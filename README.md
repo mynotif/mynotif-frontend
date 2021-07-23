@@ -21,6 +21,7 @@ yarn start
 ## Test
 ```sh
 yarn test
+yarn lint
 ```
 
 ## Docker

@@ -11,4 +11,5 @@ jobs:
     - uses: actions/setup-node@v2
     - run: yarn install
     - run: yarn build
+    - run: yarn lint
     - run: yarn test

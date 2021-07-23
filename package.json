@@ -22,6 +22,8 @@
     "test": "react-scripts test",
     "docker-build": "docker build --tag issa-diallo/mynotif-frontend .",
     "docker-run": "docker run --rm -it --publish 3000:80 issa-diallo/mynotif-frontend",
+    "lint": "ts-standard src/",
+    "format": "ts-standard --fix src/",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -41,5 +43,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "ts-standard": "^10.0.0"
   }
 }
