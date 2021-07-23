@@ -1,5 +1,7 @@
 # MyNotif Frontend
 
+[![Tests](https://github.com/issa-diallo/MyNotif_frontend/workflows/Tests/badge.svg?branch=develop)](https://github.com/issa-diallo/MyNotif_frontend/actions?query=workflow%3ATests)
+
 Frontend for MyNotif: Patient management app for nurses.
 
 Backend is available via:
