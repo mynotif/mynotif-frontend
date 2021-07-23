@@ -20,6 +20,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "docker-build": "docker build --tag issa-diallo/mynotif-frontend .",
+    "docker-run": "docker run --rm -it --publish 3000:80 issa-diallo/mynotif-frontend",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
