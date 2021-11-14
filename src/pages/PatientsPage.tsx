@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { getPatients } from '../services/api'
+import { Patient } from '../types'
 
-const PatientPage = () => {
-  const [patients, setPatients] = useState([])
+const PatientPage = (): JSX.Element => {
+  const [patients, setPatients] = useState<Patient[]>([])
 
   // allows us to pick up patients
-  const fetchPatients = async () => {
+  const fetchPatients = async (): Promise<void> => {
     try {
       const data = await getPatients()
       setPatients(data)
@@ -15,7 +16,10 @@ const PatientPage = () => {
   }
 
   // when the component is loaded, the patients are picked up
-  useEffect(() => fetchPatients(), [])
+  useEffect(() => {
+    // eslint-disable-next-line no-void
+    void (async () => await fetchPatients())()
+  }, [])
 
   return (
     <div>

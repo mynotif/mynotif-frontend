@@ -6,7 +6,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import Header from './components/Header'
-import PatientsPage from './pages/PatientsPage.jsx'
+import PatientsPage from './pages/PatientsPage'
 
 library.add(fas, fab, far)
 
