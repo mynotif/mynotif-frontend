@@ -48,7 +48,7 @@ const PatientPage = (): JSX.Element => {
                 <td>{patient.zip_code}</td>
                 <td>{patient.city}</td>
                 <td>{patient.phone}</td>
-                <td><button className='btn btn-sm btn-danger'>supprimer</button></td>
+                <td><button className='btn btn-sm btn-danger' /></td>
               </tr>)
           }
 
