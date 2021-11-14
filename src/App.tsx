@@ -6,6 +6,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import Header from './components/Header'
+import PatientsPage from './pages/PatientsPage.jsx'
 
 library.add(fas, fab, far)
 
@@ -14,7 +15,7 @@ function App (): JSX.Element {
     <div className='App'>
       <Header />
       <Container>
-        MyNotif
+        <PatientsPage />
       </Container>
     </div>
   )
