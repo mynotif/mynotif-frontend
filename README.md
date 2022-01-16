@@ -1,6 +1,6 @@
 # MyNotif Frontend
 
-[![Tests](https://github.com/issa-diallo/MyNotif_frontend/workflows/Tests/badge.svg?branch=develop)](https://github.com/issa-diallo/MyNotif_frontend/actions?query=workflow%3ATests)
+[![Tests](https://github.com/issa-diallo/mynotif_frontend/actions/workflows/tests.yml/badge.svg)](https://github.com/issa-diallo/mynotif_frontend/actions/workflows/tests.yml)
 
 Frontend for MyNotif: Patient management app for nurses.
 https://mynotif.herokuapp.com/
@@ -37,8 +37,4 @@ docker run --rm -it --publish 3000:80 issa-diallo/mynotif-frontend
 ## Deploy to Heroku
 ```sh
 git push heroku main
-```
-Or if you want to deploy `develop`:
-```sh
-git push heroku develop:main
 ```
