@@ -17,6 +17,7 @@ yarn install
 ```sh
 yarn dev
 ```
+Optionally you can copy the `.env.example` to `.env.local` to override some settings.
 
 ## Test
 ```sh

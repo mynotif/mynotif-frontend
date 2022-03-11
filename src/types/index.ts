@@ -8,6 +8,11 @@ interface Patient {
   phone: string
 }
 
+interface Token {
+  token: string
+}
+
 export type {
-  Patient
+  Patient,
+  Token
 }
