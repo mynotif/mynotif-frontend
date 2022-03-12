@@ -9,13 +9,13 @@ const Login = (): JSX.Element => {
   const [password, setPassword] = useState<string>('')
   const { setToken } = useContext(TokenContext)
 
-  const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
+  const onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
     setUsername(e.target.value)
 
   const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
     setPassword(e.target.value)
 
-  const onLogin = async (): Promise<void> => {
+  const onLogin = async (e: React.MouseEvent<HTMLElement>): Promise<void> => {
     try {
       const response = await login(username, password)
       const { token } = response
@@ -26,8 +26,6 @@ const Login = (): JSX.Element => {
     }
   }
 
-  const onLoginClick = async (e: React.MouseEvent<HTMLElement>): Promise<void> => await onLogin()
-
   const onFormSubmit = (e: React.FormEvent): void => e.preventDefault()
 
   return (
@@ -36,7 +34,7 @@ const Login = (): JSX.Element => {
         placeholder='Username'
         className='me-2'
         aria-label='Email'
-        onChange={onEmailChange}
+        onChange={onUsernameChange}
       />
       <Form.Control
         type='password'
@@ -45,7 +43,7 @@ const Login = (): JSX.Element => {
         aria-label='Password'
         onChange={onPasswordChange}
       />
-      <Button type='submit' onClick={onLoginClick}>
+      <Button type='submit' onClick={onLogin}>
         Login
       </Button>
     </Form>

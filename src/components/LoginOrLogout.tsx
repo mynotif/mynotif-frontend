@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react'
 import { getTokenLocalStorage } from '../utils/helpers'
 import { TokenContext } from '../context/token'
-import Login from './Login'
+import LoginOrRegister from './LoginOrRegister'
 import Logout from './Logout'
 
 const LoginOrLogout = (): JSX.Element => {
@@ -12,7 +12,7 @@ const LoginOrLogout = (): JSX.Element => {
     setToken(getTokenLocalStorage())
   }, [setToken])
 
-  return tokenValid(token) ? <Logout /> : <Login />
+  return tokenValid(token) ? <Logout /> : <LoginOrRegister />
 }
 
 export default LoginOrLogout
