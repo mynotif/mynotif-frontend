@@ -8,11 +8,19 @@ interface Patient {
   phone: string
 }
 
+interface Profile {
+  email: string
+  username: string
+  first_name: string
+  last_name: string
+}
+
 interface Token {
   token: string
 }
 
 export type {
   Patient,
+  Profile,
   Token
 }

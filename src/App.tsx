@@ -10,6 +10,7 @@ import { TokenContextProvider } from './context/token'
 import Header from './components/Header'
 import Home from './pages/Home'
 import PatientsPage from './pages/PatientsPage'
+import ProfilePage from './pages/ProfilePage'
 
 library.add(fas, fab, far)
 
@@ -22,6 +23,7 @@ function App (): JSX.Element {
           <Container>
             <Routes>
               <Route path='/' element={<Home />} />
+              <Route path='/profile' element={<ProfilePage />} />
               <Route path='/patient' element={<PatientsPage />} />
             </Routes>
           </Container>

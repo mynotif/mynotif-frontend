@@ -18,6 +18,11 @@ const Header = (): JSX.Element => (
           </Nav.Link>
         </Nav>
         <Nav className='mr-auto'>
+          <Nav.Link as={Link} to='/profile'>
+            <FontAwesomeIcon icon={['fas', 'user']} /> Profile
+          </Nav.Link>
+        </Nav>
+        <Nav className='mr-auto'>
           <Nav.Link as={Link} to='/patient'>
             <FontAwesomeIcon icon={['fas', 'user-injured']} /> Patient
           </Nav.Link>
