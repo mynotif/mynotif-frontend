@@ -2,6 +2,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Container, Nav, Navbar } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import LoginOrLogout from './LoginOrLogout'
 
 const Header = (): JSX.Element => (
   <Navbar bg='dark' variant='dark' expand='sm'>
@@ -22,6 +23,7 @@ const Header = (): JSX.Element => (
           </Nav.Link>
         </Nav>
       </Navbar.Collapse>
+      <LoginOrLogout />
     </Container>
   </Navbar>
 )

@@ -6,6 +6,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
+import { TokenContextProvider } from './context/token'
 import Header from './components/Header'
 import Home from './pages/Home'
 import PatientsPage from './pages/PatientsPage'
@@ -16,13 +17,15 @@ function App (): JSX.Element {
   return (
     <div className='App'>
       <BrowserRouter>
-        <Header />
-        <Container>
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/patient' element={<PatientsPage />} />
-          </Routes>
-        </Container>
+        <TokenContextProvider>
+          <Header />
+          <Container>
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='/patient' element={<PatientsPage />} />
+            </Routes>
+          </Container>
+        </TokenContextProvider>
       </BrowserRouter>
     </div>
   )
