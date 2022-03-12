@@ -15,7 +15,15 @@ const login = async (username: string, password: string): Promise<Token> => {
   return response.data
 }
 
+const register = async (username: string, password: string): Promise<{}> => {
+  const data = { username, password }
+  const url = BACKEND_URL + '/account/register'
+  const response = await axios.post<{}>(url, data)
+  return response.data
+}
+
 export {
   getPatients,
-  login
+  login,
+  register
 }
