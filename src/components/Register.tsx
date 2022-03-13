@@ -1,5 +1,6 @@
 import { FunctionComponent, useContext, useState } from 'react'
-import { Button, Col, Form, Modal, Row } from 'react-bootstrap'
+import { Button, Col, Form, Modal, Nav, Row } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { TokenContext } from '../context/token'
 import { setTokenLocalStorage } from '../utils/helpers'
 import { login, register } from '../services/api'
@@ -98,9 +99,11 @@ const Register = (): JSX.Element => {
   return (
     <>
       <RegisterModal show={show} handleClose={handleClose} handleRegister={handleRegister} setUsername={setUsername} setPassword={setPassword} />
-      <Button className='mb-2' onClick={handleShow}>
-        Register
-      </Button>
+      <Nav className='mr-auto me-2'>
+        <Nav.Link onClick={handleShow}>
+          <FontAwesomeIcon icon={['fas', 'user']} /> Register
+        </Nav.Link>
+      </Nav>
     </>
   )
 }
