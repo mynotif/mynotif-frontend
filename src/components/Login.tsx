@@ -1,13 +1,21 @@
-import React, { useContext, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { login } from '../services/api'
 import { TokenContext } from '../context/token'
+import { ErrorContext, ErrorType } from '../context/error'
 import { setTokenLocalStorage } from '../utils/helpers'
 
 const Login = (): JSX.Element => {
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const { setToken } = useContext(TokenContext)
+  const { addError } = useContext(ErrorContext)
+
+  const addErrorCallback = useCallback(
+    (error: ErrorType) => addError(error),
+    // eslint-disable-next-line
+    []
+  )
 
   const onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
     setUsername(e.target.value)
@@ -23,6 +31,11 @@ const Login = (): JSX.Element => {
       setToken(token)
     } catch (error) {
       console.error(error)
+      if (error.response.status === 400) {
+        addErrorCallback({ body: 'Invalid credentials' })
+      } else {
+        addErrorCallback({ body: 'Unknown login error' })
+      }
     }
   }
 
