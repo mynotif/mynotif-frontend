@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Patient, Token } from '../types'
+import { Patient, Profile, Token } from '../types'
 import { BACKEND_URL } from './constants'
 
 const getPatients = async (): Promise<Patient[]> => {
@@ -22,8 +22,16 @@ const register = async (username: string, password: string): Promise<{}> => {
   return response.data
 }
 
+const getProfile = async (token: string): Promise<Profile> => {
+  const url = BACKEND_URL + '/profile/'
+  const headers = { Authorization: `Token ${token}` }
+  const response = await axios.get<Profile>(url, { headers })
+  return response.data
+}
+
 export {
   getPatients,
   login,
-  register
+  register,
+  getProfile
 }
