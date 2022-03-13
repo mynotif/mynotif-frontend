@@ -7,7 +7,9 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { TokenContextProvider } from './context/token'
+import { ErrorContextProvider } from './context/error'
 import Header from './components/Header'
+import Errors from './components/Errors'
 import Home from './pages/Home'
 import PatientsPage from './pages/PatientsPage'
 import ProfilePage from './pages/ProfilePage'
@@ -19,14 +21,17 @@ function App (): JSX.Element {
     <div className='App'>
       <BrowserRouter>
         <TokenContextProvider>
-          <Header />
-          <Container>
-            <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path='/profile' element={<ProfilePage />} />
-              <Route path='/patient' element={<PatientsPage />} />
-            </Routes>
-          </Container>
+          <ErrorContextProvider>
+            <Header />
+            <Container>
+              <Errors />
+              <Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='/profile' element={<ProfilePage />} />
+                <Route path='/patient' element={<PatientsPage />} />
+              </Routes>
+            </Container>
+          </ErrorContextProvider>
         </TokenContextProvider>
       </BrowserRouter>
     </div>
