@@ -98,7 +98,7 @@ const Register = (): JSX.Element => {
   return (
     <>
       <RegisterModal show={show} handleClose={handleClose} handleRegister={handleRegister} setUsername={setUsername} setPassword={setPassword} />
-      <Button className='ms-2' onClick={handleShow}>
+      <Button className='mb-2' onClick={handleShow}>
         Register
       </Button>
     </>

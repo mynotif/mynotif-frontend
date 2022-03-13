@@ -27,8 +27,8 @@ const Header = (): JSX.Element => (
             <FontAwesomeIcon icon={['fas', 'user-injured']} /> Patient
           </Nav.Link>
         </Nav>
+        <LoginOrLogout />
       </Navbar.Collapse>
-      <LoginOrLogout />
     </Container>
   </Navbar>
 )
