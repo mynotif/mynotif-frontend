@@ -42,7 +42,7 @@ const Login = (): JSX.Element => {
   const onFormSubmit = (e: React.FormEvent): void => e.preventDefault()
 
   return (
-    <Form className='d-flex mb-2' onSubmit={onFormSubmit}>
+    <Form className='d-flex' onSubmit={onFormSubmit}>
       <Form.Control
         placeholder='Username'
         className='me-2'
@@ -56,7 +56,7 @@ const Login = (): JSX.Element => {
         aria-label='Password'
         onChange={onPasswordChange}
       />
-      <Button className='me-2' type='submit' onClick={onLogin}>
+      <Button type='submit' onClick={onLogin}>
         Login
       </Button>
     </Form>
