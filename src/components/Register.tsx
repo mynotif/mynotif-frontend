@@ -1,7 +1,8 @@
-import { FunctionComponent, useContext, useState } from 'react'
+import { FunctionComponent, useCallback, useContext, useState } from 'react'
 import { Button, Col, Form, Modal, Nav, Row } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { TokenContext } from '../context/token'
+import { ErrorContext, ErrorType } from '../context/error'
 import { setTokenLocalStorage } from '../utils/helpers'
 import { login, register } from '../services/api'
 
@@ -30,7 +31,6 @@ const RegisterForm: FunctionComponent<RegisterFormProps> = ({ handleClose, handl
           <Form.Control
             placeholder='Username'
             className='me-2'
-            aria-label='Email'
             autoComplete='off'
             onChange={onUsernameChange}
           />
@@ -80,6 +80,13 @@ const Register = (): JSX.Element => {
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const { setToken } = useContext(TokenContext)
+  const { addError } = useContext(ErrorContext)
+
+  const addErrorCallback = useCallback(
+    (error: ErrorType) => addError(error),
+    // eslint-disable-next-line
+    []
+  )
 
   const handleClose = (): void => setShow(false)
   const handleShow = (): void => setShow(true)
@@ -92,6 +99,11 @@ const Register = (): JSX.Element => {
       setToken(token)
     } catch (error) {
       console.error(error)
+      if (![null, undefined].includes(error.response.data)) {
+        addErrorCallback({ title: 'Error registering', body: JSON.stringify(error.response.data) })
+      } else {
+        addErrorCallback({ body: 'Error registering' })
+      }
     }
     handleClose()
   }
