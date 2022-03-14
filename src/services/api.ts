@@ -29,9 +29,17 @@ const getProfile = async (token: string): Promise<Profile> => {
   return response.data
 }
 
+const updateUser = async (token: string, data: Profile): Promise<Profile> => {
+  const url = BACKEND_URL + '/user/current/'
+  const headers = { Authorization: `Token ${token}` }
+  const response = await axios.patch<Profile>(url, data, { headers })
+  return response.data
+}
+
 export {
   getPatients,
   login,
   register,
-  getProfile
+  getProfile,
+  updateUser
 }
