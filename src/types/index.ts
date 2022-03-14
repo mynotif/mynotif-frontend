@@ -9,6 +9,7 @@ interface Patient {
 }
 
 interface Profile {
+  id: number
   email: string
   username: string
   first_name: string
