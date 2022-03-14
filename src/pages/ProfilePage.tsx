@@ -34,7 +34,7 @@ const ProfilePage = (): JSX.Element => {
       console.error(error)
       addErrorCallback({ body: 'Error fetching profile data' })
     }
-  }, [token])
+  }, [token, addErrorCallback])
 
   useEffect(() => {
     if (token === null) return
