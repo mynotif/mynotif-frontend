@@ -38,7 +38,12 @@ const Header = (): JSX.Element => {
               </Nav>
               <Nav className='mr-auto'>
                 <Nav.Link as={Link} to='/patient'>
-                  <FontAwesomeIcon icon={['fas', 'user-injured']} /> Patient
+                  <FontAwesomeIcon icon={['fas', 'user-injured']} /> Patients
+                </Nav.Link>
+              </Nav>
+              <Nav className='mr-auto'>
+                <Nav.Link as={Link} to='/prescription'>
+                  <FontAwesomeIcon icon={['fas', 'file-medical']} /> Prescriptions
                 </Nav.Link>
               </Nav>
               <div className='ms-auto'>

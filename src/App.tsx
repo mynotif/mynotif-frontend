@@ -12,6 +12,7 @@ import Header from './components/Header'
 import Errors from './components/Errors'
 import Home from './pages/Home'
 import PatientsPage from './pages/PatientsPage'
+import PrescriptionsPage from './pages/PrescriptionsPage'
 import ProfilePage from './pages/ProfilePage'
 
 library.add(fas, fab, far)
@@ -29,6 +30,7 @@ function App (): JSX.Element {
                 <Route path='/' element={<Home />} />
                 <Route path='/profile' element={<ProfilePage />} />
                 <Route path='/patient' element={<PatientsPage />} />
+                <Route path='/prescription' element={<PrescriptionsPage />} />
               </Routes>
             </Container>
           </ErrorContextProvider>
