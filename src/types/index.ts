@@ -8,6 +8,18 @@ interface Patient {
   phone: string
 }
 
+interface Prescription {
+  id: number
+  carte_vitale: number
+  caisse_rattachement: string
+  prescribing_doctor: string
+  start_date: Date
+  end_date: Date
+  at_renew: boolean
+  photo_prescription: string
+  patient: Patient
+}
+
 interface Profile {
   id: number
   email: string
@@ -22,6 +34,7 @@ interface Token {
 
 export type {
   Patient,
+  Prescription,
   Profile,
   Token
 }

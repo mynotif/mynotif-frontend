@@ -38,20 +38,21 @@ const PatientPage = (): JSX.Element => {
           </tr>
         </thead>
         <tbody>
-          {
-            patients.map(patient =>
-              <tr key={patient.firstname}>
-                <td>{patient.id}</td>
-                <td>{patient.firstname}</td>
-                <td>{patient.lastname}</td>
-                <td>{patient.address}</td>
-                <td>{patient.zip_code}</td>
-                <td>{patient.city}</td>
-                <td>{patient.phone}</td>
-                <td><button className='btn btn-sm btn-danger' /></td>
-              </tr>)
-          }
-
+          {patients.map(patient => (
+            <tr key={patient.id}>
+              <td>{patient.id}</td>
+              <td>{patient.firstname}</td>
+              <td>{patient.lastname}</td>
+              <td>{patient.address}</td>
+              <td>{patient.zip_code}</td>
+              <td>{patient.city}</td>
+              <td>{patient.phone}</td>
+              <td>
+                <button className='btn btn-sm btn-primary mx-1'>Update</button>&nbsp;
+                <button className='btn btn-sm btn-danger'>Delete</button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
