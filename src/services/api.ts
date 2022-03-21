@@ -3,13 +3,13 @@ import { Patient, Prescription, Profile, Token } from '../types'
 import { BACKEND_URL } from './constants'
 
 const getPatients = async (): Promise<Patient[]> => {
-  const url = BACKEND_URL + '/patient/'
+  const url = BACKEND_URL + '/patients/'
   const response = await axios.get<Patient[]>(url)
   return response.data
 }
 
 const getPrescriptions = async (): Promise<Prescription[]> => {
-  const url = BACKEND_URL + '/prescription/'
+  const url = BACKEND_URL + '/prescriptions/'
   const response = await axios.get<Prescription[]>(url)
   return response.data
 }
