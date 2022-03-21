@@ -37,12 +37,12 @@ const Header = (): JSX.Element => {
                 </Nav.Link>
               </Nav>
               <Nav className='mr-auto'>
-                <Nav.Link as={Link} to='/patient'>
+                <Nav.Link as={Link} to='/patients'>
                   <FontAwesomeIcon icon={['fas', 'user-injured']} /> Patients
                 </Nav.Link>
               </Nav>
               <Nav className='mr-auto'>
-                <Nav.Link as={Link} to='/prescription'>
+                <Nav.Link as={Link} to='/prescriptions'>
                   <FontAwesomeIcon icon={['fas', 'file-medical']} /> Prescriptions
                 </Nav.Link>
               </Nav>

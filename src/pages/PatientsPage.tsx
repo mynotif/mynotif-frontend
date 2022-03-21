@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { getPatients } from '../services/api'
 import { Patient } from '../types'
+import { Link } from "react-router-dom"
+import { Button, Table } from 'react-bootstrap'
+
 
 const PatientPage = (): JSX.Element => {
   const [patients, setPatients] = useState<Patient[]>([])
@@ -23,8 +26,11 @@ const PatientPage = (): JSX.Element => {
 
   return (
     <div>
-      <h1>Liste des Patients</h1>
-      <table className='table table-hover'>
+      <div className="mb-3 d-flex justify-content-between align-items-center">
+        <h1>Liste des Patients</h1>
+        <Button href="patients/new">Créer un patient</Button>
+      </div>
+      <Table responsive>
         <thead>
           <tr>
             <th>Id</th>
@@ -54,7 +60,7 @@ const PatientPage = (): JSX.Element => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     </div>
   )
 }
