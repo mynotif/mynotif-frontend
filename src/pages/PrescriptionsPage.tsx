@@ -1,14 +1,18 @@
+import { strict as assert } from 'assert'
 import { useCallback, useEffect, useState, useContext } from 'react'
+import { Badge, Button, Table } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ErrorContext } from '../context/error'
-import { Table } from 'react-bootstrap'
-import { getPrescriptions } from '../services/api'
+import { TokenContext } from '../context/token'
+import { deletePrescription, getPrescriptions } from '../services/api'
 import { Prescription } from '../types'
 
 // Allows to change the colour if true or false
-const toRenew = (renew: boolean): string => !renew ? 'danger' : 'success'
+const toRenew = (renew: boolean): string => renew ? 'warning' : 'success'
 
 const PrescriptionsPage = (): JSX.Element => {
   const [prescriptions, setPrescriptions] = useState<Prescription[]>([])
+  const { token } = useContext(TokenContext)
 
   const { addError } = useContext(ErrorContext)
 
@@ -34,20 +38,32 @@ const PrescriptionsPage = (): JSX.Element => {
     void (async () => await fetchPrescriptionsCallback())()
   }, [fetchPrescriptionsCallback])
 
+  const onDelete = async (id: number): Promise<void> => {
+    assert(token)
+    try {
+      await deletePrescription(token, id)
+    } catch (error) {
+      console.error(error)
+      addError({ body: 'Error deleting prescription' })
+    }
+    // updates the prescriptions state
+    await fetchPrescriptions()
+  }
+
   return (
     <>
       <h1>Liste des Ordonnances</h1>
       <Table responsive>
         <thead>
           <tr>
-            <th>carte_vitale</th>
-            <th>caisse_rattachement</th>
-            <th>prescribing_doctor</th>
-            <th>start_date</th>
-            <th>end_date</th>
-            <th>to_renew</th>
-            <th>photo_prescription</th>
-            <th>patient</th>
+            <th>Carte vitale</th>
+            <th>Caisse rattachement</th>
+            <th>Prescribing doctor</th>
+            <th>Start date</th>
+            <th>End date</th>
+            <th>To renew</th>
+            <th>Photo prescription</th>
+            <th>Patient</th>
             <th />
           </tr>
         </thead>
@@ -60,13 +76,14 @@ const PrescriptionsPage = (): JSX.Element => {
               <td>{prescription.start_date}</td>
               <td>{prescription.end_date}</td>
               <td>
-                <span className={'badge bg-' + toRenew(prescription.at_renew)}>{prescription.at_renew}</span>
+                <Badge bg={toRenew(prescription.at_renew)}>
+                  {prescription.at_renew ? 'Yes' : 'No'}
+                </Badge>
               </td>
               <td>{prescription.photo_prescription}</td>
               <td>{prescription.patient}</td>
               <td>
-                <button className='btn btn-sm btn-primary mx-1'>Update</button>
-                <button className='btn btn-sm btn-danger'>Delete</button>
+                <Button variant='danger' onClick={async () => await onDelete(prescription.id)}><FontAwesomeIcon icon={['fas', 'trash']} /></Button>
               </td>
             </tr>)}
         </tbody>
