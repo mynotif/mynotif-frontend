@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react'
+import { useCallback, useEffect, useState, useContext } from 'react'
 import { ErrorContext } from '../context/error'
 import { Table } from 'react-bootstrap'
 import { getPrescriptions } from '../services/api'
@@ -23,11 +23,16 @@ const PrescriptionsPage = (): JSX.Element => {
     }
   }
 
+  const fetchPrescriptionsCallback = useCallback(
+    fetchPrescriptions,
+    [addError]
+  )
+
   // when the component is loaded, the Prescriptions are picked up
   useEffect(() => {
     // eslint-disable-next-line no-void
-    void (async () => await fetchPrescriptions())()
-  }, [])
+    void (async () => await fetchPrescriptionsCallback())()
+  }, [fetchPrescriptionsCallback])
 
   return (
     <>
