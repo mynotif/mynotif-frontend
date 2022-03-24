@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, useContext } from 'react'
+import { ErrorContext } from '../context/error'
 import { Table } from 'react-bootstrap'
 import { getPrescriptions } from '../services/api'
 import { Prescription } from '../types'
@@ -9,21 +10,29 @@ const toRenew = (renew: boolean): string => !renew ? 'danger' : 'success'
 const PrescriptionsPage = (): JSX.Element => {
   const [prescriptions, setPrescriptions] = useState<Prescription[]>([])
 
+  const { addError } = useContext(ErrorContext)
+
   // allows us to pick up prescriptions
   const fetchPrescriptions = async (): Promise<void> => {
     try {
       const data = await getPrescriptions()
       setPrescriptions(data)
     } catch (error) {
-      console.error(error.response)
+      console.error(error)
+      addError({ body: 'Error fetching prescription data' })
     }
   }
+
+  const fetchPrescriptionsCallback = useCallback(
+    fetchPrescriptions,
+    [addError]
+  )
 
   // when the component is loaded, the Prescriptions are picked up
   useEffect(() => {
     // eslint-disable-next-line no-void
-    void (async () => await fetchPrescriptions())()
-  }, [])
+    void (async () => await fetchPrescriptionsCallback())()
+  }, [fetchPrescriptionsCallback])
 
   return (
     <>
