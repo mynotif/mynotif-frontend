@@ -21,6 +21,13 @@ const getPrescriptions = async (): Promise<Prescription[]> => {
   return response.data
 }
 
+const deletePrescription = async (token: string, id: number): Promise<{}> => {
+  const url = BACKEND_URL + `/prescription/${id}/`
+  const headers = { Authorization: `Token ${token}` }
+  const response = await axios.delete(url, { headers })
+  return response.data
+}
+
 const login = async (username: string, password: string): Promise<Token> => {
   const data = { username, password }
   const url = BACKEND_URL + '/api-token-auth/'
@@ -31,7 +38,7 @@ const login = async (username: string, password: string): Promise<Token> => {
 const register = async (username: string, password: string): Promise<{}> => {
   const data = { username, password }
   const url = BACKEND_URL + '/account/register'
-  const response = await axios.post<{}>(url, data)
+  const response = await axios.post(url, data)
   return response.data
 }
 
@@ -56,5 +63,6 @@ export {
   register,
   getProfile,
   updateUser,
-  getPrescriptions
+  getPrescriptions,
+  deletePrescription
 }
