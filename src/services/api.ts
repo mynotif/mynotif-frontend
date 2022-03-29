@@ -8,6 +8,20 @@ const getPatients = async (): Promise<Patient[]> => {
   return response.data
 }
 
+const getPatient = async (token: string, id: number): Promise<Patient> => {
+  const url = BACKEND_URL + `/patient/${id}/`
+  const headers = { Authorization: `Token ${token}` }
+  const response = await axios.get(url, { headers })
+  return response.data
+}
+
+const updatePatient = async (token: string, patient: Patient): Promise<Patient> => {
+  const url = BACKEND_URL + `/patient/${patient.id}/`
+  const headers = { Authorization: `Token ${token}` }
+  const response = await axios.patch<Patient>(url, patient, { headers })
+  return response.data
+}
+
 const createPatient = async (token: string, patient: Patient): Promise<Patient> => {
   const headers = { Authorization: `Token ${token}` }
   const url = BACKEND_URL + '/patient/'
@@ -58,11 +72,13 @@ const updateUser = async (token: string, data: Profile): Promise<Profile> => {
 
 export {
   getPatients,
+  getPatient,
   createPatient,
   login,
   register,
   getProfile,
   updateUser,
+  updatePatient,
   getPrescriptions,
   deletePrescription
 }

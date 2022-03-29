@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { Button, Table } from 'react-bootstrap'
 import { getPatients } from '../services/api'
 import { Patient } from '../types'
-import { Button, Table } from 'react-bootstrap'
 
 const PatientPage = (): JSX.Element => {
   const [patients, setPatients] = useState<Patient[]>([])
