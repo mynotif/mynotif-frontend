@@ -1,5 +1,5 @@
-import React, { FunctionComponent, useEffect, useState } from 'react'
-
+import { FunctionComponent, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Button, Table } from 'react-bootstrap'
 import { getPatients } from '../services/api'
 import { Patient } from '../types'
@@ -18,7 +18,7 @@ const PatientLine: FunctionComponent< PatientLineProps> = ({ id, firstname, last
   return (
     <tr>
       <td>{id}</td>
-      <td>{firstname}</td>
+      <td><Link to={`/patients/${id}`}>{firstname}</Link></td>
       <td>{lastname}</td>
       <td>{address}</td>
       <td>{zipCode}</td>
