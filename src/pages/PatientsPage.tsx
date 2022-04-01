@@ -1,7 +1,32 @@
-import React, { useEffect, useState } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
+
 import { Button, Table } from 'react-bootstrap'
 import { getPatients } from '../services/api'
 import { Patient } from '../types'
+
+interface PatientLineProps {
+  id: number
+  firstname: string
+  lastname: string
+  address: string
+  zipCode: string
+  city: string
+  phone: string
+}
+
+const PatientLine: FunctionComponent< PatientLineProps> = ({ id, firstname, lastname, address, zipCode, city, phone }) => {
+  return (
+    <tr>
+      <td>{id}</td>
+      <td>{firstname}</td>
+      <td>{lastname}</td>
+      <td>{address}</td>
+      <td>{zipCode}</td>
+      <td>{city}</td>
+      <td>{phone}</td>
+    </tr>
+  )
+}
 
 const PatientPage = (): JSX.Element => {
   const [patients, setPatients] = useState<Patient[]>([])
@@ -34,28 +59,25 @@ const PatientPage = (): JSX.Element => {
             <th>Id</th>
             <th>Firstname</th>
             <th>Lastname</th>
-            <th>Address</th>
-            <th>Zip-code</th>
-            <th>City</th>
-            <th>Phone</th>
+            <th>address</th>
+            <th>zipCode</th>
+            <th>city</th>
+            <th>phone</th>
             <th />
           </tr>
         </thead>
         <tbody>
           {patients.map(patient => (
-            <tr key={patient.id}>
-              <td>{patient.id}</td>
-              <td>{patient.firstname}</td>
-              <td>{patient.lastname}</td>
-              <td>{patient.address}</td>
-              <td>{patient.zip_code}</td>
-              <td>{patient.city}</td>
-              <td>{patient.phone}</td>
-              <td>
-                <button className='btn btn-sm btn-primary mx-1'>Update</button>&nbsp;
-                <button className='btn btn-sm btn-danger'>Delete</button>
-              </td>
-            </tr>
+            <PatientLine
+              key={patient.id}
+              id={patient.id}
+              firstname={patient.firstname}
+              lastname={patient.lastname}
+              address={patient.address}
+              zipCode={patient.zip_code}
+              city={patient.city}
+              phone={patient.phone}
+            />
           ))}
         </tbody>
       </Table>
