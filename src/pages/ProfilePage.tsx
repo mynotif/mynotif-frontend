@@ -3,44 +3,27 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { Profile } from '../types'
 import { TokenContext } from '../context/token'
+import { ProfileContext } from '../context/profile'
 import { ErrorContext, ErrorType } from '../context/error'
-import { getProfile, updateUser } from '../services/api'
+import { updateUser } from '../services/api'
 
 const ProfilePage = (): JSX.Element => {
   const { token } = useContext(TokenContext)
   const { addError } = useContext(ErrorContext)
+  const { profile: profileContext, setProfile: setProfileContext } = useContext(ProfileContext)
+  // local unsaved profile state so we only hit the profile context after saving
+  const [profile, setProfile] = useState<Profile>(profileContext)
+
+  // update the local profile state when the profile context is ready
+  useEffect(() => {
+    setProfile(profileContext)
+  }, [profileContext])
 
   const addErrorCallback = useCallback(
     (error: ErrorType) => addError(error),
     // eslint-disable-next-line
     []
   )
-
-  const defaultProfile = {
-    id: 0,
-    email: '',
-    username: '',
-    first_name: '',
-    last_name: ''
-  }
-  const [profile, setProfile] = useState<Profile>(defaultProfile)
-
-  const fetchProfileCallback = useCallback(async (): Promise<void> => {
-    assert(token)
-    try {
-      const data = await getProfile(token)
-      setProfile(data)
-    } catch (error) {
-      console.error(error)
-      addErrorCallback({ body: 'Error fetching profile data' })
-    }
-  }, [token, addErrorCallback])
-
-  useEffect(() => {
-    if (token === null) return
-    // eslint-disable-next-line no-void
-    void (async () => await fetchProfileCallback())()
-  }, [token, fetchProfileCallback])
 
   const onFormSubmit = (e: React.FormEvent): void => {
     e.preventDefault()
@@ -50,7 +33,7 @@ const ProfilePage = (): JSX.Element => {
     assert(token)
     try {
       const data = await updateUser(token, profile)
-      setProfile(data)
+      setProfileContext(data)
     } catch (error) {
       addErrorCallback({ body: 'Error updating profile' })
     }
