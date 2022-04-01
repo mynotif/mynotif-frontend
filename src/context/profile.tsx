@@ -11,7 +11,8 @@ const defaultProfile = {
   email: '',
   username: '',
   first_name: '',
-  last_name: ''
+  last_name: '',
+  is_staff: false
 }
 const profileContextDefault = {
   profile: defaultProfile,
