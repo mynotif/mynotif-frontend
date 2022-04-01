@@ -1,16 +1,45 @@
-import { useContext, useEffect } from 'react'
+import { strict as assert } from 'assert'
+import { useCallback, useContext, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Container, Nav, Navbar } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useIsLoggedIn } from '../utils/hooks'
 import { getTokenLocalStorage } from '../utils/helpers'
+import { ErrorContext, ErrorType } from '../context/error'
+import { ProfileContext } from '../context/profile'
 import { TokenContext } from '../context/token'
+import { getProfile } from '../services/api'
 import Login from './Login'
 import Logout from './Logout'
 import Register from './Register'
 
 const Header = (): JSX.Element => {
-  const { setToken } = useContext(TokenContext)
+  const { token, setToken } = useContext(TokenContext)
+  const { setProfile } = useContext(ProfileContext)
+  const { addError } = useContext(ErrorContext)
+
+  const addErrorCallback = useCallback(
+    (error: ErrorType) => addError(error),
+    [addError]
+  )
+
+  const fetchProfileCallback = useCallback(async (): Promise<void> => {
+    assert(token)
+    try {
+      const data = await getProfile(token)
+      setProfile(data)
+    } catch (error) {
+      console.error(error)
+      addErrorCallback({ body: 'Error fetching profile data' })
+    }
+  }, [token, addErrorCallback, setProfile])
+
+  // fetch profile
+  useEffect(() => {
+    if (token === null) return
+    // eslint-disable-next-line no-void
+    void (async () => await fetchProfileCallback())()
+  }, [token, fetchProfileCallback])
 
   useEffect(() => {
     setToken(getTokenLocalStorage())
