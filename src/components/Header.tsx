@@ -9,13 +9,14 @@ import { ErrorContext, ErrorType } from '../context/error'
 import { ProfileContext } from '../context/profile'
 import { TokenContext } from '../context/token'
 import { getProfile } from '../services/api'
+import { BACKEND_URL } from '../services/constants'
 import Login from './Login'
 import Logout from './Logout'
 import Register from './Register'
 
 const Header = (): JSX.Element => {
   const { token, setToken } = useContext(TokenContext)
-  const { setProfile } = useContext(ProfileContext)
+  const { profile, setProfile } = useContext(ProfileContext)
   const { addError } = useContext(ErrorContext)
 
   const addErrorCallback = useCallback(
@@ -60,6 +61,13 @@ const Header = (): JSX.Element => {
           </Nav>
           {useIsLoggedIn() ? (
             <>
+              {profile.is_staff && (
+                <Nav className='mr-auto'>
+                  <Nav.Link href={`${BACKEND_URL}/admin`}>
+                    <FontAwesomeIcon icon={['fas', 'user-shield']} /> Admin
+                  </Nav.Link>
+                </Nav>
+              )}
               <Nav className='mr-auto'>
                 <Nav.Link as={Link} to='/profile'>
                   <FontAwesomeIcon icon={['fas', 'user']} /> Profile
