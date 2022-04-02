@@ -7,7 +7,7 @@ import { Button, Form } from 'react-bootstrap'
 import { TokenContext } from '../context/token'
 import { ErrorContext, ErrorType } from '../context/error'
 import { createPatient, getPatient, updatePatient } from '../services/api'
-import { Patient } from '../types'
+import { Patient, defaultPatient } from '../types'
 
 const PatientPage = (): JSX.Element => {
   // Get parameter url
@@ -22,15 +22,6 @@ const PatientPage = (): JSX.Element => {
     []
   )
 
-  const defaultPatient = {
-    id: 0,
-    firstname: '',
-    lastname: '',
-    address: '',
-    zip_code: '',
-    city: '',
-    phone: ''
-  }
   const [patient, setPatient] = useState<Patient>(defaultPatient)
 
   const fetchPatientCallback = useCallback(async (): Promise<void> => {
