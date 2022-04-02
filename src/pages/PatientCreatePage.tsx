@@ -5,7 +5,7 @@ import { Button, Form } from 'react-bootstrap'
 import { TokenContext } from '../context/token'
 import { ErrorContext, ErrorType } from '../context/error'
 import { createPatient } from '../services/api'
-import { Patient } from '../types'
+import { Patient, defaultPatient } from '../types'
 
 const PatientCreatePage = (): JSX.Element => {
   const { token } = useContext(TokenContext)
@@ -17,15 +17,6 @@ const PatientCreatePage = (): JSX.Element => {
     []
   )
 
-  const defaultPatient = {
-    id: 0,
-    firstname: '',
-    lastname: '',
-    address: '',
-    zip_code: '',
-    city: '',
-    phone: ''
-  }
   const [patient, setPatient] = useState<Patient>(defaultPatient)
 
   const onCreatePatient = async (): Promise<void> => {

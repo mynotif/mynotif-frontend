@@ -6,18 +6,31 @@ interface Patient {
   zip_code: string
   city: string
   phone: string
+  prescriptions: Prescription[]
+}
+
+const defaultPatient = {
+  id: 0,
+  firstname: '',
+  lastname: '',
+  address: '',
+  zip_code: '',
+  city: '',
+  phone: '',
+  prescriptions: []
 }
 
 interface Prescription {
   id: number
-  carte_vitale: number
+  carte_vitale: string
   caisse_rattachement: string
   prescribing_doctor: string
-  start_date: Date
-  end_date: Date
+  start_date: string
+  end_date: string
   at_renew: boolean
   photo_prescription: string
-  patient: Patient
+  is_valid: boolean
+  patient: number
 }
 
 interface Profile {
@@ -39,3 +52,5 @@ export type {
   Profile,
   Token
 }
+
+export { defaultPatient }

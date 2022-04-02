@@ -1,8 +1,10 @@
 import { FunctionComponent, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Table } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { getPatients } from '../services/api'
-import { Patient } from '../types'
+import { Patient, Prescription } from '../types'
+import { getValidOrLastPrescription } from '../utils/helpers'
 
 interface PatientLineProps {
   id: number
@@ -12,9 +14,16 @@ interface PatientLineProps {
   zipCode: string
   city: string
   phone: string
+  prescriptions: Prescription[]
 }
 
-const PatientLine: FunctionComponent< PatientLineProps> = ({ id, firstname, lastname, address, zipCode, city, phone }) => {
+const PatientLine: FunctionComponent< PatientLineProps> = ({ id, firstname, lastname, address, zipCode, city, phone, prescriptions }) => {
+  const prescription = getValidOrLastPrescription(prescriptions)
+  const prescriptionEndDate = prescription?.end_date ?? 'N/A'
+  const prescriptionIsValid = prescription?.is_valid ?? false
+  const isValidIconName = (prescriptionIsValid ? 'circle-check' : 'circle-xmark')
+  const isValidIconClass = (prescriptionIsValid ? 'text-success' : 'text-danger')
+  const icon = <FontAwesomeIcon icon={['fas', isValidIconName]} className={isValidIconClass} />
   return (
     <tr>
       <td><Link to={`/patients/${id}`}>{firstname}</Link></td>
@@ -23,6 +32,8 @@ const PatientLine: FunctionComponent< PatientLineProps> = ({ id, firstname, last
       <td>{zipCode}</td>
       <td>{city}</td>
       <td>{phone}</td>
+      <td>{icon}</td>
+      <td>{prescriptionEndDate}</td>
     </tr>
   )
 }
@@ -61,7 +72,8 @@ const PatientPage = (): JSX.Element => {
             <th>Zip code</th>
             <th>City</th>
             <th>Phone</th>
-            <th />
+            <th>Valid</th>
+            <th>Prescription end date</th>
           </tr>
         </thead>
         <tbody>
@@ -75,6 +87,7 @@ const PatientPage = (): JSX.Element => {
               zipCode={patient.zip_code}
               city={patient.city}
               phone={patient.phone}
+              prescriptions={patient.prescriptions}
             />
           ))}
         </tbody>
