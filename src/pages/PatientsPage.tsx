@@ -17,7 +17,6 @@ interface PatientLineProps {
 const PatientLine: FunctionComponent< PatientLineProps> = ({ id, firstname, lastname, address, zipCode, city, phone }) => {
   return (
     <tr>
-      <td>{id}</td>
       <td><Link to={`/patients/${id}`}>{firstname}</Link></td>
       <td>{lastname}</td>
       <td>{address}</td>
@@ -56,13 +55,12 @@ const PatientPage = (): JSX.Element => {
       <Table responsive>
         <thead>
           <tr>
-            <th>Id</th>
-            <th>Firstname</th>
-            <th>Lastname</th>
-            <th>address</th>
-            <th>zipCode</th>
-            <th>city</th>
-            <th>phone</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Address</th>
+            <th>Zip code</th>
+            <th>City</th>
+            <th>Phone</th>
             <th />
           </tr>
         </thead>
