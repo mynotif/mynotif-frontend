@@ -49,7 +49,7 @@ const Header = (): JSX.Element => {
   return (
     <Navbar bg='dark' variant='dark' expand='sm'>
       <Container>
-        <Navbar.Brand href={process.env.PUBLIC_URL}>
+        <Navbar.Brand as={Link} to={process.env.PUBLIC_URL}>
           <FontAwesomeIcon icon={['fas', 'user-nurse']} /> MyNotif
         </Navbar.Brand>
         <Navbar.Toggle />
