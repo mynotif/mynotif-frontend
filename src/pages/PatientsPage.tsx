@@ -1,44 +1,10 @@
-import { FunctionComponent, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import { Button, Table } from 'react-bootstrap'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import PatientLine from '../components/PatientLine'
 import { getPatients } from '../services/api'
-import { Patient, Prescription } from '../types'
-import { getValidOrLastPrescription } from '../utils/helpers'
+import { Patient } from '../types'
 
-interface PatientLineProps {
-  id: number
-  firstname: string
-  lastname: string
-  address: string
-  zipCode: string
-  city: string
-  phone: string
-  prescriptions: Prescription[]
-}
-
-const PatientLine: FunctionComponent< PatientLineProps> = ({ id, firstname, lastname, address, zipCode, city, phone, prescriptions }) => {
-  const prescription = getValidOrLastPrescription(prescriptions)
-  const prescriptionEndDate = prescription?.end_date ?? 'N/A'
-  const prescriptionIsValid = prescription?.is_valid ?? false
-  const isValidIconName = (prescriptionIsValid ? 'circle-check' : 'circle-xmark')
-  const isValidIconClass = (prescriptionIsValid ? 'text-success' : 'text-danger')
-  const icon = <FontAwesomeIcon icon={['fas', isValidIconName]} className={isValidIconClass} />
-  return (
-    <tr>
-      <td><Link to={`/patients/${id}`}>{firstname}</Link></td>
-      <td>{lastname}</td>
-      <td>{address}</td>
-      <td>{zipCode}</td>
-      <td>{city}</td>
-      <td>{phone}</td>
-      <td>{icon}</td>
-      <td>{prescriptionEndDate}</td>
-    </tr>
-  )
-}
-
-const PatientPage = (): JSX.Element => {
+const PatientsPage = (): JSX.Element => {
   const [patients, setPatients] = useState<Patient[]>([])
 
   // allows us to pick up patients
@@ -77,7 +43,7 @@ const PatientPage = (): JSX.Element => {
           </tr>
         </thead>
         <tbody>
-          {patients.map(patient => (
+          {patients.map((patient) => (
             <PatientLine
               key={patient.id}
               id={patient.id}
@@ -96,4 +62,4 @@ const PatientPage = (): JSX.Element => {
   )
 }
 
-export default PatientPage
+export default PatientsPage
