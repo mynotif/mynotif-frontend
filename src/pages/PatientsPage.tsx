@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react'
 import PatientLine from '../components/PatientLine'
 import { getPatients } from '../services/api'
 import { Patient } from '../types'
-import Container from 'react-bootstrap/Card'
-import Row from 'react-bootstrap/Row'
+import Container from 'react-bootstrap/Container'
 
 const PatientsPage = (): JSX.Element => {
   const [patients, setPatients] = useState<Patient[]>([])
@@ -28,11 +27,9 @@ const PatientsPage = (): JSX.Element => {
     <div>
       <h1 className='center'>Patients</h1>
       <Container>
-        <Row>
-          {patients.map((patient) => (
-            <PatientLine key={patient.id} patient={patient} />
-          ))}
-        </Row>
+        {patients.map((patient) => (
+          <PatientLine key={patient.id} patient={patient} />
+        ))}
       </Container>
     </div>
   )
