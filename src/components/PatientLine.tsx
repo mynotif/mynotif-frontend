@@ -30,7 +30,7 @@ const PatientLine: FunctionComponent<PatientLineProps> = ({ patient }) => {
   }
 
   return (
-    <Card onClick={() => goToPatient(patient.id)} style={{ cursor: 'pointer' }} className='mt-2'>
+    <Card onClick={() => goToPatient(patient.id)} style={{ cursor: 'pointer' }} className='mt-2 shadow'>
       <Card.Body>
         <Card.Title>{patient.lastname}</Card.Title>
         <Card.Subtitle className='mb-2 text-muted'><small>{patient.address} à {patient.city}</small></Card.Subtitle>
