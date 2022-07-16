@@ -13,9 +13,9 @@ import Header from './components/Header'
 import Errors from './components/Errors'
 import Home from './pages/Home'
 import PatientsPage from './pages/PatientsPage'
-import PatientPage from './pages/PatientPage'
 import PrescriptionsPage from './pages/PrescriptionsPage'
 import ProfilePage from './pages/ProfilePage'
+import PatientDetail from './pages/PatientDetail'
 
 library.add(fas, fab, far)
 
@@ -33,7 +33,7 @@ function App (): JSX.Element {
                   <Route path='/' element={<Home />} />
                   <Route path='/profile' element={<ProfilePage />} />
                   <Route path='/patients' element={<PatientsPage />} />
-                  <Route path='/patients/:id' element={<PatientPage />} />
+                  <Route path='/patients/:id' element={<PatientDetail />} />
                   <Route path='/prescriptions' element={<PrescriptionsPage />} />
                 </Routes>
               </Container>
