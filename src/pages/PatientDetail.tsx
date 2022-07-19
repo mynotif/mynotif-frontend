@@ -48,6 +48,7 @@ const PatientDetail = (): JSX.Element => {
           <Card.Body>
             <Card.Title>
               {patient.firstname} {patient.lastname}
+              <Link to={`/patients/edit/${patient.id}`} className='ms-4'>Éditer</Link>
             </Card.Title>
             <Table striped bordered hover>
               <tbody>
