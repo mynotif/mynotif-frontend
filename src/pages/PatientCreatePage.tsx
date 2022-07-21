@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useState } from 'react'
 import { strict as assert } from 'assert'
-
+import { useNavigate } from 'react-router-dom'
 import { Button, Form } from 'react-bootstrap'
 import { TokenContext } from '../context/token'
 import { ErrorContext, ErrorType } from '../context/error'
@@ -10,6 +10,7 @@ import { Patient, defaultPatient } from '../types'
 const PatientCreatePage = (): JSX.Element => {
   const { token } = useContext(TokenContext)
   const { addError } = useContext(ErrorContext)
+  const navigate = useNavigate()
 
   const addErrorCallback = useCallback(
     (error: ErrorType) => addError(error),
@@ -33,6 +34,7 @@ const PatientCreatePage = (): JSX.Element => {
   const onFormSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault()
     await onCreatePatient()
+    navigate('/patients')
   }
   return (
     <div>

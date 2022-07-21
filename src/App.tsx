@@ -18,6 +18,7 @@ import ProfilePage from './pages/ProfilePage'
 import PatientDetail from './pages/PatientDetail'
 import PageNotFound from './pages/PageNotFound'
 import PatientEdit from './pages/PatientEdit'
+import PatientCreatePage from './pages/PatientCreatePage'
 
 library.add(fas, fab, far)
 
@@ -36,6 +37,7 @@ function App (): JSX.Element {
                   <Route path='/' element={<Home />} />
                   <Route path='/profile' element={<ProfilePage />} />
                   <Route path='/patients' element={<PatientsPage />} />
+                  <Route path='/patients/create' element={<PatientCreatePage />} />
                   <Route path='/patients/edit/:id' element={<PatientEdit />} />
                   <Route path='/patients/:id' element={<PatientDetail />} />
                   <Route path='/prescriptions' element={<PrescriptionsPage />} />
