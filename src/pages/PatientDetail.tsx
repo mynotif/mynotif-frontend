@@ -8,6 +8,7 @@ import { getPatient } from '../services/api'
 import { Patient } from '../types'
 import Table from 'react-bootstrap/Table'
 import Card from 'react-bootstrap/Card'
+import Spinner from 'react-bootstrap/Spinner'
 
 const PatientDetail = (): JSX.Element => {
   const { id } = useParams<'id'>()
@@ -43,7 +44,7 @@ const PatientDetail = (): JSX.Element => {
 
   return (
     <div>
-      {patient != null ? (
+      {patient !== null ? (
         <Card className='mt-4'>
           <Card.Body>
             <Card.Title>
@@ -88,7 +89,9 @@ const PatientDetail = (): JSX.Element => {
           </Card.Body>
         </Card>
       ) : (
-        <h4 className='center'>Aucun patient à afficher !</h4>
+        <div className='d-flex justify-content-center vh-100 align-items-center'>
+          <Spinner animation='border' />
+        </div>
       )}
     </div>
   )
