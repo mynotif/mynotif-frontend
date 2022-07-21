@@ -10,7 +10,7 @@ import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
-import { updatePatient } from '../services/api'
+import { deletePatient, updatePatient } from '../services/api'
 
 interface PatientFormProps {
   patient: Patient
@@ -50,6 +50,17 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient }) => {
     e.preventDefault()
     await onUpdate()
     history(`/patients/${patient.id}`)
+  }
+
+  const onDelete = async (): Promise<void> => {
+    assert(token)
+    try {
+      await deletePatient(token, patientState.id)
+      history('/patients')
+    } catch (error) {
+      console.error(error)
+      addError({ body: 'Error deleting patient' })
+    }
   }
 
   return (
@@ -123,6 +134,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient }) => {
       <Button variant='primary' type='submit'>
         Valider
       </Button>
+      <Button onClick={onDelete} className='ms-4' variant='danger'>Supprimer</Button>{' '}
     </Form>
   )
 }

@@ -29,6 +29,13 @@ const createPatient = async (token: string, patient: Patient): Promise<Patient> 
   return response.data
 }
 
+const deletePatient = async (token: string, id: number): Promise<{}> => {
+  const url = BACKEND_URL + `/patient/${id}/`
+  const headers = { Authorization: `Token ${token}` }
+  const response = await axios.delete(url, { headers })
+  return response.data
+}
+
 const getPrescriptions = async (): Promise<Prescription[]> => {
   const url = BACKEND_URL + '/prescription/'
   const response = await axios.get<Prescription[]>(url)
@@ -80,5 +87,6 @@ export {
   updateUser,
   updatePatient,
   getPrescriptions,
-  deletePrescription
+  deletePrescription,
+  deletePatient
 }
