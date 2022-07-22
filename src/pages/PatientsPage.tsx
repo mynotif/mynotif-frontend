@@ -3,6 +3,7 @@ import PatientLine from '../components/PatientLine'
 import { getPatients } from '../services/api'
 import { Patient } from '../types'
 import Container from 'react-bootstrap/Container'
+import Button from 'react-bootstrap/Button'
 
 const PatientsPage = (): JSX.Element => {
   const [patients, setPatients] = useState<Patient[]>([])
@@ -26,6 +27,7 @@ const PatientsPage = (): JSX.Element => {
   return (
     <div>
       <h1 className='center'>Patients</h1>
+      <Button variant='primary' className='ms-5' href='/patients/create'>Ajouter un patient</Button>
       <Container>
         {patients.map((patient) => (
           <PatientLine key={patient.id} patient={patient} />

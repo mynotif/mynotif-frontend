@@ -22,7 +22,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient }) => {
 
   const [patientState, setPatientState] = useState<Patient>(patient)
 
-  const history = useNavigate()
+  const navigate = useNavigate()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const fieldName: string = e.target.name
@@ -49,14 +49,14 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
     await onUpdate()
-    history(`/patients/${patient.id}`)
+    navigate(`/patients/${patient.id}`)
   }
 
   const onDelete = async (): Promise<void> => {
     assert(token)
     try {
       await deletePatient(token, patientState.id)
-      history('/patients')
+      navigate('/patients')
     } catch (error) {
       console.error(error)
       addError({ body: 'Error deleting patient' })

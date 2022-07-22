@@ -11,7 +11,7 @@ interface PatientLineProps {
 }
 
 const PatientLine: FunctionComponent<PatientLineProps> = ({ patient }) => {
-  const history = useNavigate()
+  const navigate = useNavigate()
 
   const prescription = getValidOrLastPrescription(patient.prescriptions)
   const prescriptionEndDate = prescription?.end_date ?? 'N/A'
@@ -26,7 +26,7 @@ const PatientLine: FunctionComponent<PatientLineProps> = ({ patient }) => {
   )
 
   const goToPatient = (id: number): void => {
-    history(`/patients/${id}`)
+    navigate(`/patients/${id}`)
   }
 
   return (
