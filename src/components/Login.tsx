@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Button, Form } from 'react-bootstrap'
 import { login } from '../services/api'
 import { TokenContext } from '../context/token'
@@ -10,6 +11,7 @@ const Login = (): JSX.Element => {
   const [password, setPassword] = useState<string>('')
   const { setToken } = useContext(TokenContext)
   const { addError } = useContext(ErrorContext)
+  const navigate = useNavigate()
 
   const addErrorCallback = useCallback(
     (error: ErrorType) => addError(error),
@@ -29,6 +31,7 @@ const Login = (): JSX.Element => {
       const { token } = response
       setTokenLocalStorage(token)
       setToken(token)
+      navigate('/patients')
     } catch (error) {
       console.error(error)
       if (error.response.status === 400) {
