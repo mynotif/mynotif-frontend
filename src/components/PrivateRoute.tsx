@@ -5,7 +5,10 @@ import { useIsLoggedIn } from '../utils/hooks'
 const PrivateRoute = ({ redirectPath = '/' }): JSX.Element => {
   const isLoggedIn = useIsLoggedIn()
 
-  if (!isLoggedIn) {
+  // application is still loading, let's not redirect until the token is set
+  if (isLoggedIn === undefined) {
+    return <></>
+  } else if (!isLoggedIn) {
     return <Navigate to={redirectPath} replace />
   }
 

@@ -37,7 +37,7 @@ const Header = (): JSX.Element => {
 
   // fetch profile
   useEffect(() => {
-    if (token === null) return
+    if (token === null || token === undefined) return
     // eslint-disable-next-line no-void
     void (async () => await fetchProfileCallback())()
   }, [token, fetchProfileCallback])
@@ -59,7 +59,7 @@ const Header = (): JSX.Element => {
               <FontAwesomeIcon icon={['fas', 'home']} /> Home
             </Nav.Link>
           </Nav>
-          {useIsLoggedIn() ? (
+          {useIsLoggedIn() === true ? (
             <>
               {profile.is_staff && (
                 <Nav className='mr-auto'>
