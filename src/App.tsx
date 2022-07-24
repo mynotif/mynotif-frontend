@@ -13,12 +13,12 @@ import Header from './components/Header'
 import Errors from './components/Errors'
 import Home from './pages/Home'
 import PatientsPage from './pages/PatientsPage'
-import PrescriptionsPage from './pages/PrescriptionsPage'
 import ProfilePage from './pages/ProfilePage'
 import PatientDetail from './pages/PatientDetail'
 import PageNotFound from './pages/PageNotFound'
 import PatientEdit from './pages/PatientEdit'
 import PatientCreatePage from './pages/PatientCreatePage'
+import PrivateRoute from './components/PrivateRoute'
 
 library.add(fas, fab, far)
 
@@ -35,12 +35,13 @@ function App (): JSX.Element {
                 <Routes>
                   <Route path='*' element={<PageNotFound />} />
                   <Route path='/' element={<Home />} />
-                  <Route path='/profile' element={<ProfilePage />} />
-                  <Route path='/patients' element={<PatientsPage />} />
-                  <Route path='/patients/create' element={<PatientCreatePage />} />
-                  <Route path='/patients/edit/:id' element={<PatientEdit />} />
-                  <Route path='/patients/:id' element={<PatientDetail />} />
-                  <Route path='/prescriptions' element={<PrescriptionsPage />} />
+                  <Route element={<PrivateRoute />}>
+                    <Route path='/profile' element={<ProfilePage />} />
+                    <Route path='/patients' element={<PatientsPage />} />
+                    <Route path='/patients/create' element={<PatientCreatePage />} />
+                    <Route path='/patients/edit/:id' element={<PatientEdit />} />
+                    <Route path='/patients/:id' element={<PatientDetail />} />
+                  </Route>
                 </Routes>
               </Container>
             </ErrorContextProvider>
