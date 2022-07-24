@@ -35,13 +35,11 @@ const PatientLine: FunctionComponent<PatientLineProps> = ({ patient }) => {
         <Card.Title>{patient.lastname}</Card.Title>
         <Card.Subtitle className='mb-2 text-muted'><small>{patient.address} à {patient.city}</small></Card.Subtitle>
         <Card.Text>
-          <p>Renouvellement le: {prescriptionEndDate} - {icon}</p>
+          <>Renouvellement le: {prescriptionEndDate} - {icon}</>
           {patient.prescriptions.map((prescription) => (
-            <p key={prescription.id}>
-              <small>
-                Dr. {prescription.prescribing_doctor}
-              </small>
-            </p>
+            <small key={prescription.id}>
+              Dr. {prescription.prescribing_doctor}
+            </small>
           ))}
         </Card.Text>
       </Card.Body>
