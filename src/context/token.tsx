@@ -1,11 +1,11 @@
 import { FunctionComponent, createContext, useState } from 'react'
 
 interface TokenContextType {
-  token: string|null
+  token: string|null|undefined
   setToken: (token: string|null) => void
 };
 
-const defaultToken: (string|null) = null
+const defaultToken = undefined
 const tokenContextDefault = {
   token: defaultToken,
   setToken: () => {}
@@ -14,7 +14,7 @@ const tokenContextDefault = {
 const TokenContext = createContext<TokenContextType>(tokenContextDefault)
 
 const TokenContextProvider: FunctionComponent = ({ children }) => {
-  const [token, setToken] = useState<(string|null)>(defaultToken)
+  const [token, setToken] = useState<(string|null|undefined)>(defaultToken)
   return (
     <TokenContext.Provider value={{ token, setToken }}>
       {children}
