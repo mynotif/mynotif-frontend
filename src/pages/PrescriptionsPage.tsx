@@ -80,7 +80,7 @@ const PrescriptionsPage = (): JSX.Element => {
                   {prescription.at_renew ? 'Yes' : 'No'}
                 </Badge>
               </td>
-              <td>{prescription.photo_prescription}</td>
+              <td>{prescription.photo_prescription === null ? <>N/A</> : <a href={prescription.photo_prescription}>Photo</a>}</td>
               <td>{prescription.patient}</td>
               <td>
                 <Button variant='danger' onClick={async () => await onDelete(prescription.id)}><FontAwesomeIcon icon={['fas', 'trash']} /></Button>
