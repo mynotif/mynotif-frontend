@@ -13,6 +13,7 @@ import Header from './components/Header'
 import Errors from './components/Errors'
 import Home from './pages/Home'
 import PatientsPage from './pages/PatientsPage'
+import PrescriptionsPage from './pages/PrescriptionsPage'
 import ProfilePage from './pages/ProfilePage'
 import PatientDetail from './pages/PatientDetail'
 import PageNotFound from './pages/PageNotFound'
@@ -41,6 +42,7 @@ function App (): JSX.Element {
                     <Route path='/patients/create' element={<PatientCreatePage />} />
                     <Route path='/patients/edit/:id' element={<PatientEdit />} />
                     <Route path='/patients/:id' element={<PatientDetail />} />
+                    <Route path='/prescriptions' element={<PrescriptionsPage />} />
                   </Route>
                 </Routes>
               </Container>
