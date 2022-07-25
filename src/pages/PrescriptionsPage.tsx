@@ -18,8 +18,9 @@ const PrescriptionsPage = (): JSX.Element => {
 
   // allows us to pick up prescriptions
   const fetchPrescriptions = async (): Promise<void> => {
+    assert(token)
     try {
-      const data = await getPrescriptions()
+      const data = await getPrescriptions(token)
       setPrescriptions(data)
     } catch (error) {
       console.error(error)
@@ -29,7 +30,7 @@ const PrescriptionsPage = (): JSX.Element => {
 
   const fetchPrescriptionsCallback = useCallback(
     fetchPrescriptions,
-    [addError]
+    [addError, token]
   )
 
   // when the component is loaded, the Prescriptions are picked up
