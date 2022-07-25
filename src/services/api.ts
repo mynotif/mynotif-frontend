@@ -2,9 +2,10 @@ import axios from 'axios'
 import { Patient, Prescription, Profile, Token } from '../types'
 import { BACKEND_URL } from './constants'
 
-const getPatients = async (): Promise<Patient[]> => {
+const getPatients = async (token: string): Promise<Patient[]> => {
   const url = BACKEND_URL + '/patient/'
-  const response = await axios.get<Patient[]>(url)
+  const headers = { Authorization: `Token ${token}` }
+  const response = await axios.get<Patient[]>(url, { headers })
   return response.data
 }
 
@@ -36,9 +37,10 @@ const deletePatient = async (token: string, id: number): Promise<{}> => {
   return response.data
 }
 
-const getPrescriptions = async (): Promise<Prescription[]> => {
+const getPrescriptions = async (token: string): Promise<Prescription[]> => {
   const url = BACKEND_URL + '/prescription/'
-  const response = await axios.get<Prescription[]>(url)
+  const headers = { Authorization: `Token ${token}` }
+  const response = await axios.get<Prescription[]>(url, { headers })
   return response.data
 }
 

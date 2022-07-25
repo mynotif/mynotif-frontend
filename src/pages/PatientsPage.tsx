@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react'
+import { strict as assert } from 'assert'
+import { useCallback, useContext, useEffect, useState } from 'react'
+import { TokenContext } from '../context/token'
 import PatientLine from '../components/PatientLine'
 import { getPatients } from '../services/api'
 import { Patient } from '../types'
@@ -7,22 +9,28 @@ import Button from 'react-bootstrap/Button'
 
 const PatientsPage = (): JSX.Element => {
   const [patients, setPatients] = useState<Patient[]>([])
+  const { token } = useContext(TokenContext)
 
   // allows us to pick up patients
   const fetchPatients = async (): Promise<void> => {
+    assert(token)
     try {
-      const data = await getPatients()
+      const data = await getPatients(token)
       setPatients(data)
     } catch (error) {
       console.error(error.response)
     }
   }
+  const fetchPatientsCallback = useCallback(
+    fetchPatients,
+    [token]
+  )
 
   // when the component is loaded, the patients are picked up
   useEffect(() => {
     // eslint-disable-next-line no-void
-    void (async () => await fetchPatients())()
-  }, [])
+    void (async () => await fetchPatientsCallback())()
+  }, [fetchPatientsCallback])
 
   return (
     <div>
