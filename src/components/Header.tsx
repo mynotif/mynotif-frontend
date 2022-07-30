@@ -1,4 +1,3 @@
-import { strict as assert } from 'assert'
 import { useCallback, useContext, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Container, Nav, Navbar } from 'react-bootstrap'
@@ -21,11 +20,11 @@ const Header = (): JSX.Element => {
 
   const addErrorCallback = useCallback(
     (error: ErrorType) => addError(error),
-    [addError]
+    // eslint-disable-next-line
+    []
   )
 
-  const fetchProfileCallback = useCallback(async (): Promise<void> => {
-    assert(token)
+  const fetchProfileCallback = useCallback(async (token: string): Promise<void> => {
     try {
       const data = await getProfile(token)
       setProfile(data)
@@ -33,13 +32,14 @@ const Header = (): JSX.Element => {
       console.error(error)
       addErrorCallback({ body: 'Error fetching profile data' })
     }
-  }, [token, addErrorCallback, setProfile])
+    // eslint-disable-next-line
+  }, [addErrorCallback])
 
   // fetch profile
   useEffect(() => {
     if (token === null || token === undefined) return
     // eslint-disable-next-line no-void
-    void (async () => await fetchProfileCallback())()
+    void (async () => await fetchProfileCallback(token))()
   }, [token, fetchProfileCallback])
 
   useEffect(() => {
