@@ -17,8 +17,7 @@ const PrescriptionsPage = (): JSX.Element => {
   const { addError } = useContext(ErrorContext)
 
   // allows us to pick up prescriptions
-  const fetchPrescriptions = async (): Promise<void> => {
-    assert(token)
+  const fetchPrescriptions = async (token: string): Promise<void> => {
     try {
       const data = await getPrescriptions(token)
       setPrescriptions(data)
@@ -30,14 +29,15 @@ const PrescriptionsPage = (): JSX.Element => {
 
   const fetchPrescriptionsCallback = useCallback(
     fetchPrescriptions,
-    [addError, token]
+    [addError]
   )
 
   // when the component is loaded, the Prescriptions are picked up
   useEffect(() => {
+    if (token === null || token === undefined) return
     // eslint-disable-next-line no-void
-    void (async () => await fetchPrescriptionsCallback())()
-  }, [fetchPrescriptionsCallback])
+    void (async () => await fetchPrescriptionsCallback(token))()
+  }, [fetchPrescriptionsCallback, token])
 
   const onDelete = async (id: number): Promise<void> => {
     assert(token)
@@ -48,7 +48,7 @@ const PrescriptionsPage = (): JSX.Element => {
       addError({ body: 'Error deleting prescription' })
     }
     // updates the prescriptions state
-    await fetchPrescriptions()
+    await fetchPrescriptions(token)
   }
 
   return (
