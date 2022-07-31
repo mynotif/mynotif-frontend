@@ -44,7 +44,7 @@ const PatientEdit = (): JSX.Element => {
       {(patient !== null) ? (
         <>
           <h2 className='header center'>Fiche Patient</h2>
-          <PatientForm patient={patient} />
+          <PatientForm patient={patient} isEditForm />
         </>
       ) : (
         <h4 className='center'>Aucun patient à afficher !</h4>
