@@ -1,5 +1,6 @@
 import { strict as assert } from 'assert'
 import { useCallback, useContext, useEffect, useState } from 'react'
+import axios from 'axios'
 import { TokenContext } from '../context/token'
 import PatientLine from '../components/PatientLine'
 import { getPatients } from '../services/api'
@@ -18,7 +19,11 @@ const PatientsPage = (): JSX.Element => {
       const data = await getPatients(token)
       setPatients(data)
     } catch (error) {
-      console.error(error.response)
+      if (axios.isAxiosError(error)) {
+        console.error(error?.response)
+      } else {
+        console.error(error)
+      }
     }
   }
   const fetchPatientsCallback = useCallback(

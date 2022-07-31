@@ -1,6 +1,7 @@
 import { FunctionComponent, useCallback, useContext, useState } from 'react'
 import { Button, Col, Form, Modal, Nav, Row } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import axios from 'axios'
 import { TokenContext } from '../context/token'
 import { ErrorContext, ErrorType } from '../context/error'
 import { setTokenLocalStorage } from '../utils/helpers'
@@ -99,8 +100,8 @@ const Register = (): JSX.Element => {
       setToken(token)
     } catch (error) {
       console.error(error)
-      if (![null, undefined].includes(error.response.data)) {
-        addErrorCallback({ title: 'Error registering', body: JSON.stringify(error.response.data) })
+      if (axios.isAxiosError(error)) {
+        addErrorCallback({ title: 'Error registering', body: JSON.stringify((error).response?.data) })
       } else {
         addErrorCallback({ body: 'Error registering' })
       }

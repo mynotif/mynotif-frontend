@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Form } from 'react-bootstrap'
+import axios from 'axios'
 import { login } from '../services/api'
 import { TokenContext } from '../context/token'
 import { ErrorContext, ErrorType } from '../context/error'
@@ -34,7 +35,7 @@ const Login = (): JSX.Element => {
       navigate('/patients')
     } catch (error) {
       console.error(error)
-      if (error.response.status === 400) {
+      if (axios.isAxiosError(error) && (error.response?.status === 400)) {
         addErrorCallback({ body: 'Invalid credentials' })
       } else {
         addErrorCallback({ body: 'Unknown login error' })
