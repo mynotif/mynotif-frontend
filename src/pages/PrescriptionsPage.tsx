@@ -1,5 +1,6 @@
 import { strict as assert } from 'assert'
 import { useCallback, useEffect, useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Badge, Button, Table } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ErrorContext } from '../context/error'
@@ -13,8 +14,8 @@ const toRenew = (renew: boolean): string => renew ? 'warning' : 'success'
 const PrescriptionsPage = (): JSX.Element => {
   const [prescriptions, setPrescriptions] = useState<Prescription[]>([])
   const { token } = useContext(TokenContext)
-
   const { addError } = useContext(ErrorContext)
+  const navigate = useNavigate()
 
   // allows us to pick up prescriptions
   const fetchPrescriptions = async (token: string): Promise<void> => {
@@ -51,6 +52,10 @@ const PrescriptionsPage = (): JSX.Element => {
     await fetchPrescriptions(token)
   }
 
+  const onEdit = async (id: number): Promise<void> => {
+    navigate(`/prescriptions/${id}`)
+  }
+
   return (
     <>
       <h1>Liste des Ordonnances</h1>
@@ -65,7 +70,7 @@ const PrescriptionsPage = (): JSX.Element => {
             <th>To renew</th>
             <th>Photo prescription</th>
             <th>Patient</th>
-            <th />
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -83,6 +88,9 @@ const PrescriptionsPage = (): JSX.Element => {
               </td>
               <td>{prescription.photo_prescription === null ? <>N/A</> : <a href={prescription.photo_prescription}>Photo</a>}</td>
               <td>{prescription.patient}</td>
+              <td>
+                <Button onClick={async () => await onEdit(prescription.id)}><FontAwesomeIcon icon={['fas', 'pencil']} /></Button>
+              </td>
               <td>
                 <Button variant='danger' onClick={async () => await onDelete(prescription.id)}><FontAwesomeIcon icon={['fas', 'trash']} /></Button>
               </td>

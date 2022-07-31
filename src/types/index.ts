@@ -33,6 +33,19 @@ interface Prescription {
   patient: number
 }
 
+const defaultPrescription = {
+  id: 0,
+  carte_vitale: '',
+  caisse_rattachement: '',
+  prescribing_doctor: '',
+  start_date: '',
+  end_date: '',
+  at_renew: false,
+  photo_prescription: '',
+  is_valid: false,
+  patient: 0
+}
+
 interface Profile {
   id: number
   email: string
@@ -53,4 +66,4 @@ export type {
   Token
 }
 
-export { defaultPatient }
+export { defaultPatient, defaultPrescription }

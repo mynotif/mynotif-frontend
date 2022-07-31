@@ -44,6 +44,20 @@ const getPrescriptions = async (token: string): Promise<Prescription[]> => {
   return response.data
 }
 
+const getPrescription = async (token: string, id: number): Promise<Prescription> => {
+  const url = BACKEND_URL + `/prescription/${id}/`
+  const headers = { Authorization: `Token ${token}` }
+  const response = await axios.get<Prescription>(url, { headers })
+  return response.data
+}
+
+const updatePrescription = async (token: string, prescription: Prescription): Promise<Prescription> => {
+  const url = BACKEND_URL + `/prescription/${prescription.id}/`
+  const headers = { Authorization: `Token ${token}` }
+  const response = await axios.patch<Prescription>(url, prescription, { headers })
+  return response.data
+}
+
 const deletePrescription = async (token: string, id: number): Promise<{}> => {
   const url = BACKEND_URL + `/prescription/${id}/`
   const headers = { Authorization: `Token ${token}` }
@@ -88,7 +102,9 @@ export {
   getProfile,
   updateUser,
   updatePatient,
+  updatePrescription,
   getPrescriptions,
+  getPrescription,
   deletePrescription,
   deletePatient
 }
