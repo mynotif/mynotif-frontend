@@ -25,10 +25,24 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient }) => {
   const navigate = useNavigate()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const fieldName: string = e.target.name
     const fieldValue: string = e.target.value
-    const newField = { [fieldName]: fieldValue }
-    setPatientState({ ...patientState, ...newField })
+    const keys = e.target.name.split('.')
+    const fieldName = keys[0]
+    if (fieldName in patientState) {
+      const field = patientState[fieldName as keyof typeof patientState]
+      if (field instanceof Object) {
+        const nextValue = [...field]
+        // @ts-expect-error
+        nextValue[keys[1]][keys[2]] = fieldValue
+
+        setPatientState((patienState) => ({
+          ...patienState,
+          [fieldName]: nextValue
+        }))
+      } else {
+        setPatientState({ ...patientState, [fieldName]: fieldValue })
+      }
+    }
   }
 
   const addErrorCallback = useCallback(
@@ -130,11 +144,97 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient }) => {
           />
         </Form.Group>
       </Row>
-
-      <Button variant='primary' type='submit'>
+      <h4>Ordonannce</h4>
+      {
+        patientState.prescriptions.map((prescription, index) => (
+          <React.Fragment key={index}>
+            <Row>
+              <Form.Group as={Col}>
+                <Form.Label>Médecin</Form.Label>
+                <Form.Control
+                  type='text'
+                  placeholder='Dr.Simon'
+                  name={`prescriptions.${index}.prescribing_doctor`}
+                  value={prescription.prescribing_doctor}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              <Form.Group as={Col}>
+                <Form.Label>Séléctionne ton ordonnance</Form.Label>
+                <Form.Control
+                  type='file'
+                />
+              </Form.Group>
+            </Row>
+            <Row className='my-3'>
+              <Form.Group as={Col}>
+                <Form.Label>Caisse de rattachement</Form.Label>
+                <Form.Control
+                  type='text'
+                  placeholder='N° mutuelle'
+                  value={prescription.caisse_rattachement}
+                  name={`prescriptions.${index}.caisse_rattachement`}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              <Form.Group as={Col}>
+                <Form.Label>Carte Vitale</Form.Label>
+                <Form.Control
+                  type='text'
+                  placeholder='Carte vitale'
+                  value={prescription.carte_vitale}
+                  name={`prescriptions.${index}.carte_vitale`}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+            </Row>
+            <Row className='my-3'>
+              <Form.Group as={Col}>
+                <Form.Label>Date de début</Form.Label>
+                <Form.Control
+                  type='text'
+                  placeholder='2022-03-20'
+                  value={prescription.start_date}
+                  name={`prescriptions.${index}.start_date`}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              <Form.Group as={Col}>
+                <Form.Label>Date de fin</Form.Label>
+                <Form.Control
+                  type='text'
+                  placeholder='2022-05-20'
+                  value={prescription.end_date}
+                  name={`prescriptions.${index}.end_date`}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+            </Row>
+            <Row className='my-3'>
+              <Form.Check
+                type='switch'
+                id='custom-switch'
+                label='Renouveller la prescription'
+              />
+              <Form.Group as={Col}>
+                <Form.Label />
+                <Form.Control
+                  disabled
+                  value={patientState.firstname + ' ' + patientState.lastname}
+                />
+              </Form.Group>
+            </Row>
+            <Row className='mb-3' />
+          </React.Fragment>
+        ))
+      }
+      <Button variant='success' type='submit'>
         Valider
       </Button>
-      <Button onClick={onDelete} className='ms-4' variant='danger'>Supprimer</Button>{' '}
+      <Button onClick={onDelete} className='ms-4' variant='danger'>Supprimer</Button>
+      <Button className='btn btn-primary ms-4' href='/patients'>
+        Retour
+      </Button>
     </Form>
   )
 }

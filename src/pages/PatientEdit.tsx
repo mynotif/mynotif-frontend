@@ -43,7 +43,7 @@ const PatientEdit = (): JSX.Element => {
     <>
       {(patient !== null) ? (
         <>
-          <h2 className='header center'>Éditer {patient.lastname}</h2>
+          <h2 className='header center'>Fiche Patient</h2>
           <PatientForm patient={patient} />
         </>
       ) : (
