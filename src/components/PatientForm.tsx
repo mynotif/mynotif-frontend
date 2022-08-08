@@ -10,13 +10,14 @@ import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
-import { deletePatient, updatePatient } from '../services/api'
+import { createPatient, deletePatient, updatePatient } from '../services/api'
 
 interface PatientFormProps {
   patient: Patient
+  isEditForm: boolean
 }
 
-const PatientForm: FunctionComponent<PatientFormProps> = ({ patient }) => {
+const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm }) => {
   const { token } = useContext(TokenContext)
   const { addError } = useContext(ErrorContext)
 
@@ -60,8 +61,28 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient }) => {
     }
   }
 
+  const onCreatePatient = async (): Promise<void> => {
+    assert(token)
+    try {
+      const data = await createPatient(token, patientState)
+      setPatientState(data)
+    } catch (error) {
+      console.error(error)
+      addErrorCallback({ body: 'Error creating patient' })
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
+    isEditForm ? await editPatient() : await addPatient()
+  }
+
+  const addPatient = async (): Promise<void> => {
+    await onCreatePatient()
+    navigate('/patients')
+  }
+
+  const editPatient = async (): Promise<void> => {
     await onUpdate()
     navigate(`/patients/${patient.id}`)
   }
@@ -163,6 +184,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient }) => {
                 <Form.Label>Séléctionne ton ordonnance</Form.Label>
                 <Form.Control
                   type='file'
+                  name={`prescriptions.${index}.photo_prescription`}
                 />
               </Form.Group>
             </Row>
@@ -224,7 +246,6 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient }) => {
                 />
               </Form.Group>
             </Row>
-            <Row className='mb-3' />
           </React.Fragment>
         ))
       }
