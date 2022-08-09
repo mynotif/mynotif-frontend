@@ -1,11 +1,11 @@
 import { strict as assert } from 'assert'
 import { useCallback, useEffect, useState, useContext } from 'react'
-import { Button, Form } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { ErrorContext, ErrorType } from '../context/error'
 import { TokenContext } from '../context/token'
 import { getPrescription, updatePrescription } from '../services/api'
 import { Prescription, defaultPrescription } from '../types'
+import PrescriptionForm from '../components/PrescriptionForm'
 
 const PrescriptionPage = (): JSX.Element => {
   const { id } = useParams<'id'>()
@@ -68,72 +68,8 @@ const PrescriptionPage = (): JSX.Element => {
 
   return (
     <>
-      <h1>Prescription</h1>
-      <Form onSubmit={onFormSubmit}>
-        {/* TODO: dropdown patient list */}
-        <Form.Label>Patient</Form.Label>
-        <Form.Control
-          className='me-2'
-          autoComplete='off'
-          name='patient'
-          value={prescription.patient}
-          onChange={onInputChange}
-          disabled
-        />
-        <Form.Label>Carte vitale</Form.Label>
-        <Form.Control
-          className='me-2'
-          autoComplete='off'
-          name='carte_vitale'
-          value={prescription.carte_vitale}
-          onChange={onInputChange}
-        />
-        <Form.Label>Caisse rattachement</Form.Label>
-        <Form.Control
-          className='me-2'
-          autoComplete='off'
-          name='caisse_rattachement'
-          value={prescription.caisse_rattachement}
-          onChange={onInputChange}
-        />
-        <Form.Label>Prescribing doctor</Form.Label>
-        <Form.Control
-          className='me-2'
-          autoComplete='off'
-          name='prescribing_doctor'
-          value={prescription.prescribing_doctor}
-          onChange={onInputChange}
-        />
-        {/* TODO: photo upload refs #77 */}
-        <Form.Label>Photo</Form.Label>
-        <Form.Control
-          className='me-2'
-          autoComplete='off'
-          name='photo_prescription'
-          value={prescription.photo_prescription}
-          onChange={onInputChange}
-          disabled
-        />
-        <Form.Label>Start date</Form.Label>
-        <Form.Control
-          className='me-2'
-          autoComplete='off'
-          name='start_date'
-          value={prescription.start_date}
-          onChange={onInputChange}
-        />
-        <Form.Label>End date</Form.Label>
-        <Form.Control
-          className='me-2'
-          autoComplete='off'
-          name='end_date'
-          value={prescription.end_date}
-          onChange={onInputChange}
-        />
-        <Button className='mt-2' type='submit' onClick={() => null}>
-          Save
-        </Button>
-      </Form>
+      <h1>Prescription patient {prescription.patient}</h1>
+      <PrescriptionForm prescription={prescription} onInputChange={onInputChange} onFormSubmit={onFormSubmit} />
     </>
   )
 }

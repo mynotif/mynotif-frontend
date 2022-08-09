@@ -1,16 +1,12 @@
-import React, { FunctionComponent, useState, useContext, useCallback } from 'react'
+import { strict as assert } from 'assert'
+import { FunctionComponent, useState, useContext, useCallback } from 'react'
+import { Button, Col, Form, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { Patient } from '../types'
 import { TokenContext } from '../context/token'
 import { ErrorContext, ErrorType } from '../context/error'
-
-import { strict as assert } from 'assert'
-
-import Button from 'react-bootstrap/Button'
-import Col from 'react-bootstrap/Col'
-import Form from 'react-bootstrap/Form'
-import Row from 'react-bootstrap/Row'
-import { createPatient, deletePatient, updatePatient } from '../services/api'
+import { createPatient, deletePatient, deletePrescription, updatePatient } from '../services/api'
+import Prescriptions from './Prescriptions'
 
 interface PatientFormProps {
   patient: Patient
@@ -22,28 +18,13 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
   const { addError } = useContext(ErrorContext)
 
   const [patientState, setPatientState] = useState<Patient>(patient)
+  const prescriptions = patientState.prescriptions
 
   const navigate = useNavigate()
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const fieldValue: string = e.target.value
-    const keys = e.target.name.split('.')
-    const fieldName = keys[0]
-    if (fieldName in patientState) {
-      const field = patientState[fieldName as keyof typeof patientState]
-      if (field instanceof Object) {
-        const nextValue = [...field]
-        // @ts-expect-error
-        nextValue[keys[1]][keys[2]] = fieldValue
-
-        setPatientState((patienState) => ({
-          ...patienState,
-          [fieldName]: nextValue
-        }))
-      } else {
-        setPatientState({ ...patientState, [fieldName]: fieldValue })
-      }
-    }
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = event.target
+    setPatientState({ ...patientState, [name]: value })
   }
 
   const addErrorCallback = useCallback(
@@ -96,6 +77,23 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
       console.error(error)
       addError({ body: 'Error deleting patient' })
     }
+  }
+
+  const onDeletePrescription = async (id: number): Promise<void> => {
+    assert(token)
+    try {
+      await deletePrescription(token, id)
+    } catch (error) {
+      console.error(error)
+      addError({ body: 'Error deleting prescription' })
+    }
+    // TODO
+    // updates the prescriptions state
+    // await fetchPrescriptions(token)
+  }
+
+  const onEditPrescription = async (id: number): Promise<void> => {
+    navigate(`/prescriptions/${id}`)
   }
 
   return (
@@ -165,90 +163,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
           />
         </Form.Group>
       </Row>
-      <h4>Ordonannce</h4>
-      {
-        patientState.prescriptions.map((prescription, index) => (
-          <React.Fragment key={index}>
-            <Row>
-              <Form.Group as={Col}>
-                <Form.Label>Médecin</Form.Label>
-                <Form.Control
-                  type='text'
-                  placeholder='Dr.Simon'
-                  name={`prescriptions.${index}.prescribing_doctor`}
-                  value={prescription.prescribing_doctor}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              <Form.Group as={Col}>
-                <Form.Label>Séléctionne ton ordonnance</Form.Label>
-                <Form.Control
-                  type='file'
-                  name={`prescriptions.${index}.photo_prescription`}
-                />
-              </Form.Group>
-            </Row>
-            <Row className='my-3'>
-              <Form.Group as={Col}>
-                <Form.Label>Caisse de rattachement</Form.Label>
-                <Form.Control
-                  type='text'
-                  placeholder='N° mutuelle'
-                  value={prescription.caisse_rattachement}
-                  name={`prescriptions.${index}.caisse_rattachement`}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              <Form.Group as={Col}>
-                <Form.Label>Carte Vitale</Form.Label>
-                <Form.Control
-                  type='text'
-                  placeholder='Carte vitale'
-                  value={prescription.carte_vitale}
-                  name={`prescriptions.${index}.carte_vitale`}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-            </Row>
-            <Row className='my-3'>
-              <Form.Group as={Col}>
-                <Form.Label>Date de début</Form.Label>
-                <Form.Control
-                  type='text'
-                  placeholder='2022-03-20'
-                  value={prescription.start_date}
-                  name={`prescriptions.${index}.start_date`}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              <Form.Group as={Col}>
-                <Form.Label>Date de fin</Form.Label>
-                <Form.Control
-                  type='text'
-                  placeholder='2022-05-20'
-                  value={prescription.end_date}
-                  name={`prescriptions.${index}.end_date`}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-            </Row>
-            <Row className='my-3'>
-              <Form.Check
-                type='switch'
-                id='custom-switch'
-                label='Renouveller la prescription'
-              />
-              <Form.Group as={Col}>
-                <Form.Label />
-                <Form.Control
-                  disabled
-                  value={patientState.firstname + ' ' + patientState.lastname}
-                />
-              </Form.Group>
-            </Row>
-          </React.Fragment>
-        ))
-      }
+      {prescriptions.length > 0 && <Prescriptions prescriptions={prescriptions} onDelete={onDeletePrescription} onEdit={onEditPrescription} />}
       <Button variant='success' type='submit'>
         Valider
       </Button>
