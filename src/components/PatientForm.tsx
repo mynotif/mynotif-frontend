@@ -7,6 +7,7 @@ import { TokenContext } from '../context/token'
 import { ErrorContext, ErrorType } from '../context/error'
 import { createPatient, deletePatient, deletePrescription, updatePatient } from '../services/api'
 import Prescriptions from './Prescriptions'
+import ModalDelete from './ModalDelete'
 
 interface PatientFormProps {
   patient: Patient
@@ -19,6 +20,10 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
 
   const [patientState, setPatientState] = useState<Patient>(patient)
   const prescriptions = patientState.prescriptions
+
+  const [show, setShow] = useState(false)
+  const handleClose = (): void => setShow(false)
+  const handleShow = (): void => setShow(true)
 
   const navigate = useNavigate()
 
@@ -77,6 +82,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
       console.error(error)
       addError({ body: 'Error deleting patient' })
     }
+    handleClose()
   }
 
   const onDeletePrescription = async (id: number): Promise<void> => {
@@ -163,14 +169,15 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
           />
         </Form.Group>
       </Row>
-      {prescriptions.length > 0 && <Prescriptions prescriptions={prescriptions} onDelete={onDeletePrescription} onEdit={onEditPrescription} />}
       <Button variant='success' type='submit'>
         Valider
       </Button>
-      <Button onClick={onDelete} className='ms-4' variant='danger'>Supprimer</Button>
+      <Button onClick={handleShow} className='ms-4' variant='danger'>Supprimer</Button>
+      {show && <ModalDelete handleClose={handleClose} show={show} onDelete={onDelete} />}
       <Button className='btn btn-primary ms-4' href='/patients'>
         Retour
       </Button>
+      {prescriptions.length > 0 && <Prescriptions prescriptions={prescriptions} onDelete={onDeletePrescription} onEdit={onEditPrescription} />}
     </Form>
   )
 }
