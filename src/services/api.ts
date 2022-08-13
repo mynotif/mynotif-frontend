@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Patient, Prescription, Profile, Token } from '../types'
+import { Patient, Prescription, PrescriptionUploadResponse, Profile, Token } from '../types'
 import { BACKEND_URL } from './constants'
 
 const getPatients = async (token: string): Promise<Patient[]> => {
@@ -65,6 +65,17 @@ const deletePrescription = async (token: string, id: number): Promise<{}> => {
   return response.data
 }
 
+const uploadPrescription = async (token: string, id: number, file: File): Promise<PrescriptionUploadResponse> => {
+  const url = BACKEND_URL + `/prescription/upload/${id}/`
+  const data = { photo_prescription: file }
+  const headers = {
+    Authorization: `Token ${token}`,
+    'content-type': 'multipart/form-data'
+  }
+  const response = await axios.patch<PrescriptionUploadResponse>(url, data, { headers })
+  return response.data
+}
+
 const login = async (username: string, password: string): Promise<Token> => {
   const data = { username, password }
   const url = BACKEND_URL + '/api-token-auth/'
@@ -103,6 +114,7 @@ export {
   updateUser,
   updatePatient,
   updatePrescription,
+  uploadPrescription,
   getPrescriptions,
   getPrescription,
   deletePrescription,

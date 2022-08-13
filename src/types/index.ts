@@ -59,9 +59,15 @@ interface Token {
   token: string
 }
 
+interface PrescriptionUploadResponse {
+  id: number
+  photo_prescription: string
+}
+
 export type {
   Patient,
   Prescription,
+  PrescriptionUploadResponse,
   Profile,
   Token
 }
