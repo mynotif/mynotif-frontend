@@ -1,4 +1,6 @@
 import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { removeTokenLocalStorage } from './helpers'
 import { TokenContext } from '../context/token'
 
 /**
@@ -15,4 +17,14 @@ const useIsLoggedIn = (): boolean|undefined => {
   return tokenValid
 }
 
-export { useIsLoggedIn }
+const useLogout = (): () => void => {
+  const { setToken } = useContext(TokenContext)
+  const navigate = useNavigate()
+  return () => {
+    removeTokenLocalStorage()
+    setToken(null)
+    navigate('/')
+  }
+}
+
+export { useIsLoggedIn, useLogout }
