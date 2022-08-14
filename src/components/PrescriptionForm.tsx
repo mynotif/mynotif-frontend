@@ -28,6 +28,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({ prescripti
         <Form.Control
           type='file'
           name='photo_prescription'
+          onChange={onInputChange}
         />
       </Form.Group>
     </Row>

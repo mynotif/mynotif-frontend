@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { ErrorContext, ErrorType } from '../context/error'
 import { TokenContext } from '../context/token'
-import { getPrescription, updatePrescription } from '../services/api'
+import { getPrescription, updatePrescription, uploadPrescription } from '../services/api'
 import { Prescription, defaultPrescription } from '../types'
 import PrescriptionForm from '../components/PrescriptionForm'
 
@@ -11,6 +11,7 @@ const PrescriptionPage = (): JSX.Element => {
   const { id } = useParams<'id'>()
 
   const [prescription, setPrescription] = useState<Prescription>(defaultPrescription)
+  const [file, setFile] = useState<File>()
   const { token } = useContext(TokenContext)
 
   const { addError } = useContext(ErrorContext)
@@ -46,17 +47,23 @@ const PrescriptionPage = (): JSX.Element => {
     assert(token)
     try {
       await updatePrescription(token, prescription)
+      if (file !== null && file !== undefined) {
+        await uploadPrescription(token, prescription.id, file)
+      }
     } catch (error) {
       addErrorCallback({ body: 'Error updating prescription' })
     }
   }
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = event.target
+    const { name, value, files } = event.target
     setPrescription({
       ...prescription,
       [name]: value
     })
+    if (files !== null && files !== undefined) {
+      setFile(files[0])
+    }
   }
 
   // when the component is loaded, the Prescription are picked up
