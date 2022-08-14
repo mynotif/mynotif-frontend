@@ -64,7 +64,12 @@ interface PrescriptionUploadResponse {
   photo_prescription: string
 }
 
+interface ErrorResponse {
+  detail: string
+}
+
 export type {
+  ErrorResponse,
   Patient,
   Prescription,
   PrescriptionUploadResponse,

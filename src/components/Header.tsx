@@ -2,7 +2,9 @@ import { useCallback, useContext, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Container, Nav, Navbar } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { useIsLoggedIn } from '../utils/hooks'
+import axios, { AxiosError } from 'axios'
+import { ErrorResponse } from '../types'
+import { useIsLoggedIn, useLogout } from '../utils/hooks'
 import { getTokenLocalStorage } from '../utils/helpers'
 import { ErrorContext, ErrorType } from '../context/error'
 import { ProfileContext } from '../context/profile'
@@ -17,6 +19,7 @@ const Header = (): JSX.Element => {
   const { token, setToken } = useContext(TokenContext)
   const { profile, setProfile } = useContext(ProfileContext)
   const { addError } = useContext(ErrorContext)
+  const logout = useLogout()
 
   const addErrorCallback = useCallback(
     (error: ErrorType) => addError(error),
@@ -24,16 +27,29 @@ const Header = (): JSX.Element => {
     []
   )
 
+  const handleFetchProfileError = (error: unknown | AxiosError): void => {
+    console.error(error)
+    if (axios.isAxiosError(error)) {
+      const axiosError = error as AxiosError<ErrorResponse>
+      const { response } = axiosError
+      if ((response?.status === 401) && (response.data?.detail === 'Invalid token.')) {
+        addErrorCallback({ body: 'Session expired, please log in again.' })
+        logout()
+      }
+    } else {
+      addErrorCallback({ body: 'Error fetching profile data' })
+    }
+  }
+
   const fetchProfileCallback = useCallback(async (token: string): Promise<void> => {
     try {
       const data = await getProfile(token)
       setProfile(data)
-    } catch (error) {
-      console.error(error)
-      addErrorCallback({ body: 'Error fetching profile data' })
+    } catch (error: unknown | AxiosError) {
+      handleFetchProfileError(error)
     }
     // eslint-disable-next-line
-  }, [addErrorCallback])
+  }, [addErrorCallback, handleFetchProfileError])
 
   // fetch profile
   useEffect(() => {
