@@ -27,7 +27,7 @@ const Header = (): JSX.Element => {
     []
   )
 
-  const handleFetchProfileError = (error: unknown | AxiosError): void => {
+  const handleFetchProfileErrorCallback = useCallback((error: unknown | AxiosError): void => {
     console.error(error)
     if (axios.isAxiosError(error)) {
       const axiosError = error as AxiosError<ErrorResponse>
@@ -39,17 +39,20 @@ const Header = (): JSX.Element => {
     } else {
       addErrorCallback({ body: 'Error fetching profile data' })
     }
-  }
+  },
+  // eslint-disable-next-line
+    [addErrorCallback]
+  )
 
   const fetchProfileCallback = useCallback(async (token: string): Promise<void> => {
     try {
       const data = await getProfile(token)
       setProfile(data)
     } catch (error: unknown | AxiosError) {
-      handleFetchProfileError(error)
+      handleFetchProfileErrorCallback(error)
     }
     // eslint-disable-next-line
-  }, [addErrorCallback, handleFetchProfileError])
+  }, [addErrorCallback, handleFetchProfileErrorCallback])
 
   // fetch profile
   useEffect(() => {
