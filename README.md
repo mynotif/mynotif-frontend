@@ -3,7 +3,6 @@
 [![Tests](https://github.com/issa-diallo/mynotif_frontend/actions/workflows/tests.yml/badge.svg)](https://github.com/issa-diallo/mynotif_frontend/actions/workflows/tests.yml)
 
 Frontend for MyNotif: Patient management app for nurses.
-- https://mynotif.herokuapp.com/
 - https://mynotif.vercel.app/
 
 Backend is available via:
@@ -34,9 +33,4 @@ docker build --tag issa-diallo/mynotif-frontend .
 Run:
 ```sh
 docker run --rm -it --publish 3000:80 issa-diallo/mynotif-frontend
-```
-
-## Deploy to Heroku
-```sh
-git push heroku main
 ```
