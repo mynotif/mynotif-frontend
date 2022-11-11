@@ -1,6 +1,6 @@
 {
   "name": "my-notif",
-  "homepage": "https://mynotif.herokuapp.com/",
+  "homepage": "https://mynotif.vercel.app/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
