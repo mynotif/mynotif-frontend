@@ -1,46 +1,17 @@
-import { strict as assert } from 'assert'
-import { useCallback, useContext, useEffect, useState } from 'react'
-import axios from 'axios'
-import { TokenContext } from '../context/token'
 import PatientLine from '../components/PatientLine'
-import { getPatients } from '../services/api'
-import { Patient } from '../types'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
+import usePatients from '../hook/patient.hook'
 
 const PatientsPage = (): JSX.Element => {
-  const [patients, setPatients] = useState<Patient[]>([])
-  const { token } = useContext(TokenContext)
-
-  // allows us to pick up patients
-  const fetchPatients = async (): Promise<void> => {
-    assert(token)
-    try {
-      const data = await getPatients(token)
-      setPatients(data)
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error(error?.response)
-      } else {
-        console.error(error)
-      }
-    }
-  }
-  const fetchPatientsCallback = useCallback(
-    fetchPatients,
-    [token]
-  )
-
-  // when the component is loaded, the patients are picked up
-  useEffect(() => {
-    // eslint-disable-next-line no-void
-    void (async () => await fetchPatientsCallback())()
-  }, [fetchPatientsCallback])
+  const patients = usePatients()
 
   return (
     <div>
       <h1 className='center'>Patients</h1>
-      <Button variant='primary' className='ms-5' href='/patients/create'>Ajouter un patient</Button>
+      <Button variant='primary' className='ms-5' href='/patients/create'>
+        Ajouter un patient
+      </Button>
       <Container>
         {patients.map((patient) => (
           <PatientLine key={patient.id} patient={patient} />
