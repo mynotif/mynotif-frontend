@@ -1,5 +1,6 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { FunctionComponent } from 'react'
-import { Table } from 'react-bootstrap'
+import { Button, Table } from 'react-bootstrap'
 import { Prescription } from '../types'
 import PrescriptionTr from './PrescriptionTr'
 
@@ -9,9 +10,19 @@ interface PrescriptionsProps {
   onEdit: (id: number) => Promise<void>
 }
 
-const Prescriptions: FunctionComponent<PrescriptionsProps> = ({ prescriptions, onDelete, onEdit }) => (
+const Prescriptions: FunctionComponent<PrescriptionsProps> = ({
+  prescriptions,
+  onDelete,
+  onEdit
+}) => (
   <>
     <h1>Liste des Ordonnances</h1>
+    <td>
+      <Button href='/prescriptions/create'>
+        <FontAwesomeIcon icon={['fas', 'file-medical']} /> Ajouter une
+        prescription
+      </Button>
+    </td>
     <Table responsive>
       <thead>
         <tr>
@@ -27,8 +38,14 @@ const Prescriptions: FunctionComponent<PrescriptionsProps> = ({ prescriptions, o
         </tr>
       </thead>
       <tbody>
-        {prescriptions.map(prescription =>
-          <PrescriptionTr key={prescription.id} prescription={prescription} onDelete={onDelete} onEdit={onEdit} />)}
+        {prescriptions.map((prescription) => (
+          <PrescriptionTr
+            key={prescription.id}
+            prescription={prescription}
+            onDelete={onDelete}
+            onEdit={onEdit}
+          />
+        ))}
       </tbody>
     </Table>
   </>
