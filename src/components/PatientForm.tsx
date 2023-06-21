@@ -5,8 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { Patient } from '../types'
 import { TokenContext } from '../context/token'
 import { ErrorContext, ErrorType } from '../context/error'
-import { createPatient, deletePatient, deletePrescription, updatePatient } from '../services/api'
-import Prescriptions from './Prescriptions'
+import { createPatient, deletePatient, updatePatient } from '../services/api'
 import ModalDelete from './ModalDelete'
 
 interface PatientFormProps {
@@ -19,7 +18,6 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
   const { addError } = useContext(ErrorContext)
 
   const [patientState, setPatientState] = useState<Patient>(patient)
-  const prescriptions = patientState.prescriptions
 
   const [show, setShow] = useState(false)
   const handleClose = (): void => setShow(false)
@@ -83,23 +81,6 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
       addError({ body: 'Error deleting patient' })
     }
     handleClose()
-  }
-
-  const onDeletePrescription = async (id: number): Promise<void> => {
-    assert(token)
-    try {
-      await deletePrescription(token, id)
-    } catch (error) {
-      console.error(error)
-      addError({ body: 'Error deleting prescription' })
-    }
-    // TODO
-    // updates the prescriptions state
-    // await fetchPrescriptions(token)
-  }
-
-  const onEditPrescription = async (id: number): Promise<void> => {
-    navigate(`/prescriptions/${id}`)
   }
 
   return (
@@ -183,7 +164,6 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
       <Button className='btn btn-primary ms-4' href='/patients'>
         Retour
       </Button>
-      {prescriptions.length > 0 && <Prescriptions prescriptions={prescriptions} onDelete={onDeletePrescription} onEdit={onEditPrescription} />}
     </Form>
   )
 }
