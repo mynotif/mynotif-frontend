@@ -172,8 +172,14 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
       <Button variant='success' type='submit'>
         Valider
       </Button>
-      <Button onClick={handleShow} className='ms-4' variant='danger'>Supprimer</Button>
-      {show && <ModalDelete handleClose={handleClose} show={show} onDelete={onDelete} />}
+      {isEditForm && (
+        <Button onClick={handleShow} className='ms-4' variant='danger'>
+          Supprimer
+        </Button>
+      )}
+      {show && isEditForm && (
+        <ModalDelete handleClose={handleClose} show={show} onDelete={onDelete} />
+      )}
       <Button className='btn btn-primary ms-4' href='/patients'>
         Retour
       </Button>
