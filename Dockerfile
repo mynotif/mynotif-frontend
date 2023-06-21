@@ -1,9 +1,9 @@
 # Build with:
-# docker build --tag issa-diallo/mynotif-frontend .
+# docker build --tag mynotif/mynotif-frontend .
 # Run with:
-# docker run --rm -it --publish 3000:80 issa-diallo/mynotif-frontend
+# docker run --rm -it --publish 3000:80 mynotif/mynotif-frontend
 # Or interactive shell:
-# docker run -it --rm issa-diallo/mynotif-frontend sh
+# docker run -it --rm mynotif/mynotif-frontend sh
 FROM node:16-alpine as build
 
 # Specify where our app will live in the container

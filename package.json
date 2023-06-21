@@ -35,11 +35,15 @@
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "docker-build": "docker build --tag issa-diallo/mynotif-frontend .",
-    "docker-run": "docker run --rm -it --publish 3000:80 issa-diallo/mynotif-frontend",
+    "docker:build": "docker build --tag mynotif/mynotif-frontend .",
+    "docker:run": "docker run --rm -it --publish 3000:80 mynotif/mynotif-frontend",
     "lint": "ts-standard src/",
     "format": "ts-standard --fix src/",
     "eject": "react-scripts eject"
+  },
+  "engines" : {
+    "npm" : ">=8.0.0 <9.0.0",
+    "node" : ">=16.0.0 <17.0.0"
   },
   "eslintConfig": {
     "extends": [
