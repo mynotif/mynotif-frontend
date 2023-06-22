@@ -16,6 +16,9 @@ import {
 } from '../services/api'
 import { Patient, Prescription } from '../types'
 import SelectPatient from './SelectPatient'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import { format } from 'date-fns'
 
 interface PrescriptionFormRequiredProps {
   prescription: Prescription
@@ -39,6 +42,30 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
 
   const [prescriptionState, setPrescriptionState] =
     useState<Prescription>(prescription)
+
+  const startDateValue: Date | null = prescription.start_date !== '' ? new Date(prescription.start_date) : null
+  const endDateValue: Date | null = prescription.end_date !== '' ? new Date(prescription.end_date) : null
+
+  const [startDate, setStartDate] = useState<Date | null >(startDateValue)
+  const [endDate, setEndDate] = useState<Date | null >(endDateValue)
+
+  const updatePrescriptionDate = (date: Date, field: string): void => {
+    const formattedDate = format(date, 'yyyy-MM-dd')
+    setPrescriptionState((prevState) => ({
+      ...prevState,
+      [field]: formattedDate
+    }))
+  }
+
+  const onStartDateChange = (date: Date): void => {
+    setStartDate(date)
+    updatePrescriptionDate(date, 'start_date')
+  }
+
+  const onEndDateChange = (date: Date): void => {
+    setEndDate(date)
+    updatePrescriptionDate(date, 'end_date')
+  }
 
   const navigate = useNavigate()
 
@@ -145,22 +172,24 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
       <Row className='my-3'>
         <Form.Group as={Col}>
           <Form.Label>Date de début</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='2022-03-20'
-            value={prescriptionState.start_date}
-            name='start_date'
-            onChange={onInputChange}
+          <DatePicker
+            selected={startDate}
+            onChange={onStartDateChange}
+            dateFormat='dd/MM/yyyy'
+            className='form-control'
+            showYearDropdown
+            scrollableMonthYearDropdown
           />
         </Form.Group>
         <Form.Group as={Col}>
           <Form.Label>Date de fin</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='2022-05-20'
-            value={prescriptionState.end_date}
-            name='end_date'
-            onChange={onInputChange}
+          <DatePicker
+            selected={endDate}
+            onChange={onEndDateChange}
+            dateFormat='dd/MM/yyyy'
+            className='form-control'
+            showYearDropdown
+            scrollableMonthYearDropdown
           />
         </Form.Group>
       </Row>
