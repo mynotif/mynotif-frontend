@@ -24,7 +24,7 @@ const PrescriptionTr: FunctionComponent<PrescriptionTrProps> = ({ prescription, 
         {prescription.at_renew ? 'Yes' : 'No'}
       </Badge>
     </td>
-    <td>{prescription.photo_prescription === null ? <>N/A</> : <a href={prescription.photo_prescription}>Photo</a>}</td>
+    <td>{prescription.photo_prescription === null ? <Button variant='info' href={prescription.photo_prescription} disabled><FontAwesomeIcon icon={['fas', 'eye']} /></Button> : <Button variant='info' href={prescription.photo_prescription}><FontAwesomeIcon icon={['fas', 'eye']} /></Button>}</td>
     <td>{prescription.patient}</td>
     <td>
       <Button onClick={async () => await onEdit(prescription.id)}><FontAwesomeIcon icon={['fas', 'pencil']} /></Button>
