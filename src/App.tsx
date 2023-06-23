@@ -14,7 +14,7 @@ import Errors from './components/Errors'
 import Home from './pages/Home'
 import PatientsPage from './pages/PatientsPage'
 import PrescriptionsPage from './pages/PrescriptionsPage'
-import PrescriptionPage from './pages/PrescriptionPage'
+import PrescriptionEdit from './pages/PrescriptionEdit'
 import ProfilePage from './pages/ProfilePage'
 import PatientDetail from './pages/PatientDetail'
 import PageNotFound from './pages/PageNotFound'
@@ -56,7 +56,7 @@ function App (): JSX.Element {
                     />
                     <Route
                       path='/prescriptions/:id'
-                      element={<PrescriptionPage />}
+                      element={<PrescriptionEdit />}
                     />
                     <Route
                       path='/prescriptions/create'

@@ -6,7 +6,7 @@ import { getPrescription } from '../services/api'
 import { Prescription } from '../types'
 import PrescriptionForm from '../components/PrescriptionForm'
 
-const PrescriptionPage = (): JSX.Element => {
+const PrescriptionEdit = (): JSX.Element => {
   const { id } = useParams<'id'>()
 
   const [prescription, setPrescription] = useState<Prescription | null>(null)
@@ -52,4 +52,4 @@ const PrescriptionPage = (): JSX.Element => {
   )
 }
 
-export default PrescriptionPage
+export default PrescriptionEdit
