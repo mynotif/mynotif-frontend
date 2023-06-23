@@ -9,6 +9,8 @@ import { Patient } from '../types'
 import Table from 'react-bootstrap/Table'
 import Card from 'react-bootstrap/Card'
 import Spinner from 'react-bootstrap/Spinner'
+import { Button } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const PatientDetail = (): JSX.Element => {
   const { id } = useParams<'id'>()
@@ -79,7 +81,23 @@ const PatientDetail = (): JSX.Element => {
                 </tr>
                 <tr>
                   <td>Ordonnance</td>
-                  <td>Afficher les elements de l'ordonnance</td>
+                  <td>
+                    {patient.prescriptions.length > 0 ? (
+                      <ul>
+                        {patient.prescriptions.map((prescription) => (
+                          <React.Fragment key={prescription.id}>
+                            {prescription.photo_prescription && (
+                              <Button variant='info' href={prescription.photo_prescription} className='m-2'>
+                                <FontAwesomeIcon icon={['fas', 'eye']} />
+                              </Button>
+                            )}
+                          </React.Fragment>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p>{''}</p>
+                    )}
+                  </td>
                 </tr>
               </tbody>
             </Table>
