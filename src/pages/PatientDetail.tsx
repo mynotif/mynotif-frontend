@@ -95,7 +95,7 @@ const PatientDetail = (): JSX.Element => {
                         ))}
                       </ul>
                     ) : (
-                      <p>{''}</p>
+                      <p />
                     )}
                   </td>
                 </tr>

@@ -1,8 +1,9 @@
-import { FunctionComponent } from 'react'
+import { FunctionComponent, useState } from 'react'
 import { Badge, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Prescription } from '../types'
 import { useNavigate } from 'react-router-dom'
+import ModalDelete from './ModalDelete'
 
 // Allows to change the colour if true or false
 const toRenew = (renew: boolean): string => renew ? 'warning' : 'success'
@@ -16,9 +17,15 @@ interface PrescriptionTrProps {
 const PrescriptionTr: FunctionComponent<PrescriptionTrProps> = ({ prescription, onDelete, onEdit }) => {
   const navigate = useNavigate()
 
+  const [show, setShow] = useState(false)
+  const handleClose = (): void => setShow(false)
+  const handleShow = (): void => setShow(true)
+
   const goToPatient = (id: number): void => {
     navigate(`/patients/${prescription.patient}`)
   }
+
+  const confirmationText = 'Etes vous sur de vouloir supprimer cette ordonnance ?'
 
   return (
     <tr>
@@ -40,7 +47,10 @@ const PrescriptionTr: FunctionComponent<PrescriptionTrProps> = ({ prescription, 
         <Button onClick={async () => await onEdit(prescription.id)}><FontAwesomeIcon icon={['fas', 'pencil']} /></Button>
       </td>
       <td>
-        <Button variant='danger' onClick={async () => await onDelete(prescription.id)}><FontAwesomeIcon icon={['fas', 'trash']} /></Button>
+        <Button onClick={handleShow} variant='danger'><FontAwesomeIcon icon={['fas', 'trash']} /></Button>
+        {show && (
+          <ModalDelete handleClose={handleClose} show={show} onDelete={async () => await onDelete(prescription.id)} confirmText={confirmationText} />
+        )}
       </td>
     </tr>
   )

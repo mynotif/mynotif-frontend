@@ -83,6 +83,8 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
     handleClose()
   }
 
+  const confirmationText = 'Etes vous sur de vouloir supprimer ce patient ?'
+
   return (
     <Form onSubmit={async e => await handleSubmit(e)}>
       <Row className='mb-3'>
@@ -159,7 +161,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
         </Button>
       )}
       {show && isEditForm && (
-        <ModalDelete handleClose={handleClose} show={show} onDelete={onDelete} />
+        <ModalDelete handleClose={handleClose} show={show} onDelete={onDelete} confirmText={confirmationText} />
       )}
       <Button className='btn btn-primary ms-4' href='/patients'>
         Retour
