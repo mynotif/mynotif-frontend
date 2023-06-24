@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import { strict as assert } from 'assert'
 
 import { TokenContext } from '../context/token'
@@ -25,6 +25,12 @@ const PatientDetail = (): JSX.Element => {
   )
 
   const [patient, setPatient] = useState<Patient | null>(null)
+
+  const navigate = useNavigate()
+
+  const returnPreviousPage = (): void => {
+    navigate(-1)
+  }
 
   const fetchPatientCallback = useCallback(async (): Promise<void> => {
     assert(token)
@@ -86,7 +92,7 @@ const PatientDetail = (): JSX.Element => {
                       <ul>
                         {patient.prescriptions.map((prescription) => (
                           <React.Fragment key={prescription.id}>
-                            {prescription.photo_prescription && (
+                            {typeof prescription.photo_prescription === 'string' && prescription.photo_prescription !== '' && (
                               <Button variant='info' href={prescription.photo_prescription} className='m-2'>
                                 <FontAwesomeIcon icon={['fas', 'eye']} />
                               </Button>
@@ -95,14 +101,14 @@ const PatientDetail = (): JSX.Element => {
                         ))}
                       </ul>
                     ) : (
-                      <p>{''}</p>
+                      <p />
                     )}
                   </td>
                 </tr>
               </tbody>
             </Table>
             <div className='card-action'>
-              <Link to='/patients'>Retour</Link>
+              <Button onClick={returnPreviousPage}>Retour</Button>
             </div>
           </Card.Body>
         </Card>
