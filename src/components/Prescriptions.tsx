@@ -17,12 +17,12 @@ const Prescriptions: FunctionComponent<PrescriptionsProps> = ({
 }) => (
   <>
     <h1>Liste des Ordonnances</h1>
-    <td>
+    <div>
       <Button href='/prescriptions/create'>
         <FontAwesomeIcon icon={['fas', 'file-medical']} /> Ajouter une
         prescription
       </Button>
-    </td>
+    </div>
     <Table responsive>
       <thead>
         <tr>
