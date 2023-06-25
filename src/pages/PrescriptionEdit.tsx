@@ -5,6 +5,7 @@ import { TokenContext } from '../context/token'
 import { getPrescription } from '../services/api'
 import { Prescription } from '../types'
 import PrescriptionForm from '../components/PrescriptionForm'
+import useTranslationHook from '../hook/TranslationHook'
 
 const PrescriptionEdit = (): JSX.Element => {
   const { id } = useParams<'id'>()
@@ -13,6 +14,7 @@ const PrescriptionEdit = (): JSX.Element => {
   const { token } = useContext(TokenContext)
 
   const { addError } = useContext(ErrorContext)
+  const { t } = useTranslationHook()
 
   // allows us to pick up prescription
   const fetchPrescription = async (
@@ -42,11 +44,11 @@ const PrescriptionEdit = (): JSX.Element => {
     <>
       {prescription !== null ? (
         <>
-          <h1>Prescription patient {prescription.patient}</h1>
+          <h1>{t('title.editPrescription')}</h1>
           <PrescriptionForm prescription={prescription} isEditForm />
         </>
       ) : (
-        <h4 className='center'>Aucune ordonnance à afficher !</h4>
+        <h4 className='center'>{t('title.noPrescriptionToDisplay')}</h4>
       )}
     </>
   )

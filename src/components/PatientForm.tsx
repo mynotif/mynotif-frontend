@@ -7,6 +7,7 @@ import { TokenContext } from '../context/token'
 import { ErrorContext, ErrorType } from '../context/error'
 import { createPatient, deletePatient, updatePatient } from '../services/api'
 import ModalDelete from './ModalDelete'
+import useTranslationHook from '../hook/TranslationHook'
 
 interface PatientFormProps {
   patient: Patient
@@ -22,6 +23,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
   const [show, setShow] = useState(false)
   const handleClose = (): void => setShow(false)
   const handleShow = (): void => setShow(true)
+  const { t } = useTranslationHook()
 
   const navigate = useNavigate()
 
@@ -83,13 +85,11 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
     handleClose()
   }
 
-  const confirmationText = 'Etes vous sur de vouloir supprimer ce patient ?'
-
   return (
     <Form onSubmit={async e => await handleSubmit(e)}>
       <Row className='mb-3'>
         <Form.Group as={Col}>
-          <Form.Label>Nom</Form.Label>
+          <Form.Label>{t('form.lastName')}</Form.Label>
           <Form.Control
             name='lastname'
             type='text'
@@ -100,7 +100,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
         </Form.Group>
 
         <Form.Group as={Col}>
-          <Form.Label>Prénom</Form.Label>
+          <Form.Label>{t('form.firstName')}</Form.Label>
           <Form.Control
             name='firstname'
             type='text'
@@ -113,7 +113,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
 
       <Row className='mb-3'>
         <Form.Group as={Col}>
-          <Form.Label>Adresse</Form.Label>
+          <Form.Label>{t('form.emailAddress')}</Form.Label>
           <Form.Control
             name='address'
             placeholder='1234 Main St'
@@ -123,7 +123,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
         </Form.Group>
 
         <Form.Group as={Col}>
-          <Form.Label>Téléphone</Form.Label>
+          <Form.Label>{t('form.phone')}</Form.Label>
           <Form.Control
             name='phone'
             placeholder='(123) 456-7890'
@@ -135,7 +135,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
 
       <Row className='mb-3'>
         <Form.Group as={Col}>
-          <Form.Label>Ville</Form.Label>
+          <Form.Label>{t('form.city')}</Form.Label>
           <Form.Control
             name='city'
             value={patientState.city}
@@ -144,7 +144,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
         </Form.Group>
 
         <Form.Group as={Col}>
-          <Form.Label>Code postale</Form.Label>
+          <Form.Label>{t('form.zipPostal')}</Form.Label>
           <Form.Control
             name='zip_code'
             value={patientState.zip_code}
@@ -153,18 +153,18 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
         </Form.Group>
       </Row>
       <Button variant='success' type='submit'>
-        Valider
+        {t('navigation.validate')}
       </Button>
       {isEditForm && (
         <Button onClick={handleShow} className='ms-4' variant='danger'>
-          Supprimer
+          {t('navigation.delete')}
         </Button>
       )}
       {show && isEditForm && (
-        <ModalDelete handleClose={handleClose} show={show} onDelete={onDelete} confirmText={confirmationText} />
+        <ModalDelete handleClose={handleClose} show={show} onDelete={onDelete} confirmText={t('text.confirmationPatient')} />
       )}
       <Button className='btn btn-primary ms-4' href='/patients'>
-        Retour
+        {t('navigation.return')}
       </Button>
     </Form>
   )

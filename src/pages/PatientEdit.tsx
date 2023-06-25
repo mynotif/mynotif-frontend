@@ -6,12 +6,14 @@ import { strict as assert } from 'assert'
 import { getPatient } from '../services/api'
 import PatientForm from '../components/PatientForm'
 import { Patient } from '../types'
+import useTranslationHook from '../hook/TranslationHook'
 
 const PatientEdit = (): JSX.Element => {
   const { id } = useParams<'id'>()
 
   const { token } = useContext(TokenContext)
   const { addError } = useContext(ErrorContext)
+  const { t } = useTranslationHook()
 
   const addErrorCallback = useCallback(
     (error: ErrorType) => addError(error),
@@ -43,11 +45,11 @@ const PatientEdit = (): JSX.Element => {
     <>
       {(patient !== null) ? (
         <>
-          <h2 className='header center'>Fiche Patient</h2>
+          <h2 className='header center'>{t('title.editPatient')}</h2>
           <PatientForm patient={patient} isEditForm />
         </>
       ) : (
-        <h4 className='center'>Aucun patient à afficher !</h4>
+        <h4 className='center'>{t('title.noPatientToDisplay')}</h4>
       )}
     </>
   )

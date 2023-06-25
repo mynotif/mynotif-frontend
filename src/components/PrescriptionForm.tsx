@@ -19,6 +19,7 @@ import SelectPatient from './SelectPatient'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { format } from 'date-fns'
+import useTranslationHook from '../hook/TranslationHook'
 
 interface PrescriptionFormRequiredProps {
   prescription: Prescription
@@ -39,6 +40,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
   const { token } = useContext(TokenContext)
   const [file, setFile] = useState<File>()
   const { addError } = useContext(ErrorContext)
+  const { t } = useTranslationHook()
 
   const [prescriptionState, setPrescriptionState] =
     useState<Prescription>(prescription)
@@ -128,7 +130,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
       {/* TODO: dropdown patient list */}
       <Row>
         <Form.Group as={Col}>
-          <Form.Label>Médecin</Form.Label>
+          <Form.Label>{t('form.doctor')}</Form.Label>
           <Form.Control
             type='text'
             placeholder='Dr.Simon'
@@ -139,7 +141,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
         </Form.Group>
         {/* TODO: photo upload refs #77 */}
         <Form.Group as={Col}>
-          <Form.Label>Séléctionne ton ordonnance</Form.Label>
+          <Form.Label>{t('form.selectYourPrescription')}</Form.Label>
           <Form.Control
             type='file'
             name='photo_prescription'
@@ -149,7 +151,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
       </Row>
       <Row className='my-3'>
         <Form.Group as={Col}>
-          <Form.Label>Caisse de rattachement</Form.Label>
+          <Form.Label>{t('form.caisseDeRattachement')}</Form.Label>
           <Form.Control
             type='text'
             placeholder='N° mutuelle'
@@ -159,7 +161,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
           />
         </Form.Group>
         <Form.Group as={Col}>
-          <Form.Label>Carte Vitale</Form.Label>
+          <Form.Label>{t('form.carteVitale')}</Form.Label>
           <Form.Control
             type='text'
             placeholder='Carte vitale'
@@ -171,7 +173,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
       </Row>
       <Row className='my-3'>
         <Form.Group as={Col}>
-          <Form.Label>Date de début</Form.Label>
+          <Form.Label>{t('form.startDate')}</Form.Label>
           <DatePicker
             selected={startDate}
             onChange={onStartDateChange}
@@ -182,7 +184,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
           />
         </Form.Group>
         <Form.Group as={Col}>
-          <Form.Label>Date de fin</Form.Label>
+          <Form.Label>{t('form.endDate')}</Form.Label>
           <DatePicker
             selected={endDate}
             onChange={onEndDateChange}
@@ -202,10 +204,10 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
         {!isEditForm && (
           <Form.Group>
             <Form.Label className='my-3'>
-              A quel patient voulez-vous ajouter une ordonnance ?
+              {t('text.whichPatientAddOrder')}
             </Form.Label>
             <Form.Control as='select' name='patient' onChange={onInputChange}>
-              <option>--Selectionne un patient--</option>
+              <option>--{t('form.selectPatient')}--</option>
               {
                 patients?.map((patient) => (
                   <SelectPatient key={patient.id} patient={patient} />
@@ -216,7 +218,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
         )}
       </Row>
       <Button className='mt-2' type='submit' onClick={() => null}>
-        Save
+        {t('navigation.validate')}
       </Button>
     </Form>
   )

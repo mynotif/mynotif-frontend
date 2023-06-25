@@ -6,6 +6,7 @@ import { TokenContext } from '../context/token'
 import { ErrorContext, ErrorType } from '../context/error'
 import { setTokenLocalStorage } from '../utils/helpers'
 import { login, register } from '../services/api'
+import useTranslationHook from '../hook/TranslationHook'
 
 interface RegisterFormProps {
   handleClose: () => void
@@ -18,6 +19,7 @@ const RegisterForm: FunctionComponent<RegisterFormProps> = ({ handleClose, handl
     e.preventDefault()
     handleRegister()
   }
+  const { t } = useTranslationHook()
 
   const onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
     setUsername(e.target.value)
@@ -48,7 +50,7 @@ const RegisterForm: FunctionComponent<RegisterFormProps> = ({ handleClose, handl
         </Col>
         {/* The button is there, but hidden so the submit event still works */}
         <Button className='d-none' type='submit' onClick={() => null}>
-          Register
+          {t('navigation.register')}
         </Button>
       </Row>
     </Form>
@@ -59,17 +61,19 @@ interface RegisterModalProps extends RegisterFormProps {
   show: boolean
 }
 const RegisterModal: FunctionComponent<RegisterModalProps> = ({ show, handleClose, handleRegister, setUsername, setPassword }) => {
+  const { t } = useTranslationHook()
+
   return (
     <Modal show={show} onHide={handleClose} animation={false}>
       <Modal.Header closeButton>
-        <Modal.Title>Register</Modal.Title>
+        <Modal.Title>{t('navigation.register')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <RegisterForm handleClose={handleClose} handleRegister={handleRegister} setUsername={setUsername} setPassword={setPassword} />
       </Modal.Body>
       <Modal.Footer>
         <Button variant='primary' onClick={handleRegister}>
-          Register
+          {t('navigation.register')}
         </Button>
       </Modal.Footer>
     </Modal>
@@ -91,6 +95,8 @@ const Register = (): JSX.Element => {
 
   const handleClose = (): void => setShow(false)
   const handleShow = (): void => setShow(true)
+  const { t } = useTranslationHook()
+
   const handleRegister = async (): Promise<void> => {
     try {
       await register(username, password)
@@ -114,7 +120,7 @@ const Register = (): JSX.Element => {
       <RegisterModal show={show} handleClose={handleClose} handleRegister={handleRegister} setUsername={setUsername} setPassword={setPassword} />
       <Nav className='mr-auto me-2'>
         <Nav.Link onClick={handleShow}>
-          <FontAwesomeIcon icon={['fas', 'user']} /> Register
+          <FontAwesomeIcon icon={['fas', 'user']} /> {t('navigation.register')}
         </Nav.Link>
       </Nav>
     </>

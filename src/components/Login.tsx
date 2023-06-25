@@ -6,6 +6,7 @@ import { login } from '../services/api'
 import { TokenContext } from '../context/token'
 import { ErrorContext, ErrorType } from '../context/error'
 import { setTokenLocalStorage } from '../utils/helpers'
+import useTranslationHook from '../hook/TranslationHook'
 
 const Login = (): JSX.Element => {
   const [username, setUsername] = useState<string>('')
@@ -13,6 +14,7 @@ const Login = (): JSX.Element => {
   const { setToken } = useContext(TokenContext)
   const { addError } = useContext(ErrorContext)
   const navigate = useNavigate()
+  const { t } = useTranslationHook()
 
   const addErrorCallback = useCallback(
     (error: ErrorType) => addError(error),
@@ -61,7 +63,7 @@ const Login = (): JSX.Element => {
         onChange={onPasswordChange}
       />
       <Button type='submit' onClick={onLogin}>
-        Login
+        {t('navigation.login')}
       </Button>
     </Form>
   )
