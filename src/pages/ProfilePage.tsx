@@ -6,6 +6,7 @@ import { TokenContext } from '../context/token'
 import { ProfileContext } from '../context/profile'
 import { ErrorContext, ErrorType } from '../context/error'
 import { updateUser } from '../services/api'
+import useTranslationHook from '../hook/TranslationHook'
 
 const ProfilePage = (): JSX.Element => {
   const { token } = useContext(TokenContext)
@@ -13,6 +14,7 @@ const ProfilePage = (): JSX.Element => {
   const { profile: profileContext, setProfile: setProfileContext } = useContext(ProfileContext)
   // local unsaved profile state so we only hit the profile context after saving
   const [profile, setProfile] = useState<Profile>(profileContext)
+  const { t } = useTranslationHook()
 
   // update the local profile state when the profile context is ready
   useEffect(() => {
@@ -41,9 +43,9 @@ const ProfilePage = (): JSX.Element => {
 
   return (
     <div>
-      <h1>Profile</h1>
+      <h1>{t('title.myAccount')}</h1>
       <Form onSubmit={onFormSubmit}>
-        <Form.Label>Email address</Form.Label>
+        <Form.Label>{t('form.emailAddress')}</Form.Label>
         <Form.Control
           placeholder='Email'
           className='me-2'
@@ -52,7 +54,7 @@ const ProfilePage = (): JSX.Element => {
           onChange={(e) => setProfile({ ...profile, email: e.target.value })}
           value={profile.email}
         />
-        <Form.Label>Username</Form.Label>
+        <Form.Label>{t('form.userName')}</Form.Label>
         <Form.Control
           placeholder='Username'
           className='me-2'
@@ -60,7 +62,7 @@ const ProfilePage = (): JSX.Element => {
           value={profile.username}
           disabled
         />
-        <Form.Label>Firstname</Form.Label>
+        <Form.Label>{t('form.firstName')}</Form.Label>
         <Form.Control
           placeholder='Firstname'
           className='me-2'
@@ -68,7 +70,7 @@ const ProfilePage = (): JSX.Element => {
           onChange={(e) => setProfile({ ...profile, first_name: e.target.value })}
           value={profile.first_name}
         />
-        <Form.Label>Lastname</Form.Label>
+        <Form.Label>{t('form.lastName')}</Form.Label>
         <Form.Control
           placeholder='Lastname'
           className='me-2'
@@ -77,7 +79,7 @@ const ProfilePage = (): JSX.Element => {
           value={profile.last_name}
         />
         <Button className='mt-2' type='submit' onClick={onUpdate}>
-          Update
+          {t('navigation.update')}
         </Button>
       </Form>
     </div>

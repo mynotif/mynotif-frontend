@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { strict as assert } from 'assert'
 
 import { TokenContext } from '../context/token'
@@ -11,12 +11,14 @@ import Card from 'react-bootstrap/Card'
 import Spinner from 'react-bootstrap/Spinner'
 import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import useTranslationHook from '../hook/TranslationHook'
 
 const PatientDetail = (): JSX.Element => {
   const { id } = useParams<'id'>()
 
   const { token } = useContext(TokenContext)
   const { addError } = useContext(ErrorContext)
+  const { t } = useTranslationHook()
 
   const addErrorCallback = useCallback(
     (error: ErrorType) => addError(error),
@@ -57,36 +59,36 @@ const PatientDetail = (): JSX.Element => {
           <Card.Body>
             <Card.Title>
               {patient.firstname} {patient.lastname}
-              <Link to={`/patients/edit/${patient.id}`} className='ms-4'>Éditer</Link>
+              <Button variant='warning' href={`/patients/edit/${patient.id}`} className='ms-4'>{t('navigation.update')}</Button>
             </Card.Title>
             <Table striped bordered hover>
               <tbody>
                 <tr>
-                  <td>Adresse</td>
+                  <td>{t('form.address')}</td>
                   <td>
                     <strong>{patient.address}</strong>
                   </td>
                 </tr>
                 <tr>
-                  <td>Ville</td>
+                  <td>{t('form.city')}</td>
                   <td>
                     <strong>{patient.city}</strong>
                   </td>
                 </tr>
                 <tr>
-                  <td>Code postal</td>
+                  <td>{t('form.zipPostal')}</td>
                   <td>
                     <strong>{patient.zip_code}</strong>
                   </td>
                 </tr>
                 <tr>
-                  <td>Téléphone</td>
+                  <td>{t('form.phone')}</td>
                   <td>
                     <strong>{patient.phone}</strong>
                   </td>
                 </tr>
                 <tr>
-                  <td>Ordonnance</td>
+                  <td>{t('text.prescription')}</td>
                   <td>
                     {patient.prescriptions.length > 0 ? (
                       <ul>
@@ -108,7 +110,7 @@ const PatientDetail = (): JSX.Element => {
               </tbody>
             </Table>
             <div className='card-action'>
-              <Button onClick={returnPreviousPage}>Retour</Button>
+              <Button onClick={returnPreviousPage}>{t('navigation.return')}</Button>
             </div>
           </Card.Body>
         </Card>

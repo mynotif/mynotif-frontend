@@ -1,13 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import useTranslationHook from '../hook/TranslationHook'
 
 const PageNotFound = (): JSX.Element => {
+  const { t } = useTranslationHook()
+
   return (
     <div>
       {/* TO DO Display image */}
-      <h1>Hey, cette page n'existe pas !</h1>
+      <h1>{t('title.pageNotFound')}</h1>
       <Link to='/'>
-        Retourner à l'accueil
+        {t('navigation.home')}
       </Link>
     </div>
   )

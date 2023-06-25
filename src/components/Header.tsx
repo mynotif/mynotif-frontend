@@ -14,12 +14,14 @@ import { BACKEND_URL } from '../services/constants'
 import Login from './Login'
 import Logout from './Logout'
 import Register from './Register'
+import useTranslationHook from '../hook/TranslationHook'
 
 const Header = (): JSX.Element => {
   const { token, setToken } = useContext(TokenContext)
   const { profile, setProfile } = useContext(ProfileContext)
   const { addError } = useContext(ErrorContext)
   const logout = useLogout()
+  const { t } = useTranslationHook()
 
   const addErrorCallback = useCallback(
     (error: ErrorType) => addError(error),
@@ -75,7 +77,7 @@ const Header = (): JSX.Element => {
         <Navbar.Collapse>
           <Nav className='mr-auto'>
             <Nav.Link as={Link} to={process.env.PUBLIC_URL}>
-              <FontAwesomeIcon icon={['fas', 'home']} /> Home
+              <FontAwesomeIcon icon={['fas', 'home']} /> {t('text.home')}
             </Nav.Link>
           </Nav>
           {useIsLoggedIn() === true ? (
@@ -83,23 +85,23 @@ const Header = (): JSX.Element => {
               {profile.is_staff && (
                 <Nav className='mr-auto'>
                   <Nav.Link href={`${BACKEND_URL}/admin`}>
-                    <FontAwesomeIcon icon={['fas', 'user-shield']} /> Admin
+                    <FontAwesomeIcon icon={['fas', 'user-shield']} /> {t('text.admin')}
                   </Nav.Link>
                 </Nav>
               )}
               <Nav className='mr-auto'>
                 <Nav.Link as={Link} to='/profile'>
-                  <FontAwesomeIcon icon={['fas', 'user']} /> Profile
+                  <FontAwesomeIcon icon={['fas', 'user']} /> {t('text.profile')}
                 </Nav.Link>
               </Nav>
               <Nav className='mr-auto'>
                 <Nav.Link as={Link} to='/patients'>
-                  <FontAwesomeIcon icon={['fas', 'user-injured']} /> Patients
+                  <FontAwesomeIcon icon={['fas', 'user-injured']} /> {t('text.patients')}
                 </Nav.Link>
               </Nav>
               <Nav className='mr-auto'>
                 <Nav.Link as={Link} to='/prescriptions'>
-                  <FontAwesomeIcon icon={['fas', 'file-medical']} /> Prescriptions
+                  <FontAwesomeIcon icon={['fas', 'file-medical']} /> {t('text.prescription')}
                 </Nav.Link>
               </Nav>
               <div className='ms-auto'>
