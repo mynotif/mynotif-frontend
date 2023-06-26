@@ -86,7 +86,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
     try {
       const data = await createPrescription(token, prescriptionState)
       if (file !== null && file !== undefined) {
-        await uploadPrescription(token, prescriptionState.id, file)
+        await uploadPrescription(token, data.id, file)
       }
       setPrescriptionState(data)
     } catch (error) {
