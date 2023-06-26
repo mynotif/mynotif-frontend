@@ -132,5 +132,6 @@ i18n
       }
     }
   })
+  .catch(console.error)
 
 export default i18n

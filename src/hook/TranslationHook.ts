@@ -15,6 +15,8 @@ const useTranslationHook = (): { t: Function } => {
     }
 
     const lng = navigator.language
+    // the error is already handled
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     changeLanguage(lng)
   }, [i18n])
 
