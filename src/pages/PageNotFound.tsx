@@ -9,8 +9,8 @@ const PageNotFound = (): JSX.Element => {
     <div>
       {/* TO DO Display image */}
       <h1>{t('title.pageNotFound')}</h1>
-      <Link to='/'>
-        {t('navigation.home')}
+      <Link to='/login'>
+        {t('navigation.return')}
       </Link>
     </div>
   )

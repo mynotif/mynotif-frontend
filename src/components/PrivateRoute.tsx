@@ -2,7 +2,7 @@ import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 import { useIsLoggedIn } from '../utils/hooks'
 
-const PrivateRoute = ({ redirectPath = '/' }): JSX.Element => {
+const PrivateRoute = ({ redirectPath = '/login' }): JSX.Element => {
   const isLoggedIn = useIsLoggedIn()
 
   // application is still loading, let's not redirect until the token is set

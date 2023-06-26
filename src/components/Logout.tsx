@@ -9,7 +9,7 @@ const Logout = (): JSX.Element => {
   const { t } = useTranslationHook()
 
   return (
-    <Button type='submit' onClick={onLogoutClick}>
+    <Button variant='danger' type='submit' onClick={onLogoutClick}>
       {t('navigation.logout')}
     </Button>
   )

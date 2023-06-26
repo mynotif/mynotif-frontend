@@ -23,7 +23,7 @@ const useLogout = (): () => void => {
   return () => {
     removeTokenLocalStorage()
     setToken(null)
-    navigate('/')
+    navigate('/login')
   }
 }
 

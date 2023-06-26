@@ -121,8 +121,8 @@ const login = async (username: string, password: string): Promise<Token> => {
   return response.data
 }
 
-const register = async (username: string, password: string): Promise<{}> => {
-  const data = { username, password }
+const register = async (username: string, password: string, email: string): Promise<{}> => {
+  const data = { username, password, email }
   const url = BACKEND_URL + '/account/register'
   const response = await axios.post(url, data)
   return response.data
