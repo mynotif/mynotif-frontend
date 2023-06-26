@@ -2,8 +2,15 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import App from './App'
 
+jest.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: key => key,
+    i18n: { changeLanguage: jest.fn() }
+  })
+}))
+
 test('renders the main page', () => {
   render(<App />)
-  const linkElement = screen.getByText(/Home/)
+  const linkElement = screen.getByText(/text.home/)
   expect(linkElement).toBeInTheDocument()
 })
