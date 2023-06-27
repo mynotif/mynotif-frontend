@@ -10,17 +10,19 @@ const PatientsPage = (): JSX.Element => {
   const { t } = useTranslationHook()
 
   return (
-    <div>
-      <h1 className='center'>{t('title.myPatients')}</h1>
-      <Button variant='primary' className='ms-5' href='/patients/create'>
-        <FontAwesomeIcon icon={['fas', 'user-plus']} />
-      </Button>
+    <>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <h1>{t('title.myPatients')}</h1>
+        <Button variant='primary' className='ms-auto' href='/patients/create'>
+          <FontAwesomeIcon icon={['fas', 'user-plus']} />
+        </Button>
+      </div>
       <Container>
         {patients.map((patient) => (
           <PatientLine key={patient.id} patient={patient} />
         ))}
       </Container>
-    </div>
+    </>
   )
 }
 
