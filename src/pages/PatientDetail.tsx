@@ -57,9 +57,11 @@ const PatientDetail = (): JSX.Element => {
       {patient !== null ? (
         <Card className='mt-4'>
           <Card.Body>
-            <Card.Title>
-              {patient.firstname} {patient.lastname}
-              <Button variant='warning' href={`/patients/edit/${patient.id}`} className='ms-4'>{t('navigation.update')}</Button>
+            <Card.Title style={{ display: 'flex', alignItems: 'center' }}>
+              <h2>{patient.firstname} {patient.lastname}</h2>
+              <Button variant='warning' href={`/patients/edit/${patient.id}`} className='ms-auto'>
+                {t('navigation.update')}
+              </Button>
             </Card.Title>
             <Table striped bordered hover>
               <tbody>
