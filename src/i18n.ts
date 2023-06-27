@@ -35,13 +35,15 @@ i18n
             noPatientToDisplay: 'No patient to display!',
             noPrescriptionToDisplay: 'No prescription to display!',
             myPatients: 'My patients',
-            confirmation: 'Confirmation'
+            confirmation: 'Confirmation',
+            login: 'Connection to application',
+            register: 'Registration'
           },
           navigation: {
             update: 'Update',
             login: 'Login',
             logout: 'Logout',
-            register: 'Register',
+            register: 'Sign up',
             home: 'Back to home page',
             validate: 'Validate',
             delete: 'Delete',
@@ -49,6 +51,7 @@ i18n
           },
           form: {
             emailAddress: 'Email address',
+            password: 'Password',
             address: 'Address',
             userName: 'Username',
             firstName: 'Firstname',
@@ -72,7 +75,11 @@ i18n
             patients: 'Patients',
             profile: 'Profile',
             admin: 'Admin',
-            home: 'Home'
+            home: 'Home',
+            alreadyAccount: 'I have an account'
+          },
+          error: {
+            errorLogin: 'Sorry, the email or password is incorrect!'
           }
         }
       },
@@ -89,12 +96,14 @@ i18n
             noPatientToDisplay: 'Aucun patient à afficher !',
             noPrescriptionToDisplay: 'Aucune ordonnance à afficher !',
             myPatients: 'Mes patients',
-            confirmation: 'Confirmation'
+            confirmation: 'Confirmation',
+            login: 'Connection à l\'application',
+            register: 'Inscription'
           },
           navigation: {
             update: 'Modifier',
             login: 'Connexion',
-            logout: 'Déconnexion',
+            logout: 'Deconnexion',
             register: 'Inscription',
             home: "Retourner à l'accueil",
             validate: 'Valider',
@@ -103,6 +112,7 @@ i18n
           },
           form: {
             emailAddress: 'Adresse email',
+            password: 'Mot de passe',
             address: 'Adresse',
             userName: "Nom d'utilisateur",
             firstName: 'Prénom',
@@ -126,7 +136,11 @@ i18n
             patients: 'Patients',
             profile: 'Profil',
             admin: 'Admin',
-            home: 'Accueil'
+            home: 'Accueil',
+            alreadyAccount: 'J\'ai déjà un compte'
+          },
+          error: {
+            errorLogin: 'Désolé, l\'email ou le mot de passe est incorrect !'
           }
         }
       }

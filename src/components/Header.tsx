@@ -11,10 +11,9 @@ import { ProfileContext } from '../context/profile'
 import { TokenContext } from '../context/token'
 import { getProfile } from '../services/api'
 import { BACKEND_URL } from '../services/constants'
-import Login from './Login'
 import Logout from './Logout'
-import Register from './Register'
 import useTranslationHook from '../hook/TranslationHook'
+import Button from './Button'
 
 const Header = (): JSX.Element => {
   const { token, setToken } = useContext(TokenContext)
@@ -68,18 +67,13 @@ const Header = (): JSX.Element => {
   }, [setToken])
 
   return (
-    <Navbar bg='dark' variant='dark' expand='sm'>
+    <Navbar bg='dark' variant='dark' expand='sm' className='mb-4'>
       <Container>
         <Navbar.Brand as={Link} to={process.env.PUBLIC_URL}>
           <FontAwesomeIcon icon={['fas', 'user-nurse']} /> MyNotif
         </Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse>
-          <Nav className='mr-auto'>
-            <Nav.Link as={Link} to={process.env.PUBLIC_URL}>
-              <FontAwesomeIcon icon={['fas', 'home']} /> {t('text.home')}
-            </Nav.Link>
-          </Nav>
           {useIsLoggedIn() === true ? (
             <>
               {profile.is_staff && (
@@ -109,10 +103,10 @@ const Header = (): JSX.Element => {
               </div>
             </>
           ) : (
-            <>
-              <Register />
-              <Login />
-            </>
+            <div className='ms-auto'>
+              <Button variant='primary' href='/register' name={t('navigation.register')} style={{ marginRight: '10px' }} />
+              <Button variant='success' href='/login' name={t('navigation.login')} />
+            </div>
           )}
         </Navbar.Collapse>
       </Container>

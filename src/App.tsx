@@ -1,7 +1,6 @@
-import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Container } from 'react-bootstrap'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
@@ -11,7 +10,6 @@ import { ErrorContextProvider } from './context/error'
 import { ProfileContextProvider } from './context/profile'
 import Header from './components/Header'
 import Errors from './components/Errors'
-import Home from './pages/Home'
 import PatientsPage from './pages/PatientsPage'
 import PrescriptionsPage from './pages/PrescriptionsPage'
 import PrescriptionEdit from './pages/PrescriptionEdit'
@@ -22,6 +20,8 @@ import PatientEdit from './pages/PatientEdit'
 import PatientCreatePage from './pages/PatientCreatePage'
 import PrivateRoute from './components/PrivateRoute'
 import PrescriptionCreatePage from './pages/PrescriptionCreatePage'
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
 
 library.add(fas, fab, far)
 
@@ -37,7 +37,9 @@ function App (): JSX.Element {
                 <Errors />
                 <Routes>
                   <Route path='*' element={<PageNotFound />} />
-                  <Route path='/' element={<Home />} />
+                  <Route path='/' element={<Navigate to='/login' />} />
+                  <Route path='/login' element={<LoginPage />} />
+                  <Route path='/register' element={<RegisterPage />} />
                   <Route element={<PrivateRoute />}>
                     <Route path='/profile' element={<ProfilePage />} />
                     <Route path='/patients' element={<PatientsPage />} />
