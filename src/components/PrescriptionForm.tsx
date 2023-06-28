@@ -20,6 +20,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { format } from 'date-fns'
 import useTranslationHook from '../hook/TranslationHook'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 interface PrescriptionFormRequiredProps {
   prescription: Prescription
@@ -30,7 +31,7 @@ interface PrescriptionFormOptionalProps {
 }
 interface PrescriptionFormProps
   extends PrescriptionFormRequiredProps,
-  PrescriptionFormOptionalProps {}
+  PrescriptionFormOptionalProps { }
 
 const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
   prescription,
@@ -48,8 +49,8 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
   const startDateValue: Date | null = prescription.start_date !== '' ? new Date(prescription.start_date) : null
   const endDateValue: Date | null = prescription.end_date !== '' ? new Date(prescription.end_date) : null
 
-  const [startDate, setStartDate] = useState<Date | null >(startDateValue)
-  const [endDate, setEndDate] = useState<Date | null >(endDateValue)
+  const [startDate, setStartDate] = useState<Date | null>(startDateValue)
+  const [endDate, setEndDate] = useState<Date | null>(endDateValue)
 
   const updatePrescriptionDate = (date: Date, field: string): void => {
     const formattedDate = format(date, 'yyyy-MM-dd')
@@ -128,52 +129,48 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
   return (
     <Form onSubmit={onFormSubmit}>
       {/* TODO: dropdown patient list */}
-      <Row>
-        <Form.Group as={Col}>
-          <Form.Label>{t('form.doctor')}</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Dr.Simon'
-            name='prescribing_doctor'
-            value={prescriptionState.prescribing_doctor}
-            onChange={onInputChange}
-          />
-        </Form.Group>
-        {/* TODO: photo upload refs #77 */}
-        <Form.Group as={Col}>
-          <Form.Label>{t('form.selectYourPrescription')}</Form.Label>
-          <Form.Control
-            type='file'
-            name='photo_prescription'
-            onChange={onInputChange}
-          />
-        </Form.Group>
-      </Row>
+      <Form.Group as={Col} className='mt-2'>
+        <Form.Label><FontAwesomeIcon icon={['fas', 'user-doctor']} /> {t('form.doctor')}</Form.Label>
+        <Form.Control
+          type='text'
+          placeholder='Dr.Simon'
+          name='prescribing_doctor'
+          value={prescriptionState.prescribing_doctor}
+          onChange={onInputChange}
+        />
+      </Form.Group>
+      {/* TODO: photo upload refs #77 */}
+      <Form.Group as={Col} className='mt-2'>
+        <Form.Label><FontAwesomeIcon icon={['fas', 'file-prescription']} /> {t('form.selectYourPrescription')}</Form.Label>
+        <Form.Control
+          type='file'
+          name='photo_prescription'
+          onChange={onInputChange}
+        />
+      </Form.Group>
+      <Form.Group as={Col} className='mt-2'>
+        <Form.Label><FontAwesomeIcon icon={['fas', 'id-card']} /> {t('form.caisseDeRattachement')}</Form.Label>
+        <Form.Control
+          type='text'
+          placeholder='N° mutuelle'
+          value={prescriptionState.caisse_rattachement}
+          name='caisse_rattachement'
+          onChange={onInputChange}
+        />
+      </Form.Group>
+      <Form.Group as={Col} className='mt-2'>
+        <Form.Label><FontAwesomeIcon icon={['fas', 'id-card']} /> {t('form.carteVitale')}</Form.Label>
+        <Form.Control
+          type='text'
+          placeholder='Carte vitale'
+          value={prescriptionState.carte_vitale}
+          name='carte_vitale'
+          onChange={onInputChange}
+        />
+      </Form.Group>
       <Row className='my-3'>
-        <Form.Group as={Col}>
-          <Form.Label>{t('form.caisseDeRattachement')}</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='N° mutuelle'
-            value={prescriptionState.caisse_rattachement}
-            name='caisse_rattachement'
-            onChange={onInputChange}
-          />
-        </Form.Group>
-        <Form.Group as={Col}>
-          <Form.Label>{t('form.carteVitale')}</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Carte vitale'
-            value={prescriptionState.carte_vitale}
-            name='carte_vitale'
-            onChange={onInputChange}
-          />
-        </Form.Group>
-      </Row>
-      <Row className='my-3'>
-        <Form.Group as={Col}>
-          <Form.Label>{t('form.startDate')}</Form.Label>
+        <Form.Group as={Col} className='mt-2'>
+          <Form.Label className='me-2'><FontAwesomeIcon icon={['fas', 'calendar-days']} /> {t('form.startDate')}</Form.Label>
           <DatePicker
             selected={startDate}
             onChange={onStartDateChange}
@@ -183,8 +180,8 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
             scrollableMonthYearDropdown
           />
         </Form.Group>
-        <Form.Group as={Col}>
-          <Form.Label>{t('form.endDate')}</Form.Label>
+        <Form.Group as={Col} className='mt-2'>
+          <Form.Label className='me-2'><FontAwesomeIcon icon={['fas', 'calendar-days']} /> {t('form.endDate')}</Form.Label>
           <DatePicker
             selected={endDate}
             onChange={onEndDateChange}
@@ -196,15 +193,10 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
         </Form.Group>
       </Row>
       <Row className='my-3'>
-        <Form.Check
-          type='switch'
-          id='custom-switch'
-          label='Renouveller la prescription'
-        />
         {!isEditForm && (
           <Form.Group>
             <Form.Label className='my-3'>
-              {t('text.whichPatientAddOrder')}
+              <FontAwesomeIcon icon={['fas', 'user-injured']} /> {t('text.whichPatientAddOrder')}
             </Form.Label>
             <Form.Control as='select' name='patient' onChange={onInputChange}>
               <option>--{t('form.selectPatient')}--</option>
@@ -217,9 +209,15 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
           </Form.Group>
         )}
       </Row>
-      <Button className='mt-2' type='submit' onClick={() => null}>
-        {t('navigation.validate')}
-      </Button>
+      <div className='d-flex align-items-center'>
+        <Button variant='success' className='me-2' type='submit' onClick={() => null}>
+          {t('navigation.validate')}
+        </Button>
+        <Button variant='primary' href='/prescriptions'>
+          {t('navigation.return')}
+        </Button>
+      </div>
+
     </Form>
   )
 }
