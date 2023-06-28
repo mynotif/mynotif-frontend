@@ -81,9 +81,13 @@ i18n
             patient: 'Patient',
             endPrescription: 'End of prescription:',
             dr: 'Dr. ',
-            edit: 'Editer',
-            delete: 'Delete',
-            actions: 'I manage prescriptions'
+            editPatient: 'Edit patient',
+            editPrescription: 'Edit prescription',
+            deletePatient: 'Delete patient',
+            deletePrescription: 'Delete patient',
+            actionsPrescriptions: 'I manage prescriptions',
+            actionsPatients: 'I manage patients',
+            seePatient: 'View patient'
           },
           error: {
             errorLogin: 'Sorry, the email or password is incorrect!'
@@ -149,9 +153,13 @@ i18n
             patient: 'Patient',
             endPrescription: 'Fin de l\'ordonnance :',
             dr: 'Dr. ',
-            edit: 'Modifier',
-            delete: 'Supprimer',
-            actions: 'Je gère l\'ordonnance'
+            editPatient: 'Modifier patient',
+            deletePatient: 'Supprimer patient',
+            seePatient: 'Voir patient',
+            editPrescription: 'Modifier ordonnance',
+            deletePrescription: 'Supprimer ordonnance',
+            actionsPrescriptions: 'Je gère l\'ordonnance',
+            actionsPatients: 'Je gère mes patients'
           },
           error: {
             errorLogin: 'Désolé, l\'email ou le mot de passe est incorrect !'
