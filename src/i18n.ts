@@ -37,7 +37,8 @@ i18n
             myPatients: 'My patients',
             confirmation: 'Confirmation',
             login: 'Connection to application',
-            register: 'Registration'
+            register: 'Registration',
+            renewPrescription: 'I renew this prescription'
           },
           navigation: {
             update: 'Update',
@@ -76,7 +77,13 @@ i18n
             profile: 'Profile',
             admin: 'Admin',
             home: 'Home',
-            alreadyAccount: 'I have an account'
+            alreadyAccount: 'I have an account',
+            patient: 'Patient',
+            endPrescription: 'End of prescription:',
+            dr: 'Dr. ',
+            edit: 'Editer',
+            delete: 'Delete',
+            actions: 'I manage prescriptions'
           },
           error: {
             errorLogin: 'Sorry, the email or password is incorrect!'
@@ -98,7 +105,8 @@ i18n
             myPatients: 'Mes patients',
             confirmation: 'Confirmation',
             login: 'Connection à l\'application',
-            register: 'Inscription'
+            register: 'Inscription',
+            renewPrescription: 'Je renouvelle cette ordonnance'
           },
           navigation: {
             update: 'Modifier',
@@ -137,7 +145,13 @@ i18n
             profile: 'Profil',
             admin: 'Admin',
             home: 'Accueil',
-            alreadyAccount: 'J\'ai déjà un compte'
+            alreadyAccount: 'J\'ai déjà un compte',
+            patient: 'Patient',
+            endPrescription: 'Fin de l\'ordonnance :',
+            dr: 'Dr. ',
+            edit: 'Modifier',
+            delete: 'Supprimer',
+            actions: 'Je gère l\'ordonnance'
           },
           error: {
             errorLogin: 'Désolé, l\'email ou le mot de passe est incorrect !'

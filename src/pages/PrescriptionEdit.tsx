@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState, useContext } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { ErrorContext } from '../context/error'
 import { TokenContext } from '../context/token'
 import { getPrescription } from '../services/api'
 import { Prescription } from '../types'
 import PrescriptionForm from '../components/PrescriptionForm'
 import useTranslationHook from '../hook/TranslationHook'
-import { Row, Col, Button } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 
 const PrescriptionEdit = (): JSX.Element => {
   const { id } = useParams<'id'>()
@@ -16,7 +16,7 @@ const PrescriptionEdit = (): JSX.Element => {
 
   const { addError } = useContext(ErrorContext)
   const { t } = useTranslationHook()
-  const navigate = useNavigate()
+  const isEditForm = true
 
   // allows us to pick up prescription
   const fetchPrescription = async (
@@ -42,20 +42,13 @@ const PrescriptionEdit = (): JSX.Element => {
       await fetchPrescriptionCallback(token, parseInt(id, 10)))()
   }, [fetchPrescriptionCallback, id, token])
 
-  const returnPreviousPage = (): void => {
-    navigate(-1)
-  }
-
   return (
     <>
       {prescription !== null ? (
         <>
           <Row className='justify-content-between align-items-center'>
             <Col>
-              <h1>{t('title.editPrescription')}</h1>
-            </Col>
-            <Col xs={4}>
-              <Button onClick={returnPreviousPage} className='ml-auto'>{t('navigation.return')}</Button>
+              <h1>{isEditForm ? t('title.renewPrescription') : t('title.editPrescription')}</h1>
             </Col>
           </Row>
           <div className='my-4'>
