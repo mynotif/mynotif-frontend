@@ -68,14 +68,14 @@ const PrescriptionTr: FunctionComponent<PrescriptionTrProps> = ({ prescription, 
 
       <Modal show={buttonsModalShow} onHide={handleCloseButtonsModal}>
         <Modal.Header closeButton>
-          <Modal.Title>{t('text.actions')}</Modal.Title>
+          <Modal.Title>{t('text.actionsPrescriptions')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Button size='sm' variant='warning' className='me-2' onClick={handleEdit}>
-            {t('text.edit')}
+            {t('text.editPrescription')}
           </Button>
           <Button size='sm' variant='danger' onClick={handleShow}>
-            {t('text.delete')}
+            {t('text.deletePrescription')}
           </Button>
           {show && (
             <ModalDelete handleClose={handleClose} show={show} onDelete={async () => await onDelete(prescription.id)} confirmText={t('text.confirmationPrescription')} />

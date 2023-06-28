@@ -1,16 +1,13 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { strict as assert } from 'assert'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Card, Button } from 'react-bootstrap'
 import { TokenContext } from '../context/token'
 import { ErrorContext, ErrorType } from '../context/error'
 import { getPatient } from '../services/api'
 import { Patient } from '../types'
-import Table from 'react-bootstrap/Table'
-import Card from 'react-bootstrap/Card'
 import Spinner from 'react-bootstrap/Spinner'
-import { Button } from 'react-bootstrap'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import useTranslationHook from '../hook/TranslationHook'
 
 const PatientDetail = (): JSX.Element => {
@@ -27,12 +24,6 @@ const PatientDetail = (): JSX.Element => {
   )
 
   const [patient, setPatient] = useState<Patient | null>(null)
-
-  const navigate = useNavigate()
-
-  const returnPreviousPage = (): void => {
-    navigate(-1)
-  }
 
   const fetchPatientCallback = useCallback(async (): Promise<void> => {
     assert(token)
@@ -55,67 +46,63 @@ const PatientDetail = (): JSX.Element => {
   return (
     <div>
       {patient !== null ? (
-        <Card className='mt-4'>
-          <Card.Body>
-            <Card.Title style={{ display: 'flex', alignItems: 'center' }}>
-              <h2>{patient.firstname} {patient.lastname}</h2>
-              <Button variant='warning' href={`/patients/edit/${patient.id}`} className='ms-auto'>
-                {t('navigation.update')}
+        <div className='bg-light p-4'>
+          <Card className='text-center'>
+            <Card.Header className='bg-primary text-white'>
+              <Button variant='link' href='/patients' className='text-white fs-4'>
+                &larr;{t('navigation.return')}
               </Button>
-            </Card.Title>
-            <Table striped bordered hover>
-              <tbody>
-                <tr>
-                  <td>{t('form.address')}</td>
-                  <td>
-                    <strong>{patient.address}</strong>
-                  </td>
-                </tr>
-                <tr>
-                  <td>{t('form.city')}</td>
-                  <td>
-                    <strong>{patient.city}</strong>
-                  </td>
-                </tr>
-                <tr>
-                  <td>{t('form.zipPostal')}</td>
-                  <td>
-                    <strong>{patient.zip_code}</strong>
-                  </td>
-                </tr>
-                <tr>
-                  <td>{t('form.phone')}</td>
-                  <td>
-                    <strong>{patient.phone}</strong>
-                  </td>
-                </tr>
-                <tr>
-                  <td>{t('text.prescription')}</td>
-                  <td>
-                    {patient.prescriptions.length > 0 ? (
-                      <ul>
-                        {patient.prescriptions.map((prescription) => (
-                          <React.Fragment key={prescription.id}>
-                            {typeof prescription.photo_prescription === 'string' && prescription.photo_prescription !== '' && (
-                              <Button variant='info' href={prescription.photo_prescription} className='m-2'>
-                                <FontAwesomeIcon icon={['fas', 'eye']} />
-                              </Button>
-                            )}
-                          </React.Fragment>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p />
-                    )}
-                  </td>
-                </tr>
-              </tbody>
-            </Table>
-            <div className='card-action'>
-              <Button onClick={returnPreviousPage}>{t('navigation.return')}</Button>
-            </div>
-          </Card.Body>
-        </Card>
+              <h2 className='mb-0'>{patient.lastname.toUpperCase()} {patient.firstname.toUpperCase()}</h2>
+            </Card.Header>
+            <Card.Body className='text-center'>
+              <div className='d-flex justify-content-center align-items-center mb-4 position-relative'>
+                <div className='flex-grow-1 text-center'>
+                  <FontAwesomeIcon icon={['fas', 'user']} size='4x' />
+                </div>
+                <div>
+                  <Button variant='light' href={`/patients/edit/${patient.id}`} className='position-absolute top-5 end-0'>
+                    <FontAwesomeIcon icon={['fas', 'pencil-alt']} size='lg' style={{ cursor: 'pointer' }} />
+                  </Button>
+                </div>
+              </div>
+              <div className='mb-4'>
+                <p className='text-muted'>{t('form.address')} | {t('form.city')}</p>
+                <h4>{patient.address}</h4>
+                <h4>{patient.city}</h4>
+              </div>
+              <hr className='my-4' />
+              <div className='row'>
+                <div className='col'>
+                  <p className='text-muted'>{t('form.phone')}</p>
+                  <h4>{patient.phone}</h4>
+                </div>
+                <div className='col'>
+                  <p className='text-muted'>{t('form.zipPostal')}</p>
+                  <h4>{patient.zip_code}</h4>
+                </div>
+              </div>
+              <hr className='my-4' />
+              <div>
+                <h4 className='mb-4'>{t('text.prescription')}</h4>
+                {patient.prescriptions.length > 0 ? (
+                  <ul className='list-inline'>
+                    {patient.prescriptions.map((prescription) => (
+                      <li className='list-inline-item' key={prescription.id}>
+                        {typeof prescription.photo_prescription === 'string' && prescription.photo_prescription !== '' && (
+                          <Button variant='info' href={prescription.photo_prescription} target='_blank' className='m-2'>
+                            <FontAwesomeIcon icon={['fas', 'eye']} />
+                          </Button>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>{t('text.noPrescriptionsFound')}</p>
+                )}
+              </div>
+            </Card.Body>
+          </Card>
+        </div>
       ) : (
         <div className='d-flex justify-content-center vh-100 align-items-center'>
           <Spinner animation='border' />
