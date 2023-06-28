@@ -84,11 +84,6 @@ const Header = (): JSX.Element => {
                 </Nav>
               )}
               <Nav className='mr-auto'>
-                <Nav.Link as={Link} to='/profile'>
-                  <FontAwesomeIcon icon={['fas', 'user']} /> {t('text.profile')}
-                </Nav.Link>
-              </Nav>
-              <Nav className='mr-auto'>
                 <Nav.Link as={Link} to='/patients'>
                   <FontAwesomeIcon icon={['fas', 'user-injured']} /> {t('text.patients')}
                 </Nav.Link>
@@ -98,7 +93,12 @@ const Header = (): JSX.Element => {
                   <FontAwesomeIcon icon={['fas', 'file-medical']} /> {t('text.prescription')}
                 </Nav.Link>
               </Nav>
-              <div className='ms-auto'>
+              <Nav className='ms-auto'>
+                <Nav.Link as={Link} to='/account'>
+                  <FontAwesomeIcon icon={['fas', 'user']} /> {profile.username}
+                </Nav.Link>
+              </Nav>
+              <div className='ms-4'>
                 <Logout />
               </div>
             </>
