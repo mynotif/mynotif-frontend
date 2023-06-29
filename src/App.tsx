@@ -22,6 +22,7 @@ import PrivateRoute from './components/PrivateRoute'
 import PrescriptionCreatePage from './pages/PrescriptionCreatePage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
+import AccountPage from './pages/AccountPage'
 
 library.add(fas, fab, far)
 
@@ -41,7 +42,10 @@ function App (): JSX.Element {
                   <Route path='/login' element={<LoginPage />} />
                   <Route path='/register' element={<RegisterPage />} />
                   <Route element={<PrivateRoute />}>
-                    <Route path='/profile' element={<ProfilePage />} />
+                    {/* Account */}
+                    <Route path='/account/profile' element={<ProfilePage />} />
+                    <Route path='/account' element={<AccountPage />} />
+                    {/* Patients */}
                     <Route path='/patients' element={<PatientsPage />} />
                     <Route
                       path='/patients/create'
@@ -52,6 +56,7 @@ function App (): JSX.Element {
                       element={<PatientEdit />}
                     />
                     <Route path='/patients/:id' element={<PatientDetail />} />
+                    {/* Prescriptions */}
                     <Route
                       path='/prescriptions'
                       element={<PrescriptionsPage />}

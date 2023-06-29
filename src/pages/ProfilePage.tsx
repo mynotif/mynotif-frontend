@@ -43,7 +43,7 @@ const ProfilePage = (): JSX.Element => {
 
   return (
     <div>
-      <h1>{t('title.myAccount')}</h1>
+      <h1>{t('title.profile')}</h1>
       <Form onSubmit={onFormSubmit}>
         <Form.Label>{t('form.emailAddress')}</Form.Label>
         <Form.Control
@@ -78,7 +78,7 @@ const ProfilePage = (): JSX.Element => {
           onChange={(e) => setProfile({ ...profile, last_name: e.target.value })}
           value={profile.last_name}
         />
-        <Button className='mt-2' type='submit' onClick={onUpdate}>
+        <Button className='mt-2' type='submit' variant='success' onClick={onUpdate}>
           {t('navigation.update')}
         </Button>
       </Form>

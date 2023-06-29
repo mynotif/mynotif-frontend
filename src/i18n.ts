@@ -31,6 +31,7 @@ i18n
             addPrescription: 'Add a new prescription',
             editPrescription: 'Edit prescription',
             myAccount: 'My Account',
+            profile: 'Profile',
             editPatient: 'Edit patient',
             noPatientToDisplay: 'No patient to display!',
             noPrescriptionToDisplay: 'No prescription to display!',
@@ -87,7 +88,11 @@ i18n
             deletePrescription: 'Delete patient',
             actionsPrescriptions: 'I manage prescriptions',
             actionsPatients: 'I manage patients',
-            seePatient: 'View patient'
+            seePatient: 'View patient',
+            standardAccount: 'Standard account',
+            notifications: 'Notifications',
+            supportHelp: 'Help & Support',
+            legalNotices: 'legal notices'
           },
           error: {
             errorLogin: 'Sorry, the email or password is incorrect!'
@@ -103,6 +108,7 @@ i18n
             addPrescription: 'Ajouter une nouvelle ordonnance',
             editPrescription: "Modifier l'ordonnance",
             myAccount: 'Mon compte',
+            profile: 'Profil',
             editPatient: 'Modifier un patient',
             noPatientToDisplay: 'Aucun patient à afficher !',
             noPrescriptionToDisplay: 'Aucune ordonnance à afficher !',
@@ -159,7 +165,11 @@ i18n
             editPrescription: 'Modifier ordonnance',
             deletePrescription: 'Supprimer ordonnance',
             actionsPrescriptions: 'Je gère l\'ordonnance',
-            actionsPatients: 'Je gère mes patients'
+            actionsPatients: 'Je gère mes patients',
+            standardAccount: 'Compte standard',
+            notifications: 'Notifications',
+            supportHelp: 'Aide & Support',
+            legalNotices: 'Mentions légales'
           },
           error: {
             errorLogin: 'Désolé, l\'email ou le mot de passe est incorrect !'
