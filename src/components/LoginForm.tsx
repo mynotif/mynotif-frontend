@@ -56,7 +56,7 @@ const LoginForm = (): JSX.Element => {
           isInvalid={Boolean(error)}
         />
       </Form.Group>
-      <Button variant='success' type='submit' onClick={onLogin}>
+      <Button variant='success' type='submit' onClick={onLogin} className='w-100'>
         {t('navigation.login')}
       </Button>
     </Form>
