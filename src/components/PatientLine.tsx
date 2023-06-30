@@ -3,10 +3,9 @@ import { strict as assert } from 'assert'
 import { TokenContext } from '../context/token'
 import { FunctionComponent, useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getValidOrLastPrescription } from '../utils/helpers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Card from 'react-bootstrap/Card'
-import { Badge, Button, Modal } from 'react-bootstrap'
+import { Button, Modal } from 'react-bootstrap'
 import useTranslationHook from '../hook/TranslationHook'
 import ModalDelete from './ModalDelete'
 import { deletePatient } from '../services/api'
@@ -24,10 +23,6 @@ const PatientLine: FunctionComponent<PatientLineProps> = ({ patient }) => {
   const { t } = useTranslationHook()
   const { token } = useContext(TokenContext)
 
-  const prescription = getValidOrLastPrescription(patient.prescriptions)
-  const prescriptionEndDate = prescription?.end_date ?? 'N/A'
-  const prescriptionIsValid = prescription?.is_valid ?? false
-  const isValidIconClass = prescriptionIsValid ? 'success' : 'danger'
   const [show, setShow] = useState(false)
   const { addError } = useContext(ErrorContext)
   const handleClose = (): void => setShow(false)
@@ -67,12 +62,16 @@ const PatientLine: FunctionComponent<PatientLineProps> = ({ patient }) => {
                     icon={['fas', 'ellipsis']}
                     onClick={handleShowButtonsModal}
                     style={{ cursor: 'pointer' }}
+                    size='lg'
                   />
                 </div>
               </div>
               <hr className='my-2' />
               <div className='d-flex align-items-center justify-items-center mb-3'>
-                <small><strong>{t('text.endPrescription')}</strong> <Badge pill bg={isValidIconClass}> {prescriptionEndDate}</Badge></small>
+                <div className='d-flex flex-column'>
+                  <small><strong>{t('form.address')}: </strong>{patient?.address}</small>
+                  <small><strong>{t('form.city')}: </strong>{patient?.city}</small>
+                </div>
                 <Button size='sm' variant='dark' className='ms-auto' onClick={goToPatient}>
                   {t('text.seePatient')}
                 </Button>

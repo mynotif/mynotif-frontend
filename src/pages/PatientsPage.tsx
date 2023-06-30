@@ -11,18 +11,23 @@ const PatientsPage = (): JSX.Element => {
 
   return (
     <>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <h1>{t('title.myPatients')}</h1>
-        <Button variant='primary' className='ms-auto' href='/patients/create'>
+      <div className='position-fixed bottom-0 end-0 me-3 mb-5 pb-5' style={{ zIndex: '1030' }}>
+        <Button variant='info' href='/patients/create'>
           <FontAwesomeIcon icon={['fas', 'user-plus']} />
         </Button>
       </div>
-      <Container>
-        {patients.map((patient) => (
-          <PatientLine key={patient.id} patient={patient} />
-        ))}
-      </Container>
+      <div className='d-flex align-items-center justify-content-center bg-info rounded-bottom py-4'>
+        <h1>{t('title.myPatients')}</h1>
+      </div>
+      <div className='mb-5 pb-5'>
+        <Container>
+          {patients.map((patient) => (
+            <PatientLine key={patient.id} patient={patient} />
+          ))}
+        </Container>
+      </div>
     </>
+
   )
 }
 

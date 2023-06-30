@@ -68,13 +68,12 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
   }
 
   return (
-    <Form onSubmit={async e => await handleSubmit(e)}>
+    <Form className='mt-4' onSubmit={async e => await handleSubmit(e)}>
       <Form.Group as={Col} className='mt-2'>
         <Form.Label><FontAwesomeIcon icon={['fas', 'id-card']} /> {t('form.lastName')}</Form.Label>
         <Form.Control
           name='lastname'
           type='text'
-          placeholder='Enter lastname'
           value={patientState.lastname}
           onChange={handleChange}
         />
@@ -85,7 +84,6 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
         <Form.Control
           name='firstname'
           type='text'
-          placeholder='Enter firstname'
           value={patientState.firstname}
           onChange={handleChange}
         />
@@ -95,7 +93,6 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
         <Form.Label><FontAwesomeIcon icon={['fas', 'address-card']} /> {t('form.emailAddress')}</Form.Label>
         <Form.Control
           name='address'
-          placeholder='1234 Main St'
           value={patientState.address}
           onChange={handleChange}
         />
@@ -105,7 +102,6 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
         <Form.Label><FontAwesomeIcon icon={['fas', 'mobile']} /> {t('form.phone')}</Form.Label>
         <Form.Control
           name='phone'
-          placeholder='(123) 456-7890'
           value={patientState.phone}
           onChange={handleChange}
         />
