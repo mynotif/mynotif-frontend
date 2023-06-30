@@ -23,6 +23,7 @@ import PrescriptionCreatePage from './pages/PrescriptionCreatePage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import AccountPage from './pages/AccountPage'
+import './App.css'
 
 library.add(fas, fab, far)
 
