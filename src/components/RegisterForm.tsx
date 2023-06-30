@@ -48,6 +48,15 @@ const RegisterForm = (): JSX.Element => {
   return (
     <Form onSubmit={onFormSubmit}>
       <Form.Group className='mb-3'>
+        <Form.Label>{t('form.userName')}</Form.Label>
+        <Form.Control
+          required
+          type='text'
+          onChange={onUsernameChange}
+        />
+      </Form.Group>
+
+      <Form.Group className='mb-3'>
         <Form.Label>{t('form.emailAddress')}</Form.Label>
         <Form.Control
           required
@@ -66,19 +75,10 @@ const RegisterForm = (): JSX.Element => {
       </Form.Group>
 
       <Form.Group className='mb-3'>
-        <Form.Label>{t('form.userName')}</Form.Label>
-        <Form.Control
-          required
-          type='text'
-          onChange={onUsernameChange}
-        />
-      </Form.Group>
-      <Form.Group className='mb-3'>
-        <Button variant='success' type='submit' onClick={handleRegister}>
+        <Button variant='success' type='submit' onClick={handleRegister} className='w-100'>
           {t('navigation.register')}
         </Button>
       </Form.Group>
-      <Form.Text><a href='/login'>{t('text.alreadyAccount')}</a></Form.Text>
     </Form>
   )
 }
