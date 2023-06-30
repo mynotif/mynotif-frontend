@@ -11,9 +11,7 @@ import { ProfileContext } from '../context/profile'
 import { TokenContext } from '../context/token'
 import { getProfile } from '../services/api'
 import { BACKEND_URL } from '../services/constants'
-import Logout from './Logout'
 import useTranslationHook from '../hook/TranslationHook'
-import Button from './Button'
 
 const Header = (): JSX.Element => {
   const { token, setToken } = useContext(TokenContext)
@@ -67,50 +65,51 @@ const Header = (): JSX.Element => {
   }, [setToken])
 
   return (
-    <Navbar bg='dark' variant='dark' expand='sm' className='mb-4'>
-      <Container>
-        <Navbar.Brand as={Link} to={process.env.PUBLIC_URL}>
-          <FontAwesomeIcon icon={['fas', 'user-nurse']} /> MyNotif
-        </Navbar.Brand>
-        <Navbar.Toggle />
-        <Navbar.Collapse>
-          {useIsLoggedIn() === true ? (
+    <>
+      <Navbar className='shadow-lg' fixed='bottom' bg='body' data-bs-theme='light'>
+        <Container>
+          {useIsLoggedIn() === true && (
             <>
               {profile.is_staff && (
-                <Nav className='mr-auto'>
+                <Nav className='me-auto'>
                   <Nav.Link href={`${BACKEND_URL}/admin`}>
-                    <FontAwesomeIcon icon={['fas', 'user-shield']} /> {t('text.admin')}
+                    <div className='d-flex flex-column align-items-center'>
+                      <FontAwesomeIcon icon={['fas', 'user-shield']} />
+                      <div className='mt-1'>{t('text.admin')}</div>
+                    </div>
                   </Nav.Link>
                 </Nav>
               )}
-              <Nav className='mr-auto'>
+              <Nav className='me-auto'>
                 <Nav.Link as={Link} to='/patients'>
-                  <FontAwesomeIcon icon={['fas', 'user-injured']} /> {t('text.patients')}
+                  <div className='d-flex flex-column align-items-center'>
+                    <FontAwesomeIcon icon={['fas', 'users']} className='fa-lg' />
+                    <div className='mt-1'>{t('text.patients')}</div>
+                  </div>
                 </Nav.Link>
               </Nav>
+
               <Nav className='mr-auto'>
-                <Nav.Link as={Link} to='/prescriptions'>
-                  <FontAwesomeIcon icon={['fas', 'file-medical']} /> {t('text.prescription')}
+                <Nav.Link as={Link} to='/prescriptions' className='text-center'>
+                  <div className='d-flex flex-column align-items-center'>
+                    <FontAwesomeIcon icon={['fas', 'file-medical']} className='fa-lg' />
+                    <div className='mt-1'>{t('text.prescription')}</div>
+                  </div>
                 </Nav.Link>
               </Nav>
               <Nav className='ms-auto'>
                 <Nav.Link as={Link} to='/account'>
-                  <FontAwesomeIcon icon={['fas', 'user']} /> {profile.username}
+                  <div className='d-flex flex-column align-items-center'>
+                    <FontAwesomeIcon icon={['fas', 'user-nurse']} className='fa-lg' />
+                    <div className='mt-1'>{t('text.profile')}</div>
+                  </div>
                 </Nav.Link>
               </Nav>
-              <div className='ms-4'>
-                <Logout />
-              </div>
             </>
-          ) : (
-            <div className='ms-auto'>
-              <Button variant='primary' href='/register' name={t('navigation.register')} style={{ marginRight: '10px' }} />
-              <Button variant='success' href='/login' name={t('navigation.login')} />
-            </div>
           )}
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+        </Container>
+      </Navbar>
+    </>
   )
 }
 
