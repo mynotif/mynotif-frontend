@@ -21,7 +21,7 @@ const PatientEdit = (): JSX.Element => {
     []
   )
 
-  const [patient, setPatient] = useState<Patient|null>(null)
+  const [patient, setPatient] = useState<Patient | null>(null)
 
   const fetchPatientCallback = useCallback(async (): Promise<void> => {
     assert(token)
@@ -45,7 +45,9 @@ const PatientEdit = (): JSX.Element => {
     <>
       {(patient !== null) ? (
         <>
-          <h2 className='header center'>{t('title.editPatient')}</h2>
+          <div className='d-flex align-items-center justify-content-center bg-info rounded-bottom py-4'>
+            <h2 className='header center'>{t('title.editPatient')}</h2>
+          </div>
           <PatientForm patient={patient} isEditForm />
         </>
       ) : (
