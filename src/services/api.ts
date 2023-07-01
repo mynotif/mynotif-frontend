@@ -128,6 +128,13 @@ const register = async (username: string, password: string, email: string): Prom
   return response.data
 }
 
+const resetPassword = async (email: string): Promise<{}> => {
+  const data = { email }
+  const url = BACKEND_URL + '/account/reset/password'
+  const response = await axios.post(url, data)
+  return response.data
+}
+
 const getProfile = async (token: string): Promise<Profile> => {
   const url = BACKEND_URL + '/profile/'
   const headers = { Authorization: `Token ${token}` }
@@ -157,5 +164,6 @@ export {
   getPrescription,
   deletePrescription,
   deletePatient,
-  createPrescription
+  createPrescription,
+  resetPassword
 }

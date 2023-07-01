@@ -50,7 +50,8 @@ i18n
             home: 'Back to home page',
             validate: 'Validate',
             delete: 'Delete',
-            return: 'Return'
+            return: 'Return',
+            resetPassword: 'Reset Password '
           },
           form: {
             emailAddress: 'Email address',
@@ -96,7 +97,9 @@ i18n
             standardAccount: 'Standard account',
             notifications: 'Notifications',
             supportHelp: 'Help & Support',
-            legalNotices: 'legal notices'
+            legalNotices: 'legal notices',
+            forgotPassword: 'Forgot your Password?',
+            resetPasswordEmail: 'Please enter the e-mail address'
           },
           error: {
             errorLogin: 'Sorry, the email or password is incorrect!'
@@ -131,7 +134,8 @@ i18n
             home: "Retourner à l'accueil",
             validate: 'Valider',
             delete: 'Supprimer',
-            return: 'Retour'
+            return: 'Retour',
+            resetPassword: 'Réinitialiser'
           },
           form: {
             emailAddress: 'Adresse email',
@@ -177,7 +181,9 @@ i18n
             standardAccount: 'Compte standard',
             notifications: 'Notifications',
             supportHelp: 'Aide & Support',
-            legalNotices: 'Mentions légales'
+            legalNotices: 'Mentions légales',
+            forgotPassword: 'Mot de passe oublié ?',
+            resetPasswordEmail: 'Veuillez entrer l\'adresse e-mail'
           },
           error: {
             errorLogin: 'Désolé, l\'email ou le mot de passe est incorrect !'

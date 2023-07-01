@@ -33,6 +33,14 @@ const LoginPage = (): JSX.Element => {
           </a>
         </small>
       </div>
+      <div className='container d-flex flex-column text-center align-items-center justify-items-center mt-4'>
+        <small className='text-decoration-none text-dark'>
+          {t('text.forgotPassword')}
+          <a href='/reset/password' className='text-decoration-none ms-1'>
+            {t('navigation.resetPassword')}
+          </a>
+        </small>
+      </div>
     </>
   )
 }
