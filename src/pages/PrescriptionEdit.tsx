@@ -6,7 +6,6 @@ import { getPrescription } from '../services/api'
 import { Prescription } from '../types'
 import PrescriptionForm from '../components/PrescriptionForm'
 import useTranslationHook from '../hook/TranslationHook'
-import { Row, Col } from 'react-bootstrap'
 
 const PrescriptionEdit = (): JSX.Element => {
   const { id } = useParams<'id'>()
@@ -16,7 +15,6 @@ const PrescriptionEdit = (): JSX.Element => {
 
   const { addError } = useContext(ErrorContext)
   const { t } = useTranslationHook()
-  const isEditForm = true
 
   // allows us to pick up prescription
   const fetchPrescription = async (
@@ -46,14 +44,10 @@ const PrescriptionEdit = (): JSX.Element => {
     <>
       {prescription !== null ? (
         <>
-          <Row className='justify-content-between align-items-center'>
-            <Col>
-              <h1>{isEditForm ? t('title.renewPrescription') : t('title.editPrescription')}</h1>
-            </Col>
-          </Row>
-          <div className='my-4'>
-            <PrescriptionForm prescription={prescription} isEditForm />
+          <div className='d-flex align-items-center justify-content-center bg-info rounded-bottom py-4'>
+            <h2 className='header center'>{t('title.renewPrescription')}</h2>
           </div>
+          <PrescriptionForm prescription={prescription} isEditForm />
         </>
       ) : (
         <h4 className='center'>{t('title.noPrescriptionToDisplay')}</h4>

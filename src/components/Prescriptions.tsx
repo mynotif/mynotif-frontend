@@ -20,24 +20,28 @@ const Prescriptions: FunctionComponent<PrescriptionsProps> = ({
 
   return (
     <>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <h1>{t('title.listPrescriptions')}</h1>
-        <Button href='/prescriptions/create' className='ms-auto'>
+      <div className='position-fixed bottom-0 end-0 me-3 mb-5 pb-5' style={{ zIndex: '1030' }}>
+        <Button variant='info' href='/prescriptions/create'>
           <FontAwesomeIcon icon={['fas', 'file-medical']} />
         </Button>
       </div>
-      <Container>
-        {
-          prescriptions.map((prescription) => (
-            <PrescriptionTr
-              key={prescription.id}
-              prescription={prescription}
-              onDelete={onDelete}
-              onEdit={onEdit}
-            />
-          ))
-        }
-      </Container>
+      <div className='d-flex align-items-center justify-content-center bg-info rounded-bottom py-4'>
+        <h1>{t('title.listPrescriptions')}</h1>
+      </div>
+      <div className='mb-5 pb-5'>
+        <Container>
+          {
+            prescriptions.map((prescription) => (
+              <PrescriptionTr
+                key={prescription.id}
+                prescription={prescription}
+                onDelete={onDelete}
+                onEdit={onEdit}
+              />
+            ))
+          }
+        </Container>
+      </div>
     </>
   )
 }
