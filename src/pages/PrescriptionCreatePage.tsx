@@ -11,7 +11,9 @@ const PrescriptionCreatePage = (): JSX.Element => {
 
   return (
     <div>
-      <h1>{t('title.addPrescription')}</h1>
+      <div className='d-flex align-items-center justify-content-center bg-info rounded-bottom py-4'>
+        <h1>{t('title.addPrescription')}</h1>
+      </div>
       <PrescriptionForm
         prescription={newPrescription}
         patients={patients}

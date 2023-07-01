@@ -127,13 +127,12 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
   }
 
   return (
-    <Form onSubmit={onFormSubmit}>
+    <Form className='mt-4' onSubmit={onFormSubmit}>
       {/* TODO: dropdown patient list */}
       <Form.Group as={Col} className='mt-2'>
         <Form.Label><FontAwesomeIcon icon={['fas', 'user-doctor']} /> {t('form.doctor')}</Form.Label>
         <Form.Control
           type='text'
-          placeholder='Dr.Simon'
           name='prescribing_doctor'
           value={prescriptionState.prescribing_doctor}
           onChange={onInputChange}
@@ -152,7 +151,6 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
         <Form.Label><FontAwesomeIcon icon={['fas', 'id-card']} /> {t('form.caisseDeRattachement')}</Form.Label>
         <Form.Control
           type='text'
-          placeholder='N° mutuelle'
           value={prescriptionState.caisse_rattachement}
           name='caisse_rattachement'
           onChange={onInputChange}
@@ -162,7 +160,6 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
         <Form.Label><FontAwesomeIcon icon={['fas', 'id-card']} /> {t('form.carteVitale')}</Form.Label>
         <Form.Control
           type='text'
-          placeholder='Carte vitale'
           value={prescriptionState.carte_vitale}
           name='carte_vitale'
           onChange={onInputChange}
