@@ -10,17 +10,20 @@ import { useNavigate } from 'react-router-dom'
 import { ErrorContext, ErrorType } from '../context/error'
 import { TokenContext } from '../context/token'
 import {
+  createPatient,
   createPrescription,
   updatePrescription,
   uploadPrescription
 } from '../services/api'
-import { Patient, Prescription } from '../types'
+import { Patient, Prescription, defaultPatient } from '../types'
 import SelectPatient from './SelectPatient'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { format } from 'date-fns'
 import useTranslationHook from '../hook/TranslationHook'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import usePatients from '../hook/patient.hook'
+import ModalAddPatient from './ModalAddPatient'
 
 interface PrescriptionFormRequiredProps {
   prescription: Prescription
@@ -35,13 +38,17 @@ interface PrescriptionFormProps
 
 const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
   prescription,
-  isEditForm,
-  patients
+  isEditForm
 }) => {
   const { token } = useContext(TokenContext)
   const [file, setFile] = useState<File>()
   const { addError } = useContext(ErrorContext)
   const { t } = useTranslationHook()
+  const [addingNewPatient, setAddingNewPatient] = useState(false)
+  const [patientState, setPatientState] = useState<Patient>(defaultPatient)
+  const { patients, reloadPatients } = usePatients()
+  const [newCreatedPatientId, setNewCreatedPatientId] = useState<null | number>(null)
+  const [error, setError] = useState<string>('')
 
   const [prescriptionState, setPrescriptionState] =
     useState<Prescription>(prescription)
@@ -124,6 +131,41 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
     if (files !== null && files !== undefined) {
       setFile(files[0])
     }
+    if (name === 'patient' && value === 'addNewPatient') {
+      setAddingNewPatient(true)
+      setPrescriptionState((prevState) => ({
+        ...prevState,
+        patient: patientState.id
+      }))
+    }
+  }
+
+  const handleNewPatientSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
+    e.preventDefault()
+    assert(token)
+    try {
+      const data = await createPatient(token, patientState)
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      reloadPatients()
+      setAddingNewPatient(false)
+
+      // Set the new created patient ID
+      setNewCreatedPatientId(data?.id)
+
+      // Update prescription with the new patient ID
+      setPrescriptionState((prevState) => ({
+        ...prevState,
+        patient: data?.id
+      }))
+    } catch (error) {
+      console.error(error)
+      setError('Error creating patient')
+    }
+  }
+
+  const handleChangeNewPatient = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = event.target
+    setPatientState({ ...patientState, [name]: value })
   }
 
   return (
@@ -191,19 +233,35 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
       </Row>
       <Row className='my-3'>
         {!isEditForm && (
-          <Form.Group>
-            <Form.Label className='my-3'>
-              <FontAwesomeIcon icon={['fas', 'user-injured']} /> {t('text.whichPatientAddOrder')}
-            </Form.Label>
-            <Form.Control as='select' name='patient' onChange={onInputChange}>
-              <option>--{t('form.selectPatient')}--</option>
-              {
-                patients?.map((patient) => (
-                  <SelectPatient key={patient.id} patient={patient} />
-                ))
-              }
-            </Form.Control>
-          </Form.Group>
+          <>
+            <Form.Group>
+              <Form.Label className='my-3'>
+                <FontAwesomeIcon icon={['fas', 'user-injured']} /> {t('text.whichPatientAddOrder')}
+              </Form.Label>
+              <Form.Control as='select' name='patient' onChange={onInputChange} className='custom-select'>
+                <option>--{t('form.selectPatient')}--</option>
+                <option value='addNewPatient'>--{t('title.addPatient')}--</option>
+                {
+                  patients?.map((patient) => (
+                    <SelectPatient
+                      key={patient.id}
+                      patient={patient}
+                      selected={patient.id === newCreatedPatientId}
+                    />
+                  ))
+                }
+              </Form.Control>
+            </Form.Group>
+
+            <ModalAddPatient
+              patientState={patientState}
+              handleChangeNewPatient={handleChangeNewPatient}
+              handleNewPatientSubmit={handleNewPatientSubmit}
+              onHide={() => setAddingNewPatient(false)}
+              show={addingNewPatient}
+              error={error}
+            />
+          </>
         )}
       </Row>
       <div className='d-flex align-items-center'>

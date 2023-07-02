@@ -5,12 +5,12 @@ import { Patient } from '../types'
 import axios from 'axios'
 import { TokenContext } from '../context/token'
 
-const usePatients = (): Patient[] => {
+const usePatients = (): { patients: Patient[], reloadPatients: () => Promise<void> } => {
   const [patients, setPatients] = useState<Patient[]>([])
   const { token } = useContext(TokenContext)
 
   // allows us to pick up patients
-  const fetchPatients = async (): Promise<void> => {
+  const fetchPatients = useCallback(async (): Promise<void> => {
     assert(token)
     try {
       const data = await getPatients(token)
@@ -22,8 +22,13 @@ const usePatients = (): Patient[] => {
         console.error(error)
       }
     }
-  }
-  const fetchPatientsCallback = useCallback(fetchPatients, [token])
+  }, [token])
+
+  const reloadPatients = useCallback(async () => {
+    await fetchPatients()
+  }, [fetchPatients])
+
+  const fetchPatientsCallback = useCallback(fetchPatients, [fetchPatients])
 
   // when the component is loaded, the patients are picked up
   useEffect(() => {
@@ -31,7 +36,7 @@ const usePatients = (): Patient[] => {
     void (async () => await fetchPatientsCallback())()
   }, [fetchPatientsCallback])
 
-  return patients
+  return { patients, reloadPatients }
 }
 
 export default usePatients
