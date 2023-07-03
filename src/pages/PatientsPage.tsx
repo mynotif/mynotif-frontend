@@ -6,7 +6,7 @@ import useTranslationHook from '../hook/TranslationHook'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const PatientsPage = (): JSX.Element => {
-  const patients = usePatients()
+  const { patients } = usePatients()
   const { t } = useTranslationHook()
 
   return (
