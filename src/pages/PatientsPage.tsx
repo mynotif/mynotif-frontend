@@ -6,7 +6,7 @@ import useTranslationHook from '../hook/TranslationHook'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const PatientsPage = (): JSX.Element => {
-  const { patients } = usePatients()
+  const { patients, reloadPatients } = usePatients()
   const { t } = useTranslationHook()
 
   return (
@@ -22,7 +22,7 @@ const PatientsPage = (): JSX.Element => {
       <div className='mb-5 pb-5'>
         <Container>
           {patients.map((patient) => (
-            <PatientLine key={patient.id} patient={patient} />
+            <PatientLine key={patient.id} patient={patient} reloadPatients={reloadPatients} />
           ))}
         </Container>
       </div>

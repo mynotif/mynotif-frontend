@@ -12,10 +12,11 @@ import { deletePatient } from '../services/api'
 import { ErrorContext } from '../context/error'
 interface PatientLineProps {
   patient: Patient
+  reloadPatients: () => void
   borderColor?: string
 }
 
-const PatientLine: FunctionComponent<PatientLineProps> = ({ patient }) => {
+const PatientLine: FunctionComponent<PatientLineProps> = ({ patient, reloadPatients }) => {
   const navigate = useNavigate()
   const [buttonsModalShow, setButtonsModalShow] = useState(false)
   const handleCloseButtonsModal = (): void => setButtonsModalShow(false)
@@ -42,11 +43,13 @@ const PatientLine: FunctionComponent<PatientLineProps> = ({ patient }) => {
     try {
       await deletePatient(token, patient.id)
       navigate('/patients')
+      handleClose()
+      handleCloseButtonsModal()
+      reloadPatients()
     } catch (error) {
       console.error(error)
       addError({ body: 'Error deleting patient' })
     }
-    handleClose()
   }
 
   return (
