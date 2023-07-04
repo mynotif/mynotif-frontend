@@ -99,7 +99,9 @@ i18n
             supportHelp: 'Help & Support',
             legalNotices: 'legal notices',
             forgotPassword: 'Forgot your Password?',
-            resetPasswordEmail: 'Please enter the e-mail address'
+            resetPasswordEmail: 'Please enter the e-mail address',
+            search: 'Search ...',
+            searchDoctor: 'Search by doctor name ...'
           },
           error: {
             errorLogin: 'Sorry, the email or password is incorrect!'
@@ -183,7 +185,9 @@ i18n
             supportHelp: 'Aide & Support',
             legalNotices: 'Mentions légales',
             forgotPassword: 'Mot de passe oublié ?',
-            resetPasswordEmail: 'Veuillez entrer l\'adresse e-mail'
+            resetPasswordEmail: 'Veuillez entrer l\'adresse e-mail',
+            search: 'Rechercher ...',
+            searchDoctor: 'Rechercher par nom de medecin ...'
           },
           error: {
             errorLogin: 'Désolé, l\'email ou le mot de passe est incorrect !'

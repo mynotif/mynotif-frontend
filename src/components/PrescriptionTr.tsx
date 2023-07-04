@@ -1,22 +1,20 @@
-import { FunctionComponent, useContext, useEffect, useState } from 'react'
+import { FunctionComponent, useState } from 'react'
 import { Badge, Button, Card, Modal } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Patient, Prescription } from '../types'
 import { useNavigate } from 'react-router-dom'
 import ModalDelete from './ModalDelete'
 import useTranslationHook from '../hook/TranslationHook'
-import { getPatient } from '../services/api'
-import { strict as assert } from 'assert'
-import { TokenContext } from '../context/token'
 
 // Allows to change the colour if true or false
 interface PrescriptionTrProps {
   prescription: Prescription
+  patient: Patient | null
   onDelete: (id: number) => Promise<void>
   onEdit: (id: number) => Promise<void>
 }
 
-const PrescriptionTr: FunctionComponent<PrescriptionTrProps> = ({ prescription, onDelete, onEdit }) => {
+const PrescriptionTr: FunctionComponent<PrescriptionTrProps> = ({ prescription, patient, onDelete, onEdit }) => {
   const navigate = useNavigate()
   const { t } = useTranslationHook()
   const prescriptionEndDate = prescription?.end_date ?? 'N/A'
@@ -28,8 +26,6 @@ const PrescriptionTr: FunctionComponent<PrescriptionTrProps> = ({ prescription, 
   const [buttonsModalShow, setButtonsModalShow] = useState(false)
   const handleCloseButtonsModal = (): void => setButtonsModalShow(false)
   const handleShowButtonsModal = (): void => setButtonsModalShow(true)
-  const [patient, setPatient] = useState<Patient | null>(null)
-  const { token } = useContext(TokenContext)
 
   const handleEdit = async (): Promise<void> => {
     await onEdit(prescription.id)
@@ -39,22 +35,6 @@ const PrescriptionTr: FunctionComponent<PrescriptionTrProps> = ({ prescription, 
   const goToPatient = (id: number): void => {
     navigate(`/patients/${id}`)
   }
-
-  useEffect(() => {
-    // eslint-disable-next-line
-    const fetchPatient = async () => {
-      assert(token)
-      try {
-        const patientData = await getPatient(token, prescription.patient)
-        setPatient(patientData)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
-    // eslint-disable-next-line
-    void (fetchPatient())
-  }, [token, prescription.patient])
 
   return (
     <>
@@ -92,7 +72,7 @@ const PrescriptionTr: FunctionComponent<PrescriptionTrProps> = ({ prescription, 
                 <small className='ms-4'>
                   <strong>
                     {t('text.patient')}:
-                  </strong> {patient?.lastname}
+                  </strong> {patient?.lastname} {patient?.firstname}
                 </small>
               </div>
             </div>
