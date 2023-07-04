@@ -84,7 +84,11 @@ const PrescriptionTr: FunctionComponent<PrescriptionTrProps> = ({ prescription, 
               </div>
               <div className='d-flex align-items-center'>
                 <small><strong>{t('text.prescription')}:</strong></small>
-                <small>{prescription.photo_prescription === null ? <Button size='sm' className='ms-2' variant='primary' href={prescription.photo_prescription} disabled><FontAwesomeIcon size='sm' icon={['fas', 'eye']} /></Button> : <Button size='sm' className='ms-2' variant='primary' href={prescription.photo_prescription} target='_blank'><FontAwesomeIcon size='sm' icon={['fas', 'eye']} /></Button>}</small>
+                <small>
+                  <Button size='sm' className='ms-2' variant='primary' href={prescription.photo_prescription} disabled={prescription.photo_prescription === null} target='_blank'>
+                    <FontAwesomeIcon size='sm' icon={['fas', 'eye']} />
+                  </Button>
+                </small>
                 <small className='ms-4'>
                   <strong>
                     {t('text.patient')}:
