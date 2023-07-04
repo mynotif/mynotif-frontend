@@ -25,7 +25,7 @@ const Prescriptions: FunctionComponent<PrescriptionsProps> = ({
           <FontAwesomeIcon icon={['fas', 'file-medical']} />
         </Button>
       </div>
-      <div className='d-flex align-items-center justify-content-center bg-info rounded-bottom py-4'>
+      <div className='d-flex align-items-center justify-content-center py-4'>
         <h1>{t('title.listPrescriptions')}</h1>
       </div>
       <div className='mb-5 pb-5'>

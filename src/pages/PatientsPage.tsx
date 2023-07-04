@@ -16,16 +16,14 @@ const PatientsPage = (): JSX.Element => {
           <FontAwesomeIcon icon={['fas', 'user-plus']} />
         </Button>
       </div>
-      <div className='d-flex align-items-center justify-content-center bg-info rounded-bottom py-4'>
+      <div className='d-flex align-items-center justify-content-center py-4'>
         <h1>{t('title.myPatients')}</h1>
       </div>
-      <div className='mb-5 pb-5'>
-        <Container>
-          {patients.map((patient) => (
-            <PatientLine key={patient.id} patient={patient} reloadPatients={reloadPatients} />
-          ))}
-        </Container>
-      </div>
+      <Container>
+        {patients.map((patient) => (
+          <PatientLine key={patient.id} patient={patient} reloadPatients={reloadPatients} />
+        ))}
+      </Container>
     </>
 
   )

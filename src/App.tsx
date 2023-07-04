@@ -36,7 +36,7 @@ function App (): JSX.Element {
           <ProfileContextProvider>
             <ErrorContextProvider>
               <Header />
-              <Container>
+              <Container className='mb-5 pb-5'>
                 <Errors />
                 <Routes>
                   <Route path='*' element={<PageNotFound />} />
