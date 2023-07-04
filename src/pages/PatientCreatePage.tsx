@@ -9,7 +9,7 @@ const PatientCreatePage = (): JSX.Element => {
 
   return (
     <div>
-      <div className='d-flex align-items-center justify-content-center bg-info rounded-bottom py-4'>
+      <div className='d-flex align-items-center justify-content-center py-4'>
         <h1>{t('title.addPatient')}</h1>
       </div>
       <PatientForm patient={newPatient} isEditForm={false} />

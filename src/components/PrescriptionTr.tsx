@@ -62,7 +62,7 @@ const PrescriptionTr: FunctionComponent<PrescriptionTrProps> = ({ prescription, 
         <Card.Body>
           <div className='row align-items-start'>
             <div className='col'>
-              <div className='d-flex align-items-center'>
+              <div className='d-flex align-items-center mb-3'>
                 {t('text.dr')}{prescription.prescribing_doctor}
                 <div className='d-flex ms-auto align-items-center'>
                   <FontAwesomeIcon
@@ -72,14 +72,19 @@ const PrescriptionTr: FunctionComponent<PrescriptionTrProps> = ({ prescription, 
                   />
                 </div>
               </div>
-              <hr className='my-2' />
-              <div className='d-flex align-items-center mb-3'>
-                <small><strong className='me-5'>{t('text.endPrescription')}</strong><Badge className='ms-5' pill bg={isValidIconClass}> {prescriptionEndDate}</Badge></small>
-
+              <div className='d-flex align-items-start '>
+                <small>
+                  <strong className='me-5'>
+                    {t('text.endPrescription')}
+                  </strong>
+                </small>
+                <Badge className='ms-4' pill bg={isValidIconClass}>
+                  {prescriptionEndDate}
+                </Badge>
               </div>
               <div className='d-flex align-items-center'>
                 <small><strong>{t('text.prescription')}:</strong></small>
-                <small>{prescription.photo_prescription === null ? <Button size='sm' className='ms-2' variant='primary' href={prescription.photo_prescription} disabled><FontAwesomeIcon icon={['fas', 'eye']} /></Button> : <Button size='sm' className='ms-2' variant='primary' href={prescription.photo_prescription} target='_blank'><FontAwesomeIcon icon={['fas', 'eye']} /></Button>}</small>
+                <small>{prescription.photo_prescription === null ? <Button size='sm' className='ms-2' variant='primary' href={prescription.photo_prescription} disabled><FontAwesomeIcon size='sm' icon={['fas', 'eye']} /></Button> : <Button size='sm' className='ms-2' variant='primary' href={prescription.photo_prescription} target='_blank'><FontAwesomeIcon size='sm' icon={['fas', 'eye']} /></Button>}</small>
                 <small className='ms-4'>
                   <strong>
                     {t('text.patient')}:

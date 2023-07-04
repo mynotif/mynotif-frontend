@@ -7,6 +7,7 @@ import { ProfileContext } from '../context/profile'
 import { ErrorContext, ErrorType } from '../context/error'
 import { updateUser } from '../services/api'
 import useTranslationHook from '../hook/TranslationHook'
+import { useNavigate } from 'react-router-dom'
 
 const ProfilePage = (): JSX.Element => {
   const { token } = useContext(TokenContext)
@@ -15,6 +16,7 @@ const ProfilePage = (): JSX.Element => {
   // local unsaved profile state so we only hit the profile context after saving
   const [profile, setProfile] = useState<Profile>(profileContext)
   const { t } = useTranslationHook()
+  const navigate = useNavigate()
 
   // update the local profile state when the profile context is ready
   useEffect(() => {
@@ -36,6 +38,7 @@ const ProfilePage = (): JSX.Element => {
     try {
       const data = await updateUser(token, profile)
       setProfileContext(data)
+      navigate('/account')
     } catch (error) {
       addErrorCallback({ body: 'Error updating profile' })
     }
@@ -43,7 +46,9 @@ const ProfilePage = (): JSX.Element => {
 
   return (
     <div>
-      <h1>{t('title.profile')}</h1>
+      <div className='d-flex align-items-center justify-content-center py-4'>
+        <h1>{t('title.profile')}</h1>
+      </div>
       <Form onSubmit={onFormSubmit}>
         <Form.Label>{t('form.emailAddress')}</Form.Label>
         <Form.Control
