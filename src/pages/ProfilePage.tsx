@@ -8,6 +8,7 @@ import { ErrorContext, ErrorType } from '../context/error'
 import { updateUser } from '../services/api'
 import useTranslationHook from '../hook/TranslationHook'
 import { useNavigate } from 'react-router-dom'
+import TitlePage from '../components/TitlePage'
 
 const ProfilePage = (): JSX.Element => {
   const { token } = useContext(TokenContext)
@@ -46,9 +47,7 @@ const ProfilePage = (): JSX.Element => {
 
   return (
     <div>
-      <div className='d-flex align-items-center justify-content-center py-4'>
-        <h1>{t('title.profile')}</h1>
-      </div>
+      <TitlePage title={t('title.profile')} />
       <Form onSubmit={onFormSubmit}>
         <Form.Label>{t('form.emailAddress')}</Form.Label>
         <Form.Control

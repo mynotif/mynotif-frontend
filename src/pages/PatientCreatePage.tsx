@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Patient, defaultPatient } from '../types'
 import PatientForm from '../components/PatientForm'
 import useTranslationHook from '../hook/TranslationHook'
+import TitlePage from '../components/TitlePage'
 
 const PatientCreatePage = (): JSX.Element => {
   const [newPatient] = useState<Patient>(defaultPatient)
@@ -9,9 +10,7 @@ const PatientCreatePage = (): JSX.Element => {
 
   return (
     <div>
-      <div className='d-flex align-items-center justify-content-center py-4'>
-        <h1>{t('title.addPatient')}</h1>
-      </div>
+      <TitlePage title={t('title.addPatient')} />
       <PatientForm patient={newPatient} isEditForm={false} />
     </div>
   )

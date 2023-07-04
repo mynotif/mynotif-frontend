@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button'
 import usePatients from '../hook/patient.hook'
 import useTranslationHook from '../hook/TranslationHook'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import TitlePage from '../components/TitlePage'
 
 const PatientsPage = (): JSX.Element => {
   const { patients, reloadPatients } = usePatients()
@@ -16,9 +17,7 @@ const PatientsPage = (): JSX.Element => {
           <FontAwesomeIcon icon={['fas', 'user-plus']} />
         </Button>
       </div>
-      <div className='d-flex align-items-center justify-content-center py-4'>
-        <h1>{t('title.myPatients')}</h1>
-      </div>
+      <TitlePage title={t('title.myPatients')} />
       <Container>
         {patients.map((patient) => (
           <PatientLine key={patient.id} patient={patient} reloadPatients={reloadPatients} />

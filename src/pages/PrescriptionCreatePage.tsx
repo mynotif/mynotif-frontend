@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import PrescriptionForm from '../components/PrescriptionForm'
 import { defaultPrescription, Prescription } from '../types'
 import useTranslationHook from '../hook/TranslationHook'
+import TitlePage from '../components/TitlePage'
 
 const PrescriptionCreatePage = (): JSX.Element => {
   const [newPrescription] = useState<Prescription>(defaultPrescription)
@@ -10,9 +11,7 @@ const PrescriptionCreatePage = (): JSX.Element => {
 
   return (
     <div>
-      <div className='d-flex align-items-center justify-content-center py-4'>
-        <h1>{t('title.addPrescription')}</h1>
-      </div>
+      <TitlePage title={t('title.addPrescription')} />
       <PrescriptionForm
         prescription={newPrescription}
         isEditForm={false}
