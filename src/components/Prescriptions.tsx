@@ -4,6 +4,7 @@ import { Button, Container } from 'react-bootstrap'
 import { Prescription } from '../types'
 import PrescriptionTr from './PrescriptionTr'
 import useTranslationHook from '../hook/TranslationHook'
+import TitlePage from './TitlePage'
 
 interface PrescriptionsProps {
   prescriptions: Prescription[]
@@ -25,9 +26,7 @@ const Prescriptions: FunctionComponent<PrescriptionsProps> = ({
           <FontAwesomeIcon icon={['fas', 'file-medical']} />
         </Button>
       </div>
-      <div className='d-flex align-items-center justify-content-center py-4'>
-        <h1>{t('title.listPrescriptions')}</h1>
-      </div>
+      <TitlePage title={t('title.listPrescriptions')} />
       <div className='mb-5 pb-5'>
         <Container>
           {
