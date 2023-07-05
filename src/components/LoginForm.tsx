@@ -26,7 +26,7 @@ const LoginForm = (): JSX.Element => {
       const { token } = response
       setTokenLocalStorage(token)
       setToken(token)
-      navigate('/patients')
+      navigate('/prescriptions')
     } catch (error) {
       console.error(error)
       setError(t('error.errorLogin'))

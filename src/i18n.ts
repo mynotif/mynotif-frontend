@@ -69,7 +69,9 @@ i18n
             startDate: 'Start date',
             carteVitale: 'Carte Vitale',
             caisseDeRattachement: 'Caisse de rattachement',
-            selectYourPrescription: 'Select your prescription'
+            selectYourPrescription: 'Select your prescription',
+            newPassword: 'New password',
+            confirmNewPassword: 'Confirm new password'
           },
           text: {
             confirmationPatient: 'Are you sure you want to remove this patient?',
@@ -101,10 +103,15 @@ i18n
             forgotPassword: 'Forgot your Password?',
             resetPasswordEmail: 'Please enter the e-mail address',
             search: 'Search ...',
-            searchDoctor: 'Search by doctor name ...'
+            searchDoctor: 'Search by doctor name ...',
+            createNewPassword: 'Create your new password'
           },
           error: {
-            errorLogin: 'Sorry, the email or password is incorrect!'
+            errorLogin: 'Sorry, the email or password is incorrect!',
+            emptyFieldError: 'Fields cannot be empty',
+            passwordsMismatchError: 'Passwords don\'t match',
+            passwordLengthError: 'Password must be at least 8 characters long',
+            missResetParameters: 'Missing password reset parameters'
           }
         }
       },
@@ -155,7 +162,9 @@ i18n
             startDate: 'Date de début',
             carteVitale: 'Carte Vitale',
             caisseDeRattachement: 'Caisse de rattachement',
-            selectYourPrescription: 'Séléctionne ton ordonnance'
+            selectYourPrescription: 'Séléctionne ton ordonnance',
+            newPassword: 'Nouveau mot de passe',
+            confirmNewPassword: 'Confirmer le nouveau mot de passe'
           },
           text: {
             confirmationPatient: 'Etes vous sur de vouloir supprimer ce patient ?',
@@ -187,10 +196,15 @@ i18n
             forgotPassword: 'Mot de passe oublié ?',
             resetPasswordEmail: 'Veuillez entrer l\'adresse e-mail',
             search: 'Rechercher ...',
-            searchDoctor: 'Rechercher par nom de medecin ...'
+            searchDoctor: 'Rechercher par nom de medecin ...',
+            createNewPassword: 'Créer votre nouveau mot de passe'
           },
           error: {
-            errorLogin: 'Désolé, l\'email ou le mot de passe est incorrect !'
+            errorLogin: 'Désolé, l\'email ou le mot de passe est incorrect !',
+            emptyFieldError: 'Les champs ne peuvent pas être vides',
+            passwordsMismatchError: 'Les mots de passe ne correspondent pas',
+            passwordLengthError: 'Le mot de passe doit comporter au moins 8 caractères',
+            missResetParameters: 'Paramètres de réinitialisation du mot de passe manquants'
           }
         }
       }

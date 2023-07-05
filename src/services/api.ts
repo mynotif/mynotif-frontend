@@ -130,7 +130,14 @@ const register = async (username: string, password: string, email: string): Prom
 
 const resetPassword = async (email: string): Promise<{}> => {
   const data = { email }
-  const url = BACKEND_URL + '/account/reset/password'
+  const url = BACKEND_URL + '/auth/users/reset_password/'
+  const response = await axios.post(url, data)
+  return response.data
+}
+
+const confirmResetPassword = async (uid: string, token: string, newPassword: string): Promise<{}> => {
+  const data = { uid, token, new_password: newPassword }
+  const url = BACKEND_URL + '/auth/users/reset_password_confirm/'
   const response = await axios.post(url, data)
   return response.data
 }
@@ -165,5 +172,6 @@ export {
   deletePrescription,
   deletePatient,
   createPrescription,
-  resetPassword
+  resetPassword,
+  confirmResetPassword
 }

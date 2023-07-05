@@ -15,7 +15,7 @@ const ResetPassword = (): JSX.Element => {
   const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
     setEmail(e.target.value)
 
-  const handleResetPasswort = async (): Promise<void> => {
+  const handleResetPasswort = async (e: React.MouseEvent<HTMLElement>): Promise<void> => {
     try {
       await resetPassword(email)
       navigate('/login')
