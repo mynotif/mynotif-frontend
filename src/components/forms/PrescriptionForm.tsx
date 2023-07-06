@@ -7,7 +7,6 @@ import React, {
 } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import { ErrorContext, ErrorType } from '../../context/error'
 import { TokenContext } from '../../context/token'
 import {
   createPatient,
@@ -24,6 +23,7 @@ import useTranslationHook from '../../hook/TranslationHook'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import usePatients from '../../hook/patient.hook'
 import ModalAddPatient from '../modal/ModalAddPatient'
+import { MessageContext, MessageType } from '../../context/message'
 
 interface PrescriptionFormRequiredProps {
   prescription: Prescription
@@ -42,7 +42,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
 }) => {
   const { token } = useContext(TokenContext)
   const [file, setFile] = useState<File>()
-  const { addError } = useContext(ErrorContext)
+  const { addMessage } = useContext(MessageContext)
   const { t } = useTranslationHook()
   const [addingNewPatient, setAddingNewPatient] = useState(false)
   const [patientState, setPatientState] = useState<Patient>(defaultPatient)
@@ -97,15 +97,16 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
         await uploadPrescription(token, data.id, file)
       }
       setPrescriptionState(data)
+      addMessage({ text: 'Prescription created successfully', variant: 'success' })
     } catch (error) {
       console.error(error)
-      addErrorCallback({ body: 'Error creating prescription' })
+      addMessageCallback({ text: 'Error creating prescription', variant: 'danger' })
     }
   }
 
-  const addErrorCallback = useCallback(
-    (error: ErrorType) => addError(error),
-    [addError]
+  const addMessageCallback = useCallback(
+    (error: MessageType) => addMessage(error),
+    [addMessage]
   )
 
   const handleSave = async (): Promise<void> => {
@@ -116,8 +117,9 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
         await uploadPrescription(token, prescriptionState.id, file)
       }
       navigate('/prescriptions')
+      addMessage({ text: 'Prescription updated successfully', variant: 'success' })
     } catch (error) {
-      addErrorCallback({ body: 'Error updating prescription' })
+      addMessageCallback({ text: 'Error updating prescription', variant: 'danger' })
     }
   }
 

@@ -6,22 +6,22 @@ import axios, { AxiosError } from 'axios'
 import { ErrorResponse } from '../types'
 import { useIsLoggedIn, useLogout } from '../utils/hooks'
 import { getTokenLocalStorage } from '../utils/helpers'
-import { ErrorContext, ErrorType } from '../context/error'
 import { ProfileContext } from '../context/profile'
 import { TokenContext } from '../context/token'
 import { getProfile } from '../services/api'
 import { BACKEND_URL } from '../services/constants'
 import useTranslationHook from '../hook/TranslationHook'
+import { MessageContext, MessageType } from '../context/message'
 
 const Header = (): JSX.Element => {
   const { token, setToken } = useContext(TokenContext)
   const { profile, setProfile } = useContext(ProfileContext)
-  const { addError } = useContext(ErrorContext)
+  const { addMessage } = useContext(MessageContext)
   const logout = useLogout()
   const { t } = useTranslationHook()
 
   const addErrorCallback = useCallback(
-    (error: ErrorType) => addError(error),
+    (error: MessageType) => addMessage(error),
     // eslint-disable-next-line
     []
   )
@@ -32,11 +32,11 @@ const Header = (): JSX.Element => {
       const axiosError = error as AxiosError<ErrorResponse>
       const { response } = axiosError
       if ((response?.status === 401) && (response.data?.detail === 'Invalid token.')) {
-        addErrorCallback({ body: 'Session expired, please log in again.' })
+        addErrorCallback({ text: 'Session expired, please log in again.', variant: 'danger' })
         logout()
       }
     } else {
-      addErrorCallback({ body: 'Error fetching profile data' })
+      addErrorCallback({ text: 'Error fetching profile data', variant: 'danger' })
     }
   },
   // eslint-disable-next-line

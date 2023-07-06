@@ -2,20 +2,20 @@ import { useCallback, useContext, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { ErrorContext, ErrorType } from '../../context/error'
 import useTranslationHook from '../../hook/TranslationHook'
 import { register } from '../../services/api'
+import { MessageContext, MessageType } from '../../context/message'
 
 const RegisterForm = (): JSX.Element => {
   const [username, setUsername] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  const { addError } = useContext(ErrorContext)
+  const { addMessage } = useContext(MessageContext)
   const navigate = useNavigate()
   const { t } = useTranslationHook()
 
   const addErrorCallback = useCallback(
-    (error: ErrorType) => addError(error),
+    (error: MessageType) => addMessage(error),
     // eslint-disable-next-line
     []
   )
@@ -33,12 +33,13 @@ const RegisterForm = (): JSX.Element => {
     try {
       await register(username, password, email)
       navigate('/login')
+      addMessage({ text: 'Your account has been successfully created! Please log in to continue.', variant: 'success' })
     } catch (error) {
       console.error(error)
       if (axios.isAxiosError(error)) {
-        addErrorCallback({ title: 'Error registering', body: JSON.stringify((error).response?.data) })
+        addErrorCallback({ title: 'Error registering', text: JSON.stringify((error).response?.data), variant: 'danger' })
       } else {
-        addErrorCallback({ body: 'Error registering' })
+        addErrorCallback({ text: 'Error registering', variant: 'danger' })
       }
     }
   }

@@ -6,10 +6,9 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { TokenContextProvider } from './context/token'
-import { ErrorContextProvider } from './context/error'
 import { ProfileContextProvider } from './context/profile'
 import Header from './components/Header'
-import Errors from './components/Errors'
+import MessageFlash from './components/FlashMessages'
 import PatientsPage from './pages/patients/PatientsPage'
 import PrescriptionsPage from './pages/prescriptions/PrescriptionsPage'
 import PrescriptionEdit from './pages/prescriptions/PrescriptionEdit'
@@ -26,6 +25,7 @@ import AccountPage from './pages/accounts/AccountPage'
 import './App.css'
 import ResetPassword from './pages/authentifications/ResetPassword'
 import NewResetPassword from './pages/authentifications/NewResetPassword'
+import { MessageContextProvider } from './context/message'
 
 library.add(fas, fab, far)
 
@@ -35,10 +35,10 @@ function App (): JSX.Element {
       <BrowserRouter>
         <TokenContextProvider>
           <ProfileContextProvider>
-            <ErrorContextProvider>
+            <MessageContextProvider>
               <Header />
               <Container className='mb-5 pb-5'>
-                <Errors />
+                <MessageFlash />
                 <Routes>
                   <Route path='*' element={<PageNotFound />} />
                   <Route path='/' element={<Navigate to='/login' />} />
@@ -77,7 +77,7 @@ function App (): JSX.Element {
                   </Route>
                 </Routes>
               </Container>
-            </ErrorContextProvider>
+            </MessageContextProvider>
           </ProfileContextProvider>
         </TokenContextProvider>
       </BrowserRouter>

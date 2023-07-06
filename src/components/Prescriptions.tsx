@@ -59,9 +59,13 @@ const Prescriptions: FunctionComponent<PrescriptionsProps> = ({
   }, [token, prescriptions])
 
   const filterByPrescriptions = (prescription: Prescription, searchValue: string): boolean => {
-    return (
-      prescription.prescribing_doctor.toLowerCase().includes(searchValue.toLowerCase())
-    )
+    const prescribingDoctor = prescription.prescribing_doctor
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+    if (!prescribingDoctor) {
+      return false
+    }
+
+    return prescribingDoctor.toLowerCase().includes(searchValue.toLowerCase())
   }
 
   /**

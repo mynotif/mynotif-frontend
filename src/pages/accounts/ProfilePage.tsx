@@ -4,15 +4,15 @@ import { Button, Form } from 'react-bootstrap'
 import { Profile } from '../../types'
 import { TokenContext } from '../../context/token'
 import { ProfileContext } from '../../context/profile'
-import { ErrorContext, ErrorType } from '../../context/error'
 import { updateUser } from '../../services/api'
 import useTranslationHook from '../../hook/TranslationHook'
 import { useNavigate } from 'react-router-dom'
 import TitlePage from '../../components/TitlePage'
+import { MessageContext, MessageType } from '../../context/message'
 
 const ProfilePage = (): JSX.Element => {
   const { token } = useContext(TokenContext)
-  const { addError } = useContext(ErrorContext)
+  const { addMessage } = useContext(MessageContext)
   const { profile: profileContext, setProfile: setProfileContext } = useContext(ProfileContext)
   // local unsaved profile state so we only hit the profile context after saving
   const [profile, setProfile] = useState<Profile>(profileContext)
@@ -25,7 +25,7 @@ const ProfilePage = (): JSX.Element => {
   }, [profileContext])
 
   const addErrorCallback = useCallback(
-    (error: ErrorType) => addError(error),
+    (error: MessageType) => addMessage(error),
     // eslint-disable-next-line
     []
   )
@@ -40,8 +40,9 @@ const ProfilePage = (): JSX.Element => {
       const data = await updateUser(token, profile)
       setProfileContext(data)
       navigate('/account')
+      addMessage({ text: 'Profile updated successfully', variant: 'success' })
     } catch (error) {
-      addErrorCallback({ body: 'Error updating profile' })
+      addErrorCallback({ text: 'Error updating profile', variant: 'danger' })
     }
   }
 

@@ -5,6 +5,7 @@ import { TokenContext } from '../../context/token'
 import useTranslationHook from '../../hook/TranslationHook'
 import { login } from '../../services/api'
 import { setTokenLocalStorage } from '../../utils/helpers'
+import { MessageContext } from '../../context/message'
 
 const LoginForm = (): JSX.Element => {
   const [username, setUsername] = useState<string>('')
@@ -12,7 +13,7 @@ const LoginForm = (): JSX.Element => {
   const { setToken } = useContext(TokenContext)
   const navigate = useNavigate()
   const { t } = useTranslationHook()
-  const [error, setError] = useState<string>('')
+  const { addMessage } = useContext(MessageContext)
 
   const onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
     setUsername(e.target.value)
@@ -27,9 +28,9 @@ const LoginForm = (): JSX.Element => {
       setTokenLocalStorage(token)
       setToken(token)
       navigate('/prescriptions')
+      addMessage({ text: 'You have successfully logged in!', variant: 'success' })
     } catch (error) {
-      console.error(error)
-      setError(t('error.errorLogin'))
+      addMessage({ text: 'Invalid username or password. Please try again.', variant: 'danger' })
     }
   }
 
@@ -43,7 +44,6 @@ const LoginForm = (): JSX.Element => {
           required
           type='text'
           onChange={onUsernameChange}
-          isInvalid={Boolean(error)}
         />
       </Form.Group>
 
@@ -53,7 +53,6 @@ const LoginForm = (): JSX.Element => {
           required
           type='password'
           onChange={onPasswordChange}
-          isInvalid={Boolean(error)}
         />
       </Form.Group>
       <Button variant='success' type='submit' onClick={onLogin} className='w-100'>

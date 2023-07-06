@@ -1,22 +1,22 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { ErrorContext, ErrorType } from '../../context/error'
 import { TokenContext } from '../../context/token'
 import { strict as assert } from 'assert'
 import { getPatient } from '../../services/api'
 import PatientForm from '../../components/forms/PatientForm'
 import { Patient } from '../../types'
 import useTranslationHook from '../../hook/TranslationHook'
+import { MessageContext, MessageType } from '../../context/message'
 
 const PatientEdit = (): JSX.Element => {
   const { id } = useParams<'id'>()
 
   const { token } = useContext(TokenContext)
-  const { addError } = useContext(ErrorContext)
+  const { addMessage } = useContext(MessageContext)
   const { t } = useTranslationHook()
 
   const addErrorCallback = useCallback(
-    (error: ErrorType) => addError(error),
+    (error: MessageType) => addMessage(error),
     // eslint-disable-next-line
     []
   )
@@ -31,7 +31,7 @@ const PatientEdit = (): JSX.Element => {
       setPatient(data)
     } catch (error) {
       console.error(error)
-      addErrorCallback({ body: 'Error fetching patient data' })
+      addErrorCallback({ text: 'Error fetching patient data', variant: 'danger' })
     }
   }, [token, addErrorCallback, id])
 

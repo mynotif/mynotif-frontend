@@ -9,7 +9,7 @@ import { Button, Modal } from 'react-bootstrap'
 import useTranslationHook from '../hook/TranslationHook'
 import ModalDelete from './modal/ModalDelete'
 import { deletePatient } from '../services/api'
-import { ErrorContext } from '../context/error'
+import { MessageContext } from '../context/message'
 interface PatientLineProps {
   patient: Patient
   reloadPatients: () => void
@@ -25,7 +25,7 @@ const PatientLine: FunctionComponent<PatientLineProps> = ({ patient, reloadPatie
   const { token } = useContext(TokenContext)
 
   const [show, setShow] = useState(false)
-  const { addError } = useContext(ErrorContext)
+  const { addMessage } = useContext(MessageContext)
   const handleClose = (): void => setShow(false)
   const handleShow = (): void => setShow(true)
 
@@ -48,7 +48,7 @@ const PatientLine: FunctionComponent<PatientLineProps> = ({ patient, reloadPatie
       reloadPatients()
     } catch (error) {
       console.error(error)
-      addError({ body: 'Error deleting patient' })
+      addMessage({ text: 'Error deleting patient', variant: 'danger' })
     }
   }
 

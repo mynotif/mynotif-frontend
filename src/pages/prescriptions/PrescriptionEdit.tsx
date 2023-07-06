@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
-import { ErrorContext } from '../../context/error'
 import { TokenContext } from '../../context/token'
 import { getPrescription } from '../../services/api'
 import { Prescription } from '../../types'
 import PrescriptionForm from '../../components/forms/PrescriptionForm'
 import useTranslationHook from '../../hook/TranslationHook'
+import { MessageContext } from '../../context/message'
 
 const PrescriptionEdit = (): JSX.Element => {
   const { id } = useParams<'id'>()
@@ -13,7 +13,7 @@ const PrescriptionEdit = (): JSX.Element => {
   const [prescription, setPrescription] = useState<Prescription | null>(null)
   const { token } = useContext(TokenContext)
 
-  const { addError } = useContext(ErrorContext)
+  const { addMessage } = useContext(MessageContext)
   const { t } = useTranslationHook()
 
   // allows us to pick up prescription
@@ -26,11 +26,11 @@ const PrescriptionEdit = (): JSX.Element => {
       setPrescription(data)
     } catch (error) {
       console.error(error)
-      addError({ body: 'Error fetching prescription data' })
+      addMessage({ text: 'Error fetching prescription data', variant: 'danger' })
     }
   }
 
-  const fetchPrescriptionCallback = useCallback(fetchPrescription, [addError])
+  const fetchPrescriptionCallback = useCallback(fetchPrescription, [addMessage])
 
   // when the component is loaded, the Prescription are picked up
   useEffect(() => {

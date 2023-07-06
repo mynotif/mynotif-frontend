@@ -4,21 +4,21 @@ import { strict as assert } from 'assert'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Card, Button } from 'react-bootstrap'
 import { TokenContext } from '../../context/token'
-import { ErrorContext, ErrorType } from '../../context/error'
 import { getPatient } from '../../services/api'
 import { Patient } from '../../types'
 import Spinner from 'react-bootstrap/Spinner'
 import useTranslationHook from '../../hook/TranslationHook'
+import { MessageContext, MessageType } from '../../context/message'
 
 const PatientDetail = (): JSX.Element => {
   const { id } = useParams<'id'>()
 
   const { token } = useContext(TokenContext)
-  const { addError } = useContext(ErrorContext)
+  const { addMessage } = useContext(MessageContext)
   const { t } = useTranslationHook()
 
   const addErrorCallback = useCallback(
-    (error: ErrorType) => addError(error),
+    (error: MessageType) => addMessage(error),
     // eslint-disable-next-line
     []
   )
@@ -33,7 +33,7 @@ const PatientDetail = (): JSX.Element => {
       setPatient(data)
     } catch (error) {
       console.error(error)
-      addErrorCallback({ body: 'Error fetching patient data' })
+      addErrorCallback({ text: 'Error fetching patient data', variant: 'danger' })
     }
   }, [token, addErrorCallback, id])
 
