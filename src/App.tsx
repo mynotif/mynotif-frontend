@@ -25,6 +25,7 @@ import RegisterPage from './pages/RegisterPage'
 import AccountPage from './pages/AccountPage'
 import './App.css'
 import ResetPassword from './pages/ResetPassword'
+import NewResetPassword from './pages/NewResetPassword'
 
 library.add(fas, fab, far)
 
@@ -44,6 +45,7 @@ function App (): JSX.Element {
                   <Route path='/login' element={<LoginPage />} />
                   <Route path='/register' element={<RegisterPage />} />
                   <Route path='/reset/password' element={<ResetPassword />} />
+                  <Route path='/reset/password/:uid/:token' element={<NewResetPassword />} />
                   <Route element={<PrivateRoute />}>
                     {/* Account */}
                     <Route path='/account/profile' element={<ProfilePage />} />
