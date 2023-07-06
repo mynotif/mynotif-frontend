@@ -6,7 +6,7 @@ Frontend for MyNotif: Patient management app for nurses.
 - https://mynotif.netlify.app/
 
 Backend is available via:
-<https://github.com/mynotif/mynotif-frontend>
+https://github.com/mynotif/mynotif-backend
 
 ## Install
 ```sh
