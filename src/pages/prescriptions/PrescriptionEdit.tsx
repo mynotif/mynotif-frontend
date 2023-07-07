@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
-import { ErrorContext } from '../context/error'
-import { TokenContext } from '../context/token'
-import { getPrescription } from '../services/api'
-import { Prescription } from '../types'
-import PrescriptionForm from '../components/PrescriptionForm'
-import useTranslationHook from '../hook/TranslationHook'
+import { ErrorContext } from '../../context/error'
+import { TokenContext } from '../../context/token'
+import { getPrescription } from '../../services/api'
+import { Prescription } from '../../types'
+import PrescriptionForm from '../../components/forms/PrescriptionForm'
+import useTranslationHook from '../../hook/TranslationHook'
 
 const PrescriptionEdit = (): JSX.Element => {
   const { id } = useParams<'id'>()

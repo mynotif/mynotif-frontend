@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Card from 'react-bootstrap/Card'
 import { Button, Modal } from 'react-bootstrap'
 import useTranslationHook from '../hook/TranslationHook'
-import ModalDelete from './ModalDelete'
+import ModalDelete from './modal/ModalDelete'
 import { deletePatient } from '../services/api'
 import { ErrorContext } from '../context/error'
 interface PatientLineProps {

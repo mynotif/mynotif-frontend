@@ -1,10 +1,10 @@
 import React from 'react'
-import useTranslationHook from '../hook/TranslationHook'
-import LoginForm from '../components/LoginForm'
-import { useIsLoggedIn } from '../utils/hooks'
+import useTranslationHook from '../../hook/TranslationHook'
+import { useIsLoggedIn } from '../../utils/hooks'
 import { Navigate } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import LoginForm from '../../components/forms/LoginForm'
 
 const LoginPage = (): JSX.Element => {
   const { t } = useTranslationHook()

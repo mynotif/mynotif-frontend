@@ -2,9 +2,9 @@ import { useCallback, useContext, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { ErrorContext, ErrorType } from '../context/error'
-import { register } from '../services/api'
-import useTranslationHook from '../hook/TranslationHook'
+import { ErrorContext, ErrorType } from '../../context/error'
+import useTranslationHook from '../../hook/TranslationHook'
+import { register } from '../../services/api'
 
 const RegisterForm = (): JSX.Element => {
   const [username, setUsername] = useState<string>('')

@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import { Form, Button } from 'react-bootstrap'
-import useTranslationHook from '../hook/TranslationHook'
+import useTranslationHook from '../../hook/TranslationHook'
 
 interface ResetPasswordFormProps {
   newPassword: string

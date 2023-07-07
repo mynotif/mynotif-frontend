@@ -7,23 +7,23 @@ import React, {
 } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import { ErrorContext, ErrorType } from '../context/error'
-import { TokenContext } from '../context/token'
+import { ErrorContext, ErrorType } from '../../context/error'
+import { TokenContext } from '../../context/token'
 import {
   createPatient,
   createPrescription,
   updatePrescription,
   uploadPrescription
-} from '../services/api'
-import { Patient, Prescription, defaultPatient } from '../types'
-import SelectPatient from './SelectPatient'
+} from '../../services/api'
+import { Patient, Prescription, defaultPatient } from '../../types'
+import SelectPatient from '../SelectPatient'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { format } from 'date-fns'
-import useTranslationHook from '../hook/TranslationHook'
+import useTranslationHook from '../../hook/TranslationHook'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import usePatients from '../hook/patient.hook'
-import ModalAddPatient from './ModalAddPatient'
+import usePatients from '../../hook/patient.hook'
+import ModalAddPatient from '../modal/ModalAddPatient'
 
 interface PrescriptionFormRequiredProps {
   prescription: Prescription

@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import useTranslationHook from '../hook/TranslationHook'
+import useTranslationHook from '../../hook/TranslationHook'
 import { useNavigate, useParams } from 'react-router-dom'
-import { confirmResetPassword } from '../services/api'
-import NewResetPasswordForm from '../components/NewResetPasswordForm'
+import { confirmResetPassword } from '../../services/api'
 import { Container } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import assert from 'assert'
+import NewResetPasswordForm from '../../components/forms/NewResetPasswordForm'
 
 const NewResetPassword = (): JSX.Element => {
   const [newPassword, setNewPassword] = useState<string>('')

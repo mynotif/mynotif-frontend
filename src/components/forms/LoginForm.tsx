@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Form } from 'react-bootstrap'
-import { login } from '../services/api'
-import { TokenContext } from '../context/token'
-import { setTokenLocalStorage } from '../utils/helpers'
-import useTranslationHook from '../hook/TranslationHook'
+import { TokenContext } from '../../context/token'
+import useTranslationHook from '../../hook/TranslationHook'
+import { login } from '../../services/api'
+import { setTokenLocalStorage } from '../../utils/helpers'
 
 const LoginForm = (): JSX.Element => {
   const [username, setUsername] = useState<string>('')

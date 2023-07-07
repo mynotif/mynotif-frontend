@@ -1,14 +1,14 @@
 import { strict as assert } from 'assert'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
-import { Profile } from '../types'
-import { TokenContext } from '../context/token'
-import { ProfileContext } from '../context/profile'
-import { ErrorContext, ErrorType } from '../context/error'
-import { updateUser } from '../services/api'
-import useTranslationHook from '../hook/TranslationHook'
+import { Profile } from '../../types'
+import { TokenContext } from '../../context/token'
+import { ProfileContext } from '../../context/profile'
+import { ErrorContext, ErrorType } from '../../context/error'
+import { updateUser } from '../../services/api'
+import useTranslationHook from '../../hook/TranslationHook'
 import { useNavigate } from 'react-router-dom'
-import TitlePage from '../components/TitlePage'
+import TitlePage from '../../components/TitlePage'
 
 const ProfilePage = (): JSX.Element => {
   const { token } = useContext(TokenContext)
