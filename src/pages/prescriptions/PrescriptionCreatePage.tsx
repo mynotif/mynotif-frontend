@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import PrescriptionForm from '../components/PrescriptionForm'
-import { defaultPrescription, Prescription } from '../types'
-import useTranslationHook from '../hook/TranslationHook'
-import TitlePage from '../components/TitlePage'
+import PrescriptionForm from '../../components/forms/PrescriptionForm'
+import { defaultPrescription, Prescription } from '../../types'
+import useTranslationHook from '../../hook/TranslationHook'
+import TitlePage from '../../components/TitlePage'
 
 const PrescriptionCreatePage = (): JSX.Element => {
   const [newPrescription] = useState<Prescription>(defaultPrescription)

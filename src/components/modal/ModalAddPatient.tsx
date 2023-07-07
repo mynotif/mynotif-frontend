@@ -1,8 +1,8 @@
 import React from 'react'
 import { Modal, Form, Button, Col, Alert } from 'react-bootstrap'
-import { Patient } from '../types'
+import { Patient } from '../../types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import useTranslationHook from '../hook/TranslationHook'
+import useTranslationHook from '../../hook/TranslationHook'
 
 interface ModalAddPatientProps {
   patientState: Patient

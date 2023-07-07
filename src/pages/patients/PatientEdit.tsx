@@ -1,12 +1,12 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { ErrorContext, ErrorType } from '../context/error'
-import { TokenContext } from '../context/token'
+import { ErrorContext, ErrorType } from '../../context/error'
+import { TokenContext } from '../../context/token'
 import { strict as assert } from 'assert'
-import { getPatient } from '../services/api'
-import PatientForm from '../components/PatientForm'
-import { Patient } from '../types'
-import useTranslationHook from '../hook/TranslationHook'
+import { getPatient } from '../../services/api'
+import PatientForm from '../../components/forms/PatientForm'
+import { Patient } from '../../types'
+import useTranslationHook from '../../hook/TranslationHook'
 
 const PatientEdit = (): JSX.Element => {
   const { id } = useParams<'id'>()

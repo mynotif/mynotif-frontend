@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { Patient, defaultPatient } from '../types'
-import PatientForm from '../components/PatientForm'
-import useTranslationHook from '../hook/TranslationHook'
-import TitlePage from '../components/TitlePage'
+import { Patient, defaultPatient } from '../../types'
+import PatientForm from '../../components/forms/PatientForm'
+import useTranslationHook from '../../hook/TranslationHook'
+import TitlePage from '../../components/TitlePage'
 
 const PatientCreatePage = (): JSX.Element => {
   const [newPatient] = useState<Patient>(defaultPatient)

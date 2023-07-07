@@ -2,12 +2,13 @@ import { strict as assert } from 'assert'
 import { FunctionComponent, useState, useContext, useCallback } from 'react'
 import { Button, Col, Form } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import { Patient } from '../types'
-import { TokenContext } from '../context/token'
-import { ErrorContext, ErrorType } from '../context/error'
-import { createPatient, updatePatient } from '../services/api'
-import useTranslationHook from '../hook/TranslationHook'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Patient } from '../../types'
+import { TokenContext } from '../../context/token'
+import { ErrorContext, ErrorType } from '../../context/error'
+import useTranslationHook from '../../hook/TranslationHook'
+import { createPatient, updatePatient } from '../../services/api'
 
 interface PatientFormProps {
   patient: Patient

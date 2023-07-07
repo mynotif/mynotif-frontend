@@ -2,8 +2,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { Container, Card, Badge } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import useTranslationHook from '../hook/TranslationHook'
-import Logout from '../components/Logout'
+import useTranslationHook from '../../hook/TranslationHook'
+import Logout from '../../components/Logout'
 
 const AccountPage = (): JSX.Element => {
   const navigate = useNavigate()

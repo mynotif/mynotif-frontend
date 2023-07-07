@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Button, Container, Form } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import useTranslationHook from '../hook/TranslationHook'
+import useTranslationHook from '../../hook/TranslationHook'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { resetPassword } from '../services/api'
+import { resetPassword } from '../../services/api'
 
 const ResetPassword = (): JSX.Element => {
   const [email, setEmail] = useState<string>('')

@@ -1,8 +1,8 @@
 import React from 'react'
-import useTranslationHook from '../hook/TranslationHook'
-import RegisterForm from '../components/RegisterForm'
+import useTranslationHook from '../../hook/TranslationHook'
 import { Container } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import RegisterForm from '../../components/forms/RegisterForm'
 
 const RegisterPage = (): JSX.Element => {
   const { t } = useTranslationHook()

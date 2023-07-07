@@ -2,7 +2,7 @@ import { FunctionComponent } from 'react'
 
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
-import useTranslationHook from '../hook/TranslationHook'
+import useTranslationHook from '../../hook/TranslationHook'
 
 interface ModalDeleteProps {
   handleClose: () => void

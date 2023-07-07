@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
-import Prescriptions from '../components/Prescriptions'
-import usePrescription from '../hook/prescription.hook'
+import Prescriptions from '../../components/Prescriptions'
+import usePrescription from '../../hook/prescription.hook'
 
 const PrescriptionsPage = (): JSX.Element => {
   const [prescriptions, deletePrescriptionById] = usePrescription()

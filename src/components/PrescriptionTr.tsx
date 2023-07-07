@@ -3,7 +3,7 @@ import { Badge, Button, Card, Modal } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Patient, Prescription } from '../types'
 import { useNavigate } from 'react-router-dom'
-import ModalDelete from './ModalDelete'
+import ModalDelete from './modal/ModalDelete'
 import useTranslationHook from '../hook/TranslationHook'
 
 // Allows to change the colour if true or false

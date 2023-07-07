@@ -3,12 +3,12 @@ import { useParams } from 'react-router-dom'
 import { strict as assert } from 'assert'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Card, Button } from 'react-bootstrap'
-import { TokenContext } from '../context/token'
-import { ErrorContext, ErrorType } from '../context/error'
-import { getPatient } from '../services/api'
-import { Patient } from '../types'
+import { TokenContext } from '../../context/token'
+import { ErrorContext, ErrorType } from '../../context/error'
+import { getPatient } from '../../services/api'
+import { Patient } from '../../types'
 import Spinner from 'react-bootstrap/Spinner'
-import useTranslationHook from '../hook/TranslationHook'
+import useTranslationHook from '../../hook/TranslationHook'
 
 const PatientDetail = (): JSX.Element => {
   const { id } = useParams<'id'>()
