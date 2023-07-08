@@ -15,7 +15,7 @@ describe('helpers', () => {
         prescribing_doctor: 'Doctor 1',
         start_date: '2022-03-20',
         end_date: '2022-05-20',
-        at_renew: false,
+
         photo_prescription: '',
         patient: 1
       },
@@ -27,7 +27,7 @@ describe('helpers', () => {
         prescribing_doctor: 'Doctor 2',
         start_date: '2022-03-10',
         end_date: '2022-05-10',
-        at_renew: false,
+
         photo_prescription: '',
         patient: 1
       }
@@ -45,7 +45,7 @@ describe('helpers', () => {
         prescribing_doctor: 'Doctor 1',
         start_date: '2022-03-20',
         end_date: '2022-05-20',
-        at_renew: false,
+
         photo_prescription: '',
         patient: 1
       }
@@ -63,7 +63,7 @@ describe('helpers', () => {
         prescribing_doctor: 'Doctor 1',
         start_date: '2021-03-20',
         end_date: '2021-05-20',
-        at_renew: false,
+
         photo_prescription: '',
         patient: 1
       },
@@ -75,7 +75,7 @@ describe('helpers', () => {
         prescribing_doctor: 'Doctor 2',
         start_date: '2022-01-10',
         end_date: '2022-03-10',
-        at_renew: false,
+
         photo_prescription: '',
         patient: 1
       },
@@ -87,7 +87,7 @@ describe('helpers', () => {
         prescribing_doctor: 'Doctor 2',
         start_date: '2022-01-11',
         end_date: '2022-02-10',
-        at_renew: false,
+
         photo_prescription: '',
         patient: 1
       }
@@ -110,7 +110,7 @@ describe('helpers', () => {
         prescribing_doctor: 'Doctor 1',
         start_date: '2021-03-20',
         end_date: '2021-05-20',
-        at_renew: false,
+
         photo_prescription: '',
         patient: 1
       },
@@ -122,7 +122,7 @@ describe('helpers', () => {
         prescribing_doctor: 'Doctor 2',
         start_date: '2022-01-10',
         end_date: '2022-03-10',
-        at_renew: false,
+
         photo_prescription: '',
         patient: 1
       },
@@ -134,7 +134,7 @@ describe('helpers', () => {
         prescribing_doctor: 'Doctor 2',
         start_date: '2022-01-11',
         end_date: '2022-02-10',
-        at_renew: false,
+
         photo_prescription: '',
         patient: 1
       }
@@ -152,7 +152,7 @@ describe('helpers', () => {
         prescribing_doctor: 'Doctor 1',
         start_date: '2021-03-20',
         end_date: '2021-05-20',
-        at_renew: false,
+
         photo_prescription: '',
         patient: 1
       },
@@ -164,7 +164,7 @@ describe('helpers', () => {
         prescribing_doctor: 'Doctor 2',
         start_date: '2022-01-10',
         end_date: '2022-03-10',
-        at_renew: false,
+
         photo_prescription: '',
         patient: 1
       },
@@ -176,7 +176,7 @@ describe('helpers', () => {
         prescribing_doctor: 'Doctor 2',
         start_date: '2022-01-11',
         end_date: '2022-02-10',
-        at_renew: false,
+
         photo_prescription: '',
         patient: 1
       }

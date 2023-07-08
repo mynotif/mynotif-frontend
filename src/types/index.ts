@@ -27,7 +27,6 @@ interface Prescription {
   prescribing_doctor: string
   start_date: string
   end_date: string
-  at_renew: boolean
   photo_prescription: string
   is_valid: boolean
   patient: number
@@ -40,7 +39,6 @@ const defaultPrescription = {
   prescribing_doctor: '',
   start_date: '',
   end_date: '',
-  at_renew: false,
   photo_prescription: '',
   is_valid: false,
   patient: 0
