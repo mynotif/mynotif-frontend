@@ -3,6 +3,8 @@ import { FunctionComponent, createContext, useState } from 'react'
 interface ErrorType {
   title?: string
   body: string
+  variant?: string
+  delay?: number
 }
 interface ErrorContextType {
   errors: ErrorType[]

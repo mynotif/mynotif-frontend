@@ -38,7 +38,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
     try {
       await updatePatient(token, patientState)
     } catch (error) {
-      addErrorCallback({ body: 'Error updating patient' })
+      addErrorCallback({ body: t('error.updatedPatient') })
     }
   }
 
@@ -49,7 +49,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
       setPatientState(data)
     } catch (error) {
       console.error(error)
-      addErrorCallback({ body: 'Error creating patient' })
+      addErrorCallback({ body: t('error.createdPatient') })
     }
   }
 

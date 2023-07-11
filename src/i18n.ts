@@ -104,14 +104,28 @@ i18n
             resetPasswordEmail: 'Please enter the e-mail address',
             search: 'Search ...',
             searchDoctor: 'Search by doctor name ...',
-            createNewPassword: 'Create your new password'
+            createNewPassword: 'Create your new password',
+            updatedPatient: 'The patient has been successfully updated',
+            createdPatient: 'The patient has been successfully created',
+            updatedPrescription: 'The prescription has been updated successfully',
+            createdPrescription: 'The prescription has been created successfully',
+            userLoggin: 'You have successfully logged in!',
+            userRegister: 'Your account has been successfully created! Please log in to continue',
+            userUpdated: 'Profile updated successfully'
           },
           error: {
             errorLogin: 'Sorry, the email or password is incorrect!',
             emptyFieldError: 'Fields cannot be empty',
             passwordsMismatchError: 'Passwords don\'t match',
             passwordLengthError: 'Password must be at least 8 characters long',
-            missResetParameters: 'Missing password reset parameters'
+            missResetParameters: 'Missing password reset parameters',
+            updatedPatient: 'An error occurred while updating the patient',
+            createdPatient: 'An error occurred during patient creation',
+            updatedPrescription: 'An error occurred while updating the prescription',
+            createdPrescription: 'An error occurred while creating the prescription',
+            userLoggin: 'Invalid username or password. Please try again',
+            errorRegister: 'Error during registration',
+            userUpdated: 'Error updating profile'
           }
         }
       },
@@ -197,14 +211,28 @@ i18n
             resetPasswordEmail: 'Veuillez entrer l\'adresse e-mail',
             search: 'Rechercher ...',
             searchDoctor: 'Rechercher par nom de medecin ...',
-            createNewPassword: 'Créer votre nouveau mot de passe'
+            createNewPassword: 'Créer votre nouveau mot de passe',
+            updatedPatient: 'Le patient a été mis à jour avec succès',
+            createdPatient: 'Le patient a été créé avec succès',
+            updatedPrescription: 'L\'ordonnance a été mis à jour avec succès',
+            createdPrescription: 'L\'ordonnance a été créé avec succès',
+            userLoggin: 'Vous vous êtes connecté avec succès !',
+            userRegister: 'Votre compte a été créé avec succès ! Veuillez vous connecter pour continuer',
+            userUpdated: 'Profil mis à jour avec succès'
           },
           error: {
             errorLogin: 'Désolé, l\'email ou le mot de passe est incorrect !',
             emptyFieldError: 'Les champs ne peuvent pas être vides',
             passwordsMismatchError: 'Les mots de passe ne correspondent pas',
             passwordLengthError: 'Le mot de passe doit comporter au moins 8 caractères',
-            missResetParameters: 'Paramètres de réinitialisation du mot de passe manquants'
+            missResetParameters: 'Paramètres de réinitialisation du mot de passe manquants',
+            updatedPatient: 'Une erreur est survenue lors de la mise à jour du patient',
+            createdPatient: 'Une erreur est survenue lors de la création du patient',
+            updatedPrescription: 'Une erreur est survenue lors de la mise à jour de l\'ordonnance',
+            createdPrescription: 'Une erreur est survenue lors de la création de l\'ordonnance',
+            userLoggin: 'Nom d\'utilisateur ou mot de passe invalide. Veuillez réessayer.',
+            errorRegister: 'Erreur lors de l\'inscription',
+            userUpdated: 'Erreur de mise à jour du profil'
           }
         }
       }

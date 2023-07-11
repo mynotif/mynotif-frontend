@@ -41,7 +41,7 @@ const ProfilePage = (): JSX.Element => {
       setProfileContext(data)
       navigate('/account')
     } catch (error) {
-      addErrorCallback({ body: 'Error updating profile' })
+      addErrorCallback({ body: t('error.userUpdated') })
     }
   }
 
