@@ -5,13 +5,13 @@ import { TokenContext } from '../../context/token'
 import useTranslationHook from '../../hook/TranslationHook'
 import { login } from '../../services/api'
 import { setTokenLocalStorage } from '../../utils/helpers'
-import { ErrorContext, ErrorType } from '../../context/error'
+import { FlashMessageContext, FlashMessageType } from '../../context/flashmessage'
 
 const LoginForm = (): JSX.Element => {
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const { setToken } = useContext(TokenContext)
-  const { addError } = useContext(ErrorContext)
+  const { addErrorMessage } = useContext(FlashMessageContext)
   const navigate = useNavigate()
   const { t } = useTranslationHook()
   const [error, setError] = useState<string>('')
@@ -22,8 +22,8 @@ const LoginForm = (): JSX.Element => {
   const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
     setPassword(e.target.value)
 
-  const addErrorCallback = useCallback(
-    (error: ErrorType) => addError(error),
+  const addErrorMessageCallback = useCallback(
+    (flashMessage: FlashMessageType) => addErrorMessage(flashMessage),
     // eslint-disable-next-line
     []
   )
@@ -37,7 +37,7 @@ const LoginForm = (): JSX.Element => {
     } catch (error) {
       console.error(error)
       setError(t('error.errorLogin'))
-      addErrorCallback({ body: t('error.userLoggin') })
+      addErrorMessageCallback({ body: t('error.userLoggin') })
     }
   }
 

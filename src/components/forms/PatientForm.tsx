@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Patient } from '../../types'
 import { TokenContext } from '../../context/token'
-import { ErrorContext, ErrorType } from '../../context/error'
+import { FlashMessageContext, FlashMessageType } from '../../context/flashmessage'
 import useTranslationHook from '../../hook/TranslationHook'
 import { createPatient, updatePatient } from '../../services/api'
 
@@ -17,7 +17,7 @@ interface PatientFormProps {
 
 const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm }) => {
   const { token } = useContext(TokenContext)
-  const { addError } = useContext(ErrorContext)
+  const { addErrorMessage } = useContext(FlashMessageContext)
   const [patientState, setPatientState] = useState<Patient>(patient)
   const { t } = useTranslationHook()
   const navigate = useNavigate()
@@ -27,8 +27,8 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
     setPatientState({ ...patientState, [name]: value })
   }
 
-  const addErrorCallback = useCallback(
-    (error: ErrorType) => addError(error),
+  const addErrorMessageCallback = useCallback(
+    (flashMessage: FlashMessageType) => addErrorMessage(flashMessage),
     // eslint-disable-next-line
     []
   )
@@ -38,7 +38,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
     try {
       await updatePatient(token, patientState)
     } catch (error) {
-      addErrorCallback({ body: t('error.updatedPatient') })
+      addErrorMessageCallback({ body: t('error.updatedPatient') })
     }
   }
 
@@ -49,7 +49,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
       setPatientState(data)
     } catch (error) {
       console.error(error)
-      addErrorCallback({ body: t('error.createdPatient') })
+      addErrorMessageCallback({ body: t('error.createdPatient') })
     }
   }
 

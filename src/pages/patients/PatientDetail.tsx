@@ -4,7 +4,7 @@ import { strict as assert } from 'assert'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Card, Button } from 'react-bootstrap'
 import { TokenContext } from '../../context/token'
-import { ErrorContext, ErrorType } from '../../context/error'
+import { FlashMessageContext, FlashMessageType } from '../../context/flashmessage'
 import { getPatient } from '../../services/api'
 import { Patient } from '../../types'
 import Spinner from 'react-bootstrap/Spinner'
@@ -14,11 +14,11 @@ const PatientDetail = (): JSX.Element => {
   const { id } = useParams<'id'>()
 
   const { token } = useContext(TokenContext)
-  const { addError } = useContext(ErrorContext)
+  const { addErrorMessage } = useContext(FlashMessageContext)
   const { t } = useTranslationHook()
 
-  const addErrorCallback = useCallback(
-    (error: ErrorType) => addError(error),
+  const addErrorMessageCallback = useCallback(
+    (error: FlashMessageType) => addErrorMessage(error),
     // eslint-disable-next-line
     []
   )
@@ -33,9 +33,9 @@ const PatientDetail = (): JSX.Element => {
       setPatient(data)
     } catch (error) {
       console.error(error)
-      addErrorCallback({ body: 'Error fetching patient data' })
+      addErrorMessageCallback({ body: 'Error fetching patient data' })
     }
-  }, [token, addErrorCallback, id])
+  }, [token, addErrorMessageCallback, id])
 
   useEffect(() => {
     if (token === null) return

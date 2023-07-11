@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { ErrorContext, ErrorType } from '../../context/error'
+import { FlashMessageContext, FlashMessageType } from '../../context/flashmessage'
 import { TokenContext } from '../../context/token'
 import { strict as assert } from 'assert'
 import { getPatient } from '../../services/api'
@@ -12,11 +12,11 @@ const PatientEdit = (): JSX.Element => {
   const { id } = useParams<'id'>()
 
   const { token } = useContext(TokenContext)
-  const { addError } = useContext(ErrorContext)
+  const { addErrorMessage } = useContext(FlashMessageContext)
   const { t } = useTranslationHook()
 
-  const addErrorCallback = useCallback(
-    (error: ErrorType) => addError(error),
+  const addErrorMessageCallback = useCallback(
+    (flashMessage: FlashMessageType) => addErrorMessage(flashMessage),
     // eslint-disable-next-line
     []
   )
@@ -31,9 +31,9 @@ const PatientEdit = (): JSX.Element => {
       setPatient(data)
     } catch (error) {
       console.error(error)
-      addErrorCallback({ body: 'Error fetching patient data' })
+      addErrorMessageCallback({ body: 'Error fetching patient data' })
     }
-  }, [token, addErrorCallback, id])
+  }, [token, addErrorMessageCallback, id])
 
   useEffect(() => {
     if (token === null) return

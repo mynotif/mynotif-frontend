@@ -9,7 +9,7 @@ import { Button, Modal } from 'react-bootstrap'
 import useTranslationHook from '../hook/TranslationHook'
 import ModalDelete from './modal/ModalDelete'
 import { deletePatient } from '../services/api'
-import { ErrorContext } from '../context/error'
+import { FlashMessageContext } from '../context/flashmessage'
 interface PatientLineProps {
   patient: Patient
   reloadPatients: () => void
@@ -25,7 +25,7 @@ const PatientLine: FunctionComponent<PatientLineProps> = ({ patient, reloadPatie
   const { token } = useContext(TokenContext)
 
   const [show, setShow] = useState(false)
-  const { addError } = useContext(ErrorContext)
+  const { addErrorMessage } = useContext(FlashMessageContext)
   const handleClose = (): void => setShow(false)
   const handleShow = (): void => setShow(true)
 
@@ -48,7 +48,7 @@ const PatientLine: FunctionComponent<PatientLineProps> = ({ patient, reloadPatie
       reloadPatients()
     } catch (error) {
       console.error(error)
-      addError({ body: 'Error deleting patient' })
+      addErrorMessage({ body: 'Error deleting patient' })
     }
   }
 

@@ -4,7 +4,7 @@ import { Button, Form } from 'react-bootstrap'
 import { Profile } from '../../types'
 import { TokenContext } from '../../context/token'
 import { ProfileContext } from '../../context/profile'
-import { ErrorContext, ErrorType } from '../../context/error'
+import { FlashMessageContext, FlashMessageType } from '../../context/flashmessage'
 import { updateUser } from '../../services/api'
 import useTranslationHook from '../../hook/TranslationHook'
 import { useNavigate } from 'react-router-dom'
@@ -12,7 +12,7 @@ import TitlePage from '../../components/TitlePage'
 
 const ProfilePage = (): JSX.Element => {
   const { token } = useContext(TokenContext)
-  const { addError } = useContext(ErrorContext)
+  const { addErrorMessage } = useContext(FlashMessageContext)
   const { profile: profileContext, setProfile: setProfileContext } = useContext(ProfileContext)
   // local unsaved profile state so we only hit the profile context after saving
   const [profile, setProfile] = useState<Profile>(profileContext)
@@ -24,8 +24,8 @@ const ProfilePage = (): JSX.Element => {
     setProfile(profileContext)
   }, [profileContext])
 
-  const addErrorCallback = useCallback(
-    (error: ErrorType) => addError(error),
+  const addErrorMessageCallback = useCallback(
+    (flashMessage: FlashMessageType) => addErrorMessage(flashMessage),
     // eslint-disable-next-line
     []
   )
@@ -41,7 +41,7 @@ const ProfilePage = (): JSX.Element => {
       setProfileContext(data)
       navigate('/account')
     } catch (error) {
-      addErrorCallback({ body: t('error.userUpdated') })
+      addErrorMessageCallback({ body: t('error.userUpdated') })
     }
   }
 

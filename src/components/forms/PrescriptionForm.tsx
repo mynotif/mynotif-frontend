@@ -7,7 +7,7 @@ import React, {
 } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import { ErrorContext, ErrorType } from '../../context/error'
+import { FlashMessageContext, FlashMessageType } from '../../context/flashmessage'
 import { TokenContext } from '../../context/token'
 import {
   createPatient,
@@ -42,7 +42,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
 }) => {
   const { token } = useContext(TokenContext)
   const [file, setFile] = useState<File>()
-  const { addError } = useContext(ErrorContext)
+  const { addErrorMessage } = useContext(FlashMessageContext)
   const { t } = useTranslationHook()
   const [addingNewPatient, setAddingNewPatient] = useState(false)
   const [patientState, setPatientState] = useState<Patient>(defaultPatient)
@@ -99,13 +99,13 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
       setPrescriptionState(data)
     } catch (error) {
       console.error(error)
-      addErrorCallback({ body: t('error.createdPrescription') })
+      addErrorMessageCallback({ body: t('error.createdPrescription') })
     }
   }
 
-  const addErrorCallback = useCallback(
-    (error: ErrorType) => addError(error),
-    [addError]
+  const addErrorMessageCallback = useCallback(
+    (flashMessage: FlashMessageType) => addErrorMessage(flashMessage),
+    [addErrorMessage]
   )
 
   const handleSave = async (): Promise<void> => {
@@ -117,7 +117,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
       }
       navigate('/prescriptions')
     } catch (error) {
-      addErrorCallback({ body: t('error.updatedPrescription') })
+      addErrorMessageCallback({ body: t('error.updatedPrescription') })
     }
   }
 
@@ -160,7 +160,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
     } catch (error) {
       console.error(error)
       setError(t('error.createdPatient'))
-      addErrorCallback({ body: t('error.createdPatient') })
+      addErrorMessageCallback({ body: t('error.createdPatient') })
     }
   }
 

@@ -1,12 +1,12 @@
 import { FunctionComponent, useEffect, useState } from 'react'
 import { Alert } from 'react-bootstrap'
-import { ErrorType } from '../context/error'
+import { FlashMessageType } from '../../context/flashmessage'
 
-interface ErrorProps extends ErrorType {
+interface FlashMessageProps extends FlashMessageType {
   onClose: () => void
 }
 
-const Error: FunctionComponent<ErrorProps> = ({ title = 'Error', body, variant = 'danger', delay = 3000, onClose }) => {
+const FlashMessage: FunctionComponent<FlashMessageProps> = ({ title, body, variant, delay = 3000, onClose }) => {
   const [showToast, setShowToast] = useState(true)
 
   useEffect(() => {
@@ -27,4 +27,4 @@ const Error: FunctionComponent<ErrorProps> = ({ title = 'Error', body, variant =
   )
 }
 
-export default Error
+export default FlashMessage
