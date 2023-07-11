@@ -99,7 +99,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
       setPrescriptionState(data)
     } catch (error) {
       console.error(error)
-      addErrorCallback({ body: 'Error creating prescription' })
+      addErrorCallback({ body: t('error.createdPrescription') })
     }
   }
 
@@ -117,7 +117,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
       }
       navigate('/prescriptions')
     } catch (error) {
-      addErrorCallback({ body: 'Error updating prescription' })
+      addErrorCallback({ body: t('error.updatedPrescription') })
     }
   }
 
@@ -159,7 +159,8 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
       }))
     } catch (error) {
       console.error(error)
-      setError('Error creating patient')
+      setError(t('error.createdPatient'))
+      addErrorCallback({ body: t('error.createdPatient') })
     }
   }
 

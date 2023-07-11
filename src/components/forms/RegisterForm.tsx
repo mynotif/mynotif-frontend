@@ -36,9 +36,9 @@ const RegisterForm = (): JSX.Element => {
     } catch (error) {
       console.error(error)
       if (axios.isAxiosError(error)) {
-        addErrorCallback({ title: 'Error registering', body: JSON.stringify((error).response?.data) })
+        addErrorCallback({ title: t('error.errorRegister'), body: JSON.stringify((error).response?.data) })
       } else {
-        addErrorCallback({ body: 'Error registering' })
+        addErrorCallback({ body: t('error.errorRegister') })
       }
     }
   }

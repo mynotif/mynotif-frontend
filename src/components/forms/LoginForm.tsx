@@ -1,15 +1,17 @@
-import React, { useContext, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Form } from 'react-bootstrap'
 import { TokenContext } from '../../context/token'
 import useTranslationHook from '../../hook/TranslationHook'
 import { login } from '../../services/api'
 import { setTokenLocalStorage } from '../../utils/helpers'
+import { ErrorContext, ErrorType } from '../../context/error'
 
 const LoginForm = (): JSX.Element => {
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const { setToken } = useContext(TokenContext)
+  const { addError } = useContext(ErrorContext)
   const navigate = useNavigate()
   const { t } = useTranslationHook()
   const [error, setError] = useState<string>('')
@@ -20,6 +22,11 @@ const LoginForm = (): JSX.Element => {
   const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
     setPassword(e.target.value)
 
+  const addErrorCallback = useCallback(
+    (error: ErrorType) => addError(error),
+    // eslint-disable-next-line
+    []
+  )
   const onLogin = async (e: React.MouseEvent<HTMLElement>): Promise<void> => {
     try {
       const response = await login(username, password)
@@ -30,6 +37,7 @@ const LoginForm = (): JSX.Element => {
     } catch (error) {
       console.error(error)
       setError(t('error.errorLogin'))
+      addErrorCallback({ body: t('error.userLoggin') })
     }
   }
 

@@ -9,11 +9,13 @@ const Errors = (): JSX.Element => {
 
   return (
     <>
-      {errors.map(({ title, body }, index) => (
+      {errors.map(({ title, body, variant, delay }, index) => (
         <Error
           key={body}
           title={title}
           body={body}
+          variant={variant}
+          delay={delay}
           onClose={() => removeIndex(index)}
         />
       ))}
