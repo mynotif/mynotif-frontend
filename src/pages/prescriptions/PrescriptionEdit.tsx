@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
-import { ErrorContext } from '../../context/error'
+import { FlashMessageContext } from '../../context/flashmessage'
 import { TokenContext } from '../../context/token'
 import { getPrescription } from '../../services/api'
 import { Prescription } from '../../types'
@@ -13,7 +13,7 @@ const PrescriptionEdit = (): JSX.Element => {
   const [prescription, setPrescription] = useState<Prescription | null>(null)
   const { token } = useContext(TokenContext)
 
-  const { addError } = useContext(ErrorContext)
+  const { addErrorMessage } = useContext(FlashMessageContext)
   const { t } = useTranslationHook()
 
   // allows us to pick up prescription
@@ -26,11 +26,11 @@ const PrescriptionEdit = (): JSX.Element => {
       setPrescription(data)
     } catch (error) {
       console.error(error)
-      addError({ body: 'Error fetching prescription data' })
+      addErrorMessage({ body: 'Error fetching prescription data' })
     }
   }
 
-  const fetchPrescriptionCallback = useCallback(fetchPrescription, [addError])
+  const fetchPrescriptionCallback = useCallback(fetchPrescription, [addErrorMessage])
 
   // when the component is loaded, the Prescription are picked up
   useEffect(() => {

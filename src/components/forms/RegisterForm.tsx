@@ -2,7 +2,7 @@ import { useCallback, useContext, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { ErrorContext, ErrorType } from '../../context/error'
+import { FlashMessageContext, FlashMessageType } from '../../context/flashmessage'
 import useTranslationHook from '../../hook/TranslationHook'
 import { register } from '../../services/api'
 
@@ -10,12 +10,12 @@ const RegisterForm = (): JSX.Element => {
   const [username, setUsername] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  const { addError } = useContext(ErrorContext)
+  const { addErrorMessage } = useContext(FlashMessageContext)
   const navigate = useNavigate()
   const { t } = useTranslationHook()
 
-  const addErrorCallback = useCallback(
-    (error: ErrorType) => addError(error),
+  const addErrorMessageCallback = useCallback(
+    (flashMessage: FlashMessageType) => addErrorMessage(flashMessage),
     // eslint-disable-next-line
     []
   )
@@ -36,9 +36,9 @@ const RegisterForm = (): JSX.Element => {
     } catch (error) {
       console.error(error)
       if (axios.isAxiosError(error)) {
-        addErrorCallback({ title: t('error.errorRegister'), body: JSON.stringify((error).response?.data) })
+        addErrorMessageCallback({ title: t('error.errorRegister'), body: JSON.stringify((error).response?.data) })
       } else {
-        addErrorCallback({ body: t('error.errorRegister') })
+        addErrorMessageCallback({ body: t('error.errorRegister') })
       }
     }
   }

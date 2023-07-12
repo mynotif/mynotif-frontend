@@ -6,7 +6,7 @@ import axios, { AxiosError } from 'axios'
 import { ErrorResponse } from '../types'
 import { useIsLoggedIn, useLogout } from '../utils/hooks'
 import { getTokenLocalStorage } from '../utils/helpers'
-import { ErrorContext, ErrorType } from '../context/error'
+import { FlashMessageContext, FlashMessageType } from '../context/flashmessage'
 import { ProfileContext } from '../context/profile'
 import { TokenContext } from '../context/token'
 import { getProfile } from '../services/api'
@@ -16,12 +16,12 @@ import useTranslationHook from '../hook/TranslationHook'
 const Header = (): JSX.Element => {
   const { token, setToken } = useContext(TokenContext)
   const { profile, setProfile } = useContext(ProfileContext)
-  const { addError } = useContext(ErrorContext)
+  const { addErrorMessage } = useContext(FlashMessageContext)
   const logout = useLogout()
   const { t } = useTranslationHook()
 
-  const addErrorCallback = useCallback(
-    (error: ErrorType) => addError(error),
+  const addErrorMessageCallback = useCallback(
+    (flashMessage: FlashMessageType) => addErrorMessage(flashMessage),
     // eslint-disable-next-line
     []
   )
@@ -32,15 +32,15 @@ const Header = (): JSX.Element => {
       const axiosError = error as AxiosError<ErrorResponse>
       const { response } = axiosError
       if ((response?.status === 401) && (response.data?.detail === 'Invalid token.')) {
-        addErrorCallback({ body: 'Session expired, please log in again.' })
+        addErrorMessageCallback({ body: 'Session expired, please log in again.' })
         logout()
       }
     } else {
-      addErrorCallback({ body: 'Error fetching profile data' })
+      addErrorMessageCallback({ body: 'Error fetching profile data' })
     }
   },
   // eslint-disable-next-line
-    [addErrorCallback]
+    [addErrorMessageCallback]
   )
 
   const fetchProfileCallback = useCallback(async (token: string): Promise<void> => {
@@ -51,7 +51,7 @@ const Header = (): JSX.Element => {
       handleFetchProfileErrorCallback(error)
     }
     // eslint-disable-next-line
-  }, [addErrorCallback, handleFetchProfileErrorCallback])
+  }, [addErrorMessageCallback, handleFetchProfileErrorCallback])
 
   // fetch profile
   useEffect(() => {

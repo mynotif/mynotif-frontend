@@ -2,13 +2,13 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import { deletePrescription, getPrescriptions } from '../services/api'
 import { Prescription } from '../types'
 import { TokenContext } from '../context/token'
-import { ErrorContext } from '../context/error'
+import { FlashMessageContext } from '../context/flashmessage'
 import assert from 'assert'
 
 const usePrescription = (): [Prescription[], (id: number) => Promise<void>] => {
   const [prescriptions, setPrescriptions] = useState<Prescription[]>([])
   const { token } = useContext(TokenContext)
-  const { addError } = useContext(ErrorContext)
+  const { addErrorMessage } = useContext(FlashMessageContext)
 
   // allows us to pick up prescriptions
   const fetchPrescriptions = async (token: string): Promise<void> => {
@@ -17,7 +17,7 @@ const usePrescription = (): [Prescription[], (id: number) => Promise<void>] => {
       setPrescriptions(data)
     } catch (error) {
       console.error(error)
-      addError({ body: 'Error fetching prescription data' })
+      addErrorMessage({ body: 'Error fetching prescription data' })
     }
   }
 
@@ -29,13 +29,13 @@ const usePrescription = (): [Prescription[], (id: number) => Promise<void>] => {
       await fetchPrescriptions(token)
     } catch (error) {
       console.error(error)
-      addError({ body: 'Error deleting prescription' })
+      addErrorMessage({ body: 'Error deleting prescription' })
     }
   }
 
   const fetchPrescriptionsCallback = useCallback(
     fetchPrescriptions,
-    [addError]
+    [addErrorMessage]
   )
 
   // when the component is loaded, the Prescriptions are picked up
