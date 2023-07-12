@@ -239,7 +239,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
               <Form.Label className='my-3'>
                 <FontAwesomeIcon icon={['fas', 'user-injured']} /> {t('text.whichPatientAddOrder')}
               </Form.Label>
-              <Form.Control as='select' name='patient' onChange={onInputChange} className='custom-select'>
+              <Form.Control as='select' name='patient' onChange={onInputChange} className='custom-select' value={newCreatedPatientId ?? ''}>
                 <option>--{t('form.selectPatient')}--</option>
                 <option value='addNewPatient'>--{t('title.addPatient')}--</option>
                 {
@@ -247,7 +247,6 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
                     <SelectPatient
                       key={patient.id}
                       patient={patient}
-                      selected={patient.id === newCreatedPatientId}
                     />
                   ))
                 }
