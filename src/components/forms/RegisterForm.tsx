@@ -10,7 +10,7 @@ const RegisterForm = (): JSX.Element => {
   const [username, setUsername] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  const { addErrorMessage } = useContext(FlashMessageContext)
+  const { addErrorMessage, addSuccessMessage } = useContext(FlashMessageContext)
   const navigate = useNavigate()
   const { t } = useTranslationHook()
 
@@ -33,6 +33,7 @@ const RegisterForm = (): JSX.Element => {
     try {
       await register(username, password, email)
       navigate('/login')
+      addSuccessMessage({ body: t('text.userRegister') })
     } catch (error) {
       console.error(error)
       if (axios.isAxiosError(error)) {

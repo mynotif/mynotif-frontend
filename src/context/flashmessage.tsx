@@ -11,6 +11,7 @@ interface FlashMessageContextType {
   setFlashMessages: (flashMessages: FlashMessageType[]) => void
   addFlashMessage: (flash: FlashMessageType) => void
   addErrorMessage: (flash: FlashMessageType) => void
+  addSuccessMessage: (flash: FlashMessageType) => void
 }
 
 const flashDefault: FlashMessageType[] = []
@@ -18,7 +19,8 @@ const flashMessagesContextDefault = {
   flashMessages: flashDefault,
   setFlashMessages: () => { },
   addFlashMessage: () => { },
-  addErrorMessage: () => { }
+  addErrorMessage: () => { },
+  addSuccessMessage: () => { }
 }
 
 const flashMessagesEqual = (flash1: FlashMessageType, flash2: FlashMessageType): boolean => (
@@ -44,9 +46,10 @@ const FlashMessageContextProvider: FunctionComponent = ({ children }) => {
   )
 
   const addErrorMessage = (flash: FlashMessageType): void => addFlashMessage({ ...flash, title: 'Error', variant: 'danger' })
+  const addSuccessMessage = (flash: FlashMessageType): void => addFlashMessage({ ...flash, title: 'Success', variant: 'success' })
 
   return (
-    <FlashMessageContext.Provider value={{ flashMessages, setFlashMessages, addFlashMessage, addErrorMessage }}>
+    <FlashMessageContext.Provider value={{ flashMessages, setFlashMessages, addFlashMessage, addErrorMessage, addSuccessMessage }}>
       {children}
     </FlashMessageContext.Provider>
   )
