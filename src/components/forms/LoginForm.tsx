@@ -11,7 +11,7 @@ const LoginForm = (): JSX.Element => {
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const { setToken } = useContext(TokenContext)
-  const { addErrorMessage } = useContext(FlashMessageContext)
+  const { addErrorMessage, addSuccessMessage } = useContext(FlashMessageContext)
   const navigate = useNavigate()
   const { t } = useTranslationHook()
   const [error, setError] = useState<string>('')
@@ -34,10 +34,11 @@ const LoginForm = (): JSX.Element => {
       setTokenLocalStorage(token)
       setToken(token)
       navigate('/prescriptions')
+      addSuccessMessage({ body: t('text.userLogin') })
     } catch (error) {
       console.error(error)
       setError(t('error.errorLogin'))
-      addErrorMessageCallback({ body: t('error.userLoggin') })
+      addErrorMessageCallback({ body: t('error.userLogin') })
     }
   }
 

@@ -106,12 +106,14 @@ i18n
             searchDoctor: 'Search by doctor name ...',
             createNewPassword: 'Create your new password',
             updatedPatient: 'The patient has been successfully updated',
+            deletePatientList: 'The patient has been successfully deleted',
             createdPatient: 'The patient has been successfully created',
             updatedPrescription: 'The prescription has been updated successfully',
             createdPrescription: 'The prescription has been created successfully',
-            userLoggin: 'You have successfully logged in!',
+            userLogin: 'You have successfully logged in!',
             userRegister: 'Your account has been successfully created! Please log in to continue',
-            userUpdated: 'Profile updated successfully'
+            userUpdated: 'Profile updated successfully',
+            successResetPassword: 'You have successfully reset your password! \n Please check your inbox for instructions on how to create a new password.'
           },
           error: {
             errorLogin: 'Sorry, the email or password is incorrect!',
@@ -123,7 +125,7 @@ i18n
             createdPatient: 'An error occurred during patient creation',
             updatedPrescription: 'An error occurred while updating the prescription',
             createdPrescription: 'An error occurred while creating the prescription',
-            userLoggin: 'Invalid username or password. Please try again',
+            userLogin: 'Invalid username or password. Please try again',
             errorRegister: 'Error during registration',
             userUpdated: 'Error updating profile'
           }
@@ -213,12 +215,14 @@ i18n
             searchDoctor: 'Rechercher par nom de medecin ...',
             createNewPassword: 'Créer votre nouveau mot de passe',
             updatedPatient: 'Le patient a été mis à jour avec succès',
+            deletePatientList: 'Le patient a été supprimé avec succès',
             createdPatient: 'Le patient a été créé avec succès',
             updatedPrescription: 'L\'ordonnance a été mis à jour avec succès',
             createdPrescription: 'L\'ordonnance a été créé avec succès',
-            userLoggin: 'Vous vous êtes connecté avec succès !',
+            userLogin: 'Vous vous êtes connecté avec succès !',
             userRegister: 'Votre compte a été créé avec succès ! Veuillez vous connecter pour continuer',
-            userUpdated: 'Profil mis à jour avec succès'
+            userUpdated: 'Profil mis à jour avec succès',
+            successResetPassword: 'Vous avez réinitialisé votre mot de passe avec succès ! \n Veuillez consulter votre boîte de réception pour les instructions afin de créer un nouveau mot de passe.'
           },
           error: {
             errorLogin: 'Désolé, l\'email ou le mot de passe est incorrect !',
@@ -230,7 +234,7 @@ i18n
             createdPatient: 'Une erreur est survenue lors de la création du patient',
             updatedPrescription: 'Une erreur est survenue lors de la mise à jour de l\'ordonnance',
             createdPrescription: 'Une erreur est survenue lors de la création de l\'ordonnance',
-            userLoggin: 'Nom d\'utilisateur ou mot de passe invalide. Veuillez réessayer.',
+            userLogin: 'Nom d\'utilisateur ou mot de passe invalide. Veuillez réessayer.',
             errorRegister: 'Erreur lors de l\'inscription',
             userUpdated: 'Erreur de mise à jour du profil'
           }

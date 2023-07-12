@@ -42,7 +42,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
 }) => {
   const { token } = useContext(TokenContext)
   const [file, setFile] = useState<File>()
-  const { addErrorMessage } = useContext(FlashMessageContext)
+  const { addErrorMessage, addSuccessMessage } = useContext(FlashMessageContext)
   const { t } = useTranslationHook()
   const [addingNewPatient, setAddingNewPatient] = useState(false)
   const [patientState, setPatientState] = useState<Patient>(defaultPatient)
@@ -87,6 +87,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
   const addPrescription = async (): Promise<void> => {
     await onCreatePrescription()
     navigate('/prescriptions')
+    addSuccessMessage({ body: t('text.createdPrescription') })
   }
 
   const onCreatePrescription = async (): Promise<void> => {
@@ -157,6 +158,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
         ...prevState,
         patient: data?.id
       }))
+      addSuccessMessage({ body: t('text.createdPatient') })
     } catch (error) {
       console.error(error)
       setError(t('error.createdPatient'))

@@ -17,7 +17,7 @@ interface PatientFormProps {
 
 const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm }) => {
   const { token } = useContext(TokenContext)
-  const { addErrorMessage } = useContext(FlashMessageContext)
+  const { addErrorMessage, addSuccessMessage } = useContext(FlashMessageContext)
   const [patientState, setPatientState] = useState<Patient>(patient)
   const { t } = useTranslationHook()
   const navigate = useNavigate()
@@ -61,11 +61,13 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
   const addPatient = async (): Promise<void> => {
     await onCreatePatient()
     navigate('/patients')
+    addSuccessMessage({ body: t('text.createdPatient') })
   }
 
   const editPatient = async (): Promise<void> => {
     await onUpdate()
     navigate(`/patients/${patient.id}`)
+    addSuccessMessage({ body: t('text.updatedPatient') })
   }
 
   return (
