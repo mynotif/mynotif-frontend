@@ -24,9 +24,43 @@ const Prescriptions: FunctionComponent<PrescriptionsProps> = ({
   const { token } = useContext(TokenContext)
 
   const [filteredPrescriptions, setFilteredPrescriptions] = useState<Prescription[]>(prescriptions)
+  const [searchPatient, setSearchPatient] = useState<string>('')
 
   // Using Record to get a key-value array
-  const [patients, setPatients] = useState<Record<number, Patient | null>>({})
+  const [patients, setPatients] = useState<Record<number, Patient>>({})
+
+  // Function to check if the prescription's doctor name matches the search
+  const isDoctorMatch = (prescription: Prescription, searchValue: string): boolean => {
+    const doctorName = prescription.prescribing_doctor.toLowerCase()
+    const searchLowerCase = searchValue.toLowerCase()
+    return doctorName.includes(searchLowerCase)
+  }
+
+  // Function to check if the prescription's patient name matches the search
+  const isPatientMatch = (prescription: Prescription, searchValue: string): boolean => {
+    const patient = patients[prescription.id]
+    assert(patient)
+    const patientFullName = getPatientFullName(patient).toLowerCase()
+    const searchLowerCase = searchValue.toLowerCase()
+    return patientFullName.includes(searchLowerCase)
+  }
+
+  // Utility function to get the full name of a patient
+  const getPatientFullName = (patient: Patient): string => {
+    const { firstname, lastname } = patient
+    return `${firstname} ${lastname}`
+  }
+
+  const updatePatientsData = (prevPatients: Record<number, Patient>, patientResults: Array<{ id: number, patient: Patient }>): Record<number, Patient> =>
+    patientResults.reduce((newPatientsData, { id, patient }) => (
+      { ...newPatientsData, [id]: patient })
+    , { ...prevPatients })
+
+  const filterByPrescriptions = useCallback((prescription: Prescription, searchValue: string) => (
+    isDoctorMatch(prescription, searchValue) ||
+    isPatientMatch(prescription, searchValue)
+    // eslint-disable-next-line
+  ), [patients])
 
   useEffect(() => {
     const fetchPatients = async (): Promise<void> => {
@@ -42,13 +76,14 @@ const Prescriptions: FunctionComponent<PrescriptionsProps> = ({
         // Waits for patientPromises to be loaded
         const patientResults = await Promise.all(patientPromises)
 
-        const patientsData: Record<number, Patient | null> = {}
-
-        patientResults.forEach(({ id, patient }) => {
-          patientsData[id] = patient
+        setPatients(prevPatients => {
+          return updatePatientsData(prevPatients, patientResults)
         })
 
-        setPatients(patientsData)
+        const filteredData = prescriptions.filter((prescription) =>
+          filterByPrescriptions(prescription, searchPatient)
+        )
+        setFilteredPrescriptions(filteredData)
       } catch (error) {
         console.error(error)
       }
@@ -56,13 +91,8 @@ const Prescriptions: FunctionComponent<PrescriptionsProps> = ({
 
     // eslint-disable-next-line no-void
     void fetchPatients()
+    // eslint-disable-next-line
   }, [token, prescriptions])
-
-  const filterByPrescriptions = (prescription: Prescription, searchValue: string): boolean => {
-    return (
-      prescription.prescribing_doctor.toLowerCase().includes(searchValue.toLowerCase())
-    )
-  }
 
   /**
    * Manages the search by filtering prescriptions according to the value entered by the user.
@@ -70,7 +100,8 @@ const Prescriptions: FunctionComponent<PrescriptionsProps> = ({
   const handleSearch = useCallback((searchValue: string) => {
     const filteredData = prescriptions.filter((prescription) => filterByPrescriptions(prescription, searchValue))
     setFilteredPrescriptions(filteredData)
-  }, [prescriptions])
+    setSearchPatient(searchValue)
+  }, [prescriptions, filterByPrescriptions])
 
   return (
     <>
