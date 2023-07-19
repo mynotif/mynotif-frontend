@@ -2,3 +2,14 @@
     font-family: 'Lato', sans-serif;
     font-weight: 400;
   }
+  .App {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .App-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 100px; /* Set your footer height here */
+  }

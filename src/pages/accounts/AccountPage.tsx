@@ -14,7 +14,7 @@ const AccountPage = (): JSX.Element => {
   }
   return (
     <>
-      <div className='d-flex flex-column align-items-center justify-content-center py-4'>
+      <div className='d-flex flex-column align-items-center justify-content-center mt-5 py-4'>
         <h1>{t('title.myAccount')}</h1>
         <Badge bg='secondary'>{t('text.standardAccount')}</Badge>
       </div>

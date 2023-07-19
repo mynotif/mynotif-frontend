@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Container, Nav, Navbar } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Col, Container, Nav, Navbar, Row } from 'react-bootstrap'
+import { Link, useLocation } from 'react-router-dom'
 import axios, { AxiosError } from 'axios'
 import { ErrorResponse } from '../types'
 import { useIsLoggedIn, useLogout } from '../utils/hooks'
@@ -10,8 +10,9 @@ import { FlashMessageContext, FlashMessageType } from '../context/flashmessage'
 import { ProfileContext } from '../context/profile'
 import { TokenContext } from '../context/token'
 import { getProfile } from '../services/api'
-import { BACKEND_URL } from '../services/constants'
 import useTranslationHook from '../hook/TranslationHook'
+import PageHeader from './PageHeader'
+import { PAGE_CONFIG } from '../utils/constants'
 
 const Header = (): JSX.Element => {
   const { token, setToken } = useContext(TokenContext)
@@ -19,6 +20,8 @@ const Header = (): JSX.Element => {
   const { addErrorMessage } = useContext(FlashMessageContext)
   const logout = useLogout()
   const { t } = useTranslationHook()
+  const location = useLocation()
+  const currentPage = PAGE_CONFIG.find(page => location.pathname.includes(page.path))
 
   const addErrorMessageCallback = useCallback(
     (flashMessage: FlashMessageType) => addErrorMessage(flashMessage),
@@ -66,49 +69,43 @@ const Header = (): JSX.Element => {
 
   return (
     <>
-      <Navbar className='shadow-lg' fixed='bottom' bg='body' data-bs-theme='light'>
-        <Container>
-          {useIsLoggedIn() === true && (
-            <>
-              {profile.is_staff && (
-                <Nav className='me-auto'>
-                  <Nav.Link href={`${BACKEND_URL}/admin`}>
-                    <div className='d-flex flex-column align-items-center'>
-                      <FontAwesomeIcon icon={['fas', 'user-shield']} />
-                      <div className='mt-1'>{t('text.admin')}</div>
+      {useIsLoggedIn() === true && (
+        <Navbar className='shadow-sm mb-5' fixed='top' bg='body' data-bs-theme='light'>
+          <Container fluid>
+            <Row className='bg-light shadow-sm mx-1 w-100'>
+              <Col className='d-flex align-items-center justify-content-between'>
+                {location.pathname === '/home' && (
+                  <div className='ms-5'>
+                    <div className='ps-1'>
+                      <p className='text-warning fw-bold m-0'>{t('text.welcome')}</p>
+                      <p className='fw-bold mb-0 text-primary'>{t('text.hey')}, {profile.username}</p>
                     </div>
-                  </Nav.Link>
-                </Nav>
-              )}
-              <Nav className='me-auto'>
-                <Nav.Link as={Link} to='/patients'>
-                  <div className='d-flex flex-column align-items-center'>
-                    <FontAwesomeIcon icon={['fas', 'users']} className='fa-lg' />
-                    <div className='mt-1'>{t('text.patients')}</div>
                   </div>
-                </Nav.Link>
-              </Nav>
-
-              <Nav className='mr-auto'>
-                <Nav.Link as={Link} to='/prescriptions' className='text-center'>
-                  <div className='d-flex flex-column align-items-center'>
-                    <FontAwesomeIcon icon={['fas', 'file-medical']} className='fa-lg' />
-                    <div className='mt-1'>{t('text.prescription')}</div>
-                  </div>
-                </Nav.Link>
-              </Nav>
-              <Nav className='ms-auto'>
-                <Nav.Link as={Link} to='/account'>
-                  <div className='d-flex flex-column align-items-center'>
-                    <FontAwesomeIcon icon={['fas', 'user-nurse']} className='fa-lg' />
-                    <div className='mt-1'>{t('text.profile')}</div>
-                  </div>
-                </Nav.Link>
-              </Nav>
-            </>
-          )}
-        </Container>
-      </Navbar>
+                )}
+                {(currentPage != null) && (
+                  <PageHeader title={currentPage?.title} />
+                )}
+                <div className='d-flex align-items-center gap-2'>
+                  <Nav>
+                    <Nav.Link as={Link} to='#'>
+                      <div className='d-flex flex-column align-items-center'>
+                        <FontAwesomeIcon icon={['far', 'bell']} className='text-primary' />
+                      </div>
+                    </Nav.Link>
+                  </Nav>
+                  <Nav>
+                    <Nav.Link as={Link} to='#' className='text-center'>
+                      <div className='d-flex flex-column align-items-center'>
+                        <FontAwesomeIcon icon={['fas', 'bars']} className='toggle text-primary' />
+                      </div>
+                    </Nav.Link>
+                  </Nav>
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        </Navbar>
+      )}
     </>
   )
 }
