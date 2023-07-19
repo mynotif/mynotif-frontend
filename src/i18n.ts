@@ -113,7 +113,9 @@ i18n
             userLogin: 'You have successfully logged in!',
             userRegister: 'Your account has been successfully created! Please log in to continue',
             userUpdated: 'Profile updated successfully',
-            successResetPassword: 'You have successfully reset your password! \n Please check your inbox for instructions on how to create a new password.'
+            successResetPassword: 'You have successfully reset your password! \n Please check your inbox for instructions on how to create a new password.',
+            welcome: 'Welcome',
+            hey: 'Hey'
           },
           error: {
             errorLogin: 'Sorry, the email or password is incorrect!',
@@ -222,7 +224,9 @@ i18n
             userLogin: 'Vous vous êtes connecté avec succès !',
             userRegister: 'Votre compte a été créé avec succès ! Veuillez vous connecter pour continuer',
             userUpdated: 'Profil mis à jour avec succès',
-            successResetPassword: 'Vous avez réinitialisé votre mot de passe avec succès ! \n Veuillez consulter votre boîte de réception pour les instructions afin de créer un nouveau mot de passe.'
+            successResetPassword: 'Vous avez réinitialisé votre mot de passe avec succès ! \n Veuillez consulter votre boîte de réception pour les instructions afin de créer un nouveau mot de passe.',
+            welcome: 'Bienvenue',
+            hey: 'Salut'
           },
           error: {
             errorLogin: 'Désolé, l\'email ou le mot de passe est incorrect !',

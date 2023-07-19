@@ -44,7 +44,7 @@ const PatientDetail = (): JSX.Element => {
   }, [token, fetchPatientCallback])
 
   return (
-    <div>
+    <div className='mt-5'>
       {patient !== null ? (
         <div className='bg-light p-4'>
           <Card className='text-center'>
