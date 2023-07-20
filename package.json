@@ -57,6 +57,11 @@
       "react-app/jest"
     ]
   },
+  "ts-standard": {
+    "plugins": [
+      "react-hooks"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",

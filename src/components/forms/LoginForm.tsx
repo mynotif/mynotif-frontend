@@ -24,7 +24,7 @@ const LoginForm = (): JSX.Element => {
 
   const addErrorMessageCallback = useCallback(
     (flashMessage: FlashMessageType) => addErrorMessage(flashMessage),
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
   const onLogin = async (e: React.MouseEvent<HTMLElement>): Promise<void> => {

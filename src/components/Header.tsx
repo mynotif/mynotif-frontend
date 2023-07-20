@@ -22,7 +22,7 @@ const Header = (): JSX.Element => {
 
   const addErrorMessageCallback = useCallback(
     (flashMessage: FlashMessageType) => addErrorMessage(flashMessage),
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
 
@@ -39,8 +39,8 @@ const Header = (): JSX.Element => {
       addErrorMessageCallback({ body: 'Error fetching profile data' })
     }
   },
-  // eslint-disable-next-line
-    [addErrorMessageCallback]
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  [addErrorMessageCallback]
   )
 
   const fetchProfileCallback = useCallback(async (token: string): Promise<void> => {
@@ -50,7 +50,7 @@ const Header = (): JSX.Element => {
     } catch (error: unknown | AxiosError) {
       handleFetchProfileErrorCallback(error)
     }
-    // eslint-disable-next-line
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addErrorMessageCallback, handleFetchProfileErrorCallback])
 
   // fetch profile
