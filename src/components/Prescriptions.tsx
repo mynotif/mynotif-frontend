@@ -59,7 +59,7 @@ const Prescriptions: FunctionComponent<PrescriptionsProps> = ({
   const filterByPrescriptions = useCallback((prescription: Prescription, searchValue: string) => (
     isDoctorMatch(prescription, searchValue) ||
     isPatientMatch(prescription, searchValue)
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   ), [patients])
 
   useEffect(() => {
@@ -91,7 +91,7 @@ const Prescriptions: FunctionComponent<PrescriptionsProps> = ({
 
     // eslint-disable-next-line no-void
     void fetchPatients()
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token, prescriptions])
 
   /**

@@ -29,7 +29,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
 
   const addErrorMessageCallback = useCallback(
     (flashMessage: FlashMessageType) => addErrorMessage(flashMessage),
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
 

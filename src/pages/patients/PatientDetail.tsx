@@ -19,7 +19,7 @@ const PatientDetail = (): JSX.Element => {
 
   const addErrorMessageCallback = useCallback(
     (error: FlashMessageType) => addErrorMessage(error),
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
 
