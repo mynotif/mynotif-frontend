@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Container, Nav, Navbar } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import axios, { AxiosError } from 'axios'
 import { ErrorResponse } from '../types'
 import { useIsLoggedIn, useLogout } from '../utils/hooks'
@@ -19,6 +19,7 @@ const Header = (): JSX.Element => {
   const { addErrorMessage } = useContext(FlashMessageContext)
   const logout = useLogout()
   const { t } = useTranslationHook()
+  const location = useLocation()
 
   const addErrorMessageCallback = useCallback(
     (flashMessage: FlashMessageType) => addErrorMessage(flashMessage),
@@ -50,7 +51,7 @@ const Header = (): JSX.Element => {
     } catch (error: unknown | AxiosError) {
       handleFetchProfileErrorCallback(error)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addErrorMessageCallback, handleFetchProfileErrorCallback])
 
   // fetch profile
@@ -64,6 +65,8 @@ const Header = (): JSX.Element => {
     setToken(getTokenLocalStorage())
   }, [setToken])
 
+  const highlightOnPathname = (pathname: string): string => location.pathname === pathname ? 'text-primary' : ''
+
   return (
     <>
       <Navbar className='shadow-lg' fixed='bottom' bg='body' data-bs-theme='light'>
@@ -73,7 +76,7 @@ const Header = (): JSX.Element => {
               {profile.is_staff && (
                 <Nav className='me-auto'>
                   <Nav.Link href={`${BACKEND_URL}/admin`}>
-                    <div className='d-flex flex-column align-items-center'>
+                    <div className={`d-flex flex-column align-items-center ${highlightOnPathname('/admin')}`}>
                       <FontAwesomeIcon icon={['fas', 'user-shield']} />
                       <div className='mt-1'>{t('text.admin')}</div>
                     </div>
@@ -82,7 +85,7 @@ const Header = (): JSX.Element => {
               )}
               <Nav className='me-auto'>
                 <Nav.Link as={Link} to='/patients'>
-                  <div className='d-flex flex-column align-items-center'>
+                  <div className={`d-flex flex-column align-items-center ${highlightOnPathname('/patients')}`}>
                     <FontAwesomeIcon icon={['fas', 'users']} className='fa-lg' />
                     <div className='mt-1'>{t('text.patients')}</div>
                   </div>
@@ -91,7 +94,7 @@ const Header = (): JSX.Element => {
 
               <Nav className='mr-auto'>
                 <Nav.Link as={Link} to='/prescriptions' className='text-center'>
-                  <div className='d-flex flex-column align-items-center'>
+                  <div className={`d-flex flex-column align-items-center ${highlightOnPathname('/prescriptions')}`}>
                     <FontAwesomeIcon icon={['fas', 'file-medical']} className='fa-lg' />
                     <div className='mt-1'>{t('text.prescription')}</div>
                   </div>
@@ -99,7 +102,7 @@ const Header = (): JSX.Element => {
               </Nav>
               <Nav className='ms-auto'>
                 <Nav.Link as={Link} to='/account'>
-                  <div className='d-flex flex-column align-items-center'>
+                  <div className={`d-flex flex-column align-items-center ${highlightOnPathname('/account')}`}>
                     <FontAwesomeIcon icon={['fas', 'user-nurse']} className='fa-lg' />
                     <div className='mt-1'>{t('text.profile')}</div>
                   </div>
