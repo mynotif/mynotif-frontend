@@ -8,7 +8,7 @@ import { far } from '@fortawesome/free-regular-svg-icons'
 import { TokenContextProvider } from './context/token'
 import { FlashMessageContextProvider } from './context/flashmessage'
 import { ProfileContextProvider } from './context/profile'
-import Header from './components/Header'
+import Footer from './components/Footer'
 import FlashMessages from './components/flashMessages/FlashMessages'
 import PatientsPage from './pages/patients/PatientsPage'
 import PrescriptionsPage from './pages/prescriptions/PrescriptionsPage'
@@ -36,7 +36,6 @@ function App (): JSX.Element {
         <TokenContextProvider>
           <ProfileContextProvider>
             <FlashMessageContextProvider>
-              <Header />
               <Container className='mb-5 pb-5'>
                 <FlashMessages />
                 <Routes>
@@ -77,6 +76,7 @@ function App (): JSX.Element {
                   </Route>
                 </Routes>
               </Container>
+              <Footer />
             </FlashMessageContextProvider>
           </ProfileContextProvider>
         </TokenContextProvider>
