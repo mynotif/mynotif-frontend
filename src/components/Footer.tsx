@@ -1,7 +1,5 @@
 import { useCallback, useContext, useEffect } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Container, Nav, Navbar } from 'react-bootstrap'
-import { Link, useLocation } from 'react-router-dom'
+import { Container, Navbar } from 'react-bootstrap'
 import axios, { AxiosError } from 'axios'
 import { ErrorResponse } from '../types'
 import { useIsLoggedIn, useLogout } from '../utils/hooks'
@@ -12,6 +10,7 @@ import { TokenContext } from '../context/token'
 import { getProfile } from '../services/api'
 import { BACKEND_URL } from '../services/constants'
 import useTranslationHook from '../hook/TranslationHook'
+import FooterNav from './FooterNav'
 
 const Header = (): JSX.Element => {
   const { token, setToken } = useContext(TokenContext)
@@ -19,7 +18,6 @@ const Header = (): JSX.Element => {
   const { addErrorMessage } = useContext(FlashMessageContext)
   const logout = useLogout()
   const { t } = useTranslationHook()
-  const location = useLocation()
 
   const addErrorMessageCallback = useCallback(
     (flashMessage: FlashMessageType) => addErrorMessage(flashMessage),
@@ -65,54 +63,21 @@ const Header = (): JSX.Element => {
     setToken(getTokenLocalStorage())
   }, [setToken])
 
-  const highlightOnPathname = (pathname: string): string => location.pathname === pathname ? 'text-primary' : ''
-
   return (
-    <>
-      <Navbar className='shadow-lg' fixed='bottom' bg='body' data-bs-theme='light'>
-        <Container>
-          {useIsLoggedIn() === true && (
-            <>
-              {profile.is_staff && (
-                <Nav className='me-auto'>
-                  <Nav.Link href={`${BACKEND_URL}/admin`}>
-                    <div className={`d-flex flex-column align-items-center ${highlightOnPathname('/admin')}`}>
-                      <FontAwesomeIcon icon={['fas', 'user-shield']} />
-                      <div className='mt-1'>{t('text.admin')}</div>
-                    </div>
-                  </Nav.Link>
-                </Nav>
-              )}
-              <Nav className='me-auto'>
-                <Nav.Link as={Link} to='/patients'>
-                  <div className={`d-flex flex-column align-items-center ${highlightOnPathname('/patients')}`}>
-                    <FontAwesomeIcon icon={['fas', 'users']} className='fa-lg' />
-                    <div className='mt-1'>{t('text.patients')}</div>
-                  </div>
-                </Nav.Link>
-              </Nav>
-
-              <Nav className='mr-auto'>
-                <Nav.Link as={Link} to='/prescriptions' className='text-center'>
-                  <div className={`d-flex flex-column align-items-center ${highlightOnPathname('/prescriptions')}`}>
-                    <FontAwesomeIcon icon={['fas', 'file-medical']} className='fa-lg' />
-                    <div className='mt-1'>{t('text.prescription')}</div>
-                  </div>
-                </Nav.Link>
-              </Nav>
-              <Nav className='ms-auto'>
-                <Nav.Link as={Link} to='/account'>
-                  <div className={`d-flex flex-column align-items-center ${highlightOnPathname('/account')}`}>
-                    <FontAwesomeIcon icon={['fas', 'user-nurse']} className='fa-lg' />
-                    <div className='mt-1'>{t('text.profile')}</div>
-                  </div>
-                </Nav.Link>
-              </Nav>
-            </>
-          )}
-        </Container>
-      </Navbar>
-    </>
+    <Navbar className='shadow-lg' fixed='bottom' bg='body' data-bs-theme='light'>
+      <Container>
+        {useIsLoggedIn() === true && (
+          <>
+            {profile.is_staff && (
+              <FooterNav url={`${BACKEND_URL}/admin`} icon='user-shield' title={t('text.admin')} />
+            )}
+            <FooterNav url='/patients' icon='users' title={t('text.patients')} />
+            <FooterNav url='/prescriptions' icon='file-medical' title={t('text.prescription')} />
+            <FooterNav url='/account' icon='user-nurse' title={t('text.profile')} />
+          </>
+        )}
+      </Container>
+    </Navbar>
   )
 }
 
