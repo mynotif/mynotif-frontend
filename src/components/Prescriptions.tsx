@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { FunctionComponent, useCallback, useContext, useEffect, useState } from 'react'
-import { Button, Container } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import { Patient, Prescription } from '../types'
 import PrescriptionTr from './PrescriptionTr'
 import useTranslationHook from '../hook/TranslationHook'
@@ -112,19 +112,17 @@ const Prescriptions: FunctionComponent<PrescriptionsProps> = ({
       </div>
       <TitlePage title={t('title.listPrescriptions')} />
       <SearchBar onSearch={handleSearch} placeholderText={t('text.searchDoctor')} />
-      <Container>
-        {
-          filteredPrescriptions.map((prescription) => (
-            <PrescriptionTr
-              key={prescription.id}
-              prescription={prescription}
-              patient={patients[prescription.id] ?? null}
-              onDelete={onDelete}
-              onEdit={onEdit}
-            />
-          ))
-        }
-      </Container>
+      {
+        filteredPrescriptions.map((prescription) => (
+          <PrescriptionTr
+            key={prescription.id}
+            prescription={prescription}
+            patient={patients[prescription.id] ?? null}
+            onDelete={onDelete}
+            onEdit={onEdit}
+          />
+        ))
+      }
     </>
   )
 }

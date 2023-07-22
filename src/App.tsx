@@ -26,16 +26,18 @@ import AccountPage from './pages/accounts/AccountPage'
 import './App.css'
 import ResetPassword from './pages/authentifications/ResetPassword'
 import NewResetPassword from './pages/authentifications/NewResetPassword'
+import Header from './components/Header'
 
 library.add(fas, fab, far)
 
 function App (): JSX.Element {
   return (
-    <div className='App'>
+    <div className='App bg-light'>
       <BrowserRouter>
         <TokenContextProvider>
           <ProfileContextProvider>
             <FlashMessageContextProvider>
+              <Header />
               <Container className='mb-5 pb-5'>
                 <FlashMessages />
                 <Routes>
