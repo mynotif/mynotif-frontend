@@ -45,9 +45,6 @@ const PatientEdit = (): JSX.Element => {
     <>
       {(patient !== null) ? (
         <>
-          <div className='d-flex align-items-center justify-content-center bg-info rounded-bottom py-4'>
-            <h2 className='header center'>{t('title.editPatient')}</h2>
-          </div>
           <PatientForm patient={patient} isEditForm />
         </>
       ) : (

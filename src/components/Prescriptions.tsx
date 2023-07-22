@@ -5,7 +5,6 @@ import { Patient, Prescription } from '../types'
 import PrescriptionTr from './PrescriptionTr'
 import useTranslationHook from '../hook/TranslationHook'
 import SearchBar from './SearchBar'
-import TitlePage from './TitlePage'
 import { TokenContext } from '../context/token'
 import { strict as assert } from 'assert'
 import { getPatient } from '../services/api'
@@ -110,7 +109,6 @@ const Prescriptions: FunctionComponent<PrescriptionsProps> = ({
           <FontAwesomeIcon icon={['fas', 'file-medical']} />
         </Button>
       </div>
-      <TitlePage title={t('title.listPrescriptions')} />
       <SearchBar onSearch={handleSearch} placeholderText={t('text.searchDoctor')} />
       {
         filteredPrescriptions.map((prescription) => (

@@ -44,9 +44,6 @@ const PrescriptionEdit = (): JSX.Element => {
     <>
       {prescription !== null ? (
         <>
-          <div className='d-flex align-items-center justify-content-center bg-info rounded-bottom py-4'>
-            <h2 className='header center'>{t('title.renewPrescription')}</h2>
-          </div>
           <PrescriptionForm prescription={prescription} isEditForm />
         </>
       ) : (

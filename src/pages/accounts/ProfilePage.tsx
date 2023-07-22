@@ -8,7 +8,6 @@ import { FlashMessageContext, FlashMessageType } from '../../context/flashmessag
 import { updateUser } from '../../services/api'
 import useTranslationHook from '../../hook/TranslationHook'
 import { useNavigate } from 'react-router-dom'
-import TitlePage from '../../components/TitlePage'
 
 const ProfilePage = (): JSX.Element => {
   const { token } = useContext(TokenContext)
@@ -47,7 +46,6 @@ const ProfilePage = (): JSX.Element => {
 
   return (
     <div>
-      <TitlePage title={t('title.profile')} />
       <Form onSubmit={onFormSubmit}>
         <Form.Label>{t('form.emailAddress')}</Form.Label>
         <Form.Control

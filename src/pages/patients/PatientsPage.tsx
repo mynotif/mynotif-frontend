@@ -2,16 +2,13 @@ import PatientLine from '../../components/PatientLine'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import usePatients from '../../hook/patient.hook'
-import useTranslationHook from '../../hook/TranslationHook'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import TitlePage from '../../components/TitlePage'
 import { useCallback, useState } from 'react'
 import { Patient } from '../../types'
 import SearchBar from '../../components/SearchBar'
 
 const PatientsPage = (): JSX.Element => {
   const { patients, reloadPatients } = usePatients()
-  const { t } = useTranslationHook()
 
   // Search Bar
   const [filteredPatients, setFilteredPatients] = useState<Patient[]>(patients)
@@ -37,7 +34,6 @@ const PatientsPage = (): JSX.Element => {
           <FontAwesomeIcon icon={['fas', 'user-plus']} />
         </Button>
       </div>
-      <TitlePage title={t('title.myPatients')} />
       <SearchBar onSearch={handleSearch} />
       <Container>
         {filteredPatients.map((patient) => (
