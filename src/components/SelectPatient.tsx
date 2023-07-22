@@ -2,12 +2,11 @@ import React, { FunctionComponent } from 'react'
 import { Patient } from '../types'
 interface SelectProps {
   patient: Patient
-  selected?: boolean
 }
 
-const SelectPatient: FunctionComponent<SelectProps> = ({ patient, selected }) => {
+const SelectPatient: FunctionComponent<SelectProps> = ({ patient }) => {
   return (
-    <option key={patient.id} value={patient.id} selected={selected}>
+    <option key={patient.id} value={patient.id}>
       {patient.lastname + ' ' + patient.firstname}
     </option>
   )

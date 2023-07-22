@@ -129,6 +129,9 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
       ...prescriptionState,
       [name]: value
     })
+    if (name === 'patient' && value !== 'addNewPatient') {
+      setNewCreatedPatientId(Number(value))
+    }
     if (files !== null && files !== undefined) {
       setFile(files[0])
     }
