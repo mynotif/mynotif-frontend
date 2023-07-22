@@ -24,7 +24,7 @@ const Header = (): JSX.Element => {
                   <HeaderProfile />
                 )}
                 {(currentPage != null) && (
-                  <PageHeader url='#' title={currentPage.title} />
+                  <PageHeader url='/home' title={currentPage.title} />
                 )}
                 <NavigationLinks />
               </Col>

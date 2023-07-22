@@ -27,6 +27,7 @@ import './App.css'
 import ResetPassword from './pages/authentifications/ResetPassword'
 import NewResetPassword from './pages/authentifications/NewResetPassword'
 import Header from './components/Header'
+import HomePage from './pages/HomePage'
 
 library.add(fas, fab, far)
 
@@ -48,6 +49,8 @@ function App (): JSX.Element {
                   <Route path='/reset/password' element={<ResetPassword />} />
                   <Route path='/reset/password/:uid/:token' element={<NewResetPassword />} />
                   <Route element={<PrivateRoute />}>
+                    {/* Home */}
+                    <Route path='/home' element={<HomePage />} />
                     {/* Account */}
                     <Route path='/account/profile' element={<ProfilePage />} />
                     <Route path='/account' element={<AccountPage />} />
