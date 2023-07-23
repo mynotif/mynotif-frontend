@@ -33,7 +33,7 @@ const LoginForm = (): JSX.Element => {
       const { token } = response
       setTokenLocalStorage(token)
       setToken(token)
-      navigate('/prescriptions')
+      navigate('/home')
       addSuccessMessage({ body: t('text.userLogin') })
     } catch (error) {
       console.error(error)

@@ -12,7 +12,7 @@ const LoginPage = (): JSX.Element => {
 
   // If the user is already logged in, redirect to another page
   if (isLoggedIn === true) {
-    return <Navigate to='/prescriptions' replace />
+    return <Navigate to='/home' replace />
   }
 
   return (
