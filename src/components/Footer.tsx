@@ -21,6 +21,7 @@ const Footer = (): JSX.Element => {
             {profile.is_staff && (
               <FooterNav url={`${BACKEND_URL}/admin`} icon='user-shield' title={t('text.admin')} />
             )}
+            <FooterNav url='/home' icon='house' title={t('text.home')} />
             <FooterNav url='/patients' icon='users' title={t('text.patients')} />
             <FooterNav url='/prescriptions' icon='file-medical' title={t('text.prescription')} />
             <FooterNav url='/account' icon='user-nurse' title={t('text.profile')} />
