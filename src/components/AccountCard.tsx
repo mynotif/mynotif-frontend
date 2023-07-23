@@ -1,27 +1,18 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { IconPrefix, IconName } from '@fortawesome/fontawesome-svg-core'
-import React, { FunctionComponent } from 'react'
-import { Card } from 'react-bootstrap'
+import { FunctionComponent } from 'react'
 
 interface AccountCardProps {
   onClick: () => void
-  icon: [IconPrefix, IconName]
   title: string
 }
-const AccountCard: FunctionComponent<AccountCardProps> = ({ onClick, title, icon }): JSX.Element => {
-  return (
-    <Card onClick={onClick} className='text-center w-75 border-white'>
-      <Card.Body className='d-flex align-items-center justify-content-between'>
-        <div className='d-flex align-items-center'>
-          <FontAwesomeIcon className='me-2' icon={icon} />
-          {title}
-        </div>
-        <div className='ms-auto'>
-          <FontAwesomeIcon className='align-self-center' icon={['fas', 'angle-right']} />
-        </div>
-      </Card.Body>
-    </Card>
-  )
-}
+
+const AccountCard: FunctionComponent<AccountCardProps> = ({ onClick, title }): JSX.Element => (
+  <div onClick={onClick} className='link-dark' style={{ cursor: 'pointer' }}>
+    <div className='bg-white d-flex align-items-center justify-content-between p-3 border-bottom'>
+      <h6 className='m-0'>{title}</h6>
+      <FontAwesomeIcon icon={['fas', 'chevron-right']} />
+    </div>
+  </div>
+)
 
 export default AccountCard

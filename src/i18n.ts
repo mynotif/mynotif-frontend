@@ -40,7 +40,8 @@ i18n
             login: 'Connection to application',
             register: 'Registration',
             renewPrescription: 'I renew this prescription',
-            welcomeApp: 'Welcome on Mynotif'
+            welcomeApp: 'Welcome on Mynotif',
+            personalInfo: 'Personal Info'
           },
           navigation: {
             update: 'Update',
@@ -115,7 +116,11 @@ i18n
             userUpdated: 'Profile updated successfully',
             successResetPassword: 'You have successfully reset your password! \n Please check your inbox for instructions on how to create a new password.',
             welcome: 'Welcome',
-            hey: 'Hey'
+            hey: 'Hey',
+            name: 'Name',
+            surName: 'Surname',
+            email: 'Email',
+            phone: 'Phone'
           },
           error: {
             errorLogin: 'Sorry, the email or password is incorrect!',
@@ -151,7 +156,8 @@ i18n
             login: 'Connection à l\'application',
             register: 'Inscription',
             renewPrescription: 'Je renouvelle cette ordonnance',
-            welcomeApp: 'Bienvenue sur Mynotif'
+            welcomeApp: 'Bienvenue sur Mynotif',
+            personalInfo: 'Informations personnelles'
           },
           navigation: {
             update: 'Modifier',
@@ -226,7 +232,11 @@ i18n
             userUpdated: 'Profil mis à jour avec succès',
             successResetPassword: 'Vous avez réinitialisé votre mot de passe avec succès ! \n Veuillez consulter votre boîte de réception pour les instructions afin de créer un nouveau mot de passe.',
             welcome: 'Bienvenue',
-            hey: 'Salut'
+            hey: 'Salut',
+            name: 'Prénom',
+            surName: 'Nom',
+            email: 'Email',
+            phone: 'Téléphone'
           },
           error: {
             errorLogin: 'Désolé, l\'email ou le mot de passe est incorrect !',
