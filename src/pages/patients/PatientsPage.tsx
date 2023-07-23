@@ -8,7 +8,7 @@ import { Patient } from '../../types'
 import SearchBar from '../../components/SearchBar'
 
 const PatientsPage = (): JSX.Element => {
-  const { patients, reloadPatients } = usePatients()
+  const { patients } = usePatients()
 
   // Search Bar
   const [filteredPatients, setFilteredPatients] = useState<Patient[]>(patients)
@@ -37,7 +37,7 @@ const PatientsPage = (): JSX.Element => {
       <SearchBar onSearch={handleSearch} />
       <Container>
         {filteredPatients.map((patient) => (
-          <PatientLine key={patient.id} patient={patient} reloadPatients={reloadPatients} />
+          <PatientLine key={patient.id} patient={patient} />
         ))}
       </Container>
     </>

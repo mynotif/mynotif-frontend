@@ -120,7 +120,8 @@ i18n
             name: 'Name',
             surName: 'Surname',
             email: 'Email',
-            phone: 'Phone'
+            phone: 'Phone',
+            running: 'RUNNING'
           },
           error: {
             errorLogin: 'Sorry, the email or password is incorrect!',
@@ -236,7 +237,8 @@ i18n
             name: 'Prénom',
             surName: 'Nom',
             email: 'Email',
-            phone: 'Téléphone'
+            phone: 'Téléphone',
+            running: 'EN COURS'
           },
           error: {
             errorLogin: 'Désolé, l\'email ou le mot de passe est incorrect !',
