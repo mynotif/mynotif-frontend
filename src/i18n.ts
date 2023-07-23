@@ -41,7 +41,8 @@ i18n
             register: 'Registration',
             renewPrescription: 'I renew this prescription',
             welcomeApp: 'Welcome on Mynotif',
-            personalInfo: 'Personal Info'
+            personalInfo: 'Personal Info',
+            app: 'Mynotif'
           },
           navigation: {
             update: 'Update',
@@ -158,7 +159,8 @@ i18n
             register: 'Inscription',
             renewPrescription: 'Je renouvelle cette ordonnance',
             welcomeApp: 'Bienvenue sur Mynotif',
-            personalInfo: 'Informations personnelles'
+            personalInfo: 'Informations personnelles',
+            app: 'Mynotif'
           },
           navigation: {
             update: 'Modifier',
