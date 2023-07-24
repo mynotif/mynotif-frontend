@@ -6,10 +6,14 @@ import { useLocation } from 'react-router-dom'
 import { PAGE_CONFIG } from '../utils/constants'
 import HeaderProfile from './HeaderProfile'
 import { useIsLoggedIn } from '../utils/hooks'
+import { useState } from 'react'
+import Sidebar from './Sidebar'
 
 const Header = (): JSX.Element => {
   const location = useLocation()
   const currentPage = PAGE_CONFIG.find(page => location.pathname.includes(page.path))
+  const [showSidebar, setShowSidebar] = useState(false)
+  const handleCloseSidebar = (): void => setShowSidebar(false)
 
   useProfile()
 
@@ -26,12 +30,13 @@ const Header = (): JSX.Element => {
                 {(currentPage != null) && (
                   <PageHeader url='/home' title={currentPage.title} />
                 )}
-                <NavigationLinks />
+                <NavigationLinks onMenuClick={() => setShowSidebar(true)} />
               </Col>
             </Row>
           </Container>
         </Navbar>
       )}
+      <Sidebar show={showSidebar} handleClose={handleCloseSidebar} />
     </>
   )
 }
