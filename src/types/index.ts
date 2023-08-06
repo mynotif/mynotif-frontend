@@ -30,7 +30,6 @@ interface Prescription {
   photo_prescription: string
   is_valid: boolean
   patient: number
-  at_renew: boolean /* https://github.com/mynotif/mynotif-frontend/issues/211 */
 }
 
 const defaultPrescription = {
@@ -42,7 +41,6 @@ const defaultPrescription = {
   end_date: '',
   photo_prescription: '',
   is_valid: false,
-  at_renew: false,
   patient: 0
 }
 
