@@ -28,6 +28,7 @@ import ResetPassword from './pages/authentifications/ResetPassword'
 import NewResetPassword from './pages/authentifications/NewResetPassword'
 import Header from './components/Header'
 import HomePage from './pages/HomePage'
+import OneSignalManager from './services/oneSignal/OneSignalManager'
 
 library.add(fas, fab, far)
 
@@ -35,56 +36,58 @@ function App (): JSX.Element {
   return (
     <div className='App bg-light'>
       <BrowserRouter>
-        <TokenContextProvider>
-          <ProfileContextProvider>
-            <FlashMessageContextProvider>
-              <Header />
-              <Container className='mb-5 pb-5'>
-                <FlashMessages />
-                <Routes>
-                  <Route path='*' element={<PageNotFound />} />
-                  <Route path='/' element={<Navigate to='/login' />} />
-                  <Route path='/login' element={<LoginPage />} />
-                  <Route path='/register' element={<RegisterPage />} />
-                  <Route path='/reset/password' element={<ResetPassword />} />
-                  <Route path='/reset/password/:uid/:token' element={<NewResetPassword />} />
-                  <Route element={<PrivateRoute />}>
-                    {/* Home */}
-                    <Route path='/home' element={<HomePage />} />
-                    {/* Account */}
-                    <Route path='/account/profile' element={<ProfilePage />} />
-                    <Route path='/account' element={<AccountPage />} />
-                    {/* Patients */}
-                    <Route path='/patients' element={<PatientsPage />} />
-                    <Route
-                      path='/patients/create'
-                      element={<PatientCreatePage />}
-                    />
-                    <Route
-                      path='/patients/edit/:id'
-                      element={<PatientEdit />}
-                    />
-                    <Route path='/patients/:id' element={<PatientDetail />} />
-                    {/* Prescriptions */}
-                    <Route
-                      path='/prescriptions'
-                      element={<PrescriptionsPage />}
-                    />
-                    <Route
-                      path='/prescriptions/:id'
-                      element={<PrescriptionEdit />}
-                    />
-                    <Route
-                      path='/prescriptions/create'
-                      element={<PrescriptionCreatePage />}
-                    />
-                  </Route>
-                </Routes>
-              </Container>
-              <Footer />
-            </FlashMessageContextProvider>
-          </ProfileContextProvider>
-        </TokenContextProvider>
+        <OneSignalManager>
+          <TokenContextProvider>
+            <ProfileContextProvider>
+              <FlashMessageContextProvider>
+                <Header />
+                <Container className='mb-5 pb-5'>
+                  <FlashMessages />
+                  <Routes>
+                    <Route path='*' element={<PageNotFound />} />
+                    <Route path='/' element={<Navigate to='/login' />} />
+                    <Route path='/login' element={<LoginPage />} />
+                    <Route path='/register' element={<RegisterPage />} />
+                    <Route path='/reset/password' element={<ResetPassword />} />
+                    <Route path='/reset/password/:uid/:token' element={<NewResetPassword />} />
+                    <Route element={<PrivateRoute />}>
+                      {/* Home */}
+                      <Route path='/home' element={<HomePage />} />
+                      {/* Account */}
+                      <Route path='/account/profile' element={<ProfilePage />} />
+                      <Route path='/account' element={<AccountPage />} />
+                      {/* Patients */}
+                      <Route path='/patients' element={<PatientsPage />} />
+                      <Route
+                        path='/patients/create'
+                        element={<PatientCreatePage />}
+                      />
+                      <Route
+                        path='/patients/edit/:id'
+                        element={<PatientEdit />}
+                      />
+                      <Route path='/patients/:id' element={<PatientDetail />} />
+                      {/* Prescriptions */}
+                      <Route
+                        path='/prescriptions'
+                        element={<PrescriptionsPage />}
+                      />
+                      <Route
+                        path='/prescriptions/:id'
+                        element={<PrescriptionEdit />}
+                      />
+                      <Route
+                        path='/prescriptions/create'
+                        element={<PrescriptionCreatePage />}
+                      />
+                    </Route>
+                  </Routes>
+                </Container>
+                <Footer />
+              </FlashMessageContextProvider>
+            </ProfileContextProvider>
+          </TokenContextProvider>
+        </OneSignalManager>
       </BrowserRouter>
     </div>
   )
