@@ -195,24 +195,6 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
           onChange={onInputChange}
         />
       </Form.Group>
-      <Form.Group as={Col} className='mt-2'>
-        <Form.Label><FontAwesomeIcon icon={['fas', 'id-card']} /> {t('form.caisseDeRattachement')}</Form.Label>
-        <Form.Control
-          type='text'
-          value={prescriptionState.caisse_rattachement}
-          name='caisse_rattachement'
-          onChange={onInputChange}
-        />
-      </Form.Group>
-      <Form.Group as={Col} className='mt-2'>
-        <Form.Label><FontAwesomeIcon icon={['fas', 'id-card']} /> {t('form.carteVitale')}</Form.Label>
-        <Form.Control
-          type='text'
-          value={prescriptionState.carte_vitale}
-          name='carte_vitale'
-          onChange={onInputChange}
-        />
-      </Form.Group>
       <Row className='my-3'>
         <Form.Group as={Col} className='mt-2'>
           <Form.Label className='me-2'><FontAwesomeIcon icon={['fas', 'calendar-days']} /> {t('form.startDate')}</Form.Label>

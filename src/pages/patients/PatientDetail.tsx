@@ -67,7 +67,7 @@ const PatientDetail = (): JSX.Element => {
               </div>
               <div className='mb-4'>
                 <p className='text-muted'>{t('form.address')} | {t('form.city')}</p>
-                <h4>{patient.address}</h4>
+                <h4>{patient.street}</h4>
                 <h4>{patient.city}</h4>
               </div>
               <hr className='my-4' />

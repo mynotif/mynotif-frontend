@@ -1,14 +1,15 @@
 import { strict as assert } from 'assert'
 import { FunctionComponent, useState, useContext, useCallback } from 'react'
-import { Button, Col, Form } from 'react-bootstrap'
+import { Button, Col, Form, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-
+import { format } from 'date-fns'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Patient } from '../../types'
 import { TokenContext } from '../../context/token'
 import { FlashMessageContext, FlashMessageType } from '../../context/flashmessage'
 import useTranslationHook from '../../hook/TranslationHook'
 import { createPatient, updatePatient } from '../../services/api'
+import ReactDatePicker from 'react-datepicker'
 
 interface PatientFormProps {
   patient: Patient
@@ -21,6 +22,22 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
   const [patientState, setPatientState] = useState<Patient>(patient)
   const { t } = useTranslationHook()
   const navigate = useNavigate()
+
+  const birthdayDateValue: Date | null = patient.birthday !== '' ? new Date(patient.birthday) : null
+  const [birthdayDate, setBirthdayDate] = useState<Date | null>(birthdayDateValue)
+
+  const onBirthdayChange = (date: Date): void => {
+    setBirthdayDate(date)
+    updatePatientDate(date, 'birthday')
+  }
+
+  const updatePatientDate = (date: Date, field: string): void => {
+    const formattedDate = format(date, 'yyyy-MM-dd')
+    setPatientState((prevState) => ({
+      ...prevState,
+      [field]: formattedDate
+    }))
+  }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target
@@ -72,61 +89,98 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
 
   return (
     <Form className='mt-4' onSubmit={async e => await handleSubmit(e)}>
+      <Row className='my-3'>
+        <Form.Group as={Col} className='mt-2'>
+          <Form.Label><FontAwesomeIcon icon={['fas', 'id-card']} /> {t('form.lastName')}</Form.Label>
+          <Form.Control
+            name='lastname'
+            type='text'
+            value={patientState.lastname}
+            onChange={handleChange}
+          />
+        </Form.Group>
+
+        <Form.Group as={Col} className='mt-2'>
+          <Form.Label><FontAwesomeIcon icon={['fas', 'id-card']} /> {t('form.firstName')}</Form.Label>
+          <Form.Control
+            name='firstname'
+            type='text'
+            value={patientState.firstname}
+            onChange={handleChange}
+          />
+        </Form.Group>
+      </Row>
       <Form.Group as={Col} className='mt-2'>
-        <Form.Label><FontAwesomeIcon icon={['fas', 'id-card']} /> {t('form.lastName')}</Form.Label>
+        <Form.Label className='me-2'><FontAwesomeIcon icon={['fas', 'calendar-days']} /> {t('form.birthday')}</Form.Label>
+        <ReactDatePicker
+          selected={birthdayDate}
+          onChange={onBirthdayChange}
+          dateFormat='dd/MM/yyyy'
+          className='form-control'
+          peekNextMonth
+          showMonthDropdown
+          showYearDropdown
+          dropdownMode='select'
+        />
+      </Form.Group>
+      <Row className='my-3'>
+        <Form.Group as={Col} className='mt-2'>
+          <Form.Label><FontAwesomeIcon icon={['fas', 'address-card']} /> {t('form.address')}</Form.Label>
+          <Form.Control
+            name='street'
+            value={patientState.street}
+            onChange={handleChange}
+          />
+        </Form.Group>
+        <Form.Group as={Col} className='mt-2'>
+          <Form.Label><FontAwesomeIcon icon={['fas', 'city']} /> {t('form.city')}</Form.Label>
+          <Form.Control
+            name='city'
+            value={patientState.city}
+            onChange={handleChange}
+          />
+        </Form.Group>
+      </Row>
+
+      <Row className='my-3'>
+        <Form.Group as={Col} className='mt-2'>
+          <Form.Label><FontAwesomeIcon icon={['fas', 'mobile']} /> {t('form.phone')}</Form.Label>
+          <Form.Control
+            name='phone'
+            value={patientState.phone}
+            onChange={handleChange}
+          />
+        </Form.Group>
+
+        <Form.Group as={Col} className='mt-2'>
+          <Form.Label><FontAwesomeIcon icon={['fas', 'city']} />  {t('form.zipPostal')}</Form.Label>
+          <Form.Control
+            name='zip_code'
+            value={patientState.zip_code}
+            onChange={handleChange}
+          />
+        </Form.Group>
+      </Row>
+
+      <Form.Group as={Col} className='mt-2'>
+        <Form.Label><FontAwesomeIcon icon={['fas', 'id-card']} /> {t('form.caisseDeRattachement')}</Form.Label>
         <Form.Control
-          name='lastname'
           type='text'
-          value={patientState.lastname}
+          value={patientState.ss_provider_code}
+          name='ss_provider_code'
           onChange={handleChange}
         />
       </Form.Group>
-
       <Form.Group as={Col} className='mt-2'>
-        <Form.Label><FontAwesomeIcon icon={['fas', 'id-card']} /> {t('form.firstName')}</Form.Label>
+        <Form.Label><FontAwesomeIcon icon={['fas', 'id-card']} /> {t('form.carteVitale')}</Form.Label>
         <Form.Control
-          name='firstname'
           type='text'
-          value={patientState.firstname}
+          value={patientState.health_card_number}
+          name='health_card_number'
           onChange={handleChange}
         />
       </Form.Group>
 
-      <Form.Group as={Col} className='mt-2'>
-        <Form.Label><FontAwesomeIcon icon={['fas', 'address-card']} /> {t('form.emailAddress')}</Form.Label>
-        <Form.Control
-          name='address'
-          value={patientState.address}
-          onChange={handleChange}
-        />
-      </Form.Group>
-
-      <Form.Group as={Col} className='mt-2'>
-        <Form.Label><FontAwesomeIcon icon={['fas', 'mobile']} /> {t('form.phone')}</Form.Label>
-        <Form.Control
-          name='phone'
-          value={patientState.phone}
-          onChange={handleChange}
-        />
-      </Form.Group>
-
-      <Form.Group as={Col} className='mt-2'>
-        <Form.Label><FontAwesomeIcon icon={['fas', 'city']} /> {t('form.city')}</Form.Label>
-        <Form.Control
-          name='city'
-          value={patientState.city}
-          onChange={handleChange}
-        />
-      </Form.Group>
-
-      <Form.Group as={Col} className='mt-2'>
-        <Form.Label><FontAwesomeIcon icon={['fas', 'city']} />  {t('form.zipPostal')}</Form.Label>
-        <Form.Control
-          name='zip_code'
-          value={patientState.zip_code}
-          onChange={handleChange}
-        />
-      </Form.Group>
       <div className='d-flex align-items-center mt-4'>
         <Button variant='success' type='submit'>
           {t('navigation.validate')}
