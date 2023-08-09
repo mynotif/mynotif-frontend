@@ -73,7 +73,8 @@ i18n
             caisseDeRattachement: 'Caisse de rattachement',
             selectYourPrescription: 'Select your prescription',
             newPassword: 'New password',
-            confirmNewPassword: 'Confirm new password'
+            confirmNewPassword: 'Confirm new password',
+            birthday: 'Date of Birth'
           },
           text: {
             confirmationPatient: 'Are you sure you want to remove this patient?',
@@ -191,7 +192,8 @@ i18n
             caisseDeRattachement: 'Caisse de rattachement',
             selectYourPrescription: 'Séléctionne ton ordonnance',
             newPassword: 'Nouveau mot de passe',
-            confirmNewPassword: 'Confirmer le nouveau mot de passe'
+            confirmNewPassword: 'Confirmer le nouveau mot de passe',
+            birthday: 'Date de naissance'
           },
           text: {
             confirmationPatient: 'Etes vous sur de vouloir supprimer ce patient ?',

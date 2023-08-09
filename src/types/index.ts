@@ -2,10 +2,13 @@ interface Patient {
   id: number
   firstname: string
   lastname: string
-  address: string
+  street: string
   zip_code: string
   city: string
   phone: string
+  birthday: string
+  health_card_number: string
+  ss_provider_code: string
   prescriptions: Prescription[]
 }
 
@@ -13,17 +16,18 @@ const defaultPatient = {
   id: 0,
   firstname: '',
   lastname: '',
-  address: '',
+  street: '',
   zip_code: '',
   city: '',
   phone: '',
+  birthday: '',
+  health_card_number: '',
+  ss_provider_code: '',
   prescriptions: []
 }
 
 interface Prescription {
   id: number
-  carte_vitale: string
-  caisse_rattachement: string
   prescribing_doctor: string
   start_date: string
   end_date: string
@@ -34,8 +38,6 @@ interface Prescription {
 
 const defaultPrescription = {
   id: 0,
-  carte_vitale: '',
-  caisse_rattachement: '',
   prescribing_doctor: '',
   start_date: '',
   end_date: '',

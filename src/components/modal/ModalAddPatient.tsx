@@ -62,7 +62,7 @@ const ModalAddPatient: React.FC<ModalAddPatientProps> = ({
             <Form.Control
               name='address'
               type='text'
-              value={patientState.address}
+              value={patientState.street}
               onChange={handleChangeNewPatient}
             />
           </Form.Group>
