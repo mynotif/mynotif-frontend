@@ -29,6 +29,7 @@ import NewResetPassword from './pages/authentifications/NewResetPassword'
 import Header from './components/Header'
 import HomePage from './pages/HomePage'
 import OneSignalManager from './services/oneSignal/OneSignalManager'
+import NotificationPage from './pages/accounts/NotificationPage'
 
 library.add(fas, fab, far)
 
@@ -54,6 +55,7 @@ function App (): JSX.Element {
                       {/* Home */}
                       <Route path='/home' element={<HomePage />} />
                       {/* Account */}
+                      <Route path='/account/notifications' element={<NotificationPage />} />
                       <Route path='/account/profile' element={<ProfilePage />} />
                       <Route path='/account' element={<AccountPage />} />
                       {/* Patients */}
