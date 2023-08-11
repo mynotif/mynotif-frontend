@@ -16,6 +16,10 @@ const AccountPage = (): JSX.Element => {
     navigate('/account/profile')
   }
 
+  const onNotificationPreferences = (): void => {
+    navigate('/account/notifications')
+  }
+
   return (
     <div className='my-auto'>
       <div className='d-flex flex-column align-items-center justify-content-center py-4'>
@@ -24,7 +28,7 @@ const AccountPage = (): JSX.Element => {
       <div className='p-3'>
         <PersonalInfo profile={profile} onEdit={onEdit} />
         <div className='rounded-3 shadow overflow-hidden'>
-          <AccountCard onClick={() => { }} title={t('text.notifications')} />
+          <AccountCard onClick={onNotificationPreferences} title={t('text.notifications')} />
           <AccountCard onClick={() => { }} title={t('text.supportHelp')} />
           <AccountCard onClick={() => { }} title={t('text.legalNotices')} />
         </div>
