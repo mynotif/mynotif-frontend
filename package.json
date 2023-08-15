@@ -44,8 +44,12 @@
     "test": "react-scripts test",
     "docker:build": "docker build --tag mynotif/mynotif-frontend .",
     "docker:run": "docker run --rm -it --publish 3000:80 mynotif/mynotif-frontend",
-    "lint": "ts-standard src/",
-    "format": "ts-standard --fix src/",
+    "lint:prettier": "prettier --check 'src/**/*.{html,js,json,md,ts,tsx}' *.md",
+    "lint:ts-standard": "ts-standard src/",
+    "lint": "npm run lint:prettier && npm run lint:ts-standard",
+    "format:prettier": "prettier --write 'src/**/*.{html,js,json,md,ts,tsx}' *.md",
+    "format:ts-standard": "ts-standard --fix src/",
+    "format": "npm run format:prettier && npm run format:ts-standard",
     "eject": "react-scripts eject"
   },
   "engines": {
@@ -78,6 +82,7 @@
   "devDependencies": {
     "@types/lodash": "^4.14.181",
     "@types/react-datepicker": "^4.11.2",
+    "prettier": "^3.0.2",
     "ts-standard": "^10.0.0"
   }
 }
