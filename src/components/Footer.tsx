@@ -19,7 +19,7 @@ const Footer = (): JSX.Element => {
         {useIsLoggedIn() === true && (
           <>
             {profile.is_staff && (
-              <FooterNav url={`${BACKEND_URL}/admin`} icon='user-shield' title={t('text.admin')} />
+              <FooterNav url={`${BACKEND_URL}/admin`} icon='user-shield' title={t('text.admin')} isExternal />
             )}
             <FooterNav url='/home' icon='house' title={t('text.home')} />
             <FooterNav url='/patients' icon='users' title={t('text.patients')} />
