@@ -68,13 +68,19 @@ interface ErrorResponse {
   detail: string
 }
 
+interface LoginFormType {
+  username: string
+  password: string
+}
+
 export type {
   ErrorResponse,
   Patient,
   Prescription,
   PrescriptionUploadResponse,
   Profile,
-  Token
+  Token,
+  LoginFormType
 }
 
 export { defaultPatient, defaultPrescription }
