@@ -75,7 +75,8 @@ i18n
             selectYourPrescription: 'Select your prescription',
             newPassword: 'New password',
             confirmNewPassword: 'Confirm new password',
-            birthday: 'Date of Birth'
+            birthday: 'Date of Birth',
+            additionalDetails: 'Additional Details'
           },
           text: {
             confirmationPatient: 'Are you sure you want to remove this patient?',
@@ -197,7 +198,8 @@ i18n
             selectYourPrescription: 'Séléctionne ton ordonnance',
             newPassword: 'Nouveau mot de passe',
             confirmNewPassword: 'Confirmer le nouveau mot de passe',
-            birthday: 'Date de naissance'
+            birthday: 'Date de naissance',
+            additionalDetails: 'Détails supplémentaires'
           },
           text: {
             confirmationPatient: 'Etes vous sur de vouloir supprimer ce patient ?',
