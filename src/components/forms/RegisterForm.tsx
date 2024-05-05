@@ -1,18 +1,22 @@
-import { useCallback, useContext, useState } from 'react'
+import { useCallback, useContext } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { FlashMessageContext, FlashMessageType } from '../../context/flashmessage'
 import useTranslationHook from '../../hook/TranslationHook'
-import { register } from '../../services/api'
+import { register as createUser } from '../../services/api'
+import { useForm } from 'react-hook-form'
+import { RegisterFormType } from '../../types'
+import FormFieldError from '../FormFieldError'
 
 const RegisterForm = (): JSX.Element => {
-  const [username, setUsername] = useState<string>('')
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
   const { addErrorMessage, addSuccessMessage } = useContext(FlashMessageContext)
   const navigate = useNavigate()
   const { t } = useTranslationHook()
+  const { register, handleSubmit, formState: { errors } } = useForm<RegisterFormType>()
+
+  const minLengthPassword = 6 // Minimum length of the password required
+  const minLengthUsername = 2 // Minimum length of the username required
 
   const addErrorMessageCallback = useCallback(
     (flashMessage: FlashMessageType) => addErrorMessage(flashMessage),
@@ -20,18 +24,10 @@ const RegisterForm = (): JSX.Element => {
     []
   )
 
-  const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
-    setPassword(e.target.value)
-
-  const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
-    setEmail(e.target.value)
-
-  const onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
-    setUsername(e.target.value)
-
-  const handleRegister = async (): Promise<void> => {
+  const handleRegister = async (data: RegisterFormType): Promise<void> => {
+    const { username, password, email } = data
     try {
-      await register(username, password, email)
+      await createUser(username, password, email)
       navigate('/login')
       addSuccessMessage({ body: t('text.userRegister') })
     } catch (error) {
@@ -44,39 +40,54 @@ const RegisterForm = (): JSX.Element => {
     }
   }
 
-  const onFormSubmit = (e: React.FormEvent): void => e.preventDefault()
-
   return (
-    <Form onSubmit={onFormSubmit}>
+    <Form onSubmit={handleSubmit(handleRegister)}>
       <Form.Group className='mb-3'>
         <Form.Label>{t('form.userName')}</Form.Label>
         <Form.Control
-          required
+          {...register(
+            'username',
+            {
+              required: { value: true, message: t('error.requiredField') },
+              minLength: { value: minLengthUsername, message: t('error.minLengthError', { count: minLengthUsername }) }
+            })
+          }
           type='text'
-          onChange={onUsernameChange}
         />
+        <FormFieldError errorMessage={errors.username?.message} />
       </Form.Group>
 
       <Form.Group className='mb-3'>
         <Form.Label>{t('form.emailAddress')}</Form.Label>
         <Form.Control
-          required
+          {...register(
+            'email',
+            {
+              required: { value: true, message: t('error.requiredField') }
+            })
+          }
           type='email'
-          onChange={onEmailChange}
         />
+        <FormFieldError errorMessage={errors.email?.message} />
       </Form.Group>
 
       <Form.Group className='mb-3'>
         <Form.Label>{t('form.password')}</Form.Label>
         <Form.Control
-          required
+          {...register(
+            'password',
+            {
+              required: { value: true, message: t('error.requiredField') },
+              minLength: { value: minLengthPassword, message: t('error.minLengthError', { count: minLengthPassword }) }
+            })
+          }
           type='password'
-          onChange={onPasswordChange}
         />
+        <FormFieldError errorMessage={errors.password?.message} />
       </Form.Group>
 
       <Form.Group className='mb-3'>
-        <Button variant='success' type='submit' onClick={handleRegister} className='w-100'>
+        <Button variant='success' type='submit' className='w-100'>
           {t('navigation.register')}
         </Button>
       </Form.Group>

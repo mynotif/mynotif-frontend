@@ -68,13 +68,20 @@ interface ErrorResponse {
   detail: string
 }
 
+interface RegisterFormType {
+  username: string
+  email: string
+  password: string
+}
+
 export type {
   ErrorResponse,
   Patient,
   Prescription,
   PrescriptionUploadResponse,
   Profile,
-  Token
+  Token,
+  RegisterFormType
 }
 
 export { defaultPatient, defaultPrescription }

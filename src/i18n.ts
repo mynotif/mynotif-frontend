@@ -138,7 +138,10 @@ i18n
             createdPrescription: 'An error occurred while creating the prescription',
             userLogin: 'Invalid username or password. Please try again',
             errorRegister: 'Error during registration',
-            userUpdated: 'Error updating profile'
+            userUpdated: 'Error updating profile',
+            requiredField: 'This field is required',
+            minLengthError: 'You must enter at least {{count}} characters.',
+            emailError: 'Please enter a valid email address'
           }
         }
       },
@@ -257,7 +260,10 @@ i18n
             createdPrescription: 'Une erreur est survenue lors de la création de l\'ordonnance',
             userLogin: 'Nom d\'utilisateur ou mot de passe invalide. Veuillez réessayer.',
             errorRegister: 'Erreur lors de l\'inscription',
-            userUpdated: 'Erreur de mise à jour du profil'
+            userUpdated: 'Erreur de mise à jour du profil',
+            requiredField: 'Ce champ est requis',
+            minLengthError: 'Vous devez entrer au moins {{count}} caractères.',
+            emailError: 'Veuillez saisir une adresse e-mail valide'
           }
         }
       }
