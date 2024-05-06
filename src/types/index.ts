@@ -6,7 +6,7 @@ interface Patient {
   zip_code: string
   city: string
   phone: string
-  birthday: string
+  birthday: string | null
   health_card_number: string
   ss_provider_code: string
   prescriptions: Prescription[]

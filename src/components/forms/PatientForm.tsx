@@ -10,6 +10,7 @@ import { FlashMessageContext, FlashMessageType } from '../../context/flashmessag
 import useTranslationHook from '../../hook/TranslationHook'
 import { createPatient, updatePatient } from '../../services/api'
 import ReactDatePicker from 'react-datepicker'
+import { USER_DATE_FORMAT, BACKEND_DATE_FORMAT } from '../../services/constants'
 
 interface PatientFormProps {
   patient: Patient
@@ -23,7 +24,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
   const { t } = useTranslationHook()
   const navigate = useNavigate()
 
-  const birthdayDateValue: Date | null = patient.birthday !== '' ? new Date(patient.birthday) : null
+  const birthdayDateValue: Date | null = patient.birthday !== null && patient.birthday !== undefined && patient.birthday !== '' ? new Date(patient.birthday) : null
   const [birthdayDate, setBirthdayDate] = useState<Date | null>(birthdayDateValue)
 
   const onBirthdayChange = (date: Date): void => {
@@ -32,7 +33,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
   }
 
   const updatePatientDate = (date: Date, field: string): void => {
-    const formattedDate = format(date, 'yyyy-MM-dd')
+    const formattedDate = format(date, BACKEND_DATE_FORMAT)
     setPatientState((prevState) => ({
       ...prevState,
       [field]: formattedDate
@@ -115,7 +116,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
         <ReactDatePicker
           selected={birthdayDate}
           onChange={onBirthdayChange}
-          dateFormat='dd/MM/yyyy'
+          dateFormat={USER_DATE_FORMAT}
           className='form-control'
           peekNextMonth
           showMonthDropdown
@@ -128,6 +129,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
           <Form.Label><FontAwesomeIcon icon={['fas', 'address-card']} /> {t('form.address')}</Form.Label>
           <Form.Control
             name='street'
+            type='text'
             value={patientState.street}
             onChange={handleChange}
           />

@@ -24,6 +24,7 @@ import useTranslationHook from '../../hook/TranslationHook'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import usePatients from '../../hook/patient.hook'
 import ModalAddPatient from '../modal/ModalAddPatient'
+import { BACKEND_DATE_FORMAT, USER_DATE_FORMAT } from '../../services/constants'
 
 interface PrescriptionFormRequiredProps {
   prescription: Prescription
@@ -144,11 +145,23 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
     }
   }
 
+  const updatePatientDate = (date: Date, field: string): void => {
+    const formattedDate = format(date, BACKEND_DATE_FORMAT)
+    setPatientState((prevState) => ({
+      ...prevState,
+      [field]: formattedDate
+    }))
+  }
+
   const handleNewPatientSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
     e.preventDefault()
     assert(token)
+    const updatedPatientState = {
+      ...patientState,
+      birthday: patientState.birthday === '' ? null : patientState.birthday
+    }
     try {
-      const data = await createPatient(token, patientState)
+      const data = await createPatient(token, updatedPatientState)
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       reloadPatients()
       setAddingNewPatient(false)
@@ -201,7 +214,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
           <DatePicker
             selected={startDate}
             onChange={onStartDateChange}
-            dateFormat='dd/MM/yyyy'
+            dateFormat={USER_DATE_FORMAT}
             className='form-control'
             showYearDropdown
             scrollableMonthYearDropdown
@@ -212,7 +225,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
           <DatePicker
             selected={endDate}
             onChange={onEndDateChange}
-            dateFormat='dd/MM/yyyy'
+            dateFormat={USER_DATE_FORMAT}
             className='form-control'
             showYearDropdown
             scrollableMonthYearDropdown
@@ -244,6 +257,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
               patientState={patientState}
               handleChangeNewPatient={handleChangeNewPatient}
               handleNewPatientSubmit={handleNewPatientSubmit}
+              updatePatientDate={updatePatientDate}
               onHide={() => setAddingNewPatient(false)}
               show={addingNewPatient}
               error={error}
