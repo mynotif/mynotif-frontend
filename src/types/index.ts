@@ -12,6 +12,15 @@ interface Patient {
   prescriptions: Prescription[]
 }
 
+interface OneSignal {
+  subscription_id: string
+}
+
+interface SubscriptionInfo {
+  subscription_id: string
+  user: number
+}
+
 const defaultPatient = {
   id: 0,
   firstname: '',
@@ -81,7 +90,9 @@ export type {
   PrescriptionUploadResponse,
   Profile,
   Token,
-  RegisterFormType
+  RegisterFormType,
+  OneSignal,
+  SubscriptionInfo
 }
 
 export { defaultPatient, defaultPrescription }

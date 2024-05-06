@@ -4,7 +4,9 @@ import {
   Prescription,
   PrescriptionUploadResponse,
   Profile,
-  Token
+  Token,
+  OneSignal,
+  SubscriptionInfo
 } from '../types'
 import { BACKEND_URL } from './constants'
 
@@ -156,6 +158,21 @@ const updateUser = async (token: string, data: Profile): Promise<Profile> => {
   return response.data
 }
 
+const createOneSignalSubscriptionId = async (token: string, subscriptionId: string): Promise<{}> => {
+  const url = BACKEND_URL + '/onesignal/'
+  const headers = { Authorization: `Token ${token}` }
+  const data = { subscription_id: subscriptionId }
+  const response = await axios.post<OneSignal>(url, data, { headers })
+  return response.data
+}
+
+const getOneSignalSubscriptionId = async (token: string): Promise<SubscriptionInfo[]> => {
+  const url = BACKEND_URL + '/onesignal/'
+  const headers = { Authorization: `Token ${token}` }
+  const response = await axios.get<SubscriptionInfo[]>(url, { headers })
+  return response.data
+}
+
 export {
   getPatients,
   getPatient,
@@ -173,5 +190,7 @@ export {
   deletePatient,
   createPrescription,
   resetPassword,
-  confirmResetPassword
+  confirmResetPassword,
+  createOneSignalSubscriptionId,
+  getOneSignalSubscriptionId
 }
