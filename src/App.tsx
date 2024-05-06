@@ -36,9 +36,9 @@ function App (): JSX.Element {
   return (
     <div className='App bg-light'>
       <BrowserRouter>
-        <OneSignalManager>
-          <TokenContextProvider>
-            <ProfileContextProvider>
+        <TokenContextProvider>
+          <ProfileContextProvider>
+            <OneSignalManager>
               <FlashMessageContextProvider>
                 <Header />
                 <Container className='mb-5 pb-5'>
@@ -85,9 +85,9 @@ function App (): JSX.Element {
                 </Container>
                 <Footer />
               </FlashMessageContextProvider>
-            </ProfileContextProvider>
-          </TokenContextProvider>
-        </OneSignalManager>
+            </OneSignalManager>
+          </ProfileContextProvider>
+        </TokenContextProvider>
       </BrowserRouter>
     </div>
   )
