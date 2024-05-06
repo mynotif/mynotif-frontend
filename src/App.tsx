@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'dotenv/config'
 import { Container } from 'react-bootstrap'
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 import { library } from '@fortawesome/fontawesome-svg-core'

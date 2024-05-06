@@ -79,6 +79,7 @@
   "devDependencies": {
     "@types/lodash": "^4.14.181",
     "@types/react-datepicker": "^4.11.2",
+    "dotenv": "^16.4.5",
     "ts-standard": "^10.0.0"
   }
 }
