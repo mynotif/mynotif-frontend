@@ -43,7 +43,10 @@ i18n
             renewPrescription: 'I renew this prescription',
             welcomeApp: 'Welcome on Mynotif',
             personalInfo: 'Personal Info',
-            app: 'Mynotif'
+            app: 'Mynotif',
+            preferencesNotifications: 'Notification preferences',
+            dayOfWeek: 'Day of week',
+            weeksBeforeExpiration: 'Number of weeks before expiration'
           },
           navigation: {
             update: 'Update',
@@ -54,7 +57,8 @@ i18n
             validate: 'Validate',
             delete: 'Delete',
             return: 'Return',
-            resetPassword: 'Reset Password '
+            resetPassword: 'Reset Password ',
+            save: 'Save'
           },
           form: {
             emailAddress: 'Email address',
@@ -125,7 +129,8 @@ i18n
             surName: 'Surname',
             email: 'Email',
             phone: 'Phone',
-            running: 'RUNNING'
+            running: 'RUNNING',
+            receiveMyReports: 'I would like to receive my reports:'
           },
           error: {
             errorLogin: 'Sorry, the email or password is incorrect!',
@@ -166,7 +171,10 @@ i18n
             renewPrescription: 'Je renouvelle cette ordonnance',
             welcomeApp: 'Bienvenue sur Mynotif',
             personalInfo: 'Informations personnelles',
-            app: 'Mynotif'
+            app: 'Mynotif',
+            preferencesNotifications: 'Préférences de notification',
+            dayOfWeek: 'Jour de la semaine',
+            weeksBeforeExpiration: 'Nombre de semaines avant l\'expiration'
           },
           navigation: {
             update: 'Modifier',
@@ -177,7 +185,8 @@ i18n
             validate: 'Valider',
             delete: 'Supprimer',
             return: 'Retour',
-            resetPassword: 'Réinitialiser'
+            resetPassword: 'Réinitialiser',
+            save: 'Sauvegarder'
           },
           form: {
             emailAddress: 'Adresse email',
@@ -248,7 +257,8 @@ i18n
             surName: 'Nom',
             email: 'Email',
             phone: 'Téléphone',
-            running: 'EN COURS'
+            running: 'EN COURS',
+            receiveMyReports: 'Je souhaite recevoir mes rapports:'
           },
           error: {
             errorLogin: 'Désolé, l\'email ou le mot de passe est incorrect !',
