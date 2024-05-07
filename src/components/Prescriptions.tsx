@@ -115,7 +115,7 @@ const Prescriptions: FunctionComponent<PrescriptionsProps> = ({
           <PrescriptionTr
             key={prescription.id}
             prescription={prescription}
-            patient={patients[prescription.id] ?? null}
+            patient={patients[prescription.id]}
             onDelete={onDelete}
             onEdit={onEdit}
           />
