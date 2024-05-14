@@ -59,11 +59,6 @@ const PatientDetail = (): JSX.Element => {
                 <div className='flex-grow-1 text-center'>
                   <FontAwesomeIcon icon={['fas', 'user']} size='4x' />
                 </div>
-                <div>
-                  <Button variant='light' href={`/patients/edit/${patient.id}`} className='position-absolute top-5 end-0'>
-                    <FontAwesomeIcon icon={['fas', 'pencil-alt']} size='lg' style={{ cursor: 'pointer' }} />
-                  </Button>
-                </div>
               </div>
               <div className='mb-4'>
                 <p className='text-muted'>{t('form.address')} | {t('form.city')}</p>
