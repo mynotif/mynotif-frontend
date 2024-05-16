@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^5.8",
     "@fortawesome/fontawesome-free": "^6.1.1",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-brands-svg-icons": "^6.1.1",
@@ -40,9 +41,9 @@
   },
   "scripts": {
     "start": "serve --single build/ --listen $PORT",
-    "dev": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "dev": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "docker:build": "docker build --tag mynotif/mynotif-frontend .",
     "docker:run": "docker run --rm -it --publish 3000:80 mynotif/mynotif-frontend",
     "lint": "ts-standard src/",
@@ -79,6 +80,9 @@
   "devDependencies": {
     "@types/lodash": "^4.14.181",
     "@types/react-datepicker": "^4.11.2",
+    "autoprefixer": "^9",
+    "postcss": "^7",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "ts-standard": "^10.0.0"
   }
 }
