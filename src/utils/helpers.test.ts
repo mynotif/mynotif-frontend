@@ -1,7 +1,49 @@
 import { Prescription } from '../types'
-import { getValidPrescription, getLastPrescription, getValidOrLastPrescription } from './helpers'
+import { COLOR_STATUS } from './constants'
+import {
+  getValidPrescription,
+  getLastPrescription,
+  getValidOrLastPrescription,
+  getIconClass
+} from './helpers'
 
 describe('helpers', () => {
+  test('should return color tag', () => {
+    const prescription1: Prescription = {
+      id: 1,
+      prescribing_doctor: 'Doctor 1',
+      start_date: '2022-03-20',
+      end_date: '2022-05-20',
+      photo_prescription: '',
+      is_valid: true,
+      patient: 1,
+      expiring_soon: true
+    }
+    const prescription2: Prescription = {
+      id: 2,
+      prescribing_doctor: 'Doctor 1',
+      start_date: '2022-03-20',
+      end_date: '2022-05-20',
+      photo_prescription: '',
+      is_valid: true,
+      patient: 2,
+      expiring_soon: false
+    }
+    const prescription3: Prescription = {
+      id: 3,
+      prescribing_doctor: 'Doctor 1',
+      start_date: '2022-03-20',
+      end_date: '2022-05-20',
+      photo_prescription: '',
+      is_valid: false,
+      patient: 3,
+      expiring_soon: false
+    }
+
+    expect(getIconClass(prescription1)).toEqual(COLOR_STATUS.WARNING)
+    expect(getIconClass(prescription2)).toEqual(COLOR_STATUS.SUCCESS)
+    expect(getIconClass(prescription3)).toEqual(COLOR_STATUS.DANGER)
+  })
   /**
    * When multiple valid prescriptions are found, we default to the first found.
    */

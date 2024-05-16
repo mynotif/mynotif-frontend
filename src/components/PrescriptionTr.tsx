@@ -5,11 +5,14 @@ import { Patient, Prescription } from '../types'
 import { useNavigate } from 'react-router-dom'
 import ModalDelete from './modal/ModalDelete'
 import useTranslationHook from '../hook/TranslationHook'
+import { parseISO, format } from 'date-fns'
+import { USER_DATE_FORMAT } from '../services/constants'
+import { getIconClass } from '../utils/helpers'
 
 // Allows to change the colour if true or false
 interface PrescriptionTrProps {
   prescription: Prescription
-  patient: Patient | null
+  patient: Patient
   onDelete: (id: number) => Promise<void>
   onEdit: (id: number) => Promise<void>
 }
@@ -17,15 +20,16 @@ interface PrescriptionTrProps {
 const PrescriptionTr: FunctionComponent<PrescriptionTrProps> = ({ prescription, patient, onDelete, onEdit }) => {
   const navigate = useNavigate()
   const { t } = useTranslationHook()
-  const prescriptionEndDate = prescription?.end_date ?? 'N/A'
-  const prescriptionIsValid = prescription?.is_valid ?? false
-  const isValidIconClass = prescriptionIsValid ? 'success' : 'danger'
+  const prescriptionEndDate: Date = parseISO(prescription.end_date)
   const [show, setShow] = useState(false)
   const handleClose = (): void => setShow(false)
   const handleShow = (): void => setShow(true)
   const [buttonsModalShow, setButtonsModalShow] = useState(false)
   const handleCloseButtonsModal = (): void => setButtonsModalShow(false)
   const handleShowButtonsModal = (): void => setButtonsModalShow(true)
+
+  const isValidIconClass = getIconClass(prescription)
+  const formattedDate = format(prescriptionEndDate, USER_DATE_FORMAT)
 
   const handleEdit = async (): Promise<void> => {
     await onEdit(prescription.id)
@@ -59,7 +63,7 @@ const PrescriptionTr: FunctionComponent<PrescriptionTrProps> = ({ prescription, 
                   </strong>
                 </small>
                 <Badge className='ms-4' pill bg={isValidIconClass}>
-                  {prescriptionEndDate}
+                  {formattedDate}
                 </Badge>
               </div>
               <div className='d-flex align-items-center'>

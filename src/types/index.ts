@@ -10,6 +10,7 @@ interface Patient {
   health_card_number: string
   ss_provider_code: string
   prescriptions: Prescription[]
+  expire_soon_prescriptions: Prescription[]
 }
 
 interface OneSignal {
@@ -29,10 +30,11 @@ const defaultPatient = {
   zip_code: '',
   city: '',
   phone: '',
-  birthday: '',
+  birthday: null,
   health_card_number: '',
   ss_provider_code: '',
-  prescriptions: []
+  prescriptions: [],
+  expire_soon_prescriptions: []
 }
 
 interface Prescription {
@@ -43,6 +45,7 @@ interface Prescription {
   photo_prescription: string
   is_valid: boolean
   patient: number
+  expiring_soon: boolean
 }
 
 const defaultPrescription = {
@@ -52,7 +55,8 @@ const defaultPrescription = {
   end_date: '',
   photo_prescription: '',
   is_valid: false,
-  patient: 0
+  patient: 0,
+  expiring_soon: false
 }
 
 interface Profile {
