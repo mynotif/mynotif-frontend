@@ -1,11 +1,9 @@
 import PatientLine from '../../components/PatientLine'
-import Container from 'react-bootstrap/Container'
-import Button from 'react-bootstrap/Button'
 import usePatients from '../../hook/patient.hook'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useCallback, useState } from 'react'
 import { Patient } from '../../types'
 import SearchBar from '../../components/SearchBar'
+import Header from '../../components/Header'
 
 const PatientsPage = (): JSX.Element => {
   const { patients } = usePatients()
@@ -28,20 +26,13 @@ const PatientsPage = (): JSX.Element => {
   }, [patients])
 
   return (
-    <>
-      <div className='position-fixed bottom-0 end-0 me-3 mb-5 pb-5' style={{ zIndex: '1030' }}>
-        <Button variant='info' href='/patients/create'>
-          <FontAwesomeIcon icon={['fas', 'user-plus']} />
-        </Button>
-      </div>
+    <div className='bg-gray-50 h-screen'>
+      <Header />
       <SearchBar onSearch={handleSearch} />
-      <Container>
-        {filteredPatients.map((patient) => (
-          <PatientLine key={patient.id} patient={patient} />
-        ))}
-      </Container>
-    </>
-
+      {filteredPatients.map((patient) => (
+        <PatientLine key={patient.id} patient={patient} />
+      ))}
+    </div>
   )
 }
 
