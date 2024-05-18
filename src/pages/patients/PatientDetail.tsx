@@ -1,14 +1,18 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { strict as assert } from 'assert'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Card, Button } from 'react-bootstrap'
 import { TokenContext } from '../../context/token'
 import { FlashMessageContext, FlashMessageType } from '../../context/flashmessage'
 import { getPatient } from '../../services/api'
 import { Patient } from '../../types'
 import Spinner from 'react-bootstrap/Spinner'
 import useTranslationHook from '../../hook/TranslationHook'
+import Header from '../../components/Header'
+import { PatientProfileContainer } from '../../components/patients/patientProfile/PatientProfileContainer'
+import { PatientBanner } from '../../components/patients/patientProfile/PatientBanner'
+import { PatientBodyContainer } from '../../components/patients/patientProfile/PatientBodyContainer'
+import { PatientCard } from '../../components/patients/patientProfile/PatientCard'
+import { PrescriptionCard } from '../../components/patients/patientProfile/PrescriptionCard'
 
 const PatientDetail = (): JSX.Element => {
   const { id } = useParams<'id'>()
@@ -16,6 +20,7 @@ const PatientDetail = (): JSX.Element => {
   const { token } = useContext(TokenContext)
   const { addErrorMessage } = useContext(FlashMessageContext)
   const { t } = useTranslationHook()
+  const navigate = useNavigate()
 
   const addErrorMessageCallback = useCallback(
     (error: FlashMessageType) => addErrorMessage(error),
@@ -43,72 +48,43 @@ const PatientDetail = (): JSX.Element => {
     void (async () => await fetchPatientCallback())()
   }, [token, fetchPatientCallback])
 
+  const initials = (patient?.firstname?.charAt(0) ?? '').toUpperCase() + (patient?.lastname?.charAt(0) ?? '').toUpperCase()
+  const fullName = `${patient?.firstname ?? ''} ${patient?.lastname ?? ''}`
+
+  const goToEditPatient = (): void => {
+    if (patient?.id !== undefined) {
+      navigate(`/patients/edit/${patient.id}/`)
+    } else {
+      console.error('Patient is undefined')
+    }
+  }
+
   return (
-    <div className='mt-5'>
+    <>
       {patient !== null ? (
-        <div className='bg-light p-4'>
-          <Card className='text-center'>
-            <Card.Header className='bg-primary text-white'>
-              <Button variant='link' href='/patients' className='text-white fs-4'>
-                &larr;{t('navigation.return')}
-              </Button>
-              <h2 className='mb-0'>{patient.lastname.toUpperCase()} {patient.firstname.toUpperCase()}</h2>
-            </Card.Header>
-            <Card.Body className='text-center'>
-              <div className='d-flex justify-content-center align-items-center mb-4 position-relative'>
-                <div className='flex-grow-1 text-center'>
-                  <FontAwesomeIcon icon={['fas', 'user']} size='4x' />
-                </div>
-                <div>
-                  <Button variant='light' href={`/patients/edit/${patient.id}`} className='position-absolute top-5 end-0'>
-                    <FontAwesomeIcon icon={['fas', 'pencil-alt']} size='lg' style={{ cursor: 'pointer' }} />
-                  </Button>
-                </div>
-              </div>
-              <div className='mb-4'>
-                <p className='text-muted'>{t('form.address')} | {t('form.city')}</p>
-                <h4>{patient.street}</h4>
-                <h4>{patient.city}</h4>
-              </div>
-              <hr className='my-4' />
-              <div className='row'>
-                <div className='col'>
-                  <p className='text-muted'>{t('form.phone')}</p>
-                  <h4>{patient.phone}</h4>
-                </div>
-                <div className='col'>
-                  <p className='text-muted'>{t('form.zipPostal')}</p>
-                  <h4>{patient.zip_code}</h4>
-                </div>
-              </div>
-              <hr className='my-4' />
-              <div>
-                <h4 className='mb-4'>{t('text.prescription')}</h4>
-                {patient.prescriptions.length > 0 ? (
-                  <ul className='list-inline'>
-                    {patient.prescriptions.map((prescription) => (
-                      <li className='list-inline-item' key={prescription.id}>
-                        {typeof prescription.photo_prescription === 'string' && prescription.photo_prescription !== '' && (
-                          <Button variant='info' href={prescription.photo_prescription} target='_blank' className='m-2'>
-                            <FontAwesomeIcon icon={['fas', 'eye']} />
-                          </Button>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p>{t('text.noPrescriptionsFound')}</p>
-                )}
-              </div>
-            </Card.Body>
-          </Card>
+        <div className='min-h-screen flex flex-col bg-gray-100'>
+          <Header />
+          <div className='flex-grow overflow-y-auto'>
+            <PatientProfileContainer>
+              <PatientBanner fullName={fullName} initials={initials} onEditClick={goToEditPatient} />
+              <PatientBodyContainer>
+                <PatientCard icon={['fas', 'map-marker-alt']} content={patient.street} title={t('form.address')} />
+                <PatientCard icon={['fas', 'id-badge']} content={patient.zip_code} title={t('form.zipPostal')} />
+                <PatientCard icon={['fas', 'phone']} content={patient.phone} title={t('form.phone')} />
+                <PrescriptionCard prescriptions={patient.prescriptions} title={t('text.prescription')} icon={['fas', 'eye']} />
+              </PatientBodyContainer>
+            </PatientProfileContainer>
+          </div>
+          <div className='bg-white p-4 mt-8 relative z-10 shadow-sm' />
         </div>
       ) : (
-        <div className='d-flex justify-content-center vh-100 align-items-center'>
-          <Spinner animation='border' />
+        <div className='flex justify-center items-center min-h-screen'>
+          <div className='border-4 border-t-4 border-gray-200 rounded-full w-12 h-12 animate-spin'>
+            <Spinner animation='border' />
+          </div>
         </div>
       )}
-    </div>
+    </>
   )
 }
 
