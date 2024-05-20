@@ -26,7 +26,7 @@ const HomePage = (): JSX.Element => {
 
   return (
     <>
-      <Header />
+      <Header countNotification={patientsExpiredSoon.length} />
       <DashboardContainer>
         <CardList>
           <Card count={patients.length} title='Total Patients' onClick={goToPatients} />
