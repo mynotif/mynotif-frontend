@@ -8,7 +8,11 @@ import { PAGE_CONFIG } from '../utils/constants'
 import PageHeader from './PageHeader'
 import AvatarCircle from './AvatarCircle'
 
-const Header = (): JSX.Element => {
+interface HeaderProps {
+  countNotification?: number
+}
+
+const Header = ({ countNotification }: HeaderProps): JSX.Element => {
   const location = useLocation()
   const currentPage = PAGE_CONFIG.find(page => location.pathname.includes(page.path))
   const { profile } = useContext(ProfileContext)
@@ -16,6 +20,7 @@ const Header = (): JSX.Element => {
   const initialFullname = profile.first_name.charAt(0).toUpperCase() + profile.last_name.charAt(0).toUpperCase()
   const initials = initialFullname !== '' ? initialFullname : initialUsername
   const isPatientProfile = location.pathname.match(/patients\/\d+$/)
+  const isCountNotification = countNotification !== null && countNotification !== undefined && countNotification > 0
 
   return (
     <>
@@ -25,9 +30,11 @@ const Header = (): JSX.Element => {
             <HeaderProfile />
             <div className='flex items-center space-x-4'>
               <FontAwesomeIcon icon={['fas', 'bell']} className='text-white text-2xl' />
-              <i className='fas fa-bell text-white text-2xl relative'>
-                <span className='absolute top-0 right-0 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center'>2</span>
-              </i>
+              {isCountNotification && (
+                <i className='fas fa-bell text-white text-2xl relative'>
+                  <span className='absolute top-0 right-0 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center'>{countNotification}</span>
+                </i>
+              )}
               <AvatarCircle initials={initials} size={40} fontSize={16} />
             </div>
           </div>
@@ -36,7 +43,7 @@ const Header = (): JSX.Element => {
       {currentPage != null && (
         <>
           {(isPatientProfile != null) ? (
-            <PageHeader url='/patients' title='Patient Profile' isPatientProfile />
+            <PageHeader url='/patients' title='Patient Profile' />
           ) : (
             <PageHeader url='/home' title={currentPage.title} />
           )}

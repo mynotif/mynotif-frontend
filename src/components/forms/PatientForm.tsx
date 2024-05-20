@@ -1,16 +1,16 @@
 import { strict as assert } from 'assert'
 import { FunctionComponent, useState, useContext, useCallback } from 'react'
-import { Button, Col, Form, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { format } from 'date-fns'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Patient } from '../../types'
 import { TokenContext } from '../../context/token'
 import { FlashMessageContext, FlashMessageType } from '../../context/flashmessage'
 import useTranslationHook from '../../hook/TranslationHook'
 import { createPatient, updatePatient } from '../../services/api'
-import ReactDatePicker from 'react-datepicker'
-import { USER_DATE_FORMAT, BACKEND_DATE_FORMAT } from '../../services/constants'
+import DatePicker from 'react-datepicker'
+import { BACKEND_DATE_FORMAT, USER_DATE_FORMAT } from '../../services/constants'
+import { InputFieldContainer } from './inputGroups/InputFieldContainer'
+import { InputField } from './inputGroups/InputField'
 
 interface PatientFormProps {
   patient: Patient
@@ -89,109 +89,97 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
   }
 
   return (
-    <Form className='mt-4' onSubmit={async e => await handleSubmit(e)}>
-      <Row className='my-3'>
-        <Form.Group as={Col} className='mt-2'>
-          <Form.Label><FontAwesomeIcon icon={['fas', 'id-card']} /> {t('form.lastName')}</Form.Label>
-          <Form.Control
-            name='lastname'
-            type='text'
-            value={patientState.lastname}
-            onChange={handleChange}
-          />
-        </Form.Group>
-
-        <Form.Group as={Col} className='mt-2'>
-          <Form.Label><FontAwesomeIcon icon={['fas', 'id-card']} /> {t('form.firstName')}</Form.Label>
-          <Form.Control
-            name='firstname'
-            type='text'
-            value={patientState.firstname}
-            onChange={handleChange}
-          />
-        </Form.Group>
-      </Row>
-      <Form.Group as={Col} className='mt-2'>
-        <Form.Label className='me-2'><FontAwesomeIcon icon={['fas', 'calendar-days']} /> {t('form.birthday')}</Form.Label>
-        <ReactDatePicker
-          selected={birthdayDate}
-          onChange={onBirthdayChange}
-          dateFormat={USER_DATE_FORMAT}
-          className='form-control'
-          peekNextMonth
-          showMonthDropdown
-          showYearDropdown
-          dropdownMode='select'
-        />
-      </Form.Group>
-      <Row className='my-3'>
-        <Form.Group as={Col} className='mt-2'>
-          <Form.Label><FontAwesomeIcon icon={['fas', 'address-card']} /> {t('form.address')}</Form.Label>
-          <Form.Control
-            name='street'
-            type='text'
-            value={patientState.street}
-            onChange={handleChange}
-          />
-        </Form.Group>
-        <Form.Group as={Col} className='mt-2'>
-          <Form.Label><FontAwesomeIcon icon={['fas', 'city']} /> {t('form.city')}</Form.Label>
-          <Form.Control
-            name='city'
-            value={patientState.city}
-            onChange={handleChange}
-          />
-        </Form.Group>
-      </Row>
-
-      <Row className='my-3'>
-        <Form.Group as={Col} className='mt-2'>
-          <Form.Label><FontAwesomeIcon icon={['fas', 'mobile']} /> {t('form.phone')}</Form.Label>
-          <Form.Control
-            name='phone'
-            value={patientState.phone}
-            onChange={handleChange}
-          />
-        </Form.Group>
-
-        <Form.Group as={Col} className='mt-2'>
-          <Form.Label><FontAwesomeIcon icon={['fas', 'city']} />  {t('form.zipPostal')}</Form.Label>
-          <Form.Control
-            name='zip_code'
-            value={patientState.zip_code}
-            onChange={handleChange}
-          />
-        </Form.Group>
-      </Row>
-
-      <Form.Group as={Col} className='mt-2'>
-        <Form.Label><FontAwesomeIcon icon={['fas', 'id-card']} /> {t('form.caisseDeRattachement')}</Form.Label>
-        <Form.Control
-          type='text'
-          value={patientState.ss_provider_code}
-          name='ss_provider_code'
-          onChange={handleChange}
-        />
-      </Form.Group>
-      <Form.Group as={Col} className='mt-2'>
-        <Form.Label><FontAwesomeIcon icon={['fas', 'id-card']} /> {t('form.carteVitale')}</Form.Label>
-        <Form.Control
-          type='text'
-          value={patientState.health_card_number}
-          name='health_card_number'
-          onChange={handleChange}
-        />
-      </Form.Group>
-
-      <div className='d-flex align-items-center mt-4'>
-        <Button variant='success' type='submit'>
-          {t('navigation.validate')}
-        </Button>
-        <Button className='btn btn-primary ms-4' href='/patients'>
-          {t('navigation.return')}
-        </Button>
+    <>
+      <div className='bg-gray-50 min-h-screen flex flex-col'>
+        <form className='mt-4 p-4 space-y-4 mb-24' onSubmit={handleSubmit}>
+          <InputFieldContainer icon={['fas', 'user']}>
+            <InputField
+              name='firstname'
+              placeholder={t('form.firstName')}
+              value={patientState.firstname}
+              onChange={handleChange}
+            />
+          </InputFieldContainer>
+          <InputFieldContainer icon={['fas', 'user']}>
+            <InputField
+              name='lastname'
+              placeholder={t('form.lastName')}
+              value={patientState.lastname}
+              onChange={handleChange}
+            />
+          </InputFieldContainer>
+          <InputFieldContainer icon={['fas', 'calendar-alt']}>
+            <DatePicker
+              selected={birthdayDate}
+              onChange={onBirthdayChange}
+              dateFormat={USER_DATE_FORMAT}
+              className='flex-grow outline-none text-gray-600'
+              placeholderText={t('form.birthday')}
+              peekNextMonth
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode='select'
+            />
+          </InputFieldContainer>
+          <InputFieldContainer icon={['fas', 'city']}>
+            <InputField
+              name='city'
+              placeholder={t('form.city')}
+              value={patientState.city}
+              onChange={handleChange}
+            />
+          </InputFieldContainer>
+          <InputFieldContainer icon={['fas', 'address-card']}>
+            <InputField
+              name='street'
+              placeholder={t('form.address')}
+              value={patientState.street}
+              onChange={handleChange}
+            />
+          </InputFieldContainer>
+          <InputFieldContainer icon={['fas', 'phone']}>
+            <InputField
+              name='phone'
+              placeholder={t('form.phone')}
+              value={patientState.phone}
+              onChange={handleChange}
+            />
+          </InputFieldContainer>
+          <InputFieldContainer icon={['fas', 'city']}>
+            <InputField
+              name='zip_code'
+              placeholder={t('form.zipPostal')}
+              value={patientState.zip_code}
+              onChange={handleChange}
+            />
+          </InputFieldContainer>
+          <InputFieldContainer icon={['fas', 'id-card']}>
+            <InputField
+              name='health_card_number'
+              placeholder={t('form.carteVitale')}
+              value={patientState.health_card_number}
+              onChange={handleChange}
+            />
+          </InputFieldContainer>
+          <InputFieldContainer icon={['fas', 'id-card']}>
+            <InputField
+              name='ss_provider_code'
+              placeholder={t('form.caisseDeRattachement')}
+              value={patientState.ss_provider_code}
+              onChange={handleChange}
+            />
+          </InputFieldContainer>
+          <div className='flex justify-center items-center mt-4'>
+            <button
+              type='submit'
+              className='bg-colorprimary text-white font-semibold w-100 h-12 py-2 px-8 rounded-lg'
+            >
+              {t('navigation.validate')}
+            </button>
+          </div>
+        </form>
       </div>
-    </Form>
+    </>
   )
 }
 
