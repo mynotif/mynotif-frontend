@@ -5,9 +5,9 @@ import { Patient } from '../../types'
 import SearchBar from '../../components/SearchBar'
 import Header from '../../components/Header'
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
-import { PatientPageContainer } from '../../components/patients/PatientsPage/PatientPageContainer'
+import { ContainerBodyPage } from '../../components/pageSections/ContainerBodyPage'
 import { AddButton } from '../../components/module/AddButton'
-import { PatientContainer } from '../../components/patients/PatientsPage/PatientContainer'
+import { ContainerPage } from '../../components/pageSections/ContainerPage'
 
 const PatientsPage = (): JSX.Element => {
   const { patients } = usePatients()
@@ -30,17 +30,17 @@ const PatientsPage = (): JSX.Element => {
   }, [patients])
 
   return (
-    <PatientContainer>
+    <ContainerPage>
       <Header />
-      <PatientPageContainer>
+      <ContainerBodyPage>
         <SearchBar onSearch={handleSearch} />
         {filteredPatients.map((patient) => (
           <PatientLine key={patient.id} patient={patient} />
         ))}
         <div className='h-20' /> {/* Added space for the bottom */}
-      </PatientPageContainer>
+      </ContainerBodyPage>
       <AddButton icon={faUserPlus} url='/patients/create' />
-    </PatientContainer>
+    </ContainerPage>
   )
 }
 

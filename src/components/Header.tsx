@@ -20,6 +20,7 @@ const Header = ({ countNotification }: HeaderProps): JSX.Element => {
   const initialFullname = profile.first_name.charAt(0).toUpperCase() + profile.last_name.charAt(0).toUpperCase()
   const initials = initialFullname !== '' ? initialFullname : initialUsername
   const isPatientProfile = location.pathname.match(/patients\/\d+$/)
+  const isPrescriptionProfile = location.pathname.match(/prescriptions\/\d+$/)
   const isCountNotification = countNotification !== null && countNotification !== undefined && countNotification > 0
 
   return (
@@ -44,6 +45,8 @@ const Header = ({ countNotification }: HeaderProps): JSX.Element => {
         <>
           {(isPatientProfile != null) ? (
             <PageHeader url='/patients' title='Patient Profile' />
+          ) : (isPrescriptionProfile != null) ? (
+            <PageHeader url='/prescriptions' title='Prescription Profile' />
           ) : (
             <PageHeader url='/home' title={currentPage.title} />
           )}
