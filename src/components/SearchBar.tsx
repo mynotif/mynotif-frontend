@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Form } from 'react-bootstrap'
 import useTranslationHook from '../hook/TranslationHook'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 interface SearchBarProps {
   onSearch: (searchValue: string) => void
@@ -20,14 +20,21 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, placeholderText }) => {
   }, [search, onSearch])
 
   return (
-    <Form>
-      <Form.Control
-        type='text'
-        placeholder={placeholderText ?? t('text.search')}
-        value={search}
-        onChange={handleSearch}
-      />
-    </Form>
+
+    <>
+      <form className='p-4'>
+        <div className='bg-white rounded-lg h-16 py-2 px-4 shadow-md flex items-center'>
+          <FontAwesomeIcon icon={['fas', 'search']} className='text-colorprimary mr-2' />
+          <input
+            type='text'
+            value={search}
+            onChange={handleSearch}
+            placeholder={placeholderText ?? t('text.search')}
+            className='outline-none w-full text-gray-600 placeholder-gray-500'
+          />
+        </div>
+      </form>
+    </>
   )
 }
 
