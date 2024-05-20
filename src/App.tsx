@@ -27,6 +27,7 @@ import ResetPassword from './pages/authentifications/ResetPassword'
 import NewResetPassword from './pages/authentifications/NewResetPassword'
 import HomePage from './pages/HomePage'
 import OneSignalManager from './services/oneSignal/OneSignalManager'
+import PrescriptionDetail from './pages/prescriptions/PrescriptionDetail'
 
 library.add(fas, fab, far)
 
@@ -69,16 +70,19 @@ function App (): JSX.Element {
                       element={<PrescriptionsPage />}
                     />
                     <Route
-                      path='/prescriptions/:id'
+                      path='/prescriptions/edit/:id'
                       element={<PrescriptionEdit />}
                     />
                     <Route
                       path='/prescriptions/create'
                       element={<PrescriptionCreatePage />}
                     />
+                    <Route
+                      path='/prescriptions/:id'
+                      element={<PrescriptionDetail />}
+                    />
                   </Route>
                 </Routes>
-
                 <Footer />
               </FlashMessageContextProvider>
             </OneSignalManager>

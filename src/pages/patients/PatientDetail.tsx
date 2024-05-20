@@ -8,11 +8,12 @@ import { Patient } from '../../types'
 import Spinner from 'react-bootstrap/Spinner'
 import useTranslationHook from '../../hook/TranslationHook'
 import Header from '../../components/Header'
-import { PatientProfileContainer } from '../../components/patients/patientProfile/PatientProfileContainer'
 import { PatientBanner } from '../../components/patients/patientProfile/PatientBanner'
 import { PatientBodyContainer } from '../../components/patients/patientProfile/PatientBodyContainer'
 import { PatientCard } from '../../components/patients/patientProfile/PatientCard'
 import { PrescriptionCard } from '../../components/patients/patientProfile/PrescriptionCard'
+import { ContainerDetailPage } from '../../components/pageSections/ContainerDetailPage'
+import { ProfileContainer } from '../../components/pageSections/ProfileContainer'
 
 const PatientDetail = (): JSX.Element => {
   const { id } = useParams<'id'>()
@@ -62,10 +63,10 @@ const PatientDetail = (): JSX.Element => {
   return (
     <>
       {patient !== null ? (
-        <div className='min-h-screen flex flex-col bg-gray-100'>
+        <ContainerDetailPage>
           <Header />
           <div className='flex-grow overflow-y-auto'>
-            <PatientProfileContainer>
+            <ProfileContainer>
               <PatientBanner fullName={fullName} initials={initials} onEditClick={goToEditPatient} />
               <PatientBodyContainer>
                 <PatientCard icon={['fas', 'map-marker-alt']} content={patient.street} title={t('form.address')} />
@@ -73,10 +74,10 @@ const PatientDetail = (): JSX.Element => {
                 <PatientCard icon={['fas', 'phone']} content={patient.phone} title={t('form.phone')} />
                 <PrescriptionCard prescriptions={patient.prescriptions} title={t('text.prescription')} icon={['fas', 'eye']} />
               </PatientBodyContainer>
-            </PatientProfileContainer>
+            </ProfileContainer>
           </div>
           <div className='bg-white p-4 mt-8 relative z-10 shadow-sm' />
-        </div>
+        </ContainerDetailPage>
       ) : (
         <div className='flex justify-center items-center min-h-screen'>
           <div className='border-4 border-t-4 border-gray-200 rounded-full w-12 h-12 animate-spin'>
