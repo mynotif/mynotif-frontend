@@ -1,6 +1,8 @@
+import { parseISO, format } from 'date-fns'
 import { COLOR_STATUS } from './constants'
 import { last, sortBy } from 'lodash'
 import { Prescription } from '../types'
+import { USER_DATE_FORMAT } from '../services/constants'
 const tokenLocalStorageKey = 'token'
 
 const getTokenLocalStorage = (): string | null =>
@@ -52,6 +54,14 @@ const getIconClass = (prescription: Prescription): string => {
   return COLOR_STATUS.DANGER
 }
 
+// Utility function to format date from ISO string to `dd/MM/yyyy`
+const formatDate = (dateIsoString: string): string => {
+  // Parse the ISO string to a Date object
+  const date = parseISO(dateIsoString)
+  // Format the Date object to a string in `dd/MM/yyyy` format
+  return format(date, USER_DATE_FORMAT)
+}
+
 export {
   getTokenLocalStorage,
   setTokenLocalStorage,
@@ -59,5 +69,6 @@ export {
   getValidPrescription,
   getLastPrescription,
   getValidOrLastPrescription,
-  getIconClass
+  getIconClass,
+  formatDate
 }
