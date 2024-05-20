@@ -2,9 +2,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 interface PageHeaderProps {
   url: string
   title: string
+  isPatientProfile?: boolean
 }
 
-const PageHeader = ({ url, title }: PageHeaderProps): JSX.Element => (
+const PageHeader = ({ url, title, isPatientProfile }: PageHeaderProps): JSX.Element => (
   <div className='bg-white p-4 flex items-center shadow-md'>
     <div className='rounded-full border border-gray-300 w-10 h-10 flex items-center justify-center mr-2'>
       <a href={url}>

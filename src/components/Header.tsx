@@ -6,6 +6,7 @@ import { useContext } from 'react'
 import { ProfileContext } from '../context/profile'
 import { PAGE_CONFIG } from '../utils/constants'
 import PageHeader from './PageHeader'
+import AvatarCircle from './AvatarCircle'
 
 const Header = (): JSX.Element => {
   const location = useLocation()
@@ -14,6 +15,8 @@ const Header = (): JSX.Element => {
   const initialUsername = profile.username.charAt(0).toUpperCase() + profile.username.charAt(1).toUpperCase()
   const initialFullname = profile.first_name.charAt(0).toUpperCase() + profile.last_name.charAt(0).toUpperCase()
   const initials = initialFullname !== '' ? initialFullname : initialUsername
+  const isPatientProfile = location.pathname.match(/patients\/\d+$/)
+
   return (
     <>
       {useIsLoggedIn() === true && location.pathname === '/home' && (
@@ -25,16 +28,19 @@ const Header = (): JSX.Element => {
               <i className='fas fa-bell text-white text-2xl relative'>
                 <span className='absolute top-0 right-0 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center'>2</span>
               </i>
-              <div className='bg-gray-300 rounded-full w-10 h-10 flex items-center justify-center'>
-                <span className='text-white text-xl font-semibold'>{initials}</span>
-              </div>
-
+              <AvatarCircle initials={initials} size={40} fontSize={16} />
             </div>
           </div>
         </div>
       )}
-      {(currentPage != null) && (
-        <PageHeader url='/home' title={currentPage.title} />
+      {currentPage != null && (
+        <>
+          {(isPatientProfile != null) ? (
+            <PageHeader url='/patients' title='Patient Profile' isPatientProfile />
+          ) : (
+            <PageHeader url='/home' title={currentPage.title} />
+          )}
+        </>
       )}
     </>
   )

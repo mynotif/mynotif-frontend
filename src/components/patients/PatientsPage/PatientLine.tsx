@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Patient } from '../types'
+import { Patient } from '../../../types'
 import { FunctionComponent } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -17,6 +17,8 @@ const PatientLine: FunctionComponent<PatientLineProps> = ({ patient }) => {
   const capitalizeFirstLetter = (name: string): string =>
     name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()
 
+  const addressIsEmpty = patient.street === '' || patient.city === '' || patient.zip_code === ''
+
   return (
     <div onClick={goToPatient} className='p-4 space-y-4 relative z-10 h-auto overflow-hidden'>
       <div className='bg-white rounded-lg p-4 shadow-md'>
@@ -30,10 +32,15 @@ const PatientLine: FunctionComponent<PatientLineProps> = ({ patient }) => {
         </div>
         <div className='mb-4' />
         <div className='flex items-baseline space-x-2 text-gray-600'>
-          {patient.street !== '' && patient.city !== '' && patient.zip_code !== '' && (
+          {!addressIsEmpty ? (
             <>
               <FontAwesomeIcon icon={['fas', 'map-marker']} className='text-black text-xl' />
               <p>{capitalizeFirstLetter(patient.street)}, {capitalizeFirstLetter(patient.city)} {patient.zip_code}</p>
+            </>
+          ) : (
+            <>
+              <FontAwesomeIcon icon={['fas', 'map-marker']} className='text-black text-xl' />
+              <p className='text-red-500'>Address is missing</p>
             </>
           )}
         </div>
