@@ -37,6 +37,7 @@ const HomePage = (): JSX.Element => {
         {patientsExpiredSoon.map(patient => (
           <PatientCard key={patient.id} patient={patient} />
         ))}
+        <div className='h-20' />
       </DashboardContainer>
     </>
   )
