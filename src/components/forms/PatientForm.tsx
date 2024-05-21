@@ -11,6 +11,7 @@ import DatePicker from 'react-datepicker'
 import { BACKEND_DATE_FORMAT, USER_DATE_FORMAT } from '../../services/constants'
 import { InputFieldContainer } from './inputGroups/InputFieldContainer'
 import { InputField } from './inputGroups/InputField'
+import { Button } from './inputGroups/Button'
 
 interface PatientFormProps {
   patient: Patient
@@ -169,14 +170,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
               onChange={handleChange}
             />
           </InputFieldContainer>
-          <div className='flex justify-center items-center mt-4'>
-            <button
-              type='submit'
-              className='bg-colorprimary text-white font-semibold w-100 h-12 py-2 px-8 rounded-lg'
-            >
-              {t('navigation.validate')}
-            </button>
-          </div>
+          <Button text={t('navigation.validate')} />
         </form>
       </div>
     </>

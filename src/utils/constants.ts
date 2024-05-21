@@ -8,7 +8,7 @@ export const PAGE_CONFIG = [
 ]
 
 export const COLOR_STATUS = {
-  DANGER: 'danger',
-  WARNING: 'warning',
-  SUCCESS: 'success'
+  DANGER: 'bg-red-100 text-red-500',
+  WARNING: 'bg-yellow-100 text-yellow-600',
+  SUCCESS: 'bg-green-100 text-green-500'
 }

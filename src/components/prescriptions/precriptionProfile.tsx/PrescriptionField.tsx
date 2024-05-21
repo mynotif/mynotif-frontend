@@ -39,7 +39,7 @@ export const PrescriptionField = ({ prescriptionState, patientState, fullNamePat
       <div className='bg-white p-4 mt-8 rounded-lg relative z-10 shadow-sm'>
         <div className='flex items-center mb-2'>
           <p className='flex-grow font-semibold'>Expire le: </p>
-          <div className='flex items-center bg-red-100 text-red-500 px-3 py-1 rounded-full'>
+          <div className='flex items-center bg-colorsecondary text-colorprimary px-3 py-1 rounded-full'>
             <FontAwesomeIcon icon={['fas', 'calendar']} className='mr-2' />
             {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */}
             <span>{(prescriptionState.end_date && prescriptionState.end_date !== '') ? formatDate(prescriptionState.end_date) : <span className='text-red-500'>Valeur manquante à remplir</span>}</span>
@@ -47,10 +47,12 @@ export const PrescriptionField = ({ prescriptionState, patientState, fullNamePat
         </div>
         <div className='flex justify-end'>
           {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */}
-          <a href={(prescriptionState.photo_prescription && prescriptionState.photo_prescription !== '') ? prescriptionState.photo_prescription : '#'} target='_blank' rel='noreferrer' className='flex justify-center items-center no-underline bg-colorprimary text-white px-4 py-2 w-full rounded-lg'>
-            <FontAwesomeIcon icon={['fas', 'eye']} className='mr-2' />
-            <span>Voir ordonnance</span>
-          </a>
+          {prescriptionState.photo_prescription && prescriptionState.photo_prescription !== '' && (
+            <a href={prescriptionState.photo_prescription} target='_blank' rel='noreferrer' className='flex justify-center items-center no-underline bg-colorprimary text-white px-4 py-2 w-full rounded-lg'>
+              <FontAwesomeIcon icon={['fas', 'eye']} className='mr-2' />
+              <span>Voir ordonnance</span>
+            </a>
+          )}
         </div>
       </div>
     </div>
