@@ -6,7 +6,7 @@ import SearchBar from '../../components/SearchBar'
 import Header from '../../components/Header'
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
 import { ContainerBodyPage } from '../../components/pageSections/ContainerBodyPage'
-import { AddButton } from '../../components/module/AddButton'
+import { LinkButton } from '../../components/module/LinkButton'
 import { ContainerPage } from '../../components/pageSections/ContainerPage'
 
 const PatientsPage = (): JSX.Element => {
@@ -39,7 +39,7 @@ const PatientsPage = (): JSX.Element => {
         ))}
         <div className='h-20' /> {/* Added space for the bottom */}
       </ContainerBodyPage>
-      <AddButton icon={faUserPlus} url='/patients/create' />
+      <LinkButton icon={faUserPlus} url='/patients/create' />
     </ContainerPage>
   )
 }

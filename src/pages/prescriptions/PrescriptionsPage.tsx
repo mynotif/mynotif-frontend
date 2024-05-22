@@ -11,7 +11,7 @@ import { TokenContext } from '../../context/token'
 import { ContainerPage } from '../../components/pageSections/ContainerPage'
 import { formatDate } from '../../utils/helpers'
 import { ContainerBodyPage } from '../../components/pageSections/ContainerBodyPage'
-import { AddButton } from '../../components/module/AddButton'
+import { LinkButton } from '../../components/module/LinkButton'
 import { faFolderPlus } from '@fortawesome/free-solid-svg-icons'
 
 const PrescriptionsPage = (): JSX.Element => {
@@ -122,7 +122,7 @@ const PrescriptionsPage = (): JSX.Element => {
         }
         <div className='h-20' /> {/* Added space for the bottom */}
       </ContainerBodyPage>
-      <AddButton icon={faFolderPlus} url='/prescriptions/create' />
+      <LinkButton icon={faFolderPlus} url='/prescriptions/create' />
     </ContainerPage>
   )
 }

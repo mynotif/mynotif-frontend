@@ -5,7 +5,6 @@ import React, {
   useContext,
   useState
 } from 'react'
-import { Button, Col, Form, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { FlashMessageContext, FlashMessageType } from '../../context/flashmessage'
 import { TokenContext } from '../../context/token'
@@ -16,15 +15,17 @@ import {
   uploadPrescription
 } from '../../services/api'
 import { Patient, Prescription, defaultPatient } from '../../types'
-import SelectPatient from '../SelectPatient'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { format } from 'date-fns'
 import useTranslationHook from '../../hook/TranslationHook'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import usePatients from '../../hook/patient.hook'
 import ModalAddPatient from '../modal/ModalAddPatient'
 import { BACKEND_DATE_FORMAT, USER_DATE_FORMAT } from '../../services/constants'
+import { InputFieldContainer } from './inputGroups/InputFieldContainer'
+import { InputField } from './inputGroups/InputField'
+import { SelectField } from './inputGroups/SelectField'
+import { Button } from './inputGroups/Button'
 
 interface PrescriptionFormRequiredProps {
   prescription: Prescription
@@ -54,23 +55,16 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
   const [prescriptionState, setPrescriptionState] =
     useState<Prescription>(prescription)
 
-  const startDateValue: Date | null = prescription.start_date !== '' ? new Date(prescription.start_date) : null
   const endDateValue: Date | null = prescription.end_date !== '' ? new Date(prescription.end_date) : null
 
-  const [startDate, setStartDate] = useState<Date | null>(startDateValue)
   const [endDate, setEndDate] = useState<Date | null>(endDateValue)
 
   const updatePrescriptionDate = (date: Date, field: string): void => {
-    const formattedDate = format(date, 'yyyy-MM-dd')
+    const formattedDate = format(date, BACKEND_DATE_FORMAT)
     setPrescriptionState((prevState) => ({
       ...prevState,
       [field]: formattedDate
     }))
-  }
-
-  const onStartDateChange = (date: Date): void => {
-    setStartDate(date)
-    updatePrescriptionDate(date, 'start_date')
   }
 
   const onEndDateChange = (date: Date): void => {
@@ -94,7 +88,11 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
   const onCreatePrescription = async (): Promise<void> => {
     assert(token)
     try {
-      const data = await createPrescription(token, prescriptionState)
+      const prescriptionData = {
+        ...prescriptionState,
+        start_date: format(new Date(), BACKEND_DATE_FORMAT)
+      }
+      const data = await createPrescription(token, prescriptionData)
       if (file !== null && file !== undefined) {
         await uploadPrescription(token, data.id, file)
       }
@@ -122,7 +120,6 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
       addErrorMessageCallback({ body: t('error.updatedPrescription') })
     }
   }
-
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value, files } = event.target
 
@@ -130,11 +127,20 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
       ...prescriptionState,
       [name]: value
     })
-    if (name === 'patient' && value !== 'addNewPatient') {
-      setNewCreatedPatientId(Number(value))
-    }
+
     if (files !== null && files !== undefined) {
       setFile(files[0])
+    }
+  }
+
+  const onSelectChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
+    const { name, value } = event.target
+    setPrescriptionState({
+      ...prescriptionState,
+      [name]: value
+    })
+    if (name === 'patient' && value !== 'addNewPatient') {
+      setNewCreatedPatientId(Number(value))
     }
     if (name === 'patient' && value === 'addNewPatient') {
       setAddingNewPatient(true)
@@ -143,14 +149,6 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
         patient: patientState.id
       }))
     }
-  }
-
-  const updatePatientDate = (date: Date, field: string): void => {
-    const formattedDate = format(date, BACKEND_DATE_FORMAT)
-    setPatientState((prevState) => ({
-      ...prevState,
-      [field]: formattedDate
-    }))
   }
 
   const handleNewPatientSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
@@ -188,93 +186,65 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
   }
 
   return (
-    <Form className='mt-4' onSubmit={onFormSubmit}>
-      {/* TODO: dropdown patient list */}
-      <Form.Group as={Col} className='mt-2'>
-        <Form.Label><FontAwesomeIcon icon={['fas', 'user-doctor']} /> {t('form.doctor')}</Form.Label>
-        <Form.Control
-          type='text'
-          name='prescribing_doctor'
-          value={prescriptionState.prescribing_doctor}
-          onChange={onInputChange}
-        />
-      </Form.Group>
-      {/* TODO: photo upload refs #77 */}
-      <Form.Group as={Col} className='mt-2'>
-        <Form.Label><FontAwesomeIcon icon={['fas', 'file-prescription']} /> {t('form.selectYourPrescription')}</Form.Label>
-        <Form.Control
-          type='file'
-          name='photo_prescription'
-          onChange={onInputChange}
-        />
-      </Form.Group>
-      <Row className='my-3'>
-        <Form.Group as={Col} className='mt-2'>
-          <Form.Label className='me-2'><FontAwesomeIcon icon={['fas', 'calendar-days']} /> {t('form.startDate')}</Form.Label>
-          <DatePicker
-            selected={startDate}
-            onChange={onStartDateChange}
-            dateFormat={USER_DATE_FORMAT}
-            className='form-control'
-            showYearDropdown
-            scrollableMonthYearDropdown
+    <div className='bg-gray-50 min-h-screen flex flex-col'>
+      <form className='mt-4 p-4 space-y-4 mb-24' onSubmit={onFormSubmit}>
+        <InputFieldContainer icon={['fas', 'user-doctor']}>
+          <InputField
+            name='prescribing_doctor'
+            placeholder={t('form.doctor')}
+            value={prescriptionState.prescribing_doctor}
+            onChange={onInputChange}
           />
-        </Form.Group>
-        <Form.Group as={Col} className='mt-2'>
-          <Form.Label className='me-2'><FontAwesomeIcon icon={['fas', 'calendar-days']} /> {t('form.endDate')}</Form.Label>
+        </InputFieldContainer>
+        <InputFieldContainer icon={['fas', 'file-prescription']}>
+          <InputField
+            type='file'
+            name='photo_prescription'
+            placeholder={t('form.selectYourPrescription')}
+            onChange={onInputChange}
+            file={file?.name}
+          />
+        </InputFieldContainer>
+        <InputFieldContainer icon={['fas', 'calendar-alt']}>
           <DatePicker
             selected={endDate}
             onChange={onEndDateChange}
             dateFormat={USER_DATE_FORMAT}
-            className='form-control'
+            className='flex-grow outline-none text-gray-600'
+            placeholderText={t('form.endDate')}
+            peekNextMonth
+            showMonthDropdown
             showYearDropdown
-            scrollableMonthYearDropdown
+            dropdownMode='select'
           />
-        </Form.Group>
-      </Row>
-      <Row className='my-3'>
+        </InputFieldContainer>
         {!isEditForm && (
           <>
-            <Form.Group>
-              <Form.Label className='my-3'>
-                <FontAwesomeIcon icon={['fas', 'user-injured']} /> {t('text.whichPatientAddOrder')}
-              </Form.Label>
-              <Form.Control as='select' name='patient' onChange={onInputChange} className='custom-select' value={newCreatedPatientId ?? ''}>
-                <option>--{t('form.selectPatient')}--</option>
-                <option value='addNewPatient'>--{t('title.addPatient')}--</option>
-                {
-                  patients?.map((patient) => (
-                    <SelectPatient
-                      key={patient.id}
-                      patient={patient}
-                    />
-                  ))
-                }
-              </Form.Control>
-            </Form.Group>
+            <InputFieldContainer icon={['fas', 'user-injured']}>
+              <SelectField
+                name='patient'
+                value={newCreatedPatientId ?? ''}
+                onChange={onSelectChange}
+                patients={patients}
+              />
+            </InputFieldContainer>
 
-            <ModalAddPatient
-              patientState={patientState}
-              handleChangeNewPatient={handleChangeNewPatient}
-              handleNewPatientSubmit={handleNewPatientSubmit}
-              updatePatientDate={updatePatientDate}
-              onHide={() => setAddingNewPatient(false)}
-              show={addingNewPatient}
-              error={error}
-            />
           </>
         )}
-      </Row>
-      <div className='d-flex align-items-center'>
-        <Button variant='success' className='me-2' type='submit' onClick={() => null}>
-          {t('navigation.validate')}
-        </Button>
-        <Button variant='primary' href='/prescriptions'>
-          {t('navigation.return')}
-        </Button>
-      </div>
 
-    </Form>
+        <Button text={t('navigation.validate')} />
+      </form>
+      {addingNewPatient && (
+        <ModalAddPatient
+          patientState={patientState}
+          handleChangeNewPatient={handleChangeNewPatient}
+          handleNewPatientSubmit={handleNewPatientSubmit}
+          onHide={() => setAddingNewPatient(false)}
+          show={addingNewPatient}
+          error={error}
+        />
+      )}
+    </div>
   )
 }
 

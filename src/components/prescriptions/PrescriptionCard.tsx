@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate } from 'react-router-dom'
 import { Prescription } from '../../types'
+import { getIconClass } from '../../utils/helpers'
 
 interface PrescriptionCardProps {
   doctorName: string
@@ -16,6 +17,8 @@ export const PrescriptionCard = ({ doctorName, endDate, patientName, prescriptio
     navigate(`/prescriptions/${prescription.id}`)
   }
 
+  const isValidIconClass = getIconClass(prescription)
+
   return (
     <div onClick={goToPrescription} className='p-4 space-y-2 relative z-10 h-auto overflow-hidden'>
 
@@ -28,7 +31,7 @@ export const PrescriptionCard = ({ doctorName, endDate, patientName, prescriptio
         </div>
         <div className='flex items-center mb-2'>
           <p className='flex-grow font-semibold'>End of prescription: </p>
-          <div className='flex items-center bg-red-100 text-red-500 px-3 py-1 rounded-full'>
+          <div className={`flex items-center ${isValidIconClass} px-3 py-1 rounded-full`}>
             <FontAwesomeIcon icon={['fas', 'calendar']} className='mr-2' />
             <span>{endDate}</span>
           </div>
