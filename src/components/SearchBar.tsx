@@ -22,7 +22,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, placeholderText }) => {
   return (
 
     <>
-      <form className='p-4'>
+      <form className='p-3'>
         <div className='bg-white rounded-lg h-16 py-2 px-4 shadow-md flex items-center'>
           <FontAwesomeIcon icon={['fas', 'search']} className='text-colorprimary mr-2' />
           <input
