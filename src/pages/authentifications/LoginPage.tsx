@@ -1,10 +1,12 @@
-import React from 'react'
+import { HeaderAuth } from '../../components/authentifications/HeaderAuth'
+import { WelcomeAuth } from '../../components/authentifications/WelcomeAuth'
+import LoginForm from '../../components/forms/LoginForm'
+import { ResetPasswordLink } from '../../components/authentifications/ResetPasswordLink'
+import { Separator } from '../../components/module/Separator'
+import { RegisterLink } from '../../components/authentifications/RegisterLink'
 import useTranslationHook from '../../hook/TranslationHook'
 import { useIsLoggedIn } from '../../utils/hooks'
 import { Navigate } from 'react-router-dom'
-import { Container } from 'react-bootstrap'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import LoginForm from '../../components/forms/LoginForm'
 
 const LoginPage = (): JSX.Element => {
   const { t } = useTranslationHook()
@@ -17,29 +19,13 @@ const LoginPage = (): JSX.Element => {
 
   return (
     <>
-      <Container>
-        <div className='container d-flex flex-column align-items-center justify-items-center mt-4'>
-          <FontAwesomeIcon size='7x' icon={['fas', 'user-nurse']} />
-          <h1>{t('title.welcomeApp')}</h1>
-          <p>{t('title.login')}</p>
-          <LoginForm />
-        </div>
-      </Container>
-      <div className='container d-flex flex-column text-center align-items-center justify-items-center mt-4'>
-        <small className='text-decoration-none text-dark'>
-          {t('text.notAlreadyAccount')}
-          <a href='/register' className='text-decoration-none ms-1'>
-            {t('navigation.register')}
-          </a>
-        </small>
-      </div>
-      <div className='container d-flex flex-column text-center align-items-center justify-items-center mt-4'>
-        <small className='text-decoration-none text-dark'>
-          {t('text.forgotPassword')}
-          <a href='/reset/password' className='text-decoration-none ms-1'>
-            {t('navigation.resetPassword')}
-          </a>
-        </small>
+      <HeaderAuth />
+      <div className='bg-gray-50 p-4 relative z-10 h-80 -mt-72 rounded-t-2xl'>
+        <WelcomeAuth title={t('title.welcomeApp')} description={t('title.login')} />
+        <LoginForm />
+        <ResetPasswordLink content={t('navigation.resetPassword')} />
+        <Separator />
+        <RegisterLink textcontent={t('text.notAlreadyAccount')} textAnchor={t('navigation.register')} />
       </div>
     </>
   )
