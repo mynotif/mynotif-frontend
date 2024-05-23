@@ -18,16 +18,16 @@ const LoginPage = (): JSX.Element => {
   }
 
   return (
-    <>
+    <div className='min-h-screen flex flex-col'>
       <HeaderAuth />
-      <div className='bg-gray-50 p-4 relative z-10 h-80 -mt-72 rounded-t-2xl'>
+      <div className='bg-gray-50 p-4 flex-grow z-10 -mt-72 rounded-t-2xl overflow-y-auto'>
         <WelcomeAuth title={t('title.welcomeApp')} description={t('title.login')} />
         <LoginForm />
         <ResetPasswordLink content={t('navigation.resetPassword')} />
         <Separator />
         <RegisterLink textcontent={t('text.notAlreadyAccount')} textAnchor={t('navigation.register')} />
       </div>
-    </>
+    </div>
   )
 }
 
