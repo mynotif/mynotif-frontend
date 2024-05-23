@@ -1,11 +1,13 @@
 import React, { useCallback, useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Button, Form } from 'react-bootstrap'
 import { TokenContext } from '../../context/token'
 import useTranslationHook from '../../hook/TranslationHook'
 import { login } from '../../services/api'
 import { setTokenLocalStorage } from '../../utils/helpers'
 import { FlashMessageContext, FlashMessageType } from '../../context/flashmessage'
+import { InputFieldContainer } from './inputGroups/InputFieldContainer'
+import { InputField } from './inputGroups/InputField'
+import { Button } from './inputGroups/Button'
 
 const LoginForm = (): JSX.Element => {
   const [username, setUsername] = useState<string>('')
@@ -14,7 +16,6 @@ const LoginForm = (): JSX.Element => {
   const { addErrorMessage, addSuccessMessage } = useContext(FlashMessageContext)
   const navigate = useNavigate()
   const { t } = useTranslationHook()
-  const [error, setError] = useState<string>('')
 
   const onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
     setUsername(e.target.value)
@@ -37,7 +38,6 @@ const LoginForm = (): JSX.Element => {
       addSuccessMessage({ body: t('text.userLogin') })
     } catch (error) {
       console.error(error)
-      setError(t('error.errorLogin'))
       addErrorMessageCallback({ body: t('error.userLogin') })
     }
   }
@@ -45,30 +45,27 @@ const LoginForm = (): JSX.Element => {
   const onFormSubmit = (e: React.FormEvent): void => e.preventDefault()
 
   return (
-    <Form onSubmit={onFormSubmit}>
-      <Form.Group className='mb-3'>
-        <Form.Label>{t('form.userName')}</Form.Label>
-        <Form.Control
-          required
-          type='text'
+    <form className='mt-4 p-4 space-y-4 ' onSubmit={onFormSubmit}>
+      <InputFieldContainer icon={['fas', 'user']}>
+        <InputField
+          name='userName'
+          placeholder={t('form.userName')}
+          value={username}
           onChange={onUsernameChange}
-          isInvalid={Boolean(error)}
         />
-      </Form.Group>
-
-      <Form.Group className='mb-3'>
-        <Form.Label>{t('form.password')}</Form.Label>
-        <Form.Control
-          required
+      </InputFieldContainer>
+      <InputFieldContainer icon={['fas', 'lock']}>
+        <InputField
+          name='password'
           type='password'
+          placeholder={t('form.password')}
+          value={password}
           onChange={onPasswordChange}
-          isInvalid={Boolean(error)}
         />
-      </Form.Group>
-      <Button variant='success' type='submit' onClick={onLogin} className='w-100'>
-        {t('navigation.login')}
-      </Button>
-    </Form>
+      </InputFieldContainer>
+
+      <Button onClick={onLogin} text={t('navigation.login')} />
+    </form>
   )
 }
 

@@ -41,7 +41,7 @@ i18n
             login: 'Connection to application',
             register: 'Registration',
             renewPrescription: 'I renew this prescription',
-            welcomeApp: 'Welcome on Mynotif',
+            welcomeApp: 'Welcome on OrdoPro',
             personalInfo: 'Personal Info',
             app: 'Mynotif'
           },
@@ -164,7 +164,7 @@ i18n
             login: 'Connection à l\'application',
             register: 'Inscription',
             renewPrescription: 'Je renouvelle cette ordonnance',
-            welcomeApp: 'Bienvenue sur Mynotif',
+            welcomeApp: 'Bienvenue sur OrdoPro',
             personalInfo: 'Informations personnelles',
             app: 'Mynotif'
           },
@@ -177,7 +177,7 @@ i18n
             validate: 'Valider',
             delete: 'Supprimer',
             return: 'Retour',
-            resetPassword: 'Réinitialiser'
+            resetPassword: 'Mot de passe perdu ?'
           },
           form: {
             emailAddress: 'Adresse email',
