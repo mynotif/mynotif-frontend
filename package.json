@@ -35,6 +35,7 @@
     "react-onesignal": "^3.0.1",
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
+    "react-spinners": "^0.13.8",
     "serve": "^12.0.0",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1"
