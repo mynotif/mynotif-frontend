@@ -51,6 +51,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
   const { patients, reloadPatients } = usePatients()
   const [newCreatedPatientId, setNewCreatedPatientId] = useState<null | number>(null)
   const [error, setError] = useState<string>('')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const [prescriptionState, setPrescriptionState] =
     useState<Prescription>(prescription)
@@ -97,8 +98,10 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
         await uploadPrescription(token, data.id, file)
       }
       setPrescriptionState(data)
+      setIsLoading(true)
     } catch (error) {
       console.error(error)
+      setIsLoading(false)
       addErrorMessageCallback({ body: t('error.createdPrescription') })
     }
   }
@@ -115,8 +118,10 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
       if (file !== null && file !== undefined) {
         await uploadPrescription(token, prescriptionState.id, file)
       }
+      setIsLoading(true)
       navigate('/prescriptions')
     } catch (error) {
+      setIsLoading(false)
       addErrorMessageCallback({ body: t('error.updatedPrescription') })
     }
   }
@@ -232,7 +237,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
           </>
         )}
 
-        <Button text={t('navigation.validate')} />
+        <Button isLoading={isLoading} text={t('navigation.validate')} />
       </form>
       {addingNewPatient && (
         <ModalAddPatient
