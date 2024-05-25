@@ -1,32 +1,26 @@
 import React from 'react'
 import useTranslationHook from '../../hook/TranslationHook'
-import { Container } from 'react-bootstrap'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import RegisterForm from '../../components/forms/RegisterForm'
 import { Link } from 'react-router-dom'
+import { HeaderAuth } from '../../components/authentifications/HeaderAuth'
+import { WelcomeAuth } from '../../components/authentifications/WelcomeAuth'
 
 const RegisterPage = (): JSX.Element => {
   const { t } = useTranslationHook()
 
   return (
-    <>
-      <Container>
-        <div className='container d-flex flex-column align-items-center justify-items-center mt-4'>
-          <FontAwesomeIcon size='7x' icon={['fas', 'user-nurse']} />
-          <h1>{t('title.welcomeApp')}</h1>
-          <p>{t('title.register')}</p>
-          <RegisterForm />
-        </div>
-      </Container>
-      <div className='container d-flex flex-column text-center align-items-center justify-items-center mt-4'>
-        <small className='text-decoration-none text-dark'>
-          {t('text.alreadyAccount')}
-          <Link to='/login' className='text-decoration-none ms-1'>
-            {t('navigation.login')}
+    <div className='min-h-screen flex flex-col'>
+      <HeaderAuth />
+      <div className='bg-gray-50 p-4 flex-grow z-10 -mt-72 rounded-t-2xl overflow-y-auto'>
+        <WelcomeAuth title={t('title.welcomeApp')} description={t('title.register')} />
+        <RegisterForm />
+        <div className='flex justify-end mr-6'>
+          <Link to='/login' className='text-gray-500 text-sm no-underline hover:text-colorprimary'>
+            <span>{t('text.alreadyAccount')} {t('navigation.login')}</span>
           </Link>
-        </small>
+        </div>
       </div>
-    </>
+    </div>
   )
 }
 
