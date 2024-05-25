@@ -70,7 +70,7 @@ const PatientDetail = (): JSX.Element => {
               <PatientBanner fullName={fullName} initials={initials} onEditClick={goToEditPatient} />
               <PatientBodyContainer>
                 <PatientCard icon={['fas', 'map-marker-alt']} content={patient.street} title={t('form.address')} />
-                <PatientCard icon={['fas', 'id-badge']} content={patient.zip_code} title={t('form.zipPostal')} />
+                <PatientCard icon={['fas', 'map-marker-alt']} content={patient.city} title={t('form.city')} />
                 <PatientCard icon={['fas', 'phone']} content={patient.phone} title={t('form.phone')} />
                 <PrescriptionCard prescriptions={patient.prescriptions} title={t('text.prescription')} icon={['fas', 'eye']} />
               </PatientBodyContainer>
@@ -80,7 +80,7 @@ const PatientDetail = (): JSX.Element => {
         </ContainerDetailPage>
       ) : (
         <div className='flex justify-center items-center min-h-screen'>
-          <div className='border-4 border-t-4 border-gray-200 rounded-full w-12 h-12 animate-spin'>
+          <div className='border-4 border-t-4 border-colorprimary rounded-full w-12 h-12 animate-spin'>
             <Spinner animation='border' />
           </div>
         </div>
