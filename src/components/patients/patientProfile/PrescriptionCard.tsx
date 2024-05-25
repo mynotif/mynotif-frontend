@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { Prescription } from '../../../types'
 import { t } from 'i18next'
+import { Link } from 'react-router-dom'
 
 interface PrescriptionCardProps {
   prescriptions: Prescription[]
@@ -22,9 +23,9 @@ export const PrescriptionCard = ({ prescriptions, title, icon }: PrescriptionCar
     <div className='flex space-x-4'>
       {prescriptions.length > 0 ? (
         prescriptions.map((prescription, index) => (
-          <a key={index} href={prescription.photo_prescription} target='_blank' rel='noreferrer'>
+          <Link key={index} to={prescription.photo_prescription} target='_blank' rel='noreferrer'>
             <FontAwesomeIcon icon={icon} className='text-gray-600' />
-          </a>
+          </Link>
         ))
       ) : (
         <p>{t('text.noPrescriptionsFound')}</p>
