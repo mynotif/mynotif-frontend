@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
-import { Button, Container, Form } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import useTranslationHook from '../../hook/TranslationHook'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { resetPassword } from '../../services/api'
+import { HeaderAuth } from '../../components/authentifications/HeaderAuth'
+import { InputFieldContainer } from '../../components/forms/inputGroups/InputFieldContainer'
+import { InputField } from '../../components/forms/inputGroups/InputField'
+import { Button } from '../../components/forms/inputGroups/Button'
 
 const ResetPassword = (): JSX.Element => {
   const [email, setEmail] = useState<string>('')
@@ -25,30 +27,30 @@ const ResetPassword = (): JSX.Element => {
   }
 
   return (
-    <>
-      <Container>
-        <div className='container d-flex flex-column align-items-center justify-items-center mt-4'>
-          <FontAwesomeIcon size='7x' icon={['fas', 'user-nurse']} />
-          <h1>{t('title.welcomeApp')}</h1>
-          <p>{t('text.resetPasswordEmail')}</p>
-          <Form onSubmit={onFormSubmit}>
+    <div className='min-h-screen flex flex-col'>
+      <HeaderAuth />
+      <div className='bg-gray-50 p-4 flex-grow z-10 -mt-72 rounded-t-2xl overflow-y-auto'>
+        <form className='mt-1 p-1 space-y-4 ' onSubmit={onFormSubmit}>
+          <InputFieldContainer icon={['fas', 'lock']}>
+            <InputField
+              name='email'
+              type='email'
+              placeholder={t('form.password')}
+              value={email}
+              onChange={onEmailChange}
+            />
+          </InputFieldContainer>
 
-            <Form.Group className='mb-3'>
-              <Form.Label>{t('form.emailAddress')}</Form.Label>
-              <Form.Control
-                required
-                type='email'
-                onChange={onEmailChange}
-              />
-            </Form.Group>
+          <Button onClick={handleResetPasswort} text={t('navigation.login')} />
+        </form>
 
-            <Button variant='success' type='submit' onClick={handleResetPasswort} className='w-100'>
-              {t('navigation.resetPassword')}
-            </Button>
-          </Form>
+        <div className='flex justify-end m-6'>
+          <Link to='/login' className='text-gray-500 text-sm no-underline hover:text-colorprimary'>
+            <span>{t('text.alreadyAccount')} {t('navigation.login')}</span>
+          </Link>
         </div>
-      </Container>
-    </>
+      </div>
+    </div>
   )
 }
 
