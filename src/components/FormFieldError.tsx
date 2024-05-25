@@ -7,7 +7,7 @@ interface FormFieldErrorProps {
 const FormFieldError: React.FC<FormFieldErrorProps> = ({ errorMessage }) => (
   <>
     {((errorMessage) != null) && (
-      <span className='mt-4 text-danger'>
+      <span className='mt-4 text-red-600'>
         {errorMessage}
       </span>
     )}
