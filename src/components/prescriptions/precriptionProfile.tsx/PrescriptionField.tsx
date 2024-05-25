@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { formatDate } from '../../../utils/helpers'
 import { Patient, Prescription } from '../../../types'
+import { Link } from 'react-router-dom'
 
 interface PrescriptionFieldProps {
   prescriptionState: Prescription
@@ -48,10 +49,10 @@ export const PrescriptionField = ({ prescriptionState, patientState, fullNamePat
         <div className='flex justify-end'>
           {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */}
           {prescriptionState.photo_prescription && prescriptionState.photo_prescription !== '' && (
-            <a href={prescriptionState.photo_prescription} target='_blank' rel='noreferrer' className='flex justify-center items-center no-underline bg-colorprimary text-white px-4 py-2 w-full rounded-lg'>
+            <Link to={prescriptionState.photo_prescription} target='_blank' rel='noreferrer' className='flex justify-center items-center no-underline bg-colorprimary text-white px-4 py-2 w-full rounded-lg'>
               <FontAwesomeIcon icon={['fas', 'eye']} className='mr-2' />
               <span>Voir ordonnance</span>
-            </a>
+            </Link>
           )}
         </div>
       </div>

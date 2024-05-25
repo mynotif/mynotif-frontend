@@ -3,6 +3,7 @@ import useTranslationHook from '../../hook/TranslationHook'
 import { Container } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import RegisterForm from '../../components/forms/RegisterForm'
+import { Link } from 'react-router-dom'
 
 const RegisterPage = (): JSX.Element => {
   const { t } = useTranslationHook()
@@ -20,9 +21,9 @@ const RegisterPage = (): JSX.Element => {
       <div className='container d-flex flex-column text-center align-items-center justify-items-center mt-4'>
         <small className='text-decoration-none text-dark'>
           {t('text.alreadyAccount')}
-          <a href='/login' className='text-decoration-none ms-1'>
+          <Link to='/login' className='text-decoration-none ms-1'>
             {t('navigation.login')}
-          </a>
+          </Link>
         </small>
       </div>
     </>
