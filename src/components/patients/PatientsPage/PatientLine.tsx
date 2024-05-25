@@ -23,8 +23,8 @@ const PatientLine: FunctionComponent<PatientLineProps> = ({ patient }) => {
     <div onClick={goToPatient} className='p-3 space-y-4 relative z-10 h-auto overflow-hidden'>
       <div className='bg-white rounded-lg p-4 shadow-md'>
         <div className='flex items-center space-x-4 mb-2'>
-          <div className='bg-colorsecondary rounded-full w-20 h-20 flex items-center justify-center '>
-            <FontAwesomeIcon icon={['fas', 'id-badge']} className='text-colorprimary text-3xl' />
+          <div className='bg-colorsecondary rounded-full w-12 h-12 flex items-center justify-center '>
+            <FontAwesomeIcon icon={['fas', 'id-badge']} className='text-colorprimary text-2xl' />
           </div>
           <div>
             <h3 className='font-semibold'>{capitalizeFirstLetter(patient.lastname)} {capitalizeFirstLetter(patient.firstname)}</h3>
