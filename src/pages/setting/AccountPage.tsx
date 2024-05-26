@@ -1,0 +1,42 @@
+import React, { useContext } from 'react'
+import { ProfileContainer } from '../../components/pageSections/ProfileContainer'
+import AvatarCircle from '../../components/AvatarCircle'
+import Header from '../../components/Header'
+import { ProfileContext } from '../../context/profile'
+import AccountCard from '../../components/setting/AccountCard'
+import { useNavigate } from 'react-router-dom'
+import { useLogout } from '../../utils/hooks'
+import useTranslationHook from '../../hook/TranslationHook'
+
+export const AccountPage = (): JSX.Element => {
+  const { profile } = useContext(ProfileContext)
+  const initials = (profile?.username?.charAt(0) ?? '').toUpperCase() + (profile?.username?.charAt(1) ?? '').toUpperCase()
+  const fullName = `${profile?.username ?? ''}`
+  const navigate = useNavigate()
+  const logout = useLogout()
+  const onLogoutClick = (e: React.MouseEvent<HTMLElement>): void => logout()
+  const { t } = useTranslationHook()
+
+  const onAccountDetail = (): void => {
+    navigate('/profile')
+  }
+  return (
+    <>
+      <Header />
+      <ProfileContainer>
+        <div className='relative pt-16 pb-8'>
+          <div />
+          <div className='flex justify-center'>
+            <AvatarCircle initials={initials} size={100} fontSize={32} />
+          </div>
+          <div className='text-center mt-4 text-black'>
+            <h2 className='text-2xl font-semibold'>{fullName}</h2>
+          </div>
+        </div>
+        <AccountCard title='Account' onClick={onAccountDetail} />
+        <AccountCard title={t('navigation.logout')} onClick={onLogoutClick} />
+      </ProfileContainer>
+    </>
+
+  )
+}

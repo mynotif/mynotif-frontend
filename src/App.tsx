@@ -28,6 +28,7 @@ import OneSignalManager from './services/oneSignal/OneSignalManager'
 import PrescriptionDetail from './pages/prescriptions/PrescriptionDetail'
 import ProfileDetail from './pages/profile/ProfileDetail'
 import ProfileEdit from './pages/profile/ProfileEdit'
+import { AccountPage } from './pages/setting/AccountPage'
 
 library.add(fas, fab, far)
 
@@ -53,6 +54,8 @@ function App (): JSX.Element {
                     {/* Profile */}
                     <Route path='/profile/edit' element={<ProfileEdit />} />
                     <Route path='/profile' element={<ProfileDetail />} />
+                    {/* Setting */}
+                    <Route path='/setting' element={<AccountPage />} />
                     {/* Patients */}
                     <Route path='/patients' element={<PatientsPage />} />
                     <Route
