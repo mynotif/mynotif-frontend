@@ -1,9 +1,9 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Logo } from './module/Logo'
 
 const HeaderProfile: React.FC = () => {
   return (
     <div className=''>
-      <FontAwesomeIcon icon={['fas', 'house']} className='text-white text-2xl' />
+      <Logo size={50} />
     </div>
   )
 }
