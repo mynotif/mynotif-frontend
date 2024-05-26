@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import HeaderProfile from './HeaderProfile'
 import { useIsLoggedIn } from '../utils/hooks'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -23,6 +23,12 @@ const Header = ({ countNotification }: HeaderProps): JSX.Element => {
   const isPrescriptionProfile = location.pathname.match(/prescriptions\/\d+$/)
   const isCountNotification = countNotification !== null && countNotification !== undefined && countNotification > 0
 
+  const navigate = useNavigate()
+
+  const onAccountDetail = (): void => {
+    navigate('/account')
+  }
+
   return (
     <>
       {useIsLoggedIn() === true && location.pathname === '/home' && (
@@ -36,7 +42,9 @@ const Header = ({ countNotification }: HeaderProps): JSX.Element => {
                   <span className='absolute top-0 right-0 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center'>{countNotification}</span>
                 </i>
               )}
-              <AvatarCircle initials={initials} size={40} fontSize={16} />
+              <div onClick={onAccountDetail}>
+                <AvatarCircle initials={initials} size={40} fontSize={16} />
+              </div>
             </div>
           </div>
         </div>
