@@ -24,6 +24,7 @@ const Footer = (): JSX.Element => {
             <FooterNav url='/home' icon='house' title={t('text.home')} />
             <FooterNav url='/patients' icon='users' title={t('text.patients')} />
             <FooterNav url='/prescriptions' icon='file-medical' title={t('text.prescription')} />
+            <FooterNav url='/setting' icon='user' title={t('text.profile')} />
           </>
         )}
       </Container>
