@@ -4,7 +4,9 @@ export const PAGE_CONFIG = [
   { path: 'patients/create', title: 'Create Patient' },
   { path: '/account', title: 'Account' },
   { path: '/patients', title: 'Patients' },
-  { path: '/prescriptions', title: 'Prescriptions' }
+  { path: '/prescriptions', title: 'Prescriptions' },
+  { path: '/profile/edit', title: 'Edit Profile' },
+  { path: '/profile', title: 'Profile' }
 ]
 
 export const COLOR_STATUS = {
