@@ -26,7 +26,7 @@ const Header = ({ countNotification }: HeaderProps): JSX.Element => {
   const navigate = useNavigate()
 
   const onAccountDetail = (): void => {
-    navigate('/account')
+    navigate('/profile')
   }
 
   return (

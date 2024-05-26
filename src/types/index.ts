@@ -87,6 +87,13 @@ interface RegisterFormType {
   password: string
 }
 
+interface ProfileFormType {
+  username: string
+  email: string
+  first_name: string
+  last_name: string
+}
+
 export type {
   ErrorResponse,
   Patient,
@@ -96,7 +103,8 @@ export type {
   Token,
   RegisterFormType,
   OneSignal,
-  SubscriptionInfo
+  SubscriptionInfo,
+  ProfileFormType
 }
 
 export { defaultPatient, defaultPrescription }

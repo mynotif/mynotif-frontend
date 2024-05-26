@@ -10,13 +10,13 @@ import { BodyContainer } from '../../components/pageSections/detail/BodyContaine
 import { CardDetail } from '../../components/pageSections/detail/CardDetail'
 import { ClipLoader } from 'react-spinners'
 
-const AccountDetail = (): JSX.Element => {
+const ProfileDetail = (): JSX.Element => {
   const navigate = useNavigate()
   const { t } = useTranslationHook()
   const { profile } = useContext(ProfileContext)
 
   const onEdit = (): void => {
-    navigate('/account/profile')
+    navigate('/profile/edit')
   }
 
   const initials = (profile?.username?.charAt(0) ?? '').toUpperCase() + (profile?.username?.charAt(1) ?? '').toUpperCase()
@@ -51,4 +51,4 @@ const AccountDetail = (): JSX.Element => {
   )
 }
 
-export default AccountDetail
+export default ProfileDetail

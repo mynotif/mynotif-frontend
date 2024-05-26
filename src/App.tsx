@@ -12,7 +12,6 @@ import FlashMessages from './components/flashMessages/FlashMessages'
 import PatientsPage from './pages/patients/PatientsPage'
 import PrescriptionsPage from './pages/prescriptions/PrescriptionsPage'
 import PrescriptionEdit from './pages/prescriptions/PrescriptionEdit'
-import ProfilePage from './pages/accounts/ProfilePage'
 import PatientDetail from './pages/patients/PatientDetail'
 import PageNotFound from './pages/PageNotFound'
 import PatientEdit from './pages/patients/PatientEdit'
@@ -27,7 +26,8 @@ import NewResetPassword from './pages/authentifications/NewResetPassword'
 import HomePage from './pages/HomePage'
 import OneSignalManager from './services/oneSignal/OneSignalManager'
 import PrescriptionDetail from './pages/prescriptions/PrescriptionDetail'
-import AccountDetail from './pages/accounts/AccountDetail'
+import ProfileDetail from './pages/profile/ProfileDetail'
+import ProfileEdit from './pages/profile/ProfileEdit'
 
 library.add(fas, fab, far)
 
@@ -50,9 +50,9 @@ function App (): JSX.Element {
                   <Route element={<PrivateRoute />}>
                     {/* Home */}
                     <Route path='/home' element={<HomePage />} />
-                    {/* Account */}
-                    <Route path='/account/profile' element={<ProfilePage />} />
-                    <Route path='/account' element={<AccountDetail />} />
+                    {/* Profile */}
+                    <Route path='/profile/edit' element={<ProfileEdit />} />
+                    <Route path='/profile' element={<ProfileDetail />} />
                     {/* Patients */}
                     <Route path='/patients' element={<PatientsPage />} />
                     <Route
