@@ -1,6 +1,6 @@
 {
-  "name": "my-notif",
-  "homepage": "https://mynotif.netlify.app/",
+  "name": "ordopro",
+  "homepage": "https://ordopro.fr/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

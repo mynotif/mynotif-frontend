@@ -21,13 +21,13 @@ import PrivateRoute from './components/PrivateRoute'
 import PrescriptionCreatePage from './pages/prescriptions/PrescriptionCreatePage'
 import LoginPage from './pages/authentifications/LoginPage'
 import RegisterPage from './pages/authentifications/RegisterPage'
-import AccountPage from './pages/accounts/AccountPage'
 import './App.css'
 import ResetPassword from './pages/authentifications/ResetPassword'
 import NewResetPassword from './pages/authentifications/NewResetPassword'
 import HomePage from './pages/HomePage'
 import OneSignalManager from './services/oneSignal/OneSignalManager'
 import PrescriptionDetail from './pages/prescriptions/PrescriptionDetail'
+import AccountDetail from './pages/accounts/AccountDetail'
 
 library.add(fas, fab, far)
 
@@ -52,7 +52,7 @@ function App (): JSX.Element {
                     <Route path='/home' element={<HomePage />} />
                     {/* Account */}
                     <Route path='/account/profile' element={<ProfilePage />} />
-                    <Route path='/account' element={<AccountPage />} />
+                    <Route path='/account' element={<AccountDetail />} />
                     {/* Patients */}
                     <Route path='/patients' element={<PatientsPage />} />
                     <Route

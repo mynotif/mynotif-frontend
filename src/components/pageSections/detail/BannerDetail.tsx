@@ -1,13 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import AvatarCircle from '../../AvatarCircle'
 
-interface PatientBannerProps {
+interface BannerDetailProps {
   onEditClick: () => void
   fullName: string
   initials: string
 }
 
-export const PatientBanner = ({ onEditClick, initials, fullName }: PatientBannerProps): JSX.Element => {
+export const BannerDetail = ({ onEditClick, initials, fullName }: BannerDetailProps): JSX.Element => {
   return (
     <div className='relative bg-colorprimary opacity-75 rounded-b-lg pt-16 pb-8'>
       <div
