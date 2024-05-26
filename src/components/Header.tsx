@@ -27,7 +27,7 @@ const Header = ({ countNotification }: HeaderProps): JSX.Element => {
     <>
       {useIsLoggedIn() === true && location.pathname === '/home' && (
         <div className='bg-colorprimary pb-60 rounded-b-2xl relative'>
-          <div className='flex justify-between items-center mb-4 p-5'>
+          <div className='flex justify-between items-start mb-4 p-5'>
             <HeaderProfile />
             <div className='flex items-center space-x-4'>
               <FontAwesomeIcon icon={['fas', 'bell']} className='text-white text-2xl' />
