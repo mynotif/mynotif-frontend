@@ -1,19 +1,23 @@
+import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { ClipLoader } from 'react-spinners'
 
 interface ButtonProps {
   size?: 'small' | 'medium' | 'large'
   variant?: 'accent' | 'secondary' | 'disabled' | 'icon'
-  text: string
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => Promise<void>
   isLoading?: boolean
-  type?: 'button' | 'submit' | 'reset'
+  type?: 'button' | 'submit'
   disabled?: boolean
+  children?: React.ReactNode
+  icon?: IconProp
+  iconTheme?: 'accent' | 'secondary'
+  iconPosition?: 'left' | 'right'
 }
 
-export const Button = ({ text, onClick, isLoading, type = 'button', disabled, variant = 'accent', size = 'medium' }: ButtonProps): JSX.Element => {
-  let variantStyle: string = ''
-  let sizeStyle: string = ''
+export const Button = ({ icon, iconTheme = 'accent', iconPosition = 'right', children, onClick, isLoading, type = 'button', disabled, variant = 'accent', size = 'medium' }: ButtonProps): JSX.Element => {
+  let variantStyle: string = ''; let sizeStyle: string = ''; let iconSize: SizeProp
 
   switch (variant) {
     case 'accent': // default
@@ -26,19 +30,26 @@ export const Button = ({ text, onClick, isLoading, type = 'button', disabled, va
       variantStyle = 'bg-gray-200 border border-gray-300 text-gray-600 cursor-not-allowed rounded-lg'
       break
     case 'icon':
-      variantStyle = ''
+      if (iconTheme === 'accent') {
+        variantStyle = 'bg-colorprimary hover:bg-shade2 text-white rounded-full'
+      } else if (iconTheme === 'secondary') {
+        variantStyle = 'bg-colorsecondary hover:bg-shade3 text-colorprimary rounded-full'
+      }
       break
   }
 
   switch (size) {
     case 'small':
-      sizeStyle = 'text-body-sm font-medium px-14 py-2'
+      sizeStyle = `text-body-sm font-medium ${variant === 'icon' ? 'flex items-center justify-center w-10 h-10' : ' px-14 py-2'}`
+      iconSize = 'xs'
       break
     case 'medium': // default
-      sizeStyle = 'text-body-base font-medium px-16 py-3'
+      sizeStyle = `text-body-base font-medium ${variant === 'icon' ? 'flex items-center justify-center w-12 h-12' : 'px-16 py-3'}`
+      iconSize = 'sm'
       break
     case 'large':
-      sizeStyle = 'text-body-lg font-medium px-20 py-4'
+      sizeStyle = `text-body-lg font-medium ${variant === 'icon' ? 'flex items-center justify-center w-14 h-14' : 'px-20 py-4'} `
+      iconSize = 'lg'
       break
   }
 
@@ -50,11 +61,17 @@ export const Button = ({ text, onClick, isLoading, type = 'button', disabled, va
         onClick={onClick}
         disabled={disabled}
       >
-        {isLoading !== null && isLoading &&
-          <div>
-            <ClipLoader color='#fff' size={30} />
-          </div>}
-        {text}
+        {icon && variant === 'icon' ? (
+          <>
+            <FontAwesomeIcon icon={icon} size={iconSize} />
+          </>
+        ) : (
+          <div className={clsx(icon && 'flex items-center gap-1')}>
+            {icon && iconPosition === 'left' && <FontAwesomeIcon icon={icon} size={iconSize} />}
+            {children}
+            {icon && iconPosition === 'right' && <FontAwesomeIcon icon={icon} size={iconSize} />}
+          </div>
+        )}
       </button>
     </div>
   )

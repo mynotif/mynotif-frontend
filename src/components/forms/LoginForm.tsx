@@ -64,9 +64,9 @@ const LoginForm = (): JSX.Element => {
         />
       </InputFieldContainer>
 
-      <Button size='small' variant='secondary' onClick={onLogin} text={t('navigation.login')} />
-      <Button size='medium' variant='disabled' onClick={onLogin} text={t('navigation.login')} />
-      <Button size='large' onClick={onLogin} text={t('navigation.login')} />
+      <Button size='medium' type='submit' onClick={onLogin}>
+        {t('navigation.login')}
+      </Button>
     </form>
   )
 }

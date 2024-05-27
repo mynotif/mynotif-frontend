@@ -47,8 +47,8 @@
     "test": "craco test",
     "docker:build": "docker build --tag mynotif/mynotif-frontend .",
     "docker:run": "docker run --rm -it --publish 3000:80 mynotif/mynotif-frontend",
-    "lint": "ts-standard src/",
-    "format": "ts-standard --fix src/",
+    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
+    "format": "eslint --fix 'src/**/*.{js,jsx,ts,tsx}'",
     "eject": "react-scripts eject"
   },
   "engines": {
