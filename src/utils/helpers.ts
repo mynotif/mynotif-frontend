@@ -47,7 +47,7 @@ const getIconClass = (prescription: Prescription): string => {
     return COLOR_STATUS.WARNING
   }
 
-  if (prescription.is_valid) {
+  if (prescription.is_valid && !prescription.expiring_soon) {
     return COLOR_STATUS.SUCCESS
   }
 
