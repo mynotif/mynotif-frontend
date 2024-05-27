@@ -12,11 +12,58 @@ module.exports = {
       xl: '1280px',
       '2xl': '1536px',
     },
+    fontSize: {
+      'display': [
+        '24px',
+        {
+          lineHeight: '40px',
+          fontWeight: '600',
+        }],
+      'h1': [
+        '20px',
+        {
+          lineHeight: '28px',
+          fontWeight: '600',
+        }],
+      'h2': [
+        '16px',
+        {
+          lineHeight: '24px',
+          fontWeight: '600',
+        }],
+      'fullname': [
+        '22px',
+        {
+          lineHeight: '33px',
+          fontWeight: '600',
+        }],
+      'body-sm': [
+        '13px',
+        {
+          lineHeight: '24px',
+          fontWeight: '400',
+        }],
+      'body-base': [
+        '14px',
+        {
+          lineHeight: '30px',
+          fontWeight: '400',
+        }],
+      'body-lg': [
+        '16px',
+        {
+          lineHeight: '30px',
+          fontWeight: '700',
+        }],
+    },
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
 
       'colorprimary': '#2BB8B9',
+      'shade1': '#4DC5C6',
+      'shade2': '#6ED2D3',
+      'shade3': '#90DFE0',
       'colorsecondary': '#E1F5F5',
 
       black: colors.black,

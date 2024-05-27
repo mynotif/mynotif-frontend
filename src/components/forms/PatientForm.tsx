@@ -176,7 +176,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
               onChange={handleChange}
             />
           </InputFieldContainer>
-          <Button isLoading={isLoading} text={t('navigation.validate')} />
+          <Button variant='accent' isLoading={isLoading} text={t('navigation.validate')} />
         </form>
       </div>
     </>
