@@ -33,7 +33,7 @@ library.add(fas, fab, far)
 
 function App (): JSX.Element {
   return (
-    <>
+    <div className="main-content">
       <BrowserRouter>
         <TokenContextProvider>
           <ProfileContextProvider>
@@ -91,7 +91,7 @@ function App (): JSX.Element {
           </ProfileContextProvider>
         </TokenContextProvider>
       </BrowserRouter>
-    </>
+    </div>
   )
 }
 

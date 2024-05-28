@@ -23,7 +23,7 @@ const Footer = (): JSX.Element => {
   return (
     <>
       {useIsLoggedIn() === true && (
-        <div className="flex justify-around items-end h-16 ">
+        <div className="footer">
           <FooterNav location={location} text={t('text.home')} icon={['fas', 'home']} url='/home' />
           <FooterNav location={location} text={t('text.patients')} icon={['fas', 'users']} url='/patients' />
 
