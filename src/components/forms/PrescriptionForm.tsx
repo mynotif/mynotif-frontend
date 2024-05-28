@@ -157,7 +157,6 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
   }
 
   const handleNewPatientSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
-    setLoading(true)
     e.preventDefault()
     assert(token)
     const updatedPatientState = {
@@ -180,7 +179,6 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
       }))
       addSuccessMessage({ body: t('text.createdPatient') })
     } catch (error) {
-      setLoading(false)
       console.error(error)
       setError(t('error.createdPatient'))
       addErrorMessageCallback({ body: t('error.createdPatient') })

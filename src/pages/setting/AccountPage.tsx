@@ -23,7 +23,7 @@ export const AccountPage = (): JSX.Element => {
   return (
     <>
       <Header />
-      <ProfileContainer>
+      <ProfileContainer className='h-screen space-y-6 bg-gray-50 m-0'>
         <div className='relative pt-16 pb-8'>
           <div />
           <div className='flex justify-center'>
