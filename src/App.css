@@ -2,3 +2,21 @@
     font-family: 'Lato', sans-serif;
     font-weight: 400;
   }
+
+.main-content {
+  padding-bottom: 1rem; /* Adjust this value according to the height of your footer */
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4rem;
+  background-color: white;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1000;
+}
