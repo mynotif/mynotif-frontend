@@ -11,6 +11,7 @@ const ResetPassword = (): JSX.Element => {
   const [email, setEmail] = useState<string>('')
   const navigate = useNavigate()
   const { t } = useTranslationHook()
+  const [loading, setLoading] = useState<boolean>(false)
 
   const onFormSubmit = (e: React.FormEvent): void => e.preventDefault()
 
@@ -18,10 +19,12 @@ const ResetPassword = (): JSX.Element => {
     setEmail(e.target.value)
 
   const handleResetPasswort = async (e: React.MouseEvent<HTMLElement>): Promise<void> => {
+    setLoading(true)
     try {
       await resetPassword(email)
       navigate('/login')
     } catch (error) {
+      setLoading(false)
       console.error(error)
     }
   }
@@ -41,7 +44,9 @@ const ResetPassword = (): JSX.Element => {
             />
           </InputFieldContainer>
 
-          <Button onClick={handleResetPasswort} text={t('navigation.login')} />
+          <Button isLoading={loading} onClick={handleResetPasswort} type='submit' >
+            {t('navigation.resetPassword')}
+          </Button>
         </form>
 
         <div className='flex justify-end m-6'>

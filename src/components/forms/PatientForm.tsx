@@ -24,7 +24,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
   const [patientState, setPatientState] = useState<Patient>(patient)
   const { t } = useTranslationHook()
   const navigate = useNavigate()
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
 
   const birthdayDateValue: Date | null = patient.birthday !== null && patient.birthday !== undefined && patient.birthday !== '' ? new Date(patient.birthday) : null
   const [birthdayDate, setBirthdayDate] = useState<Date | null>(birthdayDateValue)
@@ -57,10 +57,10 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
     assert(token)
     try {
       await updatePatient(token, patientState)
-      setIsLoading(true)
+      setLoading(true)
     } catch (error) {
       console.error(error)
-      setIsLoading(false)
+      setLoading(false)
       addErrorMessageCallback({ body: t('error.updatedPatient') })
     }
   }
@@ -70,10 +70,10 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
     try {
       const data = await createPatient(token, patientState)
       setPatientState(data)
-      setIsLoading(true)
+      setLoading(true)
     } catch (error) {
       console.error(error)
-      setIsLoading(false)
+      setLoading(false)
       addErrorMessageCallback({ body: t('error.createdPatient') })
     }
   }
@@ -176,7 +176,9 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
               onChange={handleChange}
             />
           </InputFieldContainer>
-          <Button variant='accent' isLoading={isLoading} text={t('navigation.validate')} />
+          <Button variant='accent' isLoading={loading} type='submit'>
+            {t('navigation.validate')}
+          </Button>
         </form>
       </div>
     </>

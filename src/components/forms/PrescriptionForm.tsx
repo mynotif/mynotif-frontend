@@ -51,7 +51,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
   const { patients, reloadPatients } = usePatients()
   const [newCreatedPatientId, setNewCreatedPatientId] = useState<null | number>(null)
   const [error, setError] = useState<string>('')
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
 
   const [prescriptionState, setPrescriptionState] =
     useState<Prescription>(prescription)
@@ -87,6 +87,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
   }
 
   const onCreatePrescription = async (): Promise<void> => {
+    setLoading(true)
     assert(token)
     try {
       const prescriptionData = {
@@ -98,10 +99,9 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
         await uploadPrescription(token, data.id, file)
       }
       setPrescriptionState(data)
-      setIsLoading(true)
     } catch (error) {
       console.error(error)
-      setIsLoading(false)
+      setLoading(false)
       addErrorMessageCallback({ body: t('error.createdPrescription') })
     }
   }
@@ -112,16 +112,16 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
   )
 
   const handleSave = async (): Promise<void> => {
+    setLoading(true)
     assert(token)
     try {
       await updatePrescription(token, prescriptionState)
       if (file !== null && file !== undefined) {
         await uploadPrescription(token, prescriptionState.id, file)
       }
-      setIsLoading(true)
       navigate('/prescriptions')
     } catch (error) {
-      setIsLoading(false)
+      setLoading(false)
       addErrorMessageCallback({ body: t('error.updatedPrescription') })
     }
   }
@@ -157,6 +157,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
   }
 
   const handleNewPatientSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
+    setLoading(true)
     e.preventDefault()
     assert(token)
     const updatedPatientState = {
@@ -179,6 +180,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
       }))
       addSuccessMessage({ body: t('text.createdPatient') })
     } catch (error) {
+      setLoading(false)
       console.error(error)
       setError(t('error.createdPatient'))
       addErrorMessageCallback({ body: t('error.createdPatient') })
@@ -237,7 +239,9 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
           </>
         )}
 
-        <Button isLoading={isLoading} text={t('navigation.validate')} />
+        <Button isLoading={loading} type='submit'>
+          {t('navigation.validate')}
+        </Button>
       </form>
       {addingNewPatient && (
         <ModalAddPatient
@@ -247,6 +251,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
           onHide={() => setAddingNewPatient(false)}
           show={addingNewPatient}
           error={error}
+          loading={loading}
         />
       )}
     </div>

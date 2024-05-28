@@ -104,7 +104,9 @@ export const ProfileForm = ({ profile, addErrorMessageCallback }: ProfileFormPro
             />
           </InputFieldContainer>
           <FormFieldError errorMessage={errors.last_name?.message} />
-          <Button isLoading={loading} text={t('navigation.validate')} />
+          <Button isLoading={loading} type='submit'>
+            {t('navigation.validate')}
+          </Button>
         </form>
       </div>
     </>

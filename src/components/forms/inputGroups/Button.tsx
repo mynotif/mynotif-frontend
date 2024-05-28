@@ -1,7 +1,7 @@
 import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
-import { ClipLoader } from 'react-spinners'
+import { Spinner } from '../../module/Spinner'
 
 interface ButtonProps {
   size?: 'small' | 'medium' | 'large'
@@ -57,10 +57,17 @@ export const Button = ({ icon, iconTheme = 'accent', iconPosition = 'right', chi
     <div className='flex justify-center items-center mt-4'>
       <button
         type={type}
-        className={clsx(variantStyle, sizeStyle)}
+        className={clsx(variantStyle, sizeStyle, isLoading && 'cursor-wait', 'relative')}
         onClick={onClick}
         disabled={disabled}
       >
+
+        {isLoading && (
+            <div className="absolute inset-0 flex items-center justify-center">
+                {variant === 'accent' || variant === 'icon' ? (<Spinner size="small" variant="white" />) : (<Spinner size="small" />)}
+            </div>
+        )}
+        <div className={clsx(isLoading && 'invisible')}>
         {icon && variant === 'icon' ? (
           <>
             <FontAwesomeIcon icon={icon} size={iconSize} />
@@ -72,6 +79,7 @@ export const Button = ({ icon, iconTheme = 'accent', iconPosition = 'right', chi
             {icon && iconPosition === 'right' && <FontAwesomeIcon icon={icon} size={iconSize} />}
           </div>
         )}
+        </div>
       </button>
     </div>
   )

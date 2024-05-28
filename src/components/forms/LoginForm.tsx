@@ -16,6 +16,7 @@ const LoginForm = (): JSX.Element => {
   const { addErrorMessage, addSuccessMessage } = useContext(FlashMessageContext)
   const navigate = useNavigate()
   const { t } = useTranslationHook()
+  const [loading, setLoading] = useState<boolean>(false)
 
   const onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
     setUsername(e.target.value)
@@ -29,6 +30,7 @@ const LoginForm = (): JSX.Element => {
     []
   )
   const onLogin = async (e: React.MouseEvent<HTMLElement>): Promise<void> => {
+    setLoading(true)
     try {
       const response = await login(username, password)
       const { token } = response
@@ -37,6 +39,7 @@ const LoginForm = (): JSX.Element => {
       navigate('/home')
       addSuccessMessage({ body: t('text.userLogin') })
     } catch (error) {
+      setLoading(false)
       console.error(error)
       addErrorMessageCallback({ body: t('error.userLogin') })
     }
@@ -64,7 +67,7 @@ const LoginForm = (): JSX.Element => {
         />
       </InputFieldContainer>
 
-      <Button size='medium' type='submit' onClick={onLogin}>
+      <Button isLoading={loading} size='medium' type='submit' onClick={onLogin}>
         {t('navigation.login')}
       </Button>
     </form>
