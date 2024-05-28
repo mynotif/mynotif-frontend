@@ -43,7 +43,7 @@ const getValidOrLastPrescription = (
  * @returns The color of the badge
  */
 const getIconClass = (prescription: Prescription): string => {
-  if (prescription.expiring_soon) {
+  if (prescription.is_valid && prescription.expiring_soon) {
     return COLOR_STATUS.WARNING
   }
 
