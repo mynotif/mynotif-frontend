@@ -35,6 +35,7 @@ const RegisterForm = (): JSX.Element => {
       navigate('/login')
       addSuccessMessage({ body: t('text.userRegister') })
     } catch (error) {
+      setLoading(false)
       console.error(error)
       if (axios.isAxiosError(error)) {
         addErrorMessageCallback({ title: t('error.errorRegister'), body: JSON.stringify((error).response?.data) })
@@ -83,7 +84,9 @@ const RegisterForm = (): JSX.Element => {
         />
       </InputFieldContainer>
       <FormFieldError errorMessage={errors.password?.message} />
-      <Button isLoading={loading} text={t('navigation.register')} />
+      <Button isLoading={loading} type='submit' >
+        {t('navigation.register')}
+      </Button>
     </form>
   )
 }

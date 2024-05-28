@@ -11,6 +11,7 @@ interface ModalAddPatientProps {
   onHide: () => void
   show: boolean
   error: string
+  loading?: boolean
 }
 
 const ModalAddPatient: React.FC<ModalAddPatientProps> = ({
@@ -19,7 +20,8 @@ const ModalAddPatient: React.FC<ModalAddPatientProps> = ({
   handleNewPatientSubmit,
   onHide,
   show,
-  error
+  error,
+  loading
 }) => {
   const { t } = useTranslationHook()
 
@@ -50,7 +52,9 @@ const ModalAddPatient: React.FC<ModalAddPatientProps> = ({
               onChange={handleChangeNewPatient}
             />
           </InputFieldContainer>
-          <Button onClick={handleNewPatientSubmit} text={t('navigation.validate')} />
+          <Button isLoading={loading} onClick={handleNewPatientSubmit} type='submit' >
+            {t('navigation.validate')}
+          </Button>
         </form>
       </div>
     </div>
