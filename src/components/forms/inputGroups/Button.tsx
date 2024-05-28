@@ -57,7 +57,7 @@ export const Button = ({ icon, iconTheme = 'accent', iconPosition = 'right', chi
     <div className='flex justify-center items-center mt-4'>
       <button
         type={type}
-        className={clsx(variantStyle, sizeStyle, isLoading && 'cursor-wait', 'relative')}
+        className={clsx(variantStyle, sizeStyle, isLoading && 'cursor-wait', disabled && 'cursor-not-allowed', 'relative')}
         onClick={onClick}
         disabled={disabled}
       >

@@ -1,0 +1,22 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
+import { Link } from 'react-router-dom'
+
+interface FooterNavProps {
+  text: string
+  icon: any
+  url: string
+  isExternal?: boolean
+  location: any
+}
+
+export const FooterNav = ({text, icon, url, isExternal, location}: FooterNavProps): JSX.Element => {
+  
+  const highlightOnPathname = (pathname: string): string => location.pathname === pathname ? 'text-colorprimary' : ''
+  return (
+    <Link to={url} className={clsx(isExternal && "target='_blank'", `flex flex-col items-center ${highlightOnPathname(url)}`)}>
+      <FontAwesomeIcon icon={icon} className='text-xl' />
+      <span className="mt-1 text-sm">{text}</span>
+    </Link>
+  )
+}

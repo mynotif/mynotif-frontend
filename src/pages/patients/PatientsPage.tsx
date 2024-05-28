@@ -4,9 +4,7 @@ import { useCallback, useState } from 'react'
 import { Patient } from '../../types'
 import SearchBar from '../../components/SearchBar'
 import Header from '../../components/Header'
-import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
 import { ContainerBodyPage } from '../../components/pageSections/ContainerBodyPage'
-import { LinkButton } from '../../components/module/LinkButton'
 import { ContainerPage } from '../../components/pageSections/ContainerPage'
 
 const PatientsPage = (): JSX.Element => {
@@ -39,7 +37,6 @@ const PatientsPage = (): JSX.Element => {
         ))}
         <div className='h-20' /> {/* Added space for the bottom */}
       </ContainerBodyPage>
-      <LinkButton icon={faUserPlus} url='/patients/create' />
     </ContainerPage>
   )
 }
