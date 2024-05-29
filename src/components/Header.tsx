@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import HeaderProfile from './HeaderProfile'
 import { useIsLoggedIn } from '../utils/hooks'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { ProfileContext } from '../context/profile'
 import { PAGE_CONFIG } from '../utils/constants'
 import PageHeader from './PageHeader'
@@ -21,6 +21,7 @@ const Header = ({ countNotification }: HeaderProps): JSX.Element => {
   const initials = initialFullname !== '' ? initialFullname : initialUsername
   const isPatientProfile = location.pathname.match(/patients\/\d+$/)
   const isPrescriptionProfile = location.pathname.match(/prescriptions\/\d+$/)
+  const isStatus = location.pathname.includes('status')
   const isCountNotification = countNotification !== null && countNotification !== undefined && countNotification > 0
 
   const navigate = useNavigate()
@@ -28,6 +29,17 @@ const Header = ({ countNotification }: HeaderProps): JSX.Element => {
   const onAccountDetail = (): void => {
     navigate('/profile')
   }
+
+  const [previousPath, setPreviousPath] = useState<string | null>(sessionStorage.getItem('previousPath'))
+
+  useEffect(() => {
+    const currentPath = sessionStorage.getItem('currentPath')
+    if (location.pathname !== currentPath) {
+      setPreviousPath(currentPath);
+      sessionStorage.setItem('previousPath', currentPath ?? '')
+      sessionStorage.setItem('currentPath', location.pathname)
+    }
+  }, [location.pathname])
 
   return (
     <>
@@ -52,11 +64,13 @@ const Header = ({ countNotification }: HeaderProps): JSX.Element => {
       {currentPage != null && (
         <>
           {(isPatientProfile != null) ? (
-            <PageHeader url='/patients' title='Patient Profile' />
+            <PageHeader url={previousPath ?? '/patients'} title='Patient Profile' />
           ) : (isPrescriptionProfile != null) ? (
-            <PageHeader url='/prescriptions' title='Prescription Profile' />
+            <PageHeader url={previousPath ?? '/prescriptions'} title='Prescription Profile' />
+          ) : (isStatus != null) ? (
+            <PageHeader url={previousPath ?? '/patients'} title='Prescription Status' />
           ) : (
-            <PageHeader url='/home' title={currentPage.title} />
+            <PageHeader url={previousPath ?? '/home'} title={currentPage.title} />
           )}
         </>
       )}
