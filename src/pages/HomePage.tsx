@@ -23,6 +23,9 @@ const HomePage = (): JSX.Element => {
   const goToPrescriptions = (): void => {
     navigate('/prescriptions')
   }
+  const goToPatient = (id: number): void => {
+    navigate(`/patients/${id}`)
+  }
 
   return (
     <>
@@ -35,7 +38,7 @@ const HomePage = (): JSX.Element => {
         <ExpirationBanner expiration='Expire bientot' />
         {patientsExpiredSoon.length === 0 && <p>No patients expiring soon</p>}
         {patientsExpiredSoon.map(patient => (
-          <PatientCard key={patient.id} patient={patient} />
+          <PatientCard onClick={() => goToPatient(patient.id)} key={patient.id} patient={patient} />
         ))}
         <div className='h-20' />
       </DashboardContainer>
