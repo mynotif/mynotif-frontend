@@ -1,18 +1,13 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import HeaderProfile from './HeaderProfile'
 import { useIsLoggedIn } from '../utils/hooks'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext, useEffect, useState } from 'react'
 import { ProfileContext } from '../context/profile'
 import { PAGE_CONFIG } from '../utils/constants'
 import PageHeader from './PageHeader'
 import AvatarCircle from './AvatarCircle'
 
-interface HeaderProps {
-  countNotification?: number
-}
-
-const Header = ({ countNotification }: HeaderProps): JSX.Element => {
+const Header = (): JSX.Element => {
   const location = useLocation()
   const currentPage = PAGE_CONFIG.find(page => location.pathname.includes(page.path))
   const { profile } = useContext(ProfileContext)
@@ -22,8 +17,6 @@ const Header = ({ countNotification }: HeaderProps): JSX.Element => {
   const isPatientProfile = location.pathname.match(/patients\/\d+$/)
   const isPrescriptionProfile = location.pathname.match(/prescriptions\/\d+$/)
   const isStatus = location.pathname.includes('status')
-  const isCountNotification = countNotification !== null && countNotification !== undefined && countNotification > 0
-
   const navigate = useNavigate()
 
   const onAccountDetail = (): void => {
@@ -48,12 +41,6 @@ const Header = ({ countNotification }: HeaderProps): JSX.Element => {
           <div className='flex justify-between items-start mb-4 p-5'>
             <HeaderProfile />
             <div className='flex items-center space-x-4'>
-              <FontAwesomeIcon icon={['fas', 'bell']} className='text-white text-2xl' />
-              {isCountNotification && (
-                <i className='fas fa-bell text-white text-2xl relative'>
-                  <span className='absolute top-0 right-0 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center'>{countNotification}</span>
-                </i>
-              )}
               <div onClick={onAccountDetail}>
                 <AvatarCircle initials={initials} size={40} fontSize={16} />
               </div>
@@ -63,11 +50,11 @@ const Header = ({ countNotification }: HeaderProps): JSX.Element => {
       )}
       {currentPage != null && (
         <>
-          {(isPatientProfile != null) ? (
+          {(isPatientProfile) ? (
             <PageHeader url={previousPath ?? '/patients'} title='Patient Profile' />
-          ) : (isPrescriptionProfile != null) ? (
+          ) : (isPrescriptionProfile) ? (
             <PageHeader url={previousPath ?? '/prescriptions'} title='Prescription Profile' />
-          ) : (isStatus != null) ? (
+          ) : (isStatus) ? (
             <PageHeader url={previousPath ?? '/patients'} title='Prescription Status' />
           ) : (
             <PageHeader url={previousPath ?? '/home'} title={currentPage.title} />
