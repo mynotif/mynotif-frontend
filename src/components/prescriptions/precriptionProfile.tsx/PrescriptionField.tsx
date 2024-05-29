@@ -12,7 +12,7 @@ interface PrescriptionFieldProps {
 
 export const PrescriptionField = ({ prescriptionState, patientState, fullNamePatient }: PrescriptionFieldProps): JSX.Element => {
   return (
-    <div className='pt-4 h-full'>
+    <>
       <div className='bg-white p-4 mt-8 rounded-lg relative z-10 shadow-sm'>
         <div className='mb-2'>
           <p className='font-semibold'> Patient:
@@ -37,7 +37,7 @@ export const PrescriptionField = ({ prescriptionState, patientState, fullNamePat
           </p>
         </div>
       </div>
-      <div className='bg-white p-4 mt-8 rounded-lg relative z-10 shadow-sm'>
+      <div className='bg-white p-4 mt-8 rounded-lg relative  shadow-sm'>
         <div className='flex items-center mb-2'>
           <p className='flex-grow font-semibold'>Expire le: </p>
           <div className='flex items-center bg-colorsecondary text-colorprimary px-3 py-1 rounded-full'>
@@ -56,6 +56,6 @@ export const PrescriptionField = ({ prescriptionState, patientState, fullNamePat
           )}
         </div>
       </div>
-    </div>
+    </>
   )
 }

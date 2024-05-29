@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 import { Prescription } from "../../../types";
 import Header from "../../Header";
 import { PrescriptionCard } from "../../prescriptions/PrescriptionCard";
+import { Container } from "../../home/Container";
 
 export const PrescriptionStatusList = (): JSX.Element => {
   const location = useLocation();
@@ -23,7 +24,7 @@ export const PrescriptionStatusList = (): JSX.Element => {
   }
 
   return (
-    <>
+    <Container>
       <Header />
       {prescriptions.length > 0 ?
         (
@@ -42,6 +43,6 @@ export const PrescriptionStatusList = (): JSX.Element => {
             <p className="m-8">Il n'y a pas d'ordonnance {statusText}</p>
         )
       }
-    </>
+    </Container>
   )
 }

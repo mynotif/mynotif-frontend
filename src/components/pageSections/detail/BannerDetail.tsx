@@ -9,7 +9,7 @@ interface BannerDetailProps {
 
 export const BannerDetail = ({ onEditClick, initials, fullName }: BannerDetailProps): JSX.Element => {
   return (
-    <div className='relative bg-colorprimary opacity-75 rounded-b-lg pt-16 pb-8'>
+    <div className='relative bg-colorprimary opacity-75 rounded-b-lg pt-10 pb-6'>
       <div
         className='absolute top-1 right-5 bg-colorsecondary rounded-full w-10 h-10 flex items-center justify-center cursor-pointer'
         onClick={onEditClick}

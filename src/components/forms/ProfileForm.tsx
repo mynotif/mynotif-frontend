@@ -12,6 +12,7 @@ import { TokenContext } from '../../context/token'
 import { updateUser } from '../../services/api'
 import { ProfileContext } from '../../context/profile'
 import { FlashMessageType } from '../../context/flashmessage'
+import { Container } from '../home/Container'
 
 interface ProfileFormProps {
   profile: Profile
@@ -51,9 +52,9 @@ export const ProfileForm = ({ profile, addErrorMessageCallback }: ProfileFormPro
   }
 
   return (
-    <>
+    <Container>
       <div className='bg-gray-50 min-h-screen flex flex-col'>
-        <form className='mt-4 p-4 space-y-4 ' onSubmit={handleSubmit(handleProfile)}>
+        <form className='space-y-4 ' onSubmit={handleSubmit(handleProfile)}>
           <InputFieldContainer icon={['fas', 'user']}>
             <Input
               type='text'
@@ -109,6 +110,6 @@ export const ProfileForm = ({ profile, addErrorMessageCallback }: ProfileFormPro
           </Button>
         </form>
       </div>
-    </>
+    </Container>
   )
 }

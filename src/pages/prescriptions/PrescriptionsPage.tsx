@@ -1,5 +1,4 @@
 import usePrescription from '../../hook/prescription.hook'
-import Header from '../../components/Header'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import SearchBar from '../../components/SearchBar'
 import { PrescriptionCard } from '../../components/prescriptions/PrescriptionCard'
@@ -8,9 +7,8 @@ import assert from 'assert'
 import { Patient, Prescription } from '../../types'
 import useTranslationHook from '../../hook/TranslationHook'
 import { TokenContext } from '../../context/token'
-import { ContainerPage } from '../../components/pageSections/ContainerPage'
 import { formatDate } from '../../utils/helpers'
-import { ContainerBodyPage } from '../../components/pageSections/ContainerBodyPage'
+import { Container } from '../../components/home/Container'
 
 const PrescriptionsPage = (): JSX.Element => {
   const [prescriptions] = usePrescription()
@@ -103,9 +101,7 @@ const PrescriptionsPage = (): JSX.Element => {
   }, [prescriptions, filterByPrescriptions])
 
   return (
-    <ContainerPage>
-      <Header />
-      <ContainerBodyPage>
+    <Container>
         <SearchBar onSearch={handleSearch} placeholderText={t('text.searchDoctor')} />
         {
           filteredPrescriptions.map((prescription) => (
@@ -119,8 +115,7 @@ const PrescriptionsPage = (): JSX.Element => {
           ))
         }
         <div className='h-20' /> {/* Added space for the bottom */}
-      </ContainerBodyPage>
-    </ContainerPage>
+    </Container>
   )
 }
 

@@ -6,14 +6,11 @@ import { FlashMessageContext, FlashMessageType } from '../../context/flashmessag
 import { getPatient } from '../../services/api'
 import { Patient } from '../../types'
 import useTranslationHook from '../../hook/TranslationHook'
-import Header from '../../components/Header'
 import { BannerDetail } from '../../components/pageSections/detail/BannerDetail'
-import { BodyContainer } from '../../components/pageSections/detail/BodyContainer'
 import { CardDetail } from '../../components/pageSections/detail/CardDetail'
 import { PrescriptionCard } from '../../components/patients/patientProfile/PrescriptionCard'
-import { ContainerDetailPage } from '../../components/pageSections/ContainerDetailPage'
-import { ProfileContainer } from '../../components/pageSections/ProfileContainer'
 import { Spinner } from '../../components/module/Spinner'
+import { Container } from '../../components/home/Container'
 
 const PatientDetail = (): JSX.Element => {
   const { id } = useParams<'id'>()
@@ -70,29 +67,21 @@ const PatientDetail = (): JSX.Element => {
   return (
     <>
       {patient !== null ? (
-        <ContainerDetailPage>
-          <Header />
-          <div className='flex-grow overflow-y-auto'>
-            <ProfileContainer>
-              <BannerDetail fullName={fullName} initials={initials} onEditClick={goToEditPatient} />
-              <BodyContainer>
-                <CardDetail icon={['fas', 'map-marker-alt']} content={patient.street} title={t('form.address')} />
-                <CardDetail icon={['fas', 'map-marker-alt']} content={patient.city} title={t('form.city')} />
-                <CardDetail icon={['fas', 'phone']} content={patient.phone} title={t('form.phone')} />
-                <PrescriptionCard 
-                prescriptions={patient.prescriptions}
-                title={t('text.prescription')}
-                icon={['fas', 'eye']}
-                expireSoon={expireSoon}
-                valid={valid}
-                invalid={invalid}
-                patient={patient}
-                />
-              </BodyContainer>
-            </ProfileContainer>
-          </div>
-          <div className='bg-white p-4 mt-8 relative z-10 shadow-sm' />
-        </ContainerDetailPage>
+        <Container>
+          <BannerDetail fullName={fullName} initials={initials} onEditClick={goToEditPatient} />
+            <CardDetail icon={['fas', 'map-marker-alt']} content={patient.street} title={t('form.address')} />
+            <CardDetail icon={['fas', 'map-marker-alt']} content={patient.city} title={t('form.city')} />
+            <CardDetail icon={['fas', 'phone']} content={patient.phone} title={t('form.phone')} />
+            <PrescriptionCard 
+              prescriptions={patient.prescriptions}
+              title={t('text.prescription')}
+              icon={['fas', 'eye']}
+              expireSoon={expireSoon}
+              valid={valid}
+              invalid={invalid}
+              patient={patient}
+          />
+        </Container>
       ) : (
         <div className='flex justify-center items-center min-h-screen'>
           <div className='border-4 border-t-4 border-colorprimary rounded-full w-12 h-12 animate-spin'>

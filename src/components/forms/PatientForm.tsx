@@ -12,6 +12,7 @@ import { BACKEND_DATE_FORMAT, USER_DATE_FORMAT } from '../../services/constants'
 import { InputFieldContainer } from './inputGroups/InputFieldContainer'
 import { InputField } from './inputGroups/InputField'
 import { Button } from './inputGroups/Button'
+import { Container } from '../home/Container'
 
 interface PatientFormProps {
   patient: Patient
@@ -96,9 +97,9 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
   }
 
   return (
-    <>
-      <div className='bg-gray-50 min-h-screen flex flex-col'>
-        <form className='mt-4 p-4 space-y-4 mb-24' onSubmit={handleSubmit}>
+    <Container>
+      <div className='min-h-screen flex flex-col'>
+        <form className='space-y-4 mb-24' onSubmit={handleSubmit}>
           <InputFieldContainer icon={['fas', 'user']}>
             <InputField
               name='firstname'
@@ -181,7 +182,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
           </Button>
         </form>
       </div>
-    </>
+    </Container>
   )
 }
 

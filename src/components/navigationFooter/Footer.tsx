@@ -23,7 +23,7 @@ const Footer = (): JSX.Element => {
   return (
     <>
       {useIsLoggedIn() === true && (
-        <div className="footer">
+        <footer className="fixed bottom-0 left-0 right-0 h-16 bg-white shadow-md flex justify-around items-center z-10">
           <FooterNav location={location} text={t('text.home')} icon={['fas', 'home']} url='/home' />
           <FooterNav location={location} text={t('text.patients')} icon={['fas', 'users']} url='/patients' />
 
@@ -35,7 +35,7 @@ const Footer = (): JSX.Element => {
           <FooterNav location={location} text={t('text.prescription')} icon={['fas', 'file-medical']} url='/prescriptions' />
           <FooterNav location={location} text={t('text.profile')} icon={['fas', 'user']} url='/setting' />
 
-        </div>
+        </footer>
       )}
     </>
   )
