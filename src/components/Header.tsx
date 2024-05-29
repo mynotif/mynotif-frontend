@@ -17,6 +17,8 @@ const Header = (): JSX.Element => {
   const isPatientProfile = location.pathname.match(/patients\/\d+$/)
   const isPrescriptionProfile = location.pathname.match(/prescriptions\/\d+$/)
   const isStatus = location.pathname.includes('status')
+  const isLoggedIn = useIsLoggedIn()
+  const isHomePage = location.pathname === '/home'
   const navigate = useNavigate()
 
   const onAccountDetail = (): void => {
@@ -34,34 +36,34 @@ const Header = (): JSX.Element => {
     }
   }, [location.pathname])
 
+
   return (
-    <>
-      {useIsLoggedIn() === true && location.pathname === '/home' && (
-        <div className='bg-colorprimary pb-60 rounded-b-2xl relative'>
-          <div className='flex justify-between items-start mb-4 p-5'>
-            <HeaderProfile />
-            <div className='flex items-center space-x-4'>
-              <div onClick={onAccountDetail}>
-                <AvatarCircle initials={initials} size={40} fontSize={16} />
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-      {currentPage != null && (
+    <header className='fixed top-0 left-0 right-0 h-16 bg-white shadow-md flex justify-around items-center z-10'>
+      {isLoggedIn && isHomePage && (
         <>
-          {(isPatientProfile) ? (
-            <PageHeader url={previousPath ?? '/patients'} title='Patient Profile' />
-          ) : (isPrescriptionProfile) ? (
-            <PageHeader url={previousPath ?? '/prescriptions'} title='Prescription Profile' />
-          ) : (isStatus) ? (
-            <PageHeader url={previousPath ?? '/patients'} title='Prescription Status' />
-          ) : (
-            <PageHeader url={previousPath ?? '/home'} title={currentPage.title} />
-          )}
+          <HeaderProfile />
+          <div onClick={onAccountDetail}>
+            <AvatarCircle initials={initials} size={40} fontSize={16} />
+          </div>
         </>
       )}
-    </>
+      {currentPage && (
+        <PageHeader
+          url={
+            isPatientProfile ? previousPath ?? '/patients'
+            : isPrescriptionProfile ? previousPath ?? '/prescriptions'
+            : isStatus ? previousPath ?? '/patients'
+            : previousPath ?? '/home'
+          }
+          title={
+            isPatientProfile ? 'Patient Profile'
+            : isPrescriptionProfile ? 'Prescription Profile'
+            : isStatus ? 'Prescription Status'
+            : currentPage.title
+          }
+        />
+      )}
+    </header>
   )
 }
 

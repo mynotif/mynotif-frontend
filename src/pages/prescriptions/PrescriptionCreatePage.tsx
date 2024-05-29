@@ -1,19 +1,18 @@
 import React, { useState } from 'react'
 import PrescriptionForm from '../../components/forms/PrescriptionForm'
 import { defaultPrescription, Prescription } from '../../types'
-import Header from '../../components/Header'
+import { Container } from '../../components/home/Container'
 
 const PrescriptionCreatePage = (): JSX.Element => {
   const [newPrescription] = useState<Prescription>(defaultPrescription)
 
   return (
-    <div>
-      <Header />
+    <Container>
       <PrescriptionForm
         prescription={newPrescription}
         isEditForm={false}
       />
-    </div>
+    </Container>
   )
 }
 

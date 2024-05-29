@@ -26,6 +26,7 @@ import { InputFieldContainer } from './inputGroups/InputFieldContainer'
 import { InputField } from './inputGroups/InputField'
 import { SelectField } from './inputGroups/SelectField'
 import { Button } from './inputGroups/Button'
+import { Container } from '../home/Container'
 
 interface PrescriptionFormRequiredProps {
   prescription: Prescription
@@ -191,68 +192,70 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
   }
 
   return (
-    <div className='bg-gray-50 min-h-screen flex flex-col'>
-      <form className='mt-4 p-4 space-y-4 mb-24' onSubmit={onFormSubmit}>
-        <InputFieldContainer icon={['fas', 'user-doctor']}>
-          <InputField
-            name='prescribing_doctor'
-            placeholder={t('form.doctor')}
-            value={prescriptionState.prescribing_doctor}
-            onChange={onInputChange}
-          />
-        </InputFieldContainer>
-        <InputFieldContainer icon={['fas', 'file-prescription']}>
-          <InputField
-            type='file'
-            name='photo_prescription'
-            placeholder={t('form.selectYourPrescription')}
-            onChange={onInputChange}
-            file={file?.name}
-          />
-        </InputFieldContainer>
-        <InputFieldContainer icon={['fas', 'calendar-alt']}>
-          <DatePicker
-            selected={endDate}
-            onChange={onEndDateChange}
-            dateFormat={USER_DATE_FORMAT}
-            className='flex-grow outline-none text-gray-600'
-            placeholderText={t('form.endDate')}
-            peekNextMonth
-            showMonthDropdown
-            showYearDropdown
-            dropdownMode='select'
-          />
-        </InputFieldContainer>
-        {!isEditForm && (
-          <>
-            <InputFieldContainer icon={['fas', 'user-injured']}>
-              <SelectField
-                name='patient'
-                value={newCreatedPatientId ?? ''}
-                onChange={onSelectChange}
-                patients={patients}
-              />
-            </InputFieldContainer>
+    <Container>
+      <div className='min-h-screen flex flex-col'>
+        <form className='space-y-4 mb-24' onSubmit={onFormSubmit}>
+          <InputFieldContainer icon={['fas', 'user-doctor']}>
+            <InputField
+              name='prescribing_doctor'
+              placeholder={t('form.doctor')}
+              value={prescriptionState.prescribing_doctor}
+              onChange={onInputChange}
+            />
+          </InputFieldContainer>
+          <InputFieldContainer icon={['fas', 'file-prescription']}>
+            <InputField
+              type='file'
+              name='photo_prescription'
+              placeholder={t('form.selectYourPrescription')}
+              onChange={onInputChange}
+              file={file?.name}
+            />
+          </InputFieldContainer>
+          <InputFieldContainer icon={['fas', 'calendar-alt']}>
+            <DatePicker
+              selected={endDate}
+              onChange={onEndDateChange}
+              dateFormat={USER_DATE_FORMAT}
+              className='flex-grow outline-none text-gray-600'
+              placeholderText={t('form.endDate')}
+              peekNextMonth
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode='select'
+            />
+          </InputFieldContainer>
+          {!isEditForm && (
+            <>
+              <InputFieldContainer icon={['fas', 'user-injured']}>
+                <SelectField
+                  name='patient'
+                  value={newCreatedPatientId ?? ''}
+                  onChange={onSelectChange}
+                  patients={patients}
+                />
+              </InputFieldContainer>
 
-          </>
+            </>
+          )}
+
+          <Button isLoading={loading} type='submit'>
+            {t('navigation.validate')}
+          </Button>
+        </form>
+        {addingNewPatient && (
+          <ModalAddPatient
+            patientState={patientState}
+            handleChangeNewPatient={handleChangeNewPatient}
+            handleNewPatientSubmit={handleNewPatientSubmit}
+            onHide={() => setAddingNewPatient(false)}
+            show={addingNewPatient}
+            error={error}
+            loading={loading}
+          />
         )}
-
-        <Button isLoading={loading} type='submit'>
-          {t('navigation.validate')}
-        </Button>
-      </form>
-      {addingNewPatient && (
-        <ModalAddPatient
-          patientState={patientState}
-          handleChangeNewPatient={handleChangeNewPatient}
-          handleNewPatientSubmit={handleNewPatientSubmit}
-          onHide={() => setAddingNewPatient(false)}
-          show={addingNewPatient}
-          error={error}
-          loading={loading}
-        />
-      )}
-    </div>
+      </div>
+    </Container>
   )
 }
 

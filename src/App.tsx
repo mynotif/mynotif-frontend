@@ -29,16 +29,17 @@ import ProfileDetail from './pages/profile/ProfileDetail'
 import ProfileEdit from './pages/profile/ProfileEdit'
 import { AccountPage } from './pages/setting/AccountPage'
 import { PrescriptionStatusList } from './components/patients/patientProfile/PrescriptionStatusList'
+import Header from './components/Header'
 
 library.add(fas, fab, far)
 
 function App (): JSX.Element {
   return (
-    <div className="main-content">
       <BrowserRouter>
         <TokenContextProvider>
           <ProfileContextProvider>
             <OneSignalManager>
+              <Header />
               <FlashMessageContextProvider>
                 <FlashMessages />
                 <Routes>
@@ -95,7 +96,6 @@ function App (): JSX.Element {
           </ProfileContextProvider>
         </TokenContextProvider>
       </BrowserRouter>
-    </div>
   )
 }
 

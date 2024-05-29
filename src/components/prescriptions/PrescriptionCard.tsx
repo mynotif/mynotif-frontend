@@ -20,7 +20,7 @@ export const PrescriptionCard = ({ doctorName, endDate, patientName, prescriptio
   const isValidIconClass = getIconClass(prescription)
 
   return (
-    <div onClick={goToPrescription} className='p-3 space-y-2 relative z-10 h-auto overflow-hidden'>
+    <div onClick={goToPrescription} className='p-3 space-y-2 relative h-auto overflow-hidden'>
 
       <div className='bg-white rounded-lg p-4 shadow-md'>
         <div className='flex items-center space-x-4 mb-2'>

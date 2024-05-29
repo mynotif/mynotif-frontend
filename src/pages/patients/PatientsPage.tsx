@@ -3,9 +3,7 @@ import usePatients from '../../hook/patient.hook'
 import { useCallback, useState } from 'react'
 import { Patient } from '../../types'
 import SearchBar from '../../components/SearchBar'
-import Header from '../../components/Header'
-import { ContainerBodyPage } from '../../components/pageSections/ContainerBodyPage'
-import { ContainerPage } from '../../components/pageSections/ContainerPage'
+import { Container } from '../../components/home/Container'
 
 const PatientsPage = (): JSX.Element => {
   const { patients } = usePatients()
@@ -28,16 +26,13 @@ const PatientsPage = (): JSX.Element => {
   }, [patients])
 
   return (
-    <ContainerPage>
-      <Header />
-      <ContainerBodyPage>
+    <Container>
         <SearchBar onSearch={handleSearch} />
         {filteredPatients.map((patient) => (
           <PatientLine key={patient.id} patient={patient} />
         ))}
         <div className='h-20' /> {/* Added space for the bottom */}
-      </ContainerBodyPage>
-    </ContainerPage>
+    </Container>
   )
 }
 

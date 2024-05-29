@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import { ProfileContainer } from '../../components/pageSections/ProfileContainer'
 import AvatarCircle from '../../components/AvatarCircle'
-import Header from '../../components/Header'
 import { ProfileContext } from '../../context/profile'
 import AccountCard from '../../components/setting/AccountCard'
 import { useNavigate } from 'react-router-dom'
@@ -22,7 +21,6 @@ export const AccountPage = (): JSX.Element => {
   }
   return (
     <>
-      <Header />
       <ProfileContainer className='h-screen space-y-6 bg-gray-50 m-0'>
         <div className='relative pt-16 pb-8'>
           <div />

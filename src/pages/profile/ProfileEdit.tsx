@@ -2,7 +2,6 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import { Profile } from '../../types'
 import { ProfileContext } from '../../context/profile'
 import { FlashMessageContext, FlashMessageType } from '../../context/flashmessage'
-import Header from '../../components/Header'
 import { ProfileForm } from '../../components/forms/ProfileForm'
 
 const ProfileEdit = (): JSX.Element => {
@@ -24,7 +23,6 @@ const ProfileEdit = (): JSX.Element => {
 
   return (
     <>
-      <Header />
       {profile?.username !== '' && (
         <>
           <ProfileForm addErrorMessageCallback={addErrorMessageCallback} profile={profile} />

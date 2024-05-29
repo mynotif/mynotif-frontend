@@ -1,16 +1,14 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Patient, Prescription } from '../../types'
-import Header from '../../components/Header'
 import { getPatient, getPrescription } from '../../services/api'
 import { TokenContext } from '../../context/token'
 import assert from 'assert'
 import { t } from 'i18next'
-import { ContainerDetailPage } from '../../components/pageSections/ContainerDetailPage'
-import { ProfileContainer } from '../../components/pageSections/ProfileContainer'
-import { PrescriptionBanner } from '../../components/prescriptions/precriptionProfile.tsx/PrescriptionBanner'
 import { capitalize } from 'lodash'
 import { PrescriptionField } from '../../components/prescriptions/precriptionProfile.tsx/PrescriptionField'
+import { Container } from '../../components/home/Container'
+import { BannerDetail } from '../../components/pageSections/detail/BannerDetail'
 
 const PrescriptionDetail = (): JSX.Element => {
   const { id } = useParams<'id'>()
@@ -53,21 +51,15 @@ const PrescriptionDetail = (): JSX.Element => {
   return (
     <>
       {prescriptionState !== null && patientState !== null
-        ? (<ContainerDetailPage>
-          <Header />
-          <div className='flex-grow overflow-y-auto'>
-            <ProfileContainer>
-              <PrescriptionBanner onEditClick={goToEditPrescription} fullName={fullNameDoctor} initials={initials} />
-              <PrescriptionField
-                prescriptionState={prescriptionState}
-                patientState={patientState}
-                fullNamePatient={fullNamePatient}
-              />
-            </ProfileContainer>
-          </div>
-          <div className='bg-white p-4 mt-8 relative z-10 shadow-sm' />
-          {/* eslint-disable-next-line */}
-        </ContainerDetailPage>
+        ? (
+        <Container>
+            <BannerDetail onEditClick={goToEditPrescription} fullName={fullNameDoctor} initials={initials} />
+            <PrescriptionField
+              prescriptionState={prescriptionState}
+              patientState={patientState}
+              fullNamePatient={fullNamePatient}
+            />
+        </Container>
         ) : (<h4 className='center'>{t('title.noPrescriptionToDisplay')}</h4>)}
     </>
   )
