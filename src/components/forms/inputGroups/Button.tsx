@@ -6,7 +6,7 @@ import { Spinner } from '../../module/Spinner'
 interface ButtonProps {
   size?: 'small' | 'medium' | 'large'
   variant?: 'accent' | 'secondary' | 'disabled' | 'icon'
-  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => Promise<void>
+  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<void>
   isLoading?: boolean
   type?: 'button' | 'submit'
   disabled?: boolean
