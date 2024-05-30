@@ -9,6 +9,7 @@ import useTranslationHook from '../../hook/TranslationHook'
 import { TokenContext } from '../../context/token'
 import { formatDate } from '../../utils/helpers'
 import { Container } from '../../components/home/Container'
+import { Loading } from '../../components/loading/Loading'
 
 const PrescriptionsPage = (): JSX.Element => {
   const [prescriptions] = usePrescription()
@@ -50,7 +51,7 @@ const PrescriptionsPage = (): JSX.Element => {
   const updatePatientsData = (prevPatients: Record<number, Patient>, patientResults: Array<{ id: number, patient: Patient }>): Record<number, Patient> =>
     patientResults.reduce((newPatientsData, { id, patient }) => (
       { ...newPatientsData, [id]: patient })
-    , { ...prevPatients })
+      , { ...prevPatients })
 
   const filterByPrescriptions = useCallback((prescription: Prescription, searchValue: string) => (
     isDoctorMatch(prescription, searchValue) ||
@@ -101,21 +102,29 @@ const PrescriptionsPage = (): JSX.Element => {
   }, [prescriptions, filterByPrescriptions])
 
   return (
-    <Container>
-        <SearchBar onSearch={handleSearch} placeholderText={t('text.searchDoctor')} />
-        {
-          filteredPrescriptions.map((prescription) => (
-            <PrescriptionCard
-              key={prescription.id}
-              doctorName={prescription.prescribing_doctor}
-              endDate={formatDate(prescription.end_date)}
-              patientName={getPatientFullName(patients[prescription.id])}
-              prescription={prescription}
-            />
-          ))
-        }
-        <div className='h-20' /> {/* Added space for the bottom */}
-    </Container>
+    <>
+      {filteredPrescriptions && patients ?
+        (
+          <Container>
+            <SearchBar onSearch={handleSearch} placeholderText={t('text.searchDoctor')} />
+            {
+              filteredPrescriptions.map((prescription) => (
+                <PrescriptionCard
+                  key={prescription.id}
+                  doctorName={prescription.prescribing_doctor}
+                  endDate={formatDate(prescription.end_date)}
+                  patientName={getPatientFullName(patients[prescription.id])}
+                  prescription={prescription}
+                />
+              ))
+            }
+            <div className='h-20' /> {/* Added space for the bottom */}
+          </Container>
+        ) : (
+          <Loading />
+        )
+      }
+    </>
   )
 }
 

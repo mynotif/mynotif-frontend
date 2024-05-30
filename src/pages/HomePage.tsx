@@ -6,6 +6,7 @@ import { PatientCard } from '../components/home/PatientCard'
 import { ExpirationBanner } from '../components/home/ExpirationBanner'
 import { Container } from '../components/home/Container'
 import { CardList } from '../components/home/CardList'
+import { Loading } from '../components/loading/Loading'
 
 const HomePage = (): JSX.Element => {
   const navigate = useNavigate()
@@ -28,17 +29,21 @@ const HomePage = (): JSX.Element => {
 
   return (
     <>
-      <Container className='mt-24'>
-        <CardList>
-          <Card count={patients.length} title='Total Patients' onClick={goToPatients} />
-          <Card count={prescriptions.length} title='Prescriptions' onClick={goToPrescriptions} />
-        </CardList>
-        <ExpirationBanner expiration='Expire bientot' />
-        {patientsExpiredSoon.length === 0 && <p>No patients expiring soon</p>}
-        {patientsExpiredSoon.map(patient => (
-          <PatientCard className='bg-colorsecondary text-colorprimary' onClick={() => goToPatient(patient.id)} key={patient.id} patient={patient} />
-        ))}
-      </Container>
+      {patients && prescriptions ? (
+        <Container className='mt-24 mb-24'>
+          <CardList>
+            <Card count={patients.length} title='Total Patients' onClick={goToPatients} />
+            <Card count={prescriptions.length} title='Prescriptions' onClick={goToPrescriptions} />
+          </CardList>
+          <ExpirationBanner expiration='Expire bientot' />
+          {patientsExpiredSoon.length === 0 && <p>No patients expiring soon</p>}
+          {patientsExpiredSoon.map(patient => (
+            <PatientCard className='bg-colorsecondary text-colorprimary' onClick={() => goToPatient(patient.id)} key={patient.id} patient={patient} />
+          ))}
+        </Container>
+      ) : (
+        <Loading />
+      )}
     </>
   )
 }
