@@ -30,7 +30,7 @@ const HomePage = (): JSX.Element => {
   return (
     <>
       {patients && prescriptions ? (
-        <Container className='mt-24'>
+        <Container className='mt-24 mb-24'>
           <CardList>
             <Card count={patients.length} title='Total Patients' onClick={goToPatients} />
             <Card count={prescriptions.length} title='Prescriptions' onClick={goToPrescriptions} />
