@@ -9,8 +9,8 @@ import useTranslationHook from '../../hook/TranslationHook'
 import { BannerDetail } from '../../components/pageSections/detail/BannerDetail'
 import { CardDetail } from '../../components/pageSections/detail/CardDetail'
 import { PrescriptionCard } from '../../components/patients/patientProfile/PrescriptionCard'
-import { Spinner } from '../../components/module/Spinner'
 import { Container } from '../../components/home/Container'
+import { Loading } from '../../components/loading/Loading'
 
 const PatientDetail = (): JSX.Element => {
   const { id } = useParams<'id'>()
@@ -83,11 +83,7 @@ const PatientDetail = (): JSX.Element => {
           />
         </Container>
       ) : (
-        <div className='flex justify-center items-center min-h-screen'>
-          <div className='border-4 border-t-4 border-colorprimary rounded-full w-12 h-12 animate-spin'>
-            <Spinner size='large' variant='primary' />
-          </div>
-        </div>
+        <Loading />
       )}
     </>
   )

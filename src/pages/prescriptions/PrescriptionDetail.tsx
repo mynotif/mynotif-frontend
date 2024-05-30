@@ -4,11 +4,11 @@ import { Patient, Prescription } from '../../types'
 import { getPatient, getPrescription } from '../../services/api'
 import { TokenContext } from '../../context/token'
 import assert from 'assert'
-import { t } from 'i18next'
 import { capitalize } from 'lodash'
 import { PrescriptionField } from '../../components/prescriptions/precriptionProfile.tsx/PrescriptionField'
 import { Container } from '../../components/home/Container'
 import { BannerDetail } from '../../components/pageSections/detail/BannerDetail'
+import { Loading } from '../../components/loading/Loading'
 
 const PrescriptionDetail = (): JSX.Element => {
   const { id } = useParams<'id'>()
@@ -52,15 +52,17 @@ const PrescriptionDetail = (): JSX.Element => {
     <>
       {prescriptionState !== null && patientState !== null
         ? (
-        <Container>
+          <Container>
             <BannerDetail onEditClick={goToEditPrescription} fullName={fullNameDoctor} initials={initials} />
             <PrescriptionField
               prescriptionState={prescriptionState}
               patientState={patientState}
               fullNamePatient={fullNamePatient}
             />
-        </Container>
-        ) : (<h4 className='center'>{t('title.noPrescriptionToDisplay')}</h4>)}
+          </Container>
+        ) : (
+          <Loading />
+        )}
     </>
   )
 }
