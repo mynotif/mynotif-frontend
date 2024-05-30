@@ -48,16 +48,26 @@ const PrescriptionDetail = (): JSX.Element => {
     }
   }
 
+  const goToPatientDetail = (): void => {
+    if (patientState?.id !== undefined) {
+      navigate(`/patients/edit/${patientState.id}/`)
+    } else {
+      console.error('Patient is undefined')
+    }
+  }
+
   return (
     <>
       {prescriptionState !== null && patientState !== null
         ? (
-          <Container>
+          <Container className='mb-24'>
             <BannerDetail onEditClick={goToEditPrescription} fullName={fullNameDoctor} initials={initials} />
             <PrescriptionField
               prescriptionState={prescriptionState}
               patientState={patientState}
               fullNamePatient={fullNamePatient}
+              onClick={goToPatientDetail}
+              onEditClick={goToEditPrescription}
             />
           </Container>
         ) : (
