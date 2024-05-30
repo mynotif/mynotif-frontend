@@ -36,7 +36,7 @@ const HomePage = (): JSX.Element => {
         <ExpirationBanner expiration='Expire bientot' />
         {patientsExpiredSoon.length === 0 && <p>No patients expiring soon</p>}
         {patientsExpiredSoon.map(patient => (
-          <PatientCard onClick={() => goToPatient(patient.id)} key={patient.id} patient={patient} />
+          <PatientCard className='bg-colorsecondary text-colorprimary' onClick={() => goToPatient(patient.id)} key={patient.id} patient={patient} />
         ))}
       </Container>
     </>

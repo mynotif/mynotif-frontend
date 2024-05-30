@@ -24,10 +24,10 @@ const ProfileDetail = (): JSX.Element => {
       {profile !== null ? (
         <Container className=''>
           <BannerDetail fullName={fullName} initials={initials} onEditClick={onEdit} />
-          <CardDetail icon={['fas', 'user']} content={profile.username} title={t('form.userName')} />
-          <CardDetail icon={['fas', 'user']} content={profile.first_name} title={t('form.firstName')} />
-          <CardDetail icon={['fas', 'user']} content={profile.last_name} title={t('form.lastName')} />
-          <CardDetail icon={['fas', 'phone']} content={profile.email} title={t('form.emailAddress')} />
+          <CardDetail icon={['fas', 'user']} content={profile.username} defaultContent='Pseudo manquant' title={t('form.userName')} />
+          <CardDetail icon={['fas', 'user']} content={profile.first_name} defaultContent='Prénom manquant' title={t('form.firstName')} />
+          <CardDetail icon={['fas', 'user']} content={profile.last_name} defaultContent='Nom manquant' title={t('form.lastName')} />
+          <CardDetail icon={['fas', 'phone']} content={profile.email} defaultContent='Email manquant' title={t('form.emailAddress')} />
         </Container>
       ) : (
         <div className='flex justify-center items-center min-h-screen'>

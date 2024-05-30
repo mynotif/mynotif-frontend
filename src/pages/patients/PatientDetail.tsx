@@ -69,9 +69,9 @@ const PatientDetail = (): JSX.Element => {
       {patient !== null ? (
         <Container>
           <BannerDetail fullName={fullName} initials={initials} onEditClick={goToEditPatient} />
-            <CardDetail icon={['fas', 'map-marker-alt']} content={patient.street} title={t('form.address')} />
-            <CardDetail icon={['fas', 'map-marker-alt']} content={patient.city} title={t('form.city')} />
-            <CardDetail icon={['fas', 'phone']} content={patient.phone} title={t('form.phone')} />
+            <CardDetail icon={['fas', 'map-marker-alt']} content={patient.street} defaultContent='Adresse manquante' title={t('form.address')} />
+            <CardDetail icon={['fas', 'map-marker-alt']} content={patient.city} defaultContent='Ville manquante' title={t('form.city')} />
+            <CardDetail icon={['fas', 'phone']} content={patient.phone} defaultContent='Numéro manquant' title={t('form.phone')} />
             <PrescriptionCard 
               prescriptions={patient.prescriptions}
               title={t('text.prescription')}

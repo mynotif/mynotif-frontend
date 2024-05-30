@@ -24,8 +24,8 @@ export const PrescriptionCard = ({ doctorName, endDate, patientName, prescriptio
 
       <div className='bg-white rounded-lg p-4 shadow-md'>
         <div className='flex items-center space-x-4 mb-2'>
-          <div className='bg-colorsecondary rounded-full w-12 h-12 flex items-center justify-center'>
-            <FontAwesomeIcon icon={['fas', 'user-md']} className='text-colorprimary text-xl' />
+          <div className={` ${isValidIconClass} rounded-full w-12 h-12 flex items-center justify-center`}>
+            <FontAwesomeIcon icon={['fas', 'user-md']} className={`${isValidIconClass} text-xl`} />
           </div>
           <h3 className='font-semibold ml-4'>Dr. {doctorName}</h3>
         </div>
@@ -38,7 +38,7 @@ export const PrescriptionCard = ({ doctorName, endDate, patientName, prescriptio
         </div>
         <div className='mb-2'>
           <p className='font-semibold'>Patient: <span className='font-normal'>{patientName}</span></p>
-          <div className='h-1 bg-colorprimary w-12 mb-2' />
+          <div className={`h-1 ${isValidIconClass} w-12 mb-2`} />
         </div>
       </div>
     </div>

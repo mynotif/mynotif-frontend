@@ -35,12 +35,12 @@ const PatientLine: FunctionComponent<PatientLineProps> = ({ patient }) => {
           {!addressIsEmpty ? (
             <>
               <FontAwesomeIcon icon={['fas', 'map-marker']} className='text-black text-xl' />
-              <p>{capitalizeFirstLetter(patient.street)}, {capitalizeFirstLetter(patient.city)} {patient.zip_code}</p>
+              <p>{capitalizeFirstLetter(patient.street)}, {capitalizeFirstLetter(patient.city)}</p>
             </>
           ) : (
             <>
               <FontAwesomeIcon icon={['fas', 'map-marker']} className='text-black text-xl' />
-              <p className='text-red-500'>Address is missing</p>
+              <p className='text-red-500'>Adresse manquante</p>
             </>
           )}
         </div>
