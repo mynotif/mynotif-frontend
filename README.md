@@ -2,8 +2,8 @@
 
 [![Tests](https://github.com/mynotif/mynotif-frontend/actions/workflows/tests.yml/badge.svg)](https://github.com/mynotif/mynotif-frontend/actions/workflows/tests.yml)
 
-Frontend for MyNotif: Patient management app for nurses.
-- https://mynotif.netlify.app/
+Frontend for MyNotif: Patient management app for nurses mobile first only.
+- https://www.ordopro.fr/
 
 Backend is available via:
 <https://github.com/mynotif/mynotif-backend>
