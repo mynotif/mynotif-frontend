@@ -32,7 +32,7 @@ export const AccountPage = (): JSX.Element => {
           </div>
         </div>
         <AccountCard title='Account' onClick={onAccountDetail} />
-        <AccountCard title={t('navigation.logout')} onClick={onLogoutClick} />
+        <AccountCard title={t('navigation.logout')} onClick={onLogoutClick} isDanger/>
       </ProfileContainer>
     </>
 
