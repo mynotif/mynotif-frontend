@@ -1,36 +1,45 @@
 import { FunctionComponent } from 'react'
 
-import Button from 'react-bootstrap/Button'
-import Modal from 'react-bootstrap/Modal'
-import useTranslationHook from '../../hook/TranslationHook'
-
 interface ModalDeleteProps {
   handleClose: () => void
   show: boolean
-  onDelete: () => void
+  onDelete: (e: React.MouseEvent<HTMLElement>) => void
   confirmText: string
+  noSuccessText: string
+  successText: string
 }
 
-const ModalDelete: FunctionComponent<ModalDeleteProps> = ({ handleClose, show, onDelete, confirmText }) => {
-  const { t } = useTranslationHook()
-
+const ModalDelete: FunctionComponent<ModalDeleteProps> = ({ handleClose, show, onDelete, confirmText, noSuccessText, successText }) => {
   return (
     <>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header>
-          <Modal.Title>{t('title.confirmation')}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{confirmText}</Modal.Body>
-        <Modal.Footer>
-          <Button variant='primary' onClick={handleClose}>
-            {t('navigation.return')}
-          </Button>
-          <Button variant='danger' onClick={onDelete}>
-            {t('navigation.delete')}
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      {show && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg shadow-lg w-96">
+            <div className="px-6 py-4 border-b border-gray-200">
+              <h5 className="text-lg font-bold">Confirmation</h5>
+            </div>
+            <div className="px-6 py-4">
+              <p>{confirmText}</p>
+            </div>
+            <div className="px-6 py-4 border-t border-gray-200 flex justify-end space-x-2">
+              <button
+                className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+                onClick={handleClose}
+              >
+                {noSuccessText}
+              </button>
+              <button
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                onClick={onDelete}
+              >
+                {successText}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   )
 }
+
 export default ModalDelete
