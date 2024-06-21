@@ -36,10 +36,14 @@ const Header = (): JSX.Element => {
     }
   }, [location.pathname])
 
+  if (!isLoggedIn) {
+    return <></>
+  }
+
 
   return (
     <header className='fixed top-0 left-0 right-0 h-16 bg-white shadow-md flex justify-around items-center z-10'>
-      {isLoggedIn && isHomePage && (
+      {isHomePage && (
         <>
           <HeaderProfile />
           <div onClick={onAccountDetail}>
