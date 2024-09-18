@@ -1,9 +1,10 @@
 import React from 'react'
 import useTranslationHook from '../../hook/TranslationHook'
 import RegisterForm from '../../components/forms/RegisterForm'
-import { Link } from 'react-router-dom'
 import { HeaderAuth } from '../../components/authentifications/HeaderAuth'
 import { WelcomeAuth } from '../../components/authentifications/WelcomeAuth'
+import { Separator } from '../../components/module/Separator'
+import { AuthLink } from '../../components/authentifications/AuthLink'
 
 const RegisterPage = (): JSX.Element => {
   const { t } = useTranslationHook()
@@ -14,11 +15,8 @@ const RegisterPage = (): JSX.Element => {
       <div className='bg-gray-50 px-4 pt-4 flex-grow z-10 -mt-72 rounded-t-2xl overflow-y-auto'>
         <WelcomeAuth title={t('title.welcomeApp')} description={t('title.register')} />
         <RegisterForm />
-        <div className='flex justify-end mr-6'>
-          <Link to='/login' className='text-gray-500 text-sm no-underline hover:text-colorprimary'>
-            <span>{t('text.alreadyAccount')} {t('navigation.login')}</span>
-          </Link>
-        </div>
+        <Separator />
+        <AuthLink textcontent={t('text.alreadyAccount')} textAnchor={t('navigation.login')} urlRedirect='login' />
       </div>
     </div>
   )

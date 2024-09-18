@@ -3,10 +3,10 @@ import { WelcomeAuth } from '../../components/authentifications/WelcomeAuth'
 import LoginForm from '../../components/forms/LoginForm'
 import { ResetPasswordLink } from '../../components/authentifications/ResetPasswordLink'
 import { Separator } from '../../components/module/Separator'
-import { RegisterLink } from '../../components/authentifications/RegisterLink'
 import useTranslationHook from '../../hook/TranslationHook'
 import { useIsLoggedIn } from '../../utils/hooks'
 import { Navigate } from 'react-router-dom'
+import { AuthLink } from '../../components/authentifications/AuthLink'
 
 const LoginPage = (): JSX.Element => {
   const { t } = useTranslationHook()
@@ -25,7 +25,7 @@ const LoginPage = (): JSX.Element => {
         <LoginForm />
         <ResetPasswordLink content={t('navigation.resetPassword')} />
         <Separator />
-        <RegisterLink textcontent={t('text.notAlreadyAccount')} textAnchor={t('navigation.register')} />
+        <AuthLink textcontent={t('text.notAlreadyAccount')} textAnchor={t('navigation.register')} urlRedirect='register' />
       </div>
     </div>
   )

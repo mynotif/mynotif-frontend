@@ -5,7 +5,7 @@ interface ResetPasswordLinkProps {
 }
 
 export const ResetPasswordLink = ({ content }: ResetPasswordLinkProps): JSX.Element => (
-  <div className='flex justify-end mr-6'>
+  <div className='flex justify-center mt-6'>
     <Link to='/reset/password' className='text-gray-500 text-sm no-underline hover:text-colorprimary'>
       <span>{content}</span>
     </Link>
