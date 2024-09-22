@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import useTranslationHook from '../../hook/TranslationHook'
 import { resetPassword } from '../../services/api'
-import { HeaderAuth } from '../../components/authentifications/HeaderAuth'
 import { InputFieldContainer } from '../../components/forms/inputGroups/InputFieldContainer'
 import { InputField } from '../../components/forms/inputGroups/InputField'
 import { Button } from '../../components/forms/inputGroups/Button'
+import { ContainerAuth } from '../../components/authentifications/ContainerAuth'
+import LogoPng from '../../components/module/LogoPng'
+import { AuthLink } from '../../components/authentifications/AuthLink'
+import { WelcomeAuth } from '../../components/authentifications/WelcomeAuth'
 
 const ResetPassword = (): JSX.Element => {
   const [email, setEmail] = useState<string>('')
@@ -30,9 +33,10 @@ const ResetPassword = (): JSX.Element => {
   }
 
   return (
-    <div className='min-h-screen flex flex-col'>
-      <HeaderAuth />
-      <div className='bg-gray-50 px-4 pt-4 flex-grow z-10 -mt-72 rounded-t-2xl overflow-y-auto'>
+    <ContainerAuth>
+    <LogoPng />
+    <WelcomeAuth title={t('title.welcomeApp')} description={t('title.resetPassword')} />
+
         <form className='mt-1 p-1 space-y-4 ' onSubmit={onFormSubmit}>
           <InputFieldContainer icon={['fas', 'lock']}>
             <InputField
@@ -49,13 +53,9 @@ const ResetPassword = (): JSX.Element => {
           </Button>
         </form>
 
-        <div className='flex justify-end m-6'>
-          <Link to='/login' className='text-gray-500 text-sm no-underline hover:text-colorprimary'>
-            <span>{t('text.alreadyAccount')} {t('navigation.login')}</span>
-          </Link>
-        </div>
-      </div>
-    </div>
+        <AuthLink textcontent={t('text.alreadyAccount')} textAnchor={t('navigation.login')} urlRedirect='login' />
+
+    </ContainerAuth>
   )
 }
 

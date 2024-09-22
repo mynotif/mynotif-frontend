@@ -43,7 +43,8 @@ i18n
             renewPrescription: 'I renew this prescription',
             welcomeApp: 'Welcome on OrdoPro',
             personalInfo: 'Personal Info',
-            app: 'Mynotif'
+            app: 'Mynotif',
+            resetPassword: 'Reset Password',
           },
           navigation: {
             update: 'Update',
@@ -166,7 +167,8 @@ i18n
             renewPrescription: 'Je renouvelle cette ordonnance',
             welcomeApp: 'Bienvenue sur OrdoPro',
             personalInfo: 'Informations personnelles',
-            app: 'Mynotif'
+            app: 'Mynotif',
+            resetPassword: 'Réinitialiser le mot de passe',
           },
           navigation: {
             update: 'Modifier',
