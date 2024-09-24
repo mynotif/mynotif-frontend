@@ -1,9 +1,9 @@
-import { Logo } from './module/Logo'
+import LogoPng from "./module/LogoPng"
 
 const HeaderProfile: React.FC = () => {
   return (
     <div className=''>
-      <Logo size={50} />
+      <LogoPng size={150} />
     </div>
   )
 }
