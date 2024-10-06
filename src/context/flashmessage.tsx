@@ -3,7 +3,7 @@ import { FunctionComponent, createContext, useState } from 'react'
 interface FlashMessageType {
   title?: string
   body: string
-  variant?: string
+  className?: string
   delay?: number
 }
 interface FlashMessageContextType {
@@ -45,8 +45,8 @@ const FlashMessageContextProvider: FunctionComponent = ({ children }) => {
     void (containsFlashMessage(flashMessages, flash) || setFlashMessages([...flashMessages, flash]))
   )
 
-  const addErrorMessage = (flash: FlashMessageType): void => addFlashMessage({ ...flash, title: 'Error', variant: 'danger' })
-  const addSuccessMessage = (flash: FlashMessageType): void => addFlashMessage({ ...flash, title: 'Success', variant: 'success' })
+  const addErrorMessage = (flash: FlashMessageType): void => addFlashMessage({ ...flash, className: 'text-white bg-red-400' })
+  const addSuccessMessage = (flash: FlashMessageType): void => addFlashMessage({ ...flash, className: 'text-white bg-green-400' })
 
   return (
     <FlashMessageContext.Provider value={{ flashMessages, setFlashMessages, addFlashMessage, addErrorMessage, addSuccessMessage }}>

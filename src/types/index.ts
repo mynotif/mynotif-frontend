@@ -87,6 +87,11 @@ interface RegisterFormType {
   password: string
 }
 
+interface LoginFormType {
+  username: string
+  password: string
+}
+
 interface ProfileFormType {
   username: string
   email: string
@@ -104,7 +109,8 @@ export type {
   RegisterFormType,
   OneSignal,
   SubscriptionInfo,
-  ProfileFormType
+  ProfileFormType,
+  LoginFormType
 }
 
 export { defaultPatient, defaultPrescription }
