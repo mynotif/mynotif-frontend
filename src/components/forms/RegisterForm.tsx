@@ -1,7 +1,6 @@
-import { useCallback, useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import { FlashMessageContext, FlashMessageType } from '../../context/flashmessage'
+import { FlashMessageContext } from '../../context/flashmessage'
 import useTranslationHook from '../../hook/TranslationHook'
 import { register as createUser } from '../../services/api'
 import { useForm } from 'react-hook-form'
@@ -10,22 +9,14 @@ import { Button } from './inputGroups/Button'
 import { RegisterFormType } from '../../types'
 import FormFieldError from '../FormFieldError'
 import { Input } from './inputGroups/Input'
+import { resolver } from './validations/ValidationRegister'
 
 const RegisterForm = (): JSX.Element => {
-  const { addErrorMessage, addSuccessMessage } = useContext(FlashMessageContext)
+  const { addSuccessMessage } = useContext(FlashMessageContext)
   const navigate = useNavigate()
   const { t } = useTranslationHook()
-  const { register, handleSubmit, formState: { errors } } = useForm<RegisterFormType>()
+  const { register, handleSubmit, setError, formState: { errors } } = useForm<RegisterFormType>({resolver})
   const [loading, setLoading] = useState<boolean>(false)
-
-  const minLengthPassword = 6 // Minimum length of the password required
-  const minLengthUsername = 2 // Minimum length of the username required
-
-  const addErrorMessageCallback = useCallback(
-    (flashMessage: FlashMessageType) => addErrorMessage(flashMessage),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
 
   const handleRegister = async (data: RegisterFormType): Promise<void> => {
     setLoading(true)
@@ -34,54 +25,46 @@ const RegisterForm = (): JSX.Element => {
       await createUser(username, password, email)
       navigate('/login')
       addSuccessMessage({ body: t('text.userRegister') })
-    } catch (error) {
-      setLoading(false)
-      console.error(error)
-      if (axios.isAxiosError(error)) {
-        addErrorMessageCallback({ title: t('error.errorRegister'), body: JSON.stringify((error).response?.data) })
-      } else {
-        addErrorMessageCallback({ body: t('error.errorRegister') })
+    } catch (error: any) {
+      if (error.response?.status === 400) {
+        setError('password', { message: t('error.invalidCredentials') })
+        setError('username', { message: t('error.invalidCredentials') })
+        setError('email', { message: t('error.invalidCredentials') })
       }
+      setLoading(false)
     }
   }
 
   return (
     <form className='w-9/12 mt-1 p-1 space-y-4 ' onSubmit={handleSubmit(handleRegister)}>
       <InputFieldContainer icon={['fas', 'user']}>
-        <Input
+      <Input
           type='text'
           register={register}
-          errorMsgRequired={t('error.requiredField')}
-          errorMsgMinLength={t('error.minLengthError')}
           id='username'
           placeholder="Nom d'utilisateur"
           disabled={loading}
-          minLength={minLengthUsername}
         />
       </InputFieldContainer>
       <FormFieldError errorMessage={errors.username?.message} />
       <InputFieldContainer icon={['fas', 'envelope']}>
-        <Input
-          type='email'
-          register={register}
-          errorMsgRequired={t('error.requiredField')}
-          id='email'
-          placeholder='contact@ordopro.fr'
-          disabled={loading}
-        />
+      <Input
+        type='email'
+        register={register}
+        id='email'
+        placeholder='contact@ordopro.fr'
+        disabled={loading}
+      />
       </InputFieldContainer>
       <FormFieldError errorMessage={errors.email?.message} />
       <InputFieldContainer icon={['fas', 'lock']}>
-        <Input
-          type='password'
-          register={register}
-          errorMsgRequired={t('error.requiredField')}
-          errorMsgMinLength={t('error.minLengthError')}
-          id='password'
-          placeholder='Mot de passe'
-          disabled={loading}
-          minLength={minLengthPassword}
-        />
+      <Input
+        type='password'
+        register={register}
+        id='password'
+        placeholder={t('form.password')}
+        disabled={loading}
+      />
       </InputFieldContainer>
       <FormFieldError errorMessage={errors.password?.message} />
       <Button isLoading={loading} type='submit' >
