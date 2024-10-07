@@ -1,12 +1,11 @@
 import { FunctionComponent, useEffect, useState } from 'react'
-import { Alert } from 'react-bootstrap'
 import { FlashMessageType } from '../../context/flashmessage'
 
 interface FlashMessageProps extends FlashMessageType {
   onClose: () => void
 }
 
-const FlashMessage: FunctionComponent<FlashMessageProps> = ({ title, body, variant, delay = 3000, onClose }) => {
+const FlashMessage: FunctionComponent<FlashMessageProps> = ({ title, body, className, delay = 3000, onClose }) => {
   const [showToast, setShowToast] = useState(true)
 
   useEffect(() => {
@@ -17,13 +16,15 @@ const FlashMessage: FunctionComponent<FlashMessageProps> = ({ title, body, varia
     return () => {
       clearTimeout(timeout)
     }
-  }, [delay])
+  }, [delay, onClose])
+
+  if (!showToast) return null;
 
   return (
-    <Alert variant={variant} show={showToast} onClose={() => setShowToast(false)} dismissible>
-      <Alert.Heading>{title}</Alert.Heading>
+    <div className={`${className} ${showToast ? 'visible' : 'hidden'}`} role="alert">
+      <p>{title}</p>
       <p>{body}</p>
-    </Alert>
+    </div>
   )
 }
 

@@ -1,36 +1,27 @@
-import React, { useCallback, useContext, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { TokenContext } from '../../context/token'
 import useTranslationHook from '../../hook/TranslationHook'
 import { login } from '../../services/api'
 import { setTokenLocalStorage } from '../../utils/helpers'
-import { FlashMessageContext, FlashMessageType } from '../../context/flashmessage'
+import { FlashMessageContext } from '../../context/flashmessage'
 import { InputFieldContainer } from './inputGroups/InputFieldContainer'
-import { InputField } from './inputGroups/InputField'
 import { Button } from './inputGroups/Button'
+import { useForm } from 'react-hook-form'
+import { LoginFormType } from '../../types'
+import { resolver } from './validations/ValidationLogin'
 
 const LoginForm = (): JSX.Element => {
-  const [username, setUsername] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
   const { setToken } = useContext(TokenContext)
-  const { addErrorMessage, addSuccessMessage } = useContext(FlashMessageContext)
+  const { addSuccessMessage } = useContext(FlashMessageContext)
   const navigate = useNavigate()
   const { t } = useTranslationHook()
   const [loading, setLoading] = useState<boolean>(false)
+  const {register, formState: {errors} , handleSubmit, setError} = useForm<LoginFormType>({resolver})
 
-  const onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
-    setUsername(e.target.value)
-
-  const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
-    setPassword(e.target.value)
-
-  const addErrorMessageCallback = useCallback(
-    (flashMessage: FlashMessageType) => addErrorMessage(flashMessage),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
-  const onLogin = async (e: React.MouseEvent<HTMLElement>): Promise<void> => {
+  const onLogin = async (data: LoginFormType): Promise<void> => {
     setLoading(true)
+    const {username, password} = data;
     try {
       const response = await login(username, password)
       const { token } = response
@@ -38,36 +29,37 @@ const LoginForm = (): JSX.Element => {
       setToken(token)
       navigate('/home')
       addSuccessMessage({ body: t('text.userLogin') })
-    } catch (error) {
+    } catch (error: any) {
+      if (error.response?.status === 400) {
+        setError('password', { message: t('error.invalidCredentials') })
+        setError('username', { message: t('error.invalidCredentials') })
+      }
       setLoading(false)
-      console.error(error)
-      addErrorMessageCallback({ body: t('error.userLogin') })
     }
   }
 
-  const onFormSubmit = (e: React.FormEvent): void => e.preventDefault()
-
   return (
-    <form className='mt-1 p-1 space-y-4 ' onSubmit={onFormSubmit}>
+    <form className='mt-1 p-1 space-y-4 ' onSubmit={handleSubmit(onLogin)}>
       <InputFieldContainer icon={['fas', 'user']}>
-        <InputField
-          name='userName'
+      <input
+        className='flex-grow outline-none text-gray-600'
+        {...register('username')}
           placeholder={t('form.userName')}
-          value={username}
-          onChange={onUsernameChange}
-        />
+      />
       </InputFieldContainer>
-      <InputFieldContainer icon={['fas', 'lock']}>
-        <InputField
-          name='password'
-          type='password'
-          placeholder={t('form.password')}
-          value={password}
-          onChange={onPasswordChange}
-        />
-      </InputFieldContainer>
+      {errors?.username && <p className='text-red-500 text-sm'>{errors.username.message}</p>}
 
-      <Button isLoading={loading} size='medium' type='submit' onClick={onLogin}>
+      <InputFieldContainer icon={['fas', 'lock']}>
+      <input
+      type='password'
+        className='flex-grow outline-none text-gray-600'
+        {...register('password')}
+        placeholder={t('form.password')}
+      />
+      </InputFieldContainer>
+      {errors?.password && <p className='text-red-500 text-sm'>{errors.password.message}</p>}
+
+      <Button isLoading={loading} size='medium' type='submit'>
         {t('navigation.login')}
       </Button>
     </form>

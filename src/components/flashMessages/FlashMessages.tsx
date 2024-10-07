@@ -9,12 +9,12 @@ const FlashMessages = (): JSX.Element => {
 
   return (
     <>
-      {flashMessages.map(({ title, body, variant, delay }, index) => (
+      {flashMessages.map(({ title, body, className, delay }, index) => (
         <FlashMessage
           key={body}
           title={title}
           body={body}
-          variant={variant}
+          className={className}
           delay={delay}
           onClose={() => removeIndex(index)}
         />
