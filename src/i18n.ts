@@ -144,11 +144,14 @@ i18n
             userUpdated: 'Error updating profile',
             requiredUsername: 'Username is required',
             requiredPassord: 'Password is required',
+            requiredEmail: 'Email is required',
             minLengthError: 'Username must be at least 3 characters long.',
             maxLength: 'Username must be at most 20 characters long.',
             emailError: 'Please enter a valid email address',
             invalidCharacters: 'This field must contain only letters, numbers and underscores.',
             invalidCredentials: 'Username or password is incorrect. Please try again.',
+            invalidEmail: 'Please enter a valid email address',
+            minLengthPassword: 'Password must be at least 6 characters long',
           }
         }
       },
@@ -273,11 +276,14 @@ i18n
             userUpdated: 'Erreur de mise à jour du profil',
             requiredUsername: 'Le nom d\'utilisateur est requis',
             requiredPassord: 'Le mot de passe est requis',
+            requiredEmail: 'L\'email est requis',
             minLengthError: 'Ce champ doit comporter au moins 3 caractères.',
             maxLength: 'Ce champ doit comporter au plus 20 caractères.',
             emailError: 'Veuillez saisir une adresse e-mail valide',
             invalidCharacters: 'Seuls les lettres, chiffres et underscores sont autorisés.',
             invalidCredentials: 'Le nom d\'utilisateur ou le mot de passe est incorrect',
+            invalidEmail: 'Veuillez saisir une adresse e-mail valide',
+            minLengthPassword: 'Le mot de passe doit comporter au moins 6 caractères',
           }
         }
       }

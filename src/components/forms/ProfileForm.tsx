@@ -13,6 +13,7 @@ import { updateUser } from '../../services/api'
 import { ProfileContext } from '../../context/profile'
 import { FlashMessageType } from '../../context/flashmessage'
 import { Container } from '../home/Container'
+import { resolver } from './validations/ValidationProfile'
 
 interface ProfileFormProps {
   profile: Profile
@@ -24,9 +25,7 @@ export const ProfileForm = ({ profile, addErrorMessageCallback }: ProfileFormPro
   const { setProfile: setProfileContext } = useContext(ProfileContext)
   const { t } = useTranslationHook()
   const navigate = useNavigate()
-  const { register, handleSubmit, formState: { errors }, setValue } = useForm<Profile>()
-  const minLengthPassword = 6 // Minimum length of the password required
-  const minLengthUsername = 2 // Minimum length of the username required
+  const { register, handleSubmit, formState: { errors }, setValue, setError } = useForm<Profile>({resolver})
   const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
@@ -45,9 +44,14 @@ export const ProfileForm = ({ profile, addErrorMessageCallback }: ProfileFormPro
       const response = await updateUser(token, data)
       setProfileContext(response)
       navigate('/profile')
-    } catch (error) {
+    } catch (error: any) {
+      if (error.response?.status === 400) {
+        setError('last_name', { message: t('error.invalidCredentials') })
+        setError('first_name', { message: t('error.invalidCredentials') })
+        setError('username', { message: t('error.invalidCredentials') })
+        setError('email', { message: t('error.invalidCredentials') })
+      }
       setLoading(false)
-      addErrorMessageCallback({ body: t('error.userUpdated') })
     }
   }
 
@@ -59,12 +63,9 @@ export const ProfileForm = ({ profile, addErrorMessageCallback }: ProfileFormPro
             <Input
               type='text'
               register={register}
-              errorMsgRequired={t('error.requiredField')}
-              errorMsgMinLength={t('error.minLengthError')}
               id='username'
               placeholder="Nom d'utilisateur"
-              disabled
-              minLength={minLengthUsername}
+              disabled={loading}
             />
           </InputFieldContainer>
           <FormFieldError errorMessage={errors.username?.message} />
@@ -72,7 +73,6 @@ export const ProfileForm = ({ profile, addErrorMessageCallback }: ProfileFormPro
             <Input
               type='email'
               register={register}
-              errorMsgRequired={t('error.requiredField')}
               id='email'
               placeholder='contact@ordopro.fr'
               disabled={loading}
@@ -83,12 +83,9 @@ export const ProfileForm = ({ profile, addErrorMessageCallback }: ProfileFormPro
             <Input
               type='text'
               register={register}
-              errorMsgRequired={t('error.requiredField')}
-              errorMsgMinLength={t('error.minLengthError')}
               id='first_name'
               placeholder='Prénom'
               disabled={loading}
-              minLength={minLengthPassword}
             />
           </InputFieldContainer>
           <FormFieldError errorMessage={errors.first_name?.message} />
@@ -96,12 +93,9 @@ export const ProfileForm = ({ profile, addErrorMessageCallback }: ProfileFormPro
             <Input
               type='text'
               register={register}
-              errorMsgRequired={t('error.requiredField')}
-              errorMsgMinLength={t('error.minLengthError')}
               id='last_name'
               placeholder='Nom'
               disabled={loading}
-              minLength={minLengthPassword}
             />
           </InputFieldContainer>
           <FormFieldError errorMessage={errors.last_name?.message} />
