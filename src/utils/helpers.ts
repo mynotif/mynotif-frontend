@@ -62,6 +62,22 @@ const formatDate = (dateIsoString: string): string => {
   return format(date, USER_DATE_FORMAT)
 }
 
+/**
+ * Function to validate if a file type is accepted.
+ *
+ * @param {File} file - The file object to check.
+ * @param {string} accept - A comma-separated string of accepted file types.
+ */
+function validateFileType(file: File): boolean {
+  const accept = ".pdf,.jpg,.jpeg,.png"
+  const acceptedTypes = accept.split(',').map(type => type.trim());
+  // Check if the file type starts with 'image/' or directly matches an extension
+  return acceptedTypes.some(type =>
+    file.type.startsWith('image/') || file.type.endsWith(type)
+  );
+
+}
+
 export {
   getTokenLocalStorage,
   setTokenLocalStorage,
@@ -70,5 +86,6 @@ export {
   getLastPrescription,
   getValidOrLastPrescription,
   getIconClass,
-  formatDate
+  formatDate,
+  validateFileType,
 }
