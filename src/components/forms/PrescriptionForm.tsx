@@ -27,6 +27,7 @@ import { InputField } from './inputGroups/InputField'
 import { SelectField } from './inputGroups/SelectField'
 import { Button } from './inputGroups/Button'
 import { Container } from '../home/Container'
+import { validateFileType } from '../../utils/helpers'
 
 interface PrescriptionFormRequiredProps {
   prescription: Prescription
@@ -53,6 +54,9 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
   const [newCreatedPatientId, setNewCreatedPatientId] = useState<null | number>(null)
   const [error, setError] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+  const [imageLoadError, setImageLoadError] = useState<boolean>(false)
+  const [fileType, setFileType] = useState<string | null>(null)
 
   const [prescriptionState, setPrescriptionState] =
     useState<Prescription>(prescription)
@@ -96,7 +100,9 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
         start_date: format(new Date(), BACKEND_DATE_FORMAT)
       }
       const data = await createPrescription(token, prescriptionData)
-      if (file !== null && file !== undefined) {
+      if (file !== null && file !== undefined && file.type) {
+        const isValidFileType = validateFileType(file)
+        if (isValidFileType === false) throw new Error()
         await uploadPrescription(token, data.id, file)
       }
       setPrescriptionState(data)
@@ -117,7 +123,9 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
     assert(token)
     try {
       await updatePrescription(token, prescriptionState)
-      if (file !== null && file !== undefined) {
+      if (file !== null && file !== undefined && file.type) {
+          const isValidFileType = validateFileType(file)
+          if (isValidFileType === false) throw new Error()
         await uploadPrescription(token, prescriptionState.id, file)
       }
       navigate('/prescriptions')
@@ -126,20 +134,42 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
       addErrorMessageCallback({ body: t('error.updatedPrescription') })
     }
   }
+
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value, files } = event.target
 
-    setPrescriptionState({
-      ...prescriptionState,
+    setPrescriptionState((prevState) => ({
+      ...prevState,
       [name]: value
-    })
+    }))
 
-    if (files !== null && files !== undefined) {
-      const { name, type } = files[0]
-      const extension = name.split('.').pop()
+    if (files && files.length > 0 && files !== null && files !== undefined) {
+      const selectedFile = files[0]
+      const { name: fileName, type } = selectedFile
+      const extension = fileName.split('.').pop()
       const newName = `ordonnance_${Date.now()}.${extension}`
-      const newFile = new File([files[0]], newName, { type })
+      const newFile = new File([selectedFile], newName, { type })
+
       setFile(newFile)
+      setFileType(type)
+
+       // Use FileReader to create a data URL
+       const reader = new FileReader();
+       reader.onloadend = () => {
+         const dataUrl = reader.result as string;
+         setPreviewUrl(dataUrl);
+         setImageLoadError(false);
+       };
+       reader.onerror = () => {
+         setImageLoadError(true);
+       };
+       reader.readAsDataURL(selectedFile);
+
+      // Update prescriptionState with the new file name
+      setPrescriptionState((prevState) => ({
+        ...prevState,
+        photo_prescription: newName
+      }))
     }
   }
 
@@ -195,10 +225,36 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
     setPatientState({ ...patientState, [name]: value })
   }
 
+  const renderPreview = () => {
+    if (!previewUrl) return null;
+
+    if (fileType === 'application/pdf') {
+      return (
+        <div>
+          <p>Fichier PDF sélectionné : {file?.name}</p>
+          <p className="text-gray-700 text-xs mt-4">La fonctionnalité de lecture pdf en cours de travaux</p>
+        </div>
+      );
+    } else if (fileType?.startsWith('image/')) {
+      return (
+        <>
+        <img
+          src={previewUrl}
+          alt='preview'
+          className='max-w-full h-96 rounded-lg shadow-md z-10'
+          onError={() => setImageLoadError(true)}
+        />
+        </>
+      );
+    } else {
+      return <p>Type de fichier non pris en charge : {fileType}</p>;
+    }
+  }
+
   return (
     <Container>
       <div className='min-h-screen flex flex-col'>
-        <form className='space-y-4 mb-24' onSubmit={onFormSubmit}>
+        <form className='space-y-4 mb-12' onSubmit={onFormSubmit}>
           <InputFieldContainer icon={['fas', 'user-doctor']}>
             <InputField
               name='prescribing_doctor'
@@ -257,6 +313,13 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
             error={error}
             loading={loading}
           />
+        )}
+        {previewUrl && (
+          <div className=' max-w-xs mx-auto mt-2 mb-28 flex flex-col'>
+            <h3 className='text-lg font-semibold mb-2'>Aperçu de l'ordonnance</h3>
+            {renderPreview()}
+            {imageLoadError && <p className="text-red-500 mt-2">Erreur de chargement du fichier</p>}
+          </div>
         )}
       </div>
     </Container>
