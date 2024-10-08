@@ -135,7 +135,11 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
     })
 
     if (files !== null && files !== undefined) {
-      setFile(files[0])
+      const { name, type } = files[0]
+      const extension = name.split('.').pop()
+      const newName = `ordonnance_${Date.now()}.${extension}`
+      const newFile = new File([files[0]], newName, { type })
+      setFile(newFile)
     }
   }
 
