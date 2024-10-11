@@ -6,9 +6,9 @@ import { InputFieldContainer } from '../../components/forms/inputGroups/InputFie
 import { InputField } from '../../components/forms/inputGroups/InputField'
 import { Button } from '../../components/forms/inputGroups/Button'
 import { ContainerAuth } from '../../components/authentifications/ContainerAuth'
-import LogoPng from '../../components/module/LogoPng'
 import { AuthLink } from '../../components/authentifications/AuthLink'
 import { WelcomeAuth } from '../../components/authentifications/WelcomeAuth'
+import { LogoSvg } from '../../components/module/LogoSvg'
 
 const ResetPassword = (): JSX.Element => {
   const [email, setEmail] = useState<string>('')
@@ -34,7 +34,7 @@ const ResetPassword = (): JSX.Element => {
 
   return (
     <ContainerAuth>
-    <LogoPng />
+    <LogoSvg />
     <WelcomeAuth title={t('title.welcomeApp')} description={t('title.resetPassword')} />
 
         <form className='mt-1 p-1 space-y-4 ' onSubmit={onFormSubmit}>
@@ -49,7 +49,7 @@ const ResetPassword = (): JSX.Element => {
           </InputFieldContainer>
 
           <Button isLoading={loading} onClick={handleResetPasswort} type='submit' >
-            {t('navigation.resetPassword')}
+            {t('navigation.validate')}
           </Button>
         </form>
 
