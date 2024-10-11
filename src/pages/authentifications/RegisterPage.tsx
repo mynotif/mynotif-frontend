@@ -4,15 +4,15 @@ import RegisterForm from '../../components/forms/RegisterForm'
 import { WelcomeAuth } from '../../components/authentifications/WelcomeAuth'
 import { Separator } from '../../components/module/Separator'
 import { AuthLink } from '../../components/authentifications/AuthLink'
-import LogoPng from '../../components/module/LogoPng'
 import { ContainerAuth } from '../../components/authentifications/ContainerAuth'
+import { LogoSvg } from '../../components/module/LogoSvg'
 
 const RegisterPage = (): JSX.Element => {
   const { t } = useTranslationHook()
 
   return (
     <ContainerAuth>
-    <LogoPng />
+    <LogoSvg />
         <WelcomeAuth title={t('title.welcomeApp')} description={t('title.register')} />
         <RegisterForm />
         <Separator />
