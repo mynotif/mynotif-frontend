@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { strict as assert } from 'assert'
 import OneSignal from 'react-onesignal'
 import { ProfileContext } from '../../context/profile'
@@ -8,11 +8,11 @@ import { createOneSignalSubscriptionId, getOneSignalSubscriptionId } from '../ap
 const OneSignalManager: React.FC<any> = ({ children }) => {
   const { profile } = useContext(ProfileContext)
   const { token } = useContext(TokenContext)
-  const [oneSignalInitialized, setOneSignalInitialized] = useState<boolean>(false)
 
   useEffect(() => {
-    if (profile.id === 0 || token == null || token.trim() === '' || oneSignalInitialized) return
+    if (profile.id === 0 || token == null || token.trim() === '') return
 
+    // Initialze once and then listen for changes in the subscription.
     const initializeOneSignal = async (): Promise<void> => {
       const result = await getOneSignalSubscriptionId(token)
       if (result.length > 0) return
@@ -25,20 +25,17 @@ const OneSignalManager: React.FC<any> = ({ children }) => {
         size: 'small'
       })
 
-      setOneSignalInitialized(true)
-
-      try {
+      // Send the OneSignal subscription ID to the backend once it's ready
+      OneSignal?.User?.PushSubscription.addEventListener('change', async function (event) {
+        assert(profile.id, 'Profile ID is not defined')
+        assert(token, 'token is not defined')
         await OneSignal.login(profile.id.toString())
-        const subscriptionId = (window.OneSignal?.User as any).onesignalId
-        assert(subscriptionId, 'Subscription ID is not defined')
-        await createOneSignalSubscriptionId(token, subscriptionId)
-      } catch (error) {
-        console.error('Error creating subscription ID', error)
-      }
+        await createOneSignalSubscriptionId(token, event?.current?.id as string)
+      });
     }
     // eslint-disable-next-line no-void
     void initializeOneSignal()
-  }, [profile.id, oneSignalInitialized, token])
+  }, [profile.id, token])
 
   return <>{children}</>
 }
