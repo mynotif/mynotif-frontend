@@ -21,8 +21,8 @@ const OneSignalManager: React.FC<any> = ({ children }) => {
         appId: process.env.REACT_APP_ONE_SIGNAL_ID as string,
         safari_web_id: process.env.REACT_APP_SAFARI_WEB_ID as string,
         allowLocalhostAsSecureOrigin: true,
-        notifyButton: { enable: true },
-        size: 'small'
+        notifyButton: { enable: true, offset: { 'bottom': '58px', 'right': '10px' }},
+        size: 'small',
       })
 
       // Send the OneSignal subscription ID to the backend once it's ready
