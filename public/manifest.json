@@ -1,19 +1,19 @@
 {
-  "short_name": "MyNotif",
-  "name": "MyNotif",
+  "short_name": "Ordopro",
+  "name": "Ordopro",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "ordopro/logo_simple_centre.png",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "type": "image/png"
     },
     {
-      "src": "logo192.png",
+      "src": "ordopro/logo_simple_centre.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "ordopro/logo_simple_centre.png",
       "type": "image/png",
       "sizes": "512x512"
     }
