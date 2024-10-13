@@ -21,9 +21,14 @@ const OneSignalManager: React.FC<any> = ({ children }) => {
         appId: process.env.REACT_APP_ONE_SIGNAL_ID as string,
         safari_web_id: process.env.REACT_APP_SAFARI_WEB_ID as string,
         allowLocalhostAsSecureOrigin: true,
-        notifyButton: { enable: true, offset: { 'bottom': '58px', 'right': '10px' }},
-        size: 'small',
+        promptOptions: {
+          actionMessage: 'Recevez des alertes lorsque vos ordonnances arrivent à expiration.',
+          acceptButtonText: 'Accepter',
+          cancelButtonText: 'Plus tard',
+        }
       })
+
+      OneSignal.Slidedown.promptPush()
 
       // Send the OneSignal subscription ID to the backend once it's ready
       OneSignal?.User?.PushSubscription.addEventListener('change', async function (event) {
