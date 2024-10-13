@@ -36,8 +36,8 @@ const HomePage = (): JSX.Element => {
             <Card count={patients.length} title={t('text.patients')} onClick={goToPatients} />
             <Card count={prescriptions.length} title={t('text.prescriptions')} onClick={goToPrescriptions} />
           </CardList>
-          <ExpirationBanner expiration='Expire bientot' />
-          {patientsExpiredSoon.length === 0 && <p>No patients expiring soon</p>}
+          <ExpirationBanner expiration='Expirant bientôt' />
+          {patientsExpiredSoon.length === 0 && <p>Pas de patients expirant bientôt</p>}
           {patientsExpiredSoon.map(patient => (
             <PatientCard className='bg-colorsecondary text-colorprimary' onClick={() => goToPatient(patient.id)} key={patient.id} patient={patient} />
           ))}
