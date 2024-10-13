@@ -13,7 +13,7 @@ const OneSignalManager: React.FC<any> = ({ children }) => {
     if (profile.id === 0 || token == null || token.trim() === '') return
 
     // Initialze once and then listen for changes in the subscription.
-    const initializeOneSignal = async (): Promise<void> => {
+    const initializeOneSignal: any = async (): Promise<void> => {
       const result = await getOneSignalSubscriptionId(token)
       if (result.length > 0) return
 
@@ -35,7 +35,9 @@ const OneSignalManager: React.FC<any> = ({ children }) => {
         assert(profile.id, 'Profile ID is not defined')
         assert(token, 'token is not defined')
         await OneSignal.login(profile.id.toString())
-        await createOneSignalSubscriptionId(token, event?.current?.id as string)
+        const subscriptionId = OneSignal.User.PushSubscription.id
+        assert(subscriptionId, 'subscriptionId is not defined')
+        await createOneSignalSubscriptionId(token, subscriptionId as string)
       });
     }
     // eslint-disable-next-line no-void
