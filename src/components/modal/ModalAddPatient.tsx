@@ -26,11 +26,11 @@ const ModalAddPatient: React.FC<ModalAddPatientProps> = ({
   const { t } = useTranslationHook()
 
   return (
-    <div className={`fixed inset-0 flex items-center justify-center ${show ? 'block' : 'hidden'}`}>
+    <div className={`fixed bg-black bg-opacity-50 inset-0 flex items-center justify-center ${show ? 'block' : 'hidden'}`}>
       <div className='bg-white rounded-lg shadow-lg w-full max-w-2xl mx-4'>
         <div className='flex justify-between items-center p-4 border-b'>
           <h2 className='text-xl font-semibold'>Ajouter un patient</h2>
-          <button onClick={onHide} className='text-gray-500 text-2xl hover:text-gray-700'>
+          <button onClick={onHide} className='text-gray-500 text-3xl hover:text-gray-700'>
             &times;
           </button>
         </div>
