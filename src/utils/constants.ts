@@ -4,8 +4,6 @@ export const PAGE_CONFIG = [
   { path: 'patients/create', title: 'Create Patient', showBackButton: true },
   { path: 'prescriptions/create', title: 'Create prescriptions', showBackButton: true },
   { path: '/account', title: 'Account', showBackButton: false },
-  { path: '/patients', title: 'Patients', showBackButton: false },
-  { path: '/prescriptions', title: 'Prescriptions', showBackButton: false },
   { path: '/profile/edit', title: 'Edit Profile', showBackButton: true },
   { path: '/profile', title: 'Profile', showBackButton: false },
   { path: '/setting', title: 'Parametre', showBackButton: false },
