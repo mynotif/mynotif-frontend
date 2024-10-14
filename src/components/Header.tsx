@@ -13,8 +13,8 @@ const Header = (): JSX.Element => {
   const initialUsername = profile.username.charAt(0).toUpperCase() + profile.username.charAt(1).toUpperCase()
   const initialFullname = profile.first_name.charAt(0).toUpperCase() + profile.last_name.charAt(0).toUpperCase()
   const initials = initialFullname !== '' ? initialFullname : initialUsername
-  const isPatientProfile = location.pathname.match(/patients\/\d+$/)
-  const isPrescriptionProfile = location.pathname.match(/prescriptions\/\d+$/)
+  const isPatientProfileMatch = location.pathname.match(/^\/patients\/\d+$/)
+  const isPrescriptionProfileMatch = location.pathname.match(/^\/prescriptions\/\d+$/)
   const isLoggedIn = useIsLoggedIn()
   const isHomePage = location.pathname === '/home'
   const navigate = useNavigate()
@@ -49,12 +49,16 @@ const Header = (): JSX.Element => {
       url = previousPath ?? currentPageConfig.path
       title = currentPageConfig.title
       showBackButton = currentPageConfig.showBackButton
-    } else if (isPatientProfile) {
-      url = previousPath ?? '/patients'
+    } else if (isPatientProfileMatch) {
+      url = '/patients'
       title = 'Patient Profile'
-    } else if (isPrescriptionProfile) {
-      url = previousPath ?? '/prescriptions'
+    } else if (isPrescriptionProfileMatch) {
+      url = '/prescriptions'
       title = 'Prescription Profile'
+    } else if (location.pathname === '/patients') {
+      title = 'Patients'
+    } else if (location.pathname === '/prescriptions') {
+      title = 'Prescriptions'
     }
 
     return { url, title, showBackButton }
