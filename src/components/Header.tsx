@@ -9,14 +9,12 @@ import AvatarCircle from './AvatarCircle'
 
 const Header = (): JSX.Element => {
   const location = useLocation()
-  const currentPage = PAGE_CONFIG.find(page => location.pathname.includes(page.path))
   const { profile } = useContext(ProfileContext)
   const initialUsername = profile.username.charAt(0).toUpperCase() + profile.username.charAt(1).toUpperCase()
   const initialFullname = profile.first_name.charAt(0).toUpperCase() + profile.last_name.charAt(0).toUpperCase()
   const initials = initialFullname !== '' ? initialFullname : initialUsername
   const isPatientProfile = location.pathname.match(/patients\/\d+$/)
   const isPrescriptionProfile = location.pathname.match(/prescriptions\/\d+$/)
-  const isStatus = location.pathname.includes('status')
   const isLoggedIn = useIsLoggedIn()
   const isHomePage = location.pathname === '/home'
   const navigate = useNavigate()
@@ -40,9 +38,32 @@ const Header = (): JSX.Element => {
     return <></>
   }
 
+  const getPageHeaderProps = (): { url: string; title: string; showBackButton: boolean } => {
+    let url = previousPath ?? '/home'
+    let title = ''
+    let showBackButton = false
+
+    const currentPageConfig = PAGE_CONFIG.find(page => location.pathname.includes(page.path))
+
+    if (currentPageConfig) {
+      url = previousPath ?? currentPageConfig.path
+      title = currentPageConfig.title
+      showBackButton = currentPageConfig.showBackButton
+    } else if (isPatientProfile) {
+      url = previousPath ?? '/patients'
+      title = 'Patient Profile'
+    } else if (isPrescriptionProfile) {
+      url = previousPath ?? '/prescriptions'
+      title = 'Prescription Profile'
+    }
+
+    return { url, title, showBackButton }
+  }
+
+  const { url, title, showBackButton } = getPageHeaderProps()
 
   return (
-    <header className='fixed top-0 left-0 right-0 h-16 bg-white shadow-md flex justify-around items-center z-10'>
+    <header className='fixed top-0 left-0 right-0 h-16 bg-white shadow-md flex justify-between items-center px-4 z-10'>
       {isHomePage && (
         <>
           <HeaderProfile />
@@ -51,20 +72,11 @@ const Header = (): JSX.Element => {
           </div>
         </>
       )}
-      {currentPage && (
+      {title && (
         <PageHeader
-          url={
-            isPatientProfile ? previousPath ?? '/patients'
-            : isPrescriptionProfile ? previousPath ?? '/prescriptions'
-            : isStatus ? previousPath ?? '/patients'
-            : previousPath ?? '/home'
-          }
-          title={
-            isPatientProfile ? 'Patient Profile'
-            : isPrescriptionProfile ? 'Prescription Profile'
-            : isStatus ? 'Prescription Status'
-            : currentPage.title
-          }
+          url={url}
+          title={title}
+          showBackButton={showBackButton}
         />
       )}
     </header>
