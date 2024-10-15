@@ -7,8 +7,13 @@ import { PAGE_CONFIG } from '../utils/constants'
 import PageHeader from './PageHeader'
 import AvatarCircle from './AvatarCircle'
 
+interface LocationState {
+  title?: string;
+}
+
 const Header = (): JSX.Element => {
   const location = useLocation()
+  const state = location.state as LocationState
   const { profile } = useContext(ProfileContext)
   const initialUsername = profile.username.charAt(0).toUpperCase() + profile.username.charAt(1).toUpperCase()
   const initialFullname = profile.first_name.charAt(0).toUpperCase() + profile.last_name.charAt(0).toUpperCase()
@@ -43,22 +48,28 @@ const Header = (): JSX.Element => {
     let title = ''
     let showBackButton = false
 
-    const currentPageConfig = PAGE_CONFIG.find(page => location.pathname.includes(page.path))
+    if (state && state.title) {
+      title = state.title
+    } else {
+      const currentPageConfig = PAGE_CONFIG.find(page => location.pathname.includes(page.path))
 
-    if (currentPageConfig) {
-      url = previousPath ?? currentPageConfig.path
-      title = currentPageConfig.title
-      showBackButton = currentPageConfig.showBackButton
-    } else if (isPatientProfileMatch) {
-      url = '/patients'
-      title = 'Patient Profile'
-    } else if (isPrescriptionProfileMatch) {
-      url = '/prescriptions'
-      title = 'Prescription Profile'
-    } else if (location.pathname === '/patients') {
-      title = 'Patients'
-    } else if (location.pathname === '/prescriptions') {
-      title = 'Prescriptions'
+      if (currentPageConfig) {
+        url = previousPath ?? currentPageConfig.path
+        title = currentPageConfig.title
+        showBackButton = currentPageConfig.showBackButton
+      } else if (isPatientProfileMatch) {
+        url = '/patients'
+        title = 'Profil du Patient'
+        showBackButton = true
+      } else if (isPrescriptionProfileMatch) {
+        url = '/prescriptions'
+        title = 'Profil de Prescription'
+        showBackButton = true
+      } else if (location.pathname === '/patients') {
+        title = 'Patients'
+      } else if (location.pathname === '/prescriptions') {
+        title = 'Prescriptions'
+      }
     }
 
     return { url, title, showBackButton }

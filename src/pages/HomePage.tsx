@@ -8,6 +8,7 @@ import { Container } from '../components/home/Container'
 import { CardList } from '../components/home/CardList'
 import { Loading } from '../components/loading/Loading'
 import { t } from 'i18next'
+import { Patient } from '../types'
 
 const HomePage = (): JSX.Element => {
   const navigate = useNavigate()
@@ -24,8 +25,15 @@ const HomePage = (): JSX.Element => {
   const goToPrescriptions = (): void => {
     navigate('/prescriptions')
   }
-  const goToPatient = (id: number): void => {
-    navigate(`/patients/${id}`)
+  const goToPrescription = (patient: Patient): void => {
+    const expiredPrescription = expiredSoon.find(prescription => prescription.patient === patient.id);
+
+    if (expiredPrescription?.id !== undefined) {
+      navigate(`/prescriptions/${expiredPrescription.id}/`, {
+        state: { title: "Prescription Profile" }})
+    } else {
+      console.error('Patient is undefined')
+    }
   }
 
   return (
@@ -39,7 +47,7 @@ const HomePage = (): JSX.Element => {
           <ExpirationBanner expiration='Expirant bientôt' />
           {patientsExpiredSoon.length === 0 && <p>Pas de patients expirant bientôt</p>}
           {patientsExpiredSoon.map(patient => (
-            <PatientCard className='bg-colorsecondary text-colorprimary' onClick={() => goToPatient(patient.id)} key={patient.id} patient={patient} />
+            <PatientCard className='bg-colorsecondary text-colorprimary' onClick={() => goToPrescription(patient)} key={patient.id} patient={patient} />
           ))}
         </Container>
       ) : (
