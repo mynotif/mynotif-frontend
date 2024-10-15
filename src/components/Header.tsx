@@ -24,8 +24,8 @@ const Header = (): JSX.Element => {
   const isHomePage = location.pathname === '/home'
   const navigate = useNavigate()
 
-  const onAccountDetail = (): void => {
-    navigate('/profile')
+  const onAccount = (): void => {
+    navigate('/setting')
   }
 
   const [previousPath, setPreviousPath] = useState<string | null>(sessionStorage.getItem('previousPath'))
@@ -82,7 +82,7 @@ const Header = (): JSX.Element => {
       {isHomePage && (
         <>
           <HeaderProfile />
-          <div onClick={onAccountDetail}>
+          <div onClick={onAccount}>
             <AvatarCircle initials={initials} size={40} fontSize={16} />
           </div>
         </>
