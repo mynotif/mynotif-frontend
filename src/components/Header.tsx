@@ -18,8 +18,8 @@ const Header = (): JSX.Element => {
   const initialUsername = profile.username.charAt(0).toUpperCase() + profile.username.charAt(1).toUpperCase()
   const initialFullname = profile.first_name.charAt(0).toUpperCase() + profile.last_name.charAt(0).toUpperCase()
   const initials = initialFullname !== '' ? initialFullname : initialUsername
-  const isPatientProfileMatch = location.pathname.match(/^\/patients\/\d+$/)
-  const isPrescriptionProfileMatch = location.pathname.match(/^\/prescriptions\/\d+$/)
+  const isPatientProfileMatch = location.pathname.match(/^\/patients\/\d+\/?$/)
+  const isPrescriptionProfileMatch = location.pathname.match(/^\/prescriptions\/\d+\/?$/)
   const isLoggedIn = useIsLoggedIn()
   const isHomePage = location.pathname === '/home'
   const navigate = useNavigate()
