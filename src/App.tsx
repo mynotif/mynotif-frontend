@@ -28,8 +28,8 @@ import PrescriptionDetail from './pages/prescriptions/PrescriptionDetail'
 import ProfileDetail from './pages/profile/ProfileDetail'
 import ProfileEdit from './pages/profile/ProfileEdit'
 import { AccountPage } from './pages/setting/AccountPage'
-import { PrescriptionStatusList } from './components/patients/patientProfile/PrescriptionStatusList'
 import Header from './components/Header'
+import ReviewSendDoctor from './pages/emails/ReviewSendDoctor'
 
 library.add(fas, fab, far)
 
@@ -85,9 +85,9 @@ function App (): JSX.Element {
                       path='/prescriptions/:id'
                       element={<PrescriptionDetail />}
                     />
-                    <Route path='/prescriptions/status/:invalid' element={<PrescriptionStatusList />} />
-                    <Route path='/prescriptions/status/:expireSoon' element={<PrescriptionStatusList />} />
-                    <Route path='/prescriptions/status/:valid' element={<PrescriptionStatusList />} />
+                    <Route 
+                      path='/prescriptions/send/:prescriptionId' 
+                      element={<ReviewSendDoctor />} />
                   </Route>
                 </Routes>
                 <Footer />

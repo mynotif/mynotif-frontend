@@ -64,7 +64,7 @@ const Header = (): JSX.Element => {
       } else if (isPrescriptionProfileMatch) {
         url = '/prescriptions'
         title = 'Profil de Prescription'
-        showBackButton = true
+        showBackButton = false
       } else if (location.pathname === '/patients') {
         title = 'Patients'
       } else if (location.pathname === '/prescriptions') {
