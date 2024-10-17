@@ -56,6 +56,19 @@ const PrescriptionDetail = (): JSX.Element => {
     }
   }
 
+  const goToSendEmail = (): void => {
+    if (prescriptionState?.id !== undefined) {
+      navigate(`/prescriptions/send/${prescriptionState.id}/`,{
+        state: {
+          patient: patientState,
+          prescription: prescriptionState
+        }
+      })
+    } else {
+      console.error('Patient is undefined')
+    }
+  }
+
   return (
     <>
       {prescriptionState !== null && patientState !== null
@@ -68,6 +81,7 @@ const PrescriptionDetail = (): JSX.Element => {
               fullNamePatient={fullNamePatient}
               onClick={goToPatientDetail}
               onEditClick={goToEditPrescription}
+              onSendClick={goToSendEmail}
             />
           </Container>
         ) : (

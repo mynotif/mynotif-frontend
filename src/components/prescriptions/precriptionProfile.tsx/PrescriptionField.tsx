@@ -10,9 +10,10 @@ interface PrescriptionFieldProps {
   fullNamePatient: string
   onClick?: () => void
   onEditClick?: () => void
+  onSendClick?: () => void
 }
 
-export const PrescriptionField = ({ prescriptionState, patientState, fullNamePatient, onClick,onEditClick }: PrescriptionFieldProps): JSX.Element => {
+export const PrescriptionField = ({ prescriptionState, patientState, fullNamePatient, onClick, onEditClick, onSendClick }: PrescriptionFieldProps): JSX.Element => {
   const missingValue = <span className='text-red-500'>A remplir</span>
   const isValidIconClass = getIconClass(prescriptionState)
   return (
@@ -52,19 +53,22 @@ export const PrescriptionField = ({ prescriptionState, patientState, fullNamePat
               <FontAwesomeIcon icon={['fas', 'eye']} className='mr-2' />
               <span>Voir ordonnance</span>
             </a>
-            {prescriptionState.is_valid && prescriptionState.expiring_soon && (
-              <>
-                <Button onClick={onEditClick} size='small' icon={['fas', 'calendar']} iconPosition='left' variant='secondary'>
-                  <span>Mettre a jour</span>
-                </Button>
-              </>
-            )}
             </>
           ) : (
             <Button icon={['fas', 'eye-slash']} iconPosition='left' size='small' disabled variant='disabled'>
               <span>Aucune ordonnance</span>
             </Button>
           )}
+            {prescriptionState.is_valid && prescriptionState.expiring_soon && (
+              <>
+                <Button onClick={onEditClick} size='small' icon={['fas', 'calendar']} iconPosition='left' variant='secondary'>
+                  <span>Mettre a jour date</span>
+                </Button>
+                <Button onClick={onSendClick} size='small' icon={['fas', 'envelope']} iconPosition='left' variant='accent'>
+                  <span>Contacter médecin</span>
+                </Button>
+              </>
+            )}
         </div>
       </div>
     </>

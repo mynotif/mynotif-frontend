@@ -40,6 +40,7 @@ const defaultPatient = {
 interface Prescription {
   id: number
   prescribing_doctor: string
+  email_doctor: string
   start_date: string
   end_date: string
   photo_prescription: string
@@ -51,6 +52,7 @@ interface Prescription {
 const defaultPrescription = {
   id: 0,
   prescribing_doctor: '',
+  email_doctor: '',
   start_date: '',
   end_date: '',
   photo_prescription: '',

@@ -173,6 +173,14 @@ const getOneSignalSubscriptionId = async (token: string): Promise<SubscriptionIn
   return response.data
 }
 
+const sendEmailToDoctor = async (token: string, prescriptionId: number, careDetails: string): Promise<{}> => {
+  const url = BACKEND_URL + `/prescription/${prescriptionId}/send-email/`
+  const headers = { Authorization: `Token ${token}` }
+  const response = await axios.post(url, {additional_info: careDetails}, { headers })
+  return response.data
+}
+
+
 export {
   getPatients,
   getPatient,
@@ -192,5 +200,6 @@ export {
   resetPassword,
   confirmResetPassword,
   createOneSignalSubscriptionId,
-  getOneSignalSubscriptionId
+  getOneSignalSubscriptionId,
+  sendEmailToDoctor,
 }
