@@ -7,6 +7,7 @@ export const PAGE_CONFIG = [
   { path: '/profile/edit', title: 'Edit Profile', showBackButton: true },
   { path: '/profile', title: 'Profile', showBackButton: false },
   { path: '/setting', title: 'Parametre', showBackButton: false },
+  { path: 'prescriptions/send', title: 'Renouvellement', showBackButton: true }
 ]
 
 export const COLOR_STATUS = {
