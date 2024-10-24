@@ -263,6 +263,14 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
               onChange={onInputChange}
             />
           </InputFieldContainer>
+          <InputFieldContainer icon={['fas', 'envelope']}>
+            <InputField
+              name='email_doctor'
+              placeholder='doctoremail@ordopro.fr'
+              value={prescriptionState.email_doctor}
+              onChange={onInputChange}
+            />
+          </InputFieldContainer>
           <InputFieldContainer icon={['fas', 'file-prescription']}>
             <InputField
               type='file'
