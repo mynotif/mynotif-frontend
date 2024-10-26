@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate } from 'react-router-dom'
 import { Prescription } from '../../types'
 import { getIconClass } from '../../utils/helpers'
+import { useDaysRemaining } from '../../hook/daysRemaining'
 
 interface PrescriptionCardProps {
   doctorName: string
@@ -12,6 +13,7 @@ interface PrescriptionCardProps {
 
 export const PrescriptionCard = ({ doctorName, endDate, patientName, prescription }: PrescriptionCardProps): JSX.Element => {
   const navigate = useNavigate()
+  const daysRemaining = useDaysRemaining(endDate)
 
   const goToPrescription = (): void => {
     navigate(`/prescriptions/${prescription.id}`)
@@ -31,10 +33,12 @@ export const PrescriptionCard = ({ doctorName, endDate, patientName, prescriptio
         </div>
         <div className='flex items-center mb-2'>
           <p className='flex-grow font-semibold'>End of prescription: </p>
-          <div className={`flex items-center ${isValidIconClass} px-3 py-1 rounded-full`}>
-            <FontAwesomeIcon icon={['fas', 'calendar']} className='mr-2' />
-            <span>{endDate}</span>
-          </div>
+            <div className={`flex items-center ${isValidIconClass} px-3 py-1 rounded-full`}>
+              <FontAwesomeIcon icon={['fas', 'calendar']} className='mr-2' />
+                <span>
+                  {daysRemaining <= 0 ? endDate : `${daysRemaining} jour${daysRemaining > 1 ? 's' : ''} restant${daysRemaining > 1 ? 's' : ''}`}
+                </span>
+            </div>
         </div>
         <div className='mb-2'>
           <p className='font-semibold'>Patient: <span className='font-normal'>{patientName}</span></p>
