@@ -10,6 +10,7 @@ import { TokenContext } from '../../context/token'
 import { formatDate } from '../../utils/helpers'
 import { Container } from '../../components/home/Container'
 import { Loading } from '../../components/loading/Loading'
+import PrescriptionFilter from '../../components/PrescriptionFilter'
 
 const PrescriptionsPage = (): JSX.Element => {
   const [prescriptions] = usePrescription()
@@ -107,6 +108,7 @@ const PrescriptionsPage = (): JSX.Element => {
         (
           <Container>
             <SearchBar onSearch={handleSearch} placeholderText={t('text.searchDoctor')} />
+            <PrescriptionFilter prescriptions={prescriptions} onFilterChanged={setFilteredPrescriptions} />
             {
               filteredPrescriptions.map((prescription) => (
                 <PrescriptionCard
