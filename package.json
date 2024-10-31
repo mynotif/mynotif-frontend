@@ -80,6 +80,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/lodash": "^4.14.181",
     "@types/react-datepicker": "^4.11.2",
     "autoprefixer": "^9",
