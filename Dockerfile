@@ -4,7 +4,7 @@
 # docker run --rm -it --publish 3000:80 mynotif/mynotif-frontend
 # Or interactive shell:
 # docker run -it --rm mynotif/mynotif-frontend sh
-FROM node:16-alpine as build
+FROM node:20-alpine as build
 
 # Specify where our app will live in the container
 WORKDIR /app
