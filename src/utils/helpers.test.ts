@@ -17,6 +17,7 @@ describe('helpers', () => {
       photo_prescription: '',
       is_valid: true,
       patient: 1,
+      email_doctor: '',
       expiring_soon: true
     }
     const prescription2: Prescription = {
@@ -27,6 +28,7 @@ describe('helpers', () => {
       photo_prescription: '',
       is_valid: true,
       patient: 2,
+      email_doctor: '',
       expiring_soon: false
     }
     const prescription3: Prescription = {
@@ -37,6 +39,7 @@ describe('helpers', () => {
       photo_prescription: '',
       is_valid: false,
       patient: 3,
+      email_doctor: '',
       expiring_soon: false
     }
 
@@ -57,7 +60,8 @@ describe('helpers', () => {
         prescribing_doctor: 'Doctor 1',
         start_date: '2022-03-20',
         end_date: '2022-05-20',
-
+        email_doctor: '',
+        expiring_soon: false,
         photo_prescription: '',
         patient: 1
       },
@@ -69,7 +73,8 @@ describe('helpers', () => {
         prescribing_doctor: 'Doctor 2',
         start_date: '2022-03-10',
         end_date: '2022-05-10',
-
+        email_doctor: '',
+        expiring_soon: false,
         photo_prescription: '',
         patient: 1
       }
@@ -87,7 +92,8 @@ describe('helpers', () => {
         prescribing_doctor: 'Doctor 1',
         start_date: '2022-03-20',
         end_date: '2022-05-20',
-
+        email_doctor: '',
+        expiring_soon: false,
         photo_prescription: '',
         patient: 1
       }
@@ -105,7 +111,8 @@ describe('helpers', () => {
         prescribing_doctor: 'Doctor 1',
         start_date: '2021-03-20',
         end_date: '2021-05-20',
-
+        email_doctor: '',
+        expiring_soon: false,
         photo_prescription: '',
         patient: 1
       },
@@ -117,7 +124,8 @@ describe('helpers', () => {
         prescribing_doctor: 'Doctor 2',
         start_date: '2022-01-10',
         end_date: '2022-03-10',
-
+        email_doctor: '',
+        expiring_soon: false,
         photo_prescription: '',
         patient: 1
       },
@@ -129,7 +137,8 @@ describe('helpers', () => {
         prescribing_doctor: 'Doctor 2',
         start_date: '2022-01-11',
         end_date: '2022-02-10',
-
+        email_doctor: '',
+        expiring_soon: false,
         photo_prescription: '',
         patient: 1
       }
@@ -152,7 +161,8 @@ describe('helpers', () => {
         prescribing_doctor: 'Doctor 1',
         start_date: '2021-03-20',
         end_date: '2021-05-20',
-
+        email_doctor: '',
+        expiring_soon: false,
         photo_prescription: '',
         patient: 1
       },
@@ -164,7 +174,8 @@ describe('helpers', () => {
         prescribing_doctor: 'Doctor 2',
         start_date: '2022-01-10',
         end_date: '2022-03-10',
-
+        email_doctor: '',
+        expiring_soon: false,
         photo_prescription: '',
         patient: 1
       },
@@ -176,7 +187,8 @@ describe('helpers', () => {
         prescribing_doctor: 'Doctor 2',
         start_date: '2022-01-11',
         end_date: '2022-02-10',
-
+        email_doctor: '',
+        expiring_soon: false,
         photo_prescription: '',
         patient: 1
       }
@@ -194,7 +206,8 @@ describe('helpers', () => {
         prescribing_doctor: 'Doctor 1',
         start_date: '2021-03-20',
         end_date: '2021-05-20',
-
+        email_doctor: '',
+        expiring_soon: false,
         photo_prescription: '',
         patient: 1
       },
@@ -206,7 +219,8 @@ describe('helpers', () => {
         prescribing_doctor: 'Doctor 2',
         start_date: '2022-01-10',
         end_date: '2022-03-10',
-
+        email_doctor: '',
+        expiring_soon: false,
         photo_prescription: '',
         patient: 1
       },
@@ -218,7 +232,8 @@ describe('helpers', () => {
         prescribing_doctor: 'Doctor 2',
         start_date: '2022-01-11',
         end_date: '2022-02-10',
-
+        email_doctor: '',
+        expiring_soon: false,
         photo_prescription: '',
         patient: 1
       }
