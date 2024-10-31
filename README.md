@@ -10,19 +10,19 @@ Backend is available via:
 
 ## Install
 ```sh
-yarn install
+npm ci
 ```
 
 ## Run
 ```sh
-yarn dev
+npm run dev
 ```
 Optionally you can copy the `.env.example` to `.env.local` to override some settings.
 
 ## Test
 ```sh
-yarn test
-yarn lint
+npm run test
+npm run lint
 ```
 
 ## Docker
