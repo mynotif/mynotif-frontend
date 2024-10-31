@@ -10,13 +10,12 @@ FROM node:16-alpine as build
 WORKDIR /app
 
 # Build the dependencies
-COPY package.json tsconfig.json yarn.lock ./
-RUN yarn install
-RUN yarn global add react-scripts
+COPY package.json tsconfig.json package-lock.json ./
+RUN npm ci
 # Build for production
 COPY src src
 COPY public public
-RUN yarn build
+RUN npm run build
 
 # Prepare nginx
 FROM nginx:1.20-alpine
