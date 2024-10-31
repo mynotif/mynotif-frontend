@@ -1,6 +1,7 @@
 # MyNotif Frontend
 
 [![Tests](https://github.com/mynotif/mynotif-frontend/actions/workflows/tests.yml/badge.svg)](https://github.com/mynotif/mynotif-frontend/actions/workflows/tests.yml)
+[![Deployment](https://deploy-badge.vercel.app/?app=mynotif-frontend)](https://github.com/mynotif/mynotif-frontend/deployments)
 
 Frontend for MyNotif: Patient management app for nurses mobile first only.
 - https://www.ordopro.fr/
