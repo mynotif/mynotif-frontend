@@ -9,19 +9,28 @@ import {
   SubscriptionInfo
 } from '../types'
 import { BACKEND_URL } from './constants'
+import cacheService from './cache'
 
 const getPatients = async (token: string): Promise<Patient[]> => {
+  const cachedPatients = await cacheService.get('patients')
+  if (cachedPatients) return cachedPatients
   const url = BACKEND_URL + '/patient/'
   const headers = { Authorization: `Token ${token}` }
   const response = await axios.get<Patient[]>(url, { headers })
-  return response.data
+  const patients = response.data
+  cacheService.set('patients', patients)
+  return patients
 }
 
 const getPatient = async (token: string, id: number): Promise<Patient> => {
+  const cachedPatient = await cacheService.get('patients.' + id)
+  if (cachedPatient) return cachedPatient
   const url = BACKEND_URL + `/patient/${id}/`
   const headers = { Authorization: `Token ${token}` }
   const response = await axios.get(url, { headers })
-  return response.data
+  const patient = response.data
+  cacheService.set('patients.' + id, patient)
+  return patient
 }
 
 const updatePatient = async (
@@ -31,6 +40,15 @@ const updatePatient = async (
   const url = BACKEND_URL + `/patient/${patient.id}/`
   const headers = { Authorization: `Token ${token}` }
   const response = await axios.patch<Patient>(url, patient, { headers })
+  const cachedPatients = await cacheService.get('patients')
+  const cachedPatient = await cacheService.get('patients.' + patient.id)
+  if (cachedPatient) {
+    cacheService.set('patients.' + patient.id, response.data)
+  }
+  if (cachedPatients) {
+  const index = cachedPatients.findIndex((p: Patient) => p.id === patient.id)
+  cachedPatients[index] = response.data
+  }
   return response.data
 }
 
@@ -41,6 +59,10 @@ const createPatient = async (
   const headers = { Authorization: `Token ${token}` }
   const url = BACKEND_URL + '/patient/'
   const response = await axios.post<Patient>(url, patient, { headers })
+  const cachedPatients = await cacheService.get('patients')
+  if (cachedPatients) {
+    cacheService.set('patients', [...cachedPatients, response.data])
+  }
   return response.data
 }
 
@@ -48,6 +70,10 @@ const deletePatient = async (token: string, id: number): Promise<{}> => {
   const url = BACKEND_URL + `/patient/${id}/`
   const headers = { Authorization: `Token ${token}` }
   const response = await axios.delete(url, { headers })
+  const cachedPatients = await cacheService.get('patients')
+  if (cachedPatients) {
+    cacheService.set('patients', cachedPatients.filter((patient: Patient) => patient.id !== id))
+  }
   return response.data
 }
 
@@ -57,27 +83,34 @@ const createPrescription = async (
 ): Promise<Prescription> => {
   const headers = { Authorization: `Token ${token}` }
   const url = BACKEND_URL + '/prescription/'
-  const response = await axios.post<Prescription>(url, prescription, {
-    headers
-  })
+  const response = await axios.post<Prescription>(url, prescription, { headers })
+  const cachedPrescriptions = await cacheService.get('prescriptions')
+  if (cachedPrescriptions) {
+    cacheService.set('prescriptions', [...cachedPrescriptions, response.data])
+  }
   return response.data
 }
 
 const getPrescriptions = async (token: string): Promise<Prescription[]> => {
+  const cachedPrescriptions = await cacheService.get('prescriptions')
+  if (cachedPrescriptions) return cachedPrescriptions
   const url = BACKEND_URL + '/prescription/'
   const headers = { Authorization: `Token ${token}` }
   const response = await axios.get<Prescription[]>(url, { headers })
-  return response.data
+  const prescriptions = response.data
+  cacheService.set('prescriptions', prescriptions)
+  return prescriptions
 }
 
-const getPrescription = async (
-  token: string,
-  id: number
-): Promise<Prescription> => {
+const getPrescription = async (token: string, id: number): Promise<Prescription> => {
+  const cachedPrescription = await cacheService.get(`prescriptions.${id}`)
+  if (cachedPrescription) return cachedPrescription
   const url = BACKEND_URL + `/prescription/${id}/`
   const headers = { Authorization: `Token ${token}` }
   const response = await axios.get<Prescription>(url, { headers })
-  return response.data
+  const prescription = response.data
+  cacheService.set(`prescriptions.${id}`, prescription)
+  return prescription
 }
 
 const updatePrescription = async (
@@ -86,9 +119,14 @@ const updatePrescription = async (
 ): Promise<Prescription> => {
   const url = BACKEND_URL + `/prescription/${prescription.id}/`
   const headers = { Authorization: `Token ${token}` }
-  const response = await axios.patch<Prescription>(url, prescription, {
-    headers
-  })
+  const response = await axios.patch<Prescription>(url, prescription, { headers })
+  cacheService.set(`prescriptions.${prescription.id}`, response.data)
+  const cachedPrescriptions = await cacheService.get('prescriptions')
+  if (cachedPrescriptions) {
+    const index = cachedPrescriptions.findIndex((p: Prescription) => p.id === prescription.id)
+    cachedPrescriptions[index] = response.data
+    cacheService.set('prescriptions', cachedPrescriptions)
+  }
   return response.data
 }
 
@@ -96,6 +134,13 @@ const deletePrescription = async (token: string, id: number): Promise<{}> => {
   const url = BACKEND_URL + `/prescription/${id}/`
   const headers = { Authorization: `Token ${token}` }
   const response = await axios.delete(url, { headers })
+  const cachedPrescriptions = await cacheService.get('prescriptions')
+  if (cachedPrescriptions) {
+    cacheService.set(
+      'prescriptions',
+      cachedPrescriptions.filter((prescription: Prescription) => prescription.id !== id)
+    )
+  }
   return response.data
 }
 
