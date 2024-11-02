@@ -17,6 +17,8 @@ describe('helpers', () => {
       photo_prescription: '',
       is_valid: true,
       patient: 1,
+      patient_firstname: '',
+      patient_lastname: '',
       email_doctor: '',
       expiring_soon: true
     }
@@ -28,6 +30,8 @@ describe('helpers', () => {
       photo_prescription: '',
       is_valid: true,
       patient: 2,
+      patient_firstname: '',
+      patient_lastname: '',
       email_doctor: '',
       expiring_soon: false
     }
@@ -39,6 +43,8 @@ describe('helpers', () => {
       photo_prescription: '',
       is_valid: false,
       patient: 3,
+      patient_firstname: '',
+      patient_lastname: '',
       email_doctor: '',
       expiring_soon: false
     }
@@ -63,7 +69,9 @@ describe('helpers', () => {
         email_doctor: '',
         expiring_soon: false,
         photo_prescription: '',
-        patient: 1
+        patient: 1,
+        patient_firstname: '',
+        patient_lastname: '',
       },
       {
         id: 2,
@@ -76,7 +84,9 @@ describe('helpers', () => {
         email_doctor: '',
         expiring_soon: false,
         photo_prescription: '',
-        patient: 1
+        patient: 1,
+        patient_firstname: '',
+        patient_lastname: '',
       }
     ]
     expect(getValidPrescription(prescriptions)).toEqual(prescriptions[0])
@@ -95,7 +105,9 @@ describe('helpers', () => {
         email_doctor: '',
         expiring_soon: false,
         photo_prescription: '',
-        patient: 1
+        patient: 1,
+        patient_firstname: '',
+        patient_lastname: '',
       }
     ]
     expect(getValidPrescription(prescriptions)).toEqual(null)
@@ -114,7 +126,9 @@ describe('helpers', () => {
         email_doctor: '',
         expiring_soon: false,
         photo_prescription: '',
-        patient: 1
+        patient: 1,
+        patient_firstname: '',
+        patient_lastname: '',
       },
       {
         id: 2,
@@ -127,7 +141,9 @@ describe('helpers', () => {
         email_doctor: '',
         expiring_soon: false,
         photo_prescription: '',
-        patient: 1
+        patient: 1,
+        patient_firstname: '',
+        patient_lastname: '',
       },
       {
         id: 3,
@@ -140,7 +156,9 @@ describe('helpers', () => {
         email_doctor: '',
         expiring_soon: false,
         photo_prescription: '',
-        patient: 1
+        patient: 1,
+        patient_firstname: '',
+        patient_lastname: '',
       }
     ]
     expect(getLastPrescription(prescriptions)).toEqual(prescriptions[1])
@@ -164,7 +182,9 @@ describe('helpers', () => {
         email_doctor: '',
         expiring_soon: false,
         photo_prescription: '',
-        patient: 1
+        patient: 1,
+        patient_firstname: '',
+        patient_lastname: '',
       },
       {
         id: 2,
@@ -177,7 +197,9 @@ describe('helpers', () => {
         email_doctor: '',
         expiring_soon: false,
         photo_prescription: '',
-        patient: 1
+        patient: 1,
+        patient_firstname: '',
+        patient_lastname: '',
       },
       {
         id: 3,
@@ -190,7 +212,9 @@ describe('helpers', () => {
         email_doctor: '',
         expiring_soon: false,
         photo_prescription: '',
-        patient: 1
+        patient: 1,
+        patient_firstname: '',
+        patient_lastname: '',
       }
     ]
     expect(getValidOrLastPrescription(prescriptions)).toEqual(prescriptions[2])
@@ -209,7 +233,9 @@ describe('helpers', () => {
         email_doctor: '',
         expiring_soon: false,
         photo_prescription: '',
-        patient: 1
+        patient: 1,
+        patient_firstname: '',
+        patient_lastname: '',
       },
       {
         id: 2,
@@ -222,7 +248,9 @@ describe('helpers', () => {
         email_doctor: '',
         expiring_soon: false,
         photo_prescription: '',
-        patient: 1
+        patient: 1,
+        patient_firstname: '',
+        patient_lastname: '',
       },
       {
         id: 3,
@@ -235,7 +263,9 @@ describe('helpers', () => {
         email_doctor: '',
         expiring_soon: false,
         photo_prescription: '',
-        patient: 1
+        patient: 1,
+        patient_firstname: '',
+        patient_lastname: '',
       }
     ]
     expect(getValidOrLastPrescription(prescriptions)).toEqual(prescriptions[1])
