@@ -46,6 +46,8 @@ interface Prescription {
   photo_prescription: string
   is_valid: boolean
   patient: number
+  patient_firstname: string
+  patient_lastname: string
   expiring_soon: boolean
 }
 
@@ -58,6 +60,8 @@ const defaultPrescription = {
   photo_prescription: '',
   is_valid: false,
   patient: 0,
+  patient_firstname: '',
+  patient_lastname: '',
   expiring_soon: false
 }
 
