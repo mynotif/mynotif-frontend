@@ -6,14 +6,19 @@ import {
   Profile,
   Token,
   OneSignal,
-  SubscriptionInfo
+  SubscriptionInfo,
 } from '../types'
 import { BACKEND_URL } from './constants'
 
-const getPatients = async (token: string): Promise<Patient[]> => {
+const getPatients = async (token: string, fields?: string[]): Promise<Patient[]> => {
   const url = BACKEND_URL + '/patient/'
+  const params = fields ? { fields: fields.join(',') } : undefined
   const headers = { Authorization: `Token ${token}` }
-  const response = await axios.get<Patient[]>(url, { headers })
+
+  const response = await axios.get<Patient[]>(url, { 
+    headers,
+    params
+  })
   return response.data
 }
 
