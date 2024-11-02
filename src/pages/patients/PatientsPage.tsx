@@ -6,7 +6,7 @@ import SearchBar from '../../components/SearchBar'
 import { Container } from '../../components/home/Container'
 
 const PatientsPage = (): JSX.Element => {
-  const { patients } = usePatients()
+  const { patients } = usePatients(['id','firstname','lastname'])
 
   // Search Bar
   const [filteredPatients, setFilteredPatients] = useState<Patient[]>(patients)

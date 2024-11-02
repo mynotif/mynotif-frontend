@@ -17,8 +17,6 @@ const PatientLine: FunctionComponent<PatientLineProps> = ({ patient }) => {
   const capitalizeFirstLetter = (name: string): string =>
     name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()
 
-  const addressIsEmpty = patient.street === '' || patient.city === '' || patient.zip_code === ''
-
   return (
     <div onClick={goToPatient} className='p-3 space-y-4 relative h-auto overflow-hidden'>
       <div className='bg-white rounded-lg p-4 shadow-md'>
@@ -31,19 +29,6 @@ const PatientLine: FunctionComponent<PatientLineProps> = ({ patient }) => {
           </div>
         </div>
         <div className='mb-4' />
-        <div className='flex items-baseline space-x-2 text-gray-600'>
-          {!addressIsEmpty ? (
-            <>
-              <FontAwesomeIcon icon={['fas', 'map-marker']} className='text-black text-xl' />
-              <p>{capitalizeFirstLetter(patient.street)}, {capitalizeFirstLetter(patient.city)}</p>
-            </>
-          ) : (
-            <>
-              <FontAwesomeIcon icon={['fas', 'map-marker']} className='text-black text-xl' />
-              <p className='text-red-500'>Adresse manquante</p>
-            </>
-          )}
-        </div>
       </div>
     </div>
 

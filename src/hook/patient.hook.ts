@@ -5,7 +5,7 @@ import { Patient } from '../types'
 import axios from 'axios'
 import { TokenContext } from '../context/token'
 
-const usePatients = (): { patients: Patient[], reloadPatients: () => Promise<void> } => {
+const usePatients = (fields?: string[]): { patients: Patient[], reloadPatients: () => Promise<void> } => {
   const [patients, setPatients] = useState<Patient[]>([])
   const { token } = useContext(TokenContext)
 
@@ -13,7 +13,7 @@ const usePatients = (): { patients: Patient[], reloadPatients: () => Promise<voi
   const fetchPatients = useCallback(async (): Promise<void> => {
     assert(token)
     try {
-      const data = await getPatients(token)
+      const data = await getPatients(token, fields)
       setPatients(data)
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -22,6 +22,7 @@ const usePatients = (): { patients: Patient[], reloadPatients: () => Promise<voi
         console.error(error)
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token])
 
   const reloadPatients = useCallback(async () => {

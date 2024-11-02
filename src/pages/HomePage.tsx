@@ -13,7 +13,7 @@ import { Patient } from '../types'
 const HomePage = (): JSX.Element => {
   const navigate = useNavigate()
 
-  const { patients } = usePatients()
+  const { patients } = usePatients(['id','firstname','lastname'])
   const [prescriptions] = usePrescription()
 
   const expiredSoon = prescriptions.filter(prescription => prescription.expiring_soon)
