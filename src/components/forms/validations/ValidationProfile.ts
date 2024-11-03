@@ -4,28 +4,6 @@ import { Resolver } from 'react-hook-form'
 
 export const resolver: Resolver<Profile> = async (values) => {
     const errors: Record<string, any> = {};
-    if (!values.username) {
-      errors.username = {
-        type: "required",
-        message: t('error.requiredUsername'),
-      };
-    } else if (values.username.length < 3) {
-      errors.username = {
-        type: "minLength",
-        message: t('error.minLengthError'),
-      };
-    } else if (values.username.length > 20) {
-        errors.username = {
-            type: "maxLength",
-            message: t('error.maxLength'),
-        };
-    } else if (!/^[a-zA-Z0-9_]*$/.test(values.username)) {
-        errors.username = {
-            type: "pattern",
-            message: t('error.invalidCharacters'),
-        };
-    }
-
     if (!values.email) {
       errors.email = {
         type: "required",

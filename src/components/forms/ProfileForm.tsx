@@ -29,8 +29,7 @@ export const ProfileForm = ({ profile, addErrorMessageCallback }: ProfileFormPro
   const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
-    if (profile.username !== '') {
-      setValue('username', profile.username)
+    if (profile.email !== '') {
       setValue('email', profile.email)
       setValue('first_name', profile.first_name)
       setValue('last_name', profile.last_name)
@@ -48,7 +47,6 @@ export const ProfileForm = ({ profile, addErrorMessageCallback }: ProfileFormPro
       if (error.response?.status === 400) {
         setError('last_name', { message: t('error.invalidCredentials') })
         setError('first_name', { message: t('error.invalidCredentials') })
-        setError('username', { message: t('error.invalidCredentials') })
         setError('email', { message: t('error.invalidCredentials') })
       }
       setLoading(false)
@@ -59,16 +57,6 @@ export const ProfileForm = ({ profile, addErrorMessageCallback }: ProfileFormPro
     <Container>
       <div className='bg-gray-50 min-h-screen flex flex-col'>
         <form className='space-y-4 ' onSubmit={handleSubmit(handleProfile)}>
-          <InputFieldContainer icon={['fas', 'lock']} disabled>
-            <Input
-              type='text'
-              register={register}
-              id='username'
-              placeholder="Nom d'utilisateur"
-              disabled={true}
-            />
-          </InputFieldContainer>
-          <FormFieldError errorMessage={errors.username?.message} />
           <InputFieldContainer icon={['fas', 'envelope']}>
             <Input
               type='email'

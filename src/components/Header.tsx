@@ -15,9 +15,8 @@ const Header = (): JSX.Element => {
   const location = useLocation()
   const state = location.state as LocationState
   const { profile } = useContext(ProfileContext)
-  const initialUsername = profile.username.charAt(0).toUpperCase() + profile.username.charAt(1).toUpperCase()
   const initialFullname = profile.first_name.charAt(0).toUpperCase() + profile.last_name.charAt(0).toUpperCase()
-  const initials = initialFullname !== '' ? initialFullname : initialUsername
+  const initials = initialFullname ? initialFullname : ''
   const isPatientProfileMatch = location.pathname.match(/^\/patients\/\d+\/?$/)
   const isPrescriptionProfileMatch = location.pathname.match(/^\/prescriptions\/\d+\/?$/)
   const isLoggedIn = useIsLoggedIn()

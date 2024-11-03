@@ -16,18 +16,16 @@ const ProfileDetail = (): JSX.Element => {
     navigate('/profile/edit')
   }
 
-  const initials = (profile?.username?.charAt(0) ?? '').toUpperCase() + (profile?.username?.charAt(1) ?? '').toUpperCase()
-  const fullName = `${profile?.username ?? ''}`
+  const initials = (profile?.first_name?.charAt(0) ?? '').toUpperCase() + (profile?.last_name?.charAt(0) ?? '').toUpperCase()
+  const fullName = `${profile?.email ?? ''}`
 
   return (
     <>
       {profile !== null ? (
         <Container className=''>
           <BannerDetail fullName={fullName} initials={initials} onEditClick={onEdit} />
-          <CardDetail icon={['fas', 'user']} content={profile.username} defaultContent='Pseudo manquant' title={t('form.userName')} />
           <CardDetail icon={['fas', 'address-card']} content={profile.first_name} defaultContent='Prénom manquant' title={t('form.firstName')} />
           <CardDetail icon={['fas', 'address-card']} content={profile.last_name} defaultContent='Nom manquant' title={t('form.lastName')} />
-          <CardDetail icon={['fas', 'envelope']} content={profile.email} defaultContent='Email manquant' title={t('form.emailAddress')} />
         </Container>
       ) : (
         <div className='flex justify-center items-center min-h-screen'>
