@@ -44,7 +44,7 @@
   "scripts": {
     "start": "serve --single build/ --listen $PORT",
     "dev": "craco start",
-    "build": "craco build",
+    "build": "REACT_APP_VERSION=$(git describe --tags --always) craco build",
     "test": "craco test",
     "docker:build": "docker build --tag mynotif/mynotif-frontend .",
     "docker:run": "docker run --rm -it --publish 3000:80 mynotif/mynotif-frontend",
