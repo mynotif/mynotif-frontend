@@ -20,15 +20,14 @@ const RegisterForm = (): JSX.Element => {
 
   const handleRegister = async (data: RegisterFormType): Promise<void> => {
     setLoading(true)
-    const { username, password, email } = data
+    const { password, email } = data
     try {
-      await createUser(username, password, email)
+      await createUser( password, email)
       navigate('/login')
       addSuccessMessage({ body: t('text.userRegister') })
     } catch (error: any) {
       if (error.response?.status === 400) {
         setError('password', { message: t('error.invalidCredentials') })
-        setError('username', { message: t('error.invalidCredentials') })
         setError('email', { message: t('error.invalidCredentials') })
       }
       setLoading(false)
@@ -37,16 +36,6 @@ const RegisterForm = (): JSX.Element => {
 
   return (
     <form className='w-9/12 mt-1 p-1 space-y-4 ' onSubmit={handleSubmit(handleRegister)}>
-      <InputFieldContainer icon={['fas', 'user']}>
-      <Input
-          type='text'
-          register={register}
-          id='username'
-          placeholder="Nom d'utilisateur"
-          disabled={loading}
-        />
-      </InputFieldContainer>
-      <FormFieldError errorMessage={errors.username?.message} />
       <InputFieldContainer icon={['fas', 'envelope']}>
       <Input
         type='email'

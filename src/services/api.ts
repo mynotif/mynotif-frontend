@@ -8,7 +8,7 @@ import {
   OneSignal,
   SubscriptionInfo,
 } from '../types'
-import { API_V1 } from './constants'
+import { API_V1, API_V2 } from './constants'
 
 const getPatients = async (token: string, fields?: string[]): Promise<Patient[]> => {
   const url = API_V1 + '/patient/'
@@ -128,9 +128,9 @@ const login = async (username: string, password: string): Promise<Token> => {
   return response.data
 }
 
-const register = async (username: string, password: string, email: string): Promise<{}> => {
-  const data = { username, password, email }
-  const url = API_V1 + '/account/register'
+const register = async ( password: string, email: string): Promise<{}> => {
+  const data = { password, email }
+  const url = API_V2 + '/account/register'
   const response = await axios.post(url, data)
   return response.data
 }
