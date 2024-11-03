@@ -6,19 +6,19 @@ import { register as createUser } from '../../services/api'
 import { useForm } from 'react-hook-form'
 import { InputFieldContainer } from './inputGroups/InputFieldContainer'
 import { Button } from './inputGroups/Button'
-import { RegisterFormType } from '../../types'
+import { AuthFormType } from '../../types'
 import FormFieldError from '../FormFieldError'
 import { Input } from './inputGroups/Input'
-import { resolver } from './validations/ValidationRegister'
+import { resolver } from './validations/ValidationAuth'
 
 const RegisterForm = (): JSX.Element => {
   const { addSuccessMessage } = useContext(FlashMessageContext)
   const navigate = useNavigate()
   const { t } = useTranslationHook()
-  const { register, handleSubmit, setError, formState: { errors } } = useForm<RegisterFormType>({resolver})
+  const { register, handleSubmit, setError, formState: { errors } } = useForm<AuthFormType>({resolver})
   const [loading, setLoading] = useState<boolean>(false)
 
-  const handleRegister = async (data: RegisterFormType): Promise<void> => {
+  const handleRegister = async (data: AuthFormType): Promise<void> => {
     setLoading(true)
     const { password, email } = data
     try {

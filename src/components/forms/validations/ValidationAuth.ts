@@ -1,8 +1,8 @@
 import { t } from "i18next";
-import { RegisterFormType } from "../../../types";
+import { AuthFormType } from "../../../types";
 import { Resolver } from 'react-hook-form'
 
-export const resolver: Resolver<RegisterFormType> = async (values) => {
+export const resolver: Resolver<AuthFormType> = async (values) => {
     const errors: Record<string, any> = {};
     if (!values.email) {
       errors.email = {
