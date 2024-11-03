@@ -23,7 +23,7 @@ const ProfileEdit = (): JSX.Element => {
 
   return (
     <>
-      {profile?.username !== '' && (
+      {profile?.email !== '' && (
         <>
           <ProfileForm addErrorMessageCallback={addErrorMessageCallback} profile={profile} />
         </>

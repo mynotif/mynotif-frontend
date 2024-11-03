@@ -10,7 +10,7 @@ import useTranslationHook from '../../hook/TranslationHook'
 export const AccountPage = (): JSX.Element => {
   const { profile } = useContext(ProfileContext)
   const initials = (profile?.first_name?.charAt(0) ?? '').toUpperCase() + (profile?.last_name?.charAt(0) ?? '').toUpperCase()
-  const fullName = `${profile?.username ?? ''}`
+  const fullName = `${profile?.email ?? ''}`
   const navigate = useNavigate()
   const logout = useLogout()
   const onLogoutClick = (e: React.MouseEvent<HTMLElement>): void => logout()
