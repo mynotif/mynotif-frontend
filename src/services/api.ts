@@ -121,9 +121,9 @@ const uploadPrescription = async (
   return response.data
 }
 
-const login = async (username: string, password: string): Promise<Token> => {
-  const data = { username, password }
-  const url = API_V1 + '/api-token-auth/'
+const login = async (email: string, password: string): Promise<Token> => {
+  const data = { email, password }
+  const url = API_V2 + '/api-token-auth/'
   const response = await axios.post<Token>(url, data)
   return response.data
 }
