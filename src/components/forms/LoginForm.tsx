@@ -8,8 +8,8 @@ import { FlashMessageContext } from '../../context/flashmessage'
 import { InputFieldContainer } from './inputGroups/InputFieldContainer'
 import { Button } from './inputGroups/Button'
 import { useForm } from 'react-hook-form'
-import { LoginFormType } from '../../types'
-import { resolver } from './validations/ValidationLogin'
+import { AuthFormType } from '../../types'
+import { resolver } from './validations/ValidationAuth'
 
 const LoginForm = (): JSX.Element => {
   const { setToken } = useContext(TokenContext)
@@ -17,13 +17,13 @@ const LoginForm = (): JSX.Element => {
   const navigate = useNavigate()
   const { t } = useTranslationHook()
   const [loading, setLoading] = useState<boolean>(false)
-  const {register, formState: {errors} , handleSubmit, setError} = useForm<LoginFormType>({resolver})
+  const {register, formState: {errors} , handleSubmit, setError} = useForm<AuthFormType>({resolver})
 
-  const onLogin = async (data: LoginFormType): Promise<void> => {
+  const onLogin = async (data: AuthFormType): Promise<void> => {
     setLoading(true)
-    const {username, password} = data;
+    const {email, password} = data;
     try {
-      const response = await login(username, password)
+      const response = await login(email, password)
       const { token } = response
       setTokenLocalStorage(token)
       setToken(token)
@@ -32,7 +32,7 @@ const LoginForm = (): JSX.Element => {
     } catch (error: any) {
       if (error.response?.status === 400) {
         setError('password', { message: t('error.invalidCredentials') })
-        setError('username', { message: t('error.invalidCredentials') })
+        setError('email', { message: t('error.invalidCredentials') })
       }
       setLoading(false)
     }
@@ -43,11 +43,11 @@ const LoginForm = (): JSX.Element => {
       <InputFieldContainer icon={['fas', 'user']}>
       <input
         className='flex-grow outline-none text-gray-600'
-        {...register('username')}
-          placeholder={t('form.userName')}
+        {...register('email')}
+          placeholder={t('form.emailAddress')}
       />
       </InputFieldContainer>
-      {errors?.username && <p className='text-red-500 text-sm'>{errors.username.message}</p>}
+      {errors?.email && <p className='text-red-500 text-sm'>{errors.email.message}</p>}
 
       <InputFieldContainer icon={['fas', 'lock']}>
       <input

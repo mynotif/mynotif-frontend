@@ -87,7 +87,7 @@ interface ErrorResponse {
   detail: string
 }
 
-interface RegisterFormType {
+interface AuthFormType {
   email: string
   password: string
 }
@@ -111,7 +111,7 @@ export type {
   PrescriptionUploadResponse,
   Profile,
   Token,
-  RegisterFormType,
+  AuthFormType,
   OneSignal,
   SubscriptionInfo,
   ProfileFormType,
