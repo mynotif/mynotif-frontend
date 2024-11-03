@@ -59,13 +59,13 @@ export const ProfileForm = ({ profile, addErrorMessageCallback }: ProfileFormPro
     <Container>
       <div className='bg-gray-50 min-h-screen flex flex-col'>
         <form className='space-y-4 ' onSubmit={handleSubmit(handleProfile)}>
-          <InputFieldContainer icon={['fas', 'user']}>
+          <InputFieldContainer icon={['fas', 'lock']} disabled>
             <Input
               type='text'
               register={register}
               id='username'
               placeholder="Nom d'utilisateur"
-              disabled={loading}
+              disabled={true}
             />
           </InputFieldContainer>
           <FormFieldError errorMessage={errors.username?.message} />
@@ -79,7 +79,7 @@ export const ProfileForm = ({ profile, addErrorMessageCallback }: ProfileFormPro
             />
           </InputFieldContainer>
           <FormFieldError errorMessage={errors.email?.message} />
-          <InputFieldContainer icon={['fas', 'lock']}>
+          <InputFieldContainer icon={['fas', 'user']}>
             <Input
               type='text'
               register={register}
@@ -89,7 +89,7 @@ export const ProfileForm = ({ profile, addErrorMessageCallback }: ProfileFormPro
             />
           </InputFieldContainer>
           <FormFieldError errorMessage={errors.first_name?.message} />
-          <InputFieldContainer icon={['fas', 'lock']}>
+          <InputFieldContainer icon={['fas', 'user']}>
             <Input
               type='text'
               register={register}

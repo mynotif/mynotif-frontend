@@ -9,7 +9,7 @@ import useTranslationHook from '../../hook/TranslationHook'
 
 export const AccountPage = (): JSX.Element => {
   const { profile } = useContext(ProfileContext)
-  const initials = (profile?.username?.charAt(0) ?? '').toUpperCase() + (profile?.username?.charAt(1) ?? '').toUpperCase()
+  const initials = (profile?.first_name?.charAt(0) ?? '').toUpperCase() + (profile?.last_name?.charAt(0) ?? '').toUpperCase()
   const fullName = `${profile?.username ?? ''}`
   const navigate = useNavigate()
   const logout = useLogout()
