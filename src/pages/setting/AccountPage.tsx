@@ -6,6 +6,7 @@ import AccountCard from '../../components/setting/AccountCard'
 import { useNavigate } from 'react-router-dom'
 import { useLogout } from '../../utils/hooks'
 import useTranslationHook from '../../hook/TranslationHook'
+import { Version } from '../../components/version/Version'
 
 export const AccountPage = (): JSX.Element => {
   const { profile } = useContext(ProfileContext)
@@ -19,8 +20,8 @@ export const AccountPage = (): JSX.Element => {
   const onAccountDetail = (): void => {
     navigate('/profile')
   }
+
   return (
-    <>
       <ProfileContainer className='h-screen space-y-6 bg-gray-50 m-0'>
         <div className='relative pt-16 pb-8'>
           <div />
@@ -31,10 +32,9 @@ export const AccountPage = (): JSX.Element => {
             <h2 className='text-2xl font-semibold'>{fullName}</h2>
           </div>
         </div>
+        <Version />
         <AccountCard title='Account' onClick={onAccountDetail} />
         <AccountCard title={t('navigation.logout')} onClick={onLogoutClick} isDanger/>
       </ProfileContainer>
-    </>
-
   )
 }
