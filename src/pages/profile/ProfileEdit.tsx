@@ -21,15 +21,7 @@ const ProfileEdit = (): JSX.Element => {
     []
   )
 
-  return (
-    <>
-      {profile?.email !== '' && (
-        <>
-          <ProfileForm addErrorMessageCallback={addErrorMessageCallback} profile={profile} />
-        </>
-      )}
-    </>
-  )
+  return <ProfileForm addErrorMessageCallback={addErrorMessageCallback} profile={profile} />
 }
 
 export default ProfileEdit
