@@ -1,14 +1,12 @@
-import { t } from 'i18next'
-
 export const PAGE_CONFIG = [
-  { path: '/patients/edit', title: t('title.editPatient'), showBackButton: true },
-  { path: '/prescriptions/edit', title: t('title.editPrescription'), showBackButton: true },
-  { path: 'patients/create', title: t('title.createPatient'), showBackButton: true },
-  { path: 'prescriptions/create', title: t('title.createPrescription'), showBackButton: true },
-  { path: '/profile/edit', title: t('title.editProfile'), showBackButton: true },
-  { path: '/profile', title: t('title.profile'), showBackButton: false },
-  { path: '/setting', title: t('title.setting'), showBackButton: false },
-  { path: 'prescriptions/send', title: t('title.reniew'), showBackButton: true }
+  { path: '/patients/edit', titleKey: 'title.editPatient', showBackButton: true },
+  { path: '/prescriptions/edit', titleKey: 'title.editPrescription', showBackButton: true },
+  { path: 'patients/create', titleKey: 'title.createPatient', showBackButton: true },
+  { path: 'prescriptions/create', titleKey: 'title.createPrescription', showBackButton: true },
+  { path: '/profile/edit', titleKey: 'title.editProfile', showBackButton: true },
+  { path: '/profile', titleKey: 'title.profile', showBackButton: false },
+  { path: '/setting', titleKey: 'title.setting', showBackButton: false },
+  { path: 'prescriptions/send', titleKey: 'title.reniew', showBackButton: true }
 ]
 
 export const COLOR_STATUS = {
