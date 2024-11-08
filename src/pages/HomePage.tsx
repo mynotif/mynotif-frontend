@@ -30,7 +30,7 @@ const HomePage = (): JSX.Element => {
 
     if (expiredPrescription?.id !== undefined) {
       navigate(`/prescriptions/${expiredPrescription.id}/`, {
-        state: { title: "Prescription Profile" }})
+        state: { title: t('text.detailPrescription') }})
     } else {
       console.error('Patient is undefined')
     }
@@ -44,8 +44,8 @@ const HomePage = (): JSX.Element => {
             <Card count={patients.length} title={t('text.patients')} onClick={goToPatients} />
             <Card count={prescriptions.length} title={t('text.prescriptions')} onClick={goToPrescriptions} />
           </CardList>
-          <ExpirationBanner expiration='Expirant bientôt' />
-          {patientsExpiredSoon.length === 0 && <p>Pas de patients expirant bientôt</p>}
+          <ExpirationBanner expiration={t('text.expiredSoon')} />
+          {patientsExpiredSoon.length === 0 && <p>{t('text.noExpiredSoon')}</p>}
           {patientsExpiredSoon.map(patient => (
             <PatientCard className='bg-colorsecondary text-colorprimary' onClick={() => goToPrescription(patient)} key={patient.id} patient={patient} />
           ))}
