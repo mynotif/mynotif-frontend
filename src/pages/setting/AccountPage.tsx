@@ -31,7 +31,7 @@ export const AccountPage = (): JSX.Element => {
             <h2 className='text-2xl font-semibold'>{fullName}</h2>
           </div>
         </div>
-        <AccountCard title='Account' onClick={onAccountDetail} />
+        <AccountCard title={t('navigation.account')} onClick={onAccountDetail} />
         <AccountCard title={t('navigation.logout')} onClick={onLogoutClick} isDanger/>
       </ProfileContainer>
     </>
