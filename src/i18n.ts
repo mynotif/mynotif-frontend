@@ -60,7 +60,8 @@ i18n
             validate: 'Validate',
             delete: 'Delete',
             return: 'Return',
-            resetPassword: 'Reset Password '
+            resetPassword: 'Reset Password ',
+            account: 'My account',
           },
           form: {
             emailAddress: 'Email address',
@@ -202,7 +203,8 @@ i18n
             validate: 'Valider',
             delete: 'Supprimer',
             return: 'Retour',
-            resetPassword: 'Mot de passe perdu ?'
+            resetPassword: 'Mot de passe perdu ?',
+            account: 'Mon compte',
           },
           form: {
             emailAddress: 'Adresse email',
@@ -235,7 +237,7 @@ i18n
             detailPrescription: 'Détail de l\'ordonnance',
             patients: 'Patients',
             detailPatient: 'Détail du patient',
-            profile: 'Profil',
+            profile: 'Profile',
             admin: 'Admin',
             home: 'Accueil',
             alreadyAccount: 'Vous avez déjà un compte ?',
