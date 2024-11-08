@@ -6,6 +6,7 @@ import { ProfileContext } from '../context/profile'
 import { PAGE_CONFIG } from '../utils/constants'
 import PageHeader from './PageHeader'
 import AvatarCircle from './AvatarCircle'
+import { t } from 'i18next'
 
 interface LocationState {
   title?: string;
@@ -58,16 +59,16 @@ const Header = (): JSX.Element => {
         showBackButton = currentPageConfig.showBackButton
       } else if (isPatientProfileMatch) {
         url = '/patients'
-        title = 'Profil du Patient'
+        title = t('text.detailPatient')
         showBackButton = true
       } else if (isPrescriptionProfileMatch) {
         url = '/prescriptions'
-        title = 'Profil de Prescription'
+        title = t('text.detailPrescription')
         showBackButton = false
       } else if (location.pathname === '/patients') {
-        title = 'Patients'
+        title = t('text.patients')
       } else if (location.pathname === '/prescriptions') {
-        title = 'Prescriptions'
+        title = t('text.prescriptions')
       }
     }
 

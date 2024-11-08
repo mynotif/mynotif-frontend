@@ -32,7 +32,7 @@ const Footer = (): JSX.Element => {
             <IconButtonAdd location={location} onClick={goToPrescription} icon={['fas', 'plus']} />}
           </div>
 
-          <FooterNav location={location} text={t('text.prescription')} icon={['fas', 'file-medical']} url='/prescriptions' />
+          <FooterNav location={location} text={t('text.prescriptions')} icon={['fas', 'file-medical']} url='/prescriptions' />
           <FooterNav location={location} text={t('text.profile')} icon={['fas', 'user']} url='/setting' />
 
         </footer>
