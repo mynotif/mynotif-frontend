@@ -55,7 +55,7 @@ const Header = (): JSX.Element => {
 
       if (currentPageConfig) {
         url = previousPath ?? currentPageConfig.path
-        title = currentPageConfig.title
+        title = t(currentPageConfig.titleKey)
         showBackButton = currentPageConfig.showBackButton
       } else if (isPatientProfileMatch) {
         url = '/patients'
