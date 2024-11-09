@@ -14,10 +14,7 @@ const PatientsPage = (): JSX.Element => {
   const filterByPatients = (patient: Patient, searchValue: string): boolean => {
     searchValue = searchValue.toLocaleLowerCase()
     const fullName = `${patient.lastname} ${patient.firstname}`.toLowerCase()
-    return (
-      fullName.includes(searchValue) ||
-      patient.city.toLowerCase().includes(searchValue)
-    )
+    return fullName.includes(searchValue)
   }
 
   const handleSearch = useCallback((searchValue: string) => {
@@ -28,9 +25,13 @@ const PatientsPage = (): JSX.Element => {
   return (
     <Container>
         <SearchBar onSearch={handleSearch} />
-        {filteredPatients.map((patient) => (
-          <PatientLine key={patient.id} patient={patient} />
-        ))}
+        {filteredPatients.length > 0 ? (
+      filteredPatients.map((patient) => (
+        <PatientLine key={patient.id} patient={patient} />
+      ))
+    ) : (
+      <div>Aucun match trouvé</div>
+    )}
         <div className='h-20' /> {/* Added space for the bottom */}
     </Container>
   )

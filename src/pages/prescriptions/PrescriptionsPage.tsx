@@ -55,7 +55,8 @@ const PrescriptionsPage = (): JSX.Element => {
         prescriptions={prescriptions}
         onFilterChanged={setFilteredPrescriptions}
       />
-      {filteredPrescriptions.map((prescription) => (
+        {filteredPrescriptions.length > 0 ? (
+      filteredPrescriptions.map((prescription) => (
         <PrescriptionCard
           key={prescription.id}
           doctorName={prescription.prescribing_doctor}
@@ -63,7 +64,10 @@ const PrescriptionsPage = (): JSX.Element => {
           patientName={`${prescription.patient_firstname} ${prescription.patient_lastname}`}
           prescription={prescription}
         />
-      ))}
+      ))
+    ) : (
+      <div>Aucun match trouvé</div>
+    )}
       <div className='h-20' /> {/* Added space for the bottom */}
     </Container>
   )
