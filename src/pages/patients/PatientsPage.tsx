@@ -4,6 +4,7 @@ import { useCallback, useState } from 'react'
 import { Patient } from '../../types'
 import SearchBar from '../../components/SearchBar'
 import { Container } from '../../components/home/Container'
+import { t } from 'i18next'
 
 const PatientsPage = (): JSX.Element => {
   const { patients } = usePatients(['id','firstname','lastname'])
@@ -30,7 +31,7 @@ const PatientsPage = (): JSX.Element => {
         <PatientLine key={patient.id} patient={patient} />
       ))
     ) : (
-      <div>Aucun match trouvé</div>
+      <div>{t('text.noMatchFound')}</div>
     )}
         <div className='h-20' /> {/* Added space for the bottom */}
     </Container>
