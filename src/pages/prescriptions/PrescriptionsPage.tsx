@@ -66,7 +66,7 @@ const PrescriptionsPage = (): JSX.Element => {
         />
       ))
     ) : (
-      <div>Aucun match trouvé</div>
+      <div>{t('text.noMatchFound')}</div>
     )}
       <div className='h-20' /> {/* Added space for the bottom */}
     </Container>

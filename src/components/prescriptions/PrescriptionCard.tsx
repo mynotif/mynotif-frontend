@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Prescription } from '../../types'
 import { getIconClass } from '../../utils/helpers'
 import { useDaysRemaining } from '../../hook/daysRemaining'
+import { t } from 'i18next'
 
 interface PrescriptionCardProps {
   doctorName: string
@@ -32,7 +33,7 @@ export const PrescriptionCard = ({ doctorName, endDate, patientName, prescriptio
           <h3 className='font-semibold ml-4'>Dr. {doctorName}</h3>
         </div>
         <div className='flex items-center mb-2'>
-          <p className='flex-grow font-semibold'>End of prescription: </p>
+          <p className='flex-grow font-semibold'>{daysRemaining < 0 ? t('text.expired') : t('text.expireIn')}:</p>
             <div className={`flex items-center ${isValidIconClass} px-3 py-1 rounded-full`}>
               <FontAwesomeIcon icon={['fas', 'calendar']} className='mr-2' />
                 <span>
@@ -41,7 +42,7 @@ export const PrescriptionCard = ({ doctorName, endDate, patientName, prescriptio
             </div>
         </div>
         <div className='mb-2'>
-          <p className='font-semibold'>Patient: <span className='font-normal'>{patientName}</span></p>
+          <p className='font-semibold'>{t('text.patient')}: <span className='font-normal'>{patientName}</span></p>
           <div className={`h-1 ${isValidIconClass} w-12 mb-2`} />
         </div>
       </div>
