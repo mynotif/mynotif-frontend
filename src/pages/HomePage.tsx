@@ -19,12 +19,6 @@ const HomePage = (): JSX.Element => {
   const expiredSoon = prescriptions.filter(prescription => prescription.expiring_soon)
   const patientsExpiredSoon = patients.filter(patient => expiredSoon.some(prescription => prescription.patient === patient.id))
 
-  const goToPatients = (): void => {
-    navigate('/patients')
-  }
-  const goToPrescriptions = (): void => {
-    navigate('/prescriptions')
-  }
   const goToPrescription = (patient: Patient): void => {
     const expiredPrescription = expiredSoon.find(prescription => prescription.patient === patient.id);
 
@@ -41,8 +35,8 @@ const HomePage = (): JSX.Element => {
       {patients && prescriptions ? (
         <Container className='mt-24 mb-24'>
           <CardList>
-            <Card count={patients.length} title={t('text.patients')} onClick={goToPatients} />
-            <Card count={prescriptions.length} title={t('text.prescriptions')} onClick={goToPrescriptions} />
+            <Card count={patients.length} title={t('text.patients')} />
+            <Card count={prescriptions.length} title={t('text.prescriptions')} />
           </CardList>
           <ExpirationBanner expiration={t('text.expiredSoon')} />
           {patientsExpiredSoon.length === 0 && <p>{t('text.noExpiredSoon')}</p>}
