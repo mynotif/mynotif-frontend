@@ -39,8 +39,10 @@ export const ProfileForm = ({ profile, addErrorMessageCallback }: ProfileFormPro
   const handleProfile = async (data: Profile): Promise<void> => {
     setLoading(true)
     assert(token)
+    const { email } = data
+
     try {
-      const response = await updateUser(token, data)
+      const response = await updateUser(token, {...data, email: email.toLowerCase()})
       setProfileContext(response)
       navigate('/profile')
     } catch (error: any) {

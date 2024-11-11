@@ -22,7 +22,7 @@ const RegisterForm = (): JSX.Element => {
     setLoading(true)
     const { password, email } = data
     try {
-      await createUser( password, email)
+      await createUser( password, email.toLowerCase())
       navigate('/login')
       addSuccessMessage({ body: t('text.userRegister') })
     } catch (error: any) {

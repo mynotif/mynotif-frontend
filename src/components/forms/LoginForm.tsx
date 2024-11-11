@@ -23,7 +23,7 @@ const LoginForm = (): JSX.Element => {
     setLoading(true)
     const {email, password} = data;
     try {
-      const response = await login(email, password)
+      const response = await login(email.toLowerCase(), password)
       const { token } = response
       setTokenLocalStorage(token)
       setToken(token)
