@@ -24,7 +24,7 @@ const ResetPassword = (): JSX.Element => {
   const handleResetPasswort = async (e: React.MouseEvent<HTMLElement>): Promise<void> => {
     setLoading(true)
     try {
-      await resetPassword(email)
+      await resetPassword(email.toLowerCase())
       navigate('/login')
     } catch (error) {
       setLoading(false)
