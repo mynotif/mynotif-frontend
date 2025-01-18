@@ -30,6 +30,7 @@ import ProfileEdit from './pages/profile/ProfileEdit'
 import { AccountPage } from './pages/setting/AccountPage'
 import Header from './components/Header'
 import ReviewSendDoctor from './pages/emails/ReviewSendDoctor'
+import { SubscriptionProvider } from './context/subscription'
 
 library.add(fas, fab, far)
 
@@ -38,6 +39,7 @@ function App (): JSX.Element {
       <BrowserRouter>
         <TokenContextProvider>
           <ProfileContextProvider>
+            <SubscriptionProvider>
             <OneSignalManager>
               <Header />
               <FlashMessageContextProvider>
@@ -93,6 +95,7 @@ function App (): JSX.Element {
                 <Footer />
               </FlashMessageContextProvider>
             </OneSignalManager>
+            </SubscriptionProvider>
           </ProfileContextProvider>
         </TokenContextProvider>
       </BrowserRouter>
