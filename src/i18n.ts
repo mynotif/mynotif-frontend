@@ -50,6 +50,7 @@ i18n
             resetPassword: 'Reset Password',
             setting: 'Setting',
             reniew: 'Renewal',
+            subscription: 'Subscription',
           },
           navigation: {
             update: 'Update',
@@ -62,6 +63,7 @@ i18n
             return: 'Return',
             resetPassword: 'Reset Password ',
             account: 'My account',
+            subscription: 'Subscription',
           },
           form: {
             emailAddress: 'Email address',
@@ -195,6 +197,7 @@ i18n
             resetPassword: 'Réinitialiser le mot de passe',
             setting: 'Paramètre',
             reniew: 'Renouvellement',
+            subscription: 'Abonnement',
           },
           navigation: {
             update: 'Modifier',
@@ -207,6 +210,7 @@ i18n
             return: 'Retour',
             resetPassword: 'Mot de passe perdu ?',
             account: 'Mon compte',
+            subscription: 'Abonnement',
           },
           form: {
             emailAddress: 'Adresse email',

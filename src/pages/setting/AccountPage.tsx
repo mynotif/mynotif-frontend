@@ -19,6 +19,9 @@ export const AccountPage = (): JSX.Element => {
   const onAccountDetail = (): void => {
     navigate('/profile')
   }
+
+  const onSubscription = (): void => navigate('/subscription')
+
   return (
     <>
       <ProfileContainer className='h-screen space-y-6 bg-gray-50 m-0'>
@@ -32,6 +35,7 @@ export const AccountPage = (): JSX.Element => {
           </div>
         </div>
         <AccountCard title={t('navigation.account')} onClick={onAccountDetail} />
+        <AccountCard title={t('navigation.subscription')} onClick={onSubscription} />
         <AccountCard title={t('navigation.logout')} onClick={onLogoutClick} isDanger/>
       </ProfileContainer>
     </>

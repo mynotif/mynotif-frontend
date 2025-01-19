@@ -2,18 +2,21 @@ import React, { createContext, useState, useContext, ReactNode, useEffect, useCa
 import { TokenContext } from './token';
 import { ProfileContext } from './profile';
 import { getSubscriptionById } from '../services/api';
-
-interface SubscriptionData {
-  active: boolean;
-  hosted_invoice_url: string;
-}
+import { SubscriptionContextType, SubscriptionData } from '../types';
 
 const defaultSubscriptionData: SubscriptionData = {
   active: false,
-  hosted_invoice_url: '',
+  invoice_pdf: '',
+  current_period_end: '',
+  current_period_start: '',
+  product_name: '',
+  cancel_at_period_end: false
 }
 
-const SubscriptionContext = createContext<SubscriptionData>(defaultSubscriptionData);
+export const SubscriptionContext = createContext<SubscriptionContextType>({
+  subscription: defaultSubscriptionData,
+  fetchSubscription: async () => {}
+});
 
 export const SubscriptionProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [subscription, setSubscription] = useState<SubscriptionData>(defaultSubscriptionData);
@@ -23,9 +26,14 @@ export const SubscriptionProvider: React.FC<{ children: ReactNode }> = ({ childr
   const fetchSubscription = useCallback(async () => {
     if (token && profile) {
       const subscription = await getSubscriptionById(token, profile.id);
+
       setSubscription({
         active: subscription.active,
-        hosted_invoice_url: subscription.hosted_invoice_url,
+        invoice_pdf: subscription.invoice_pdf,
+        current_period_end: subscription.current_period_end,
+        current_period_start: subscription.current_period_start,
+        product_name: subscription.product_name,
+        cancel_at_period_end: subscription.cancel_at_period_end
       });
     }
   }
@@ -36,16 +44,8 @@ export const SubscriptionProvider: React.FC<{ children: ReactNode }> = ({ childr
   }, [fetchSubscription]);
 
   return (
-    <SubscriptionContext.Provider value={subscription}>
+    <SubscriptionContext.Provider value={{ subscription, fetchSubscription }}>
       {children}
     </SubscriptionContext.Provider>
   );
-};
-
-export const useSubscription = (): SubscriptionData => {
-  const context = useContext(SubscriptionContext);
-  if (!context) {
-    throw new Error('useSubscription must be used within a SubscriptionProvider');
-  }
-  return context;
 };
