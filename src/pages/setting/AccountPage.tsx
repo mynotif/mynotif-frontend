@@ -3,7 +3,7 @@ import { ProfileContext } from '../../context/profile'
 import { useNavigate } from 'react-router-dom'
 import { useLogout } from '../../utils/hooks'
 import useTranslationHook from '../../hook/TranslationHook'
-import { ChevronRightIcon, EditIcon, LogOutIcon, UserIcon } from 'lucide-react'
+import { ChevronRightIcon, CreditCard, EditIcon, LogOutIcon, UserIcon } from 'lucide-react'
 import Tippy from '@tippyjs/react'
 import { Container } from '../../components/home/Container'
 import LogoutModal from '../../components/modal/LogoutModal'
@@ -21,6 +21,12 @@ export const AccountPage = (): JSX.Element => {
       icon: EditIcon,
       label: t('navigation.account'),
       onClick: () => navigate('/profile'),
+      variant: 'default'
+    },
+    {
+      icon: CreditCard,
+      label: t('navigation.subscription'),
+      onClick: () => navigate('/subscription'),
       variant: 'default'
     },
     {

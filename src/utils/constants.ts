@@ -6,7 +6,8 @@ export const PAGE_CONFIG = [
   { path: '/profile/edit', titleKey: 'title.editProfile', showBackButton: true },
   { path: '/profile', titleKey: 'title.profile', showBackButton: false },
   { path: '/setting', titleKey: 'title.setting', showBackButton: false },
-  { path: 'prescriptions/send', titleKey: 'title.reniew', showBackButton: true }
+  { path: 'prescriptions/send', titleKey: 'title.reniew', showBackButton: true },
+  { path: '/subscription', titleKey: 'title.subscription', showBackButton: true },
 ]
 
 export const COLOR_STATUS = {
@@ -14,3 +15,28 @@ export const COLOR_STATUS = {
   WARNING: 'bg-yellow-100 text-yellow-600',
   SUCCESS: 'bg-colorsecondary text-colorprimary'
 }
+
+export const SUBSCRIPTION_PRICES_CONFIG = {
+  monthly: 9.99,
+  annual: 106.90,
+};
+
+enum SubscriptionPlanEnum {
+  MONTHLY = 'monthly',
+  ANNUAL = 'annual',
+  MONTHLY_FRENCH = 'MOIS',
+  ANNUAL_FRENCH = 'ANNUEL',
+}
+
+export const plans = [
+  {
+    id: SubscriptionPlanEnum.MONTHLY,
+    title: SubscriptionPlanEnum.MONTHLY_FRENCH,
+    description: `${SUBSCRIPTION_PRICES_CONFIG.monthly} €, payé mensuellement`,
+  },
+  {
+    id: SubscriptionPlanEnum.ANNUAL,
+    title: SubscriptionPlanEnum.ANNUAL_FRENCH,
+    description: `${SUBSCRIPTION_PRICES_CONFIG.annual} €, payé annuellement`,
+  },
+];

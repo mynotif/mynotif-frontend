@@ -32,6 +32,7 @@ import Header from './components/Header'
 import ReviewSendDoctor from './pages/emails/ReviewSendDoctor'
 import 'tippy.js/dist/tippy.css'
 import { SubscriptionProvider } from './context/subscription'
+import { Subscription } from './pages/subscription/Subscription'
 
 library.add(fas, fab, far)
 
@@ -53,6 +54,8 @@ function App (): JSX.Element {
                   <Route path='/reset/password' element={<ResetPassword />} />
                   <Route path='/reset/password/:uid/:token' element={<NewResetPassword />} />
                   <Route element={<PrivateRoute />}>
+                    {/* subscription */}
+                    <Route path='/subscription' element={<Subscription />} />
                     {/* Home */}
                     <Route path='/home' element={<HomePage />} />
                     {/* Profile */}

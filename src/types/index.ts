@@ -141,6 +141,31 @@ const defaultSubscription = {
   user: 0,
 }
 
+type SubscriptionPlanType = 'monthly' | 'annual';
+
+interface SessionObject {
+  sessionId: string;
+  checkout_url: string;
+}
+
+interface SubscriptionData {
+  active: boolean;
+  invoice_pdf: string;
+  current_period_end: string;
+  current_period_start: string;
+  product_name: string;
+  cancel_at_period_end: boolean;
+}
+
+interface CancelSubscriptionResponse {
+  message: string;
+}
+
+interface SubscriptionContextType {
+  subscription: SubscriptionData;
+  fetchSubscription: () => Promise<void>;
+}
+
 export type {
   ErrorResponse,
   Patient,
@@ -154,6 +179,11 @@ export type {
   ProfileFormType,
   LoginFormType,
   Subscription,
+  SessionObject,
+  SubscriptionPlanType,
+  SubscriptionData,
+  CancelSubscriptionResponse,
+  SubscriptionContextType,
 }
 
 export { defaultPatient, defaultPrescription, defaultSubscription }

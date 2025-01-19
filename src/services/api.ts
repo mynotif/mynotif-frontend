@@ -8,6 +8,9 @@ import {
   OneSignal,
   SubscriptionInfo,
   Subscription,
+  SessionObject,
+  SubscriptionPlanType,
+  CancelSubscriptionResponse,
 } from '../types'
 import { API_V1, API_V2 } from './constants'
 
@@ -193,6 +196,22 @@ const getSubscriptionById = async (token: string, id: number): Promise<Subscript
   return response.data
 }
 
+const createSubscription = async (token: string, plan: SubscriptionPlanType): Promise<Partial<SessionObject>> => {
+  const url = API_V1 + '/payment/subscription/'
+  const headers = { Authorization: `Token ${token}` }
+  const data = { plan }
+  const response = await axios.post<SessionObject>(url, data, { headers })
+  return response.data
+}
+
+const deleteSubscription = async (token: string): Promise<CancelSubscriptionResponse> => {
+  const url = API_V1 + `/payment/subscriptions/user/cancel/`
+  const headers = { Authorization: `Token ${token}` }
+  const data = {}
+  const response = await axios.post<CancelSubscriptionResponse>(url, data, { headers })
+  return response.data
+}
+
 export {
   getPatients,
   getPatient,
@@ -215,4 +234,6 @@ export {
   getOneSignalSubscriptionId,
   sendEmailToDoctor,
   getSubscriptionById,
+  createSubscription,
+  deleteSubscription,
 }

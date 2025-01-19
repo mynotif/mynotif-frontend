@@ -57,6 +57,7 @@ i18n
             optionalInformation: 'Optional Information',
             requiredInformation: 'Required Information',
             personalInformation: 'Personal Information',
+            subscription: 'Subscription',
           },
           navigation: {
             update: 'Update',
@@ -70,6 +71,7 @@ i18n
             resetPassword: 'Reset Password ',
             account: 'My account',
             add: 'Add',
+            subscription: 'Subscription',
           },
           form: {
             emailAddress: 'Email address',
@@ -222,6 +224,7 @@ i18n
             optionalInformation: 'Informations optionnelles',
             requiredInformation: 'Informations requises',
             personalInformation: 'Informations personnelles',
+            subscription: 'Abonnement',
           },
           navigation: {
             update: 'Modifier',
@@ -235,6 +238,7 @@ i18n
             resetPassword: 'Mot de passe perdu ?',
             account: 'Mon compte',
             add: 'Ajouter',
+            subscription: 'Abonnement',
           },
           form: {
             emailAddress: 'Adresse email',
