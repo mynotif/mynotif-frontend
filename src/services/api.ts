@@ -192,8 +192,8 @@ const sendEmailToDoctor = async (token: string, prescriptionId: number, careDeta
 const getSubscriptionById = async (token: string, id: number): Promise<Subscription> => {
   const url = API_V1 + `/payment/subscription/${id}/`
   const headers = { Authorization: `Token ${token}` }
-  const response = await axios.get<Subscription>(url, { headers })
-  return response.data
+  const response = await axios.get<Subscription>(url, { headers });
+  return response.data;
 }
 
 const createSubscription = async (token: string, plan: SubscriptionPlanType): Promise<Partial<SessionObject>> => {

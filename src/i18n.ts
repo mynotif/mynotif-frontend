@@ -51,6 +51,8 @@ i18n
             setting: 'Setting',
             reniew: 'Renewal',
             subscription: 'Subscription',
+            subscriptionConfirm: 'Subscription confirmed',
+            subscriptionCancel: 'Process interrupted',
           },
           navigation: {
             update: 'Update',
@@ -198,6 +200,8 @@ i18n
             setting: 'Paramètre',
             reniew: 'Renouvellement',
             subscription: 'Abonnement',
+            subscriptionConfirm: 'Abonnement confirmé',
+            subscriptionCancel: 'Processus interrompu',
           },
           navigation: {
             update: 'Modifier',

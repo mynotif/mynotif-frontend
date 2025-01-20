@@ -8,6 +8,8 @@ export const PAGE_CONFIG = [
   { path: '/setting', titleKey: 'title.setting', showBackButton: false },
   { path: 'prescriptions/send', titleKey: 'title.reniew', showBackButton: true },
   { path: '/subscription', titleKey: 'title.subscription', showBackButton: true },
+  { path: '/success', titleKey: 'title.subscriptionConfirm', showBackButton: false },
+  { path: '/cancel', titleKey: 'title.subscriptionCancel', showBackButton: false },
 ]
 
 export const COLOR_STATUS = {
