@@ -58,6 +58,8 @@ i18n
             requiredInformation: 'Required Information',
             personalInformation: 'Personal Information',
             subscription: 'Subscription',
+            subscriptionConfirm: 'Subscription confirmed',
+            subscriptionCancel: 'Process interrupted',
           },
           navigation: {
             update: 'Update',
@@ -225,6 +227,8 @@ i18n
             requiredInformation: 'Informations requises',
             personalInformation: 'Informations personnelles',
             subscription: 'Abonnement',
+            subscriptionConfirm: 'Abonnement confirmé',
+            subscriptionCancel: 'Processus interrompu',
           },
           navigation: {
             update: 'Modifier',
