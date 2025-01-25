@@ -2,6 +2,7 @@ import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { Spinner } from '../../module/Spinner'
+import { LucideIcon } from 'lucide-react'
 
 interface ButtonProps {
   size?: 'small' | 'medium' | 'large'
@@ -14,6 +15,7 @@ interface ButtonProps {
   icon?: IconProp
   iconTheme?: 'accent' | 'secondary'
   iconPosition?: 'left' | 'right'
+  lucideIcon?: LucideIcon
 }
 
 export const Button = ({ icon, iconTheme = 'accent', iconPosition = 'right', children, onClick, isLoading, type = 'button', disabled, variant = 'accent', size = 'medium' }: ButtonProps): JSX.Element => {

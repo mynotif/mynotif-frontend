@@ -26,7 +26,6 @@ import { InputFieldContainer } from './inputGroups/InputFieldContainer'
 import { InputField } from './inputGroups/InputField'
 import { SelectField } from './inputGroups/SelectField'
 import { Button } from './inputGroups/Button'
-import { Container } from '../home/Container'
 import { validateFileType } from '../../utils/helpers'
 
 interface PrescriptionFormRequiredProps {
@@ -252,8 +251,7 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
   }
 
   return (
-    <Container>
-      <div className='min-h-screen flex flex-col'>
+      <div className='flex flex-col'>
         <form className='space-y-4 mb-12' onSubmit={onFormSubmit}>
         <InputFieldContainer
           icon={['fas', 'user-doctor']}
@@ -341,7 +339,6 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
           </div>
         )}
       </div>
-    </Container>
   )
 }
 

@@ -30,6 +30,7 @@ import ProfileEdit from './pages/profile/ProfileEdit'
 import { AccountPage } from './pages/setting/AccountPage'
 import Header from './components/Header'
 import ReviewSendDoctor from './pages/emails/ReviewSendDoctor'
+import 'tippy.js/dist/tippy.css'
 
 library.add(fas, fab, far)
 

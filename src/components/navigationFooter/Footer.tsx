@@ -1,40 +1,38 @@
-import { useIsLoggedIn } from '../../utils/hooks'
-import useTranslationHook from '../../hook/TranslationHook'
-import { useProfile } from '../../hook/profile.hook'
-import { FooterNav } from './FooterNav'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { IconButtonAdd } from './IconButtonAdd'
+import { FileTextIcon, HomeIcon, SettingsIcon, UsersIcon } from "lucide-react"
+import { FooterNav } from "./FooterNav"
+import { useIsLoggedIn } from "../../utils/hooks"
+import { useProfile } from "../../hook/profile.hook"
+import { useLocation } from "react-router-dom"
 
 const Footer = (): JSX.Element => {
-  const { t } = useTranslationHook()
   const location = useLocation()
-  const navigate = useNavigate()
-
-
-  const goToPatient = (): void => {
-    navigate('/patients/create')
-  }
-  const goToPrescription = (): void => {
-    navigate('/prescriptions/create')
-  }
-
   useProfile()
 
   return (
     <>
       {useIsLoggedIn() === true && (
-        <footer className="fixed bottom-0 left-0 right-0 h-16 bg-white shadow-md flex justify-around items-center z-10">
-          <FooterNav location={location} text={t('text.home')} icon={['fas', 'home']} url='/home' />
-          <FooterNav location={location} text={t('text.patients')} icon={['fas', 'users']} url='/patients' />
+        <footer className="fixed bottom-0 left-0 right-0 h-16 bg-gradient-to-br from-colorsecondary via-colorsecondary to-shade3 border-t border-gray-100 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] flex justify-around items-center z-10">
+          <FooterNav
+            location={location}
+            icon={HomeIcon}
+            url='/home'
+          />
+          <FooterNav
+            location={location}
+            icon={UsersIcon}
+            url='/patients'
+          />
 
-          <div className="relative">
-            {location.pathname === '/patients' ? <IconButtonAdd location={location} onClick={goToPatient} icon={['fas', 'plus']} /> : 
-            <IconButtonAdd location={location} onClick={goToPrescription} icon={['fas', 'plus']} />}
-          </div>
-
-          <FooterNav location={location} text={t('text.prescriptions')} icon={['fas', 'file-medical']} url='/prescriptions' />
-          <FooterNav location={location} text={t('text.profile')} icon={['fas', 'user']} url='/setting' />
-
+          <FooterNav
+            location={location}
+            icon={FileTextIcon}
+            url='/prescriptions'
+          />
+          <FooterNav
+            location={location}
+            icon={SettingsIcon}
+            url='/setting'
+          />
         </footer>
       )}
     </>

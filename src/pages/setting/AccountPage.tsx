@@ -1,40 +1,82 @@
-import React, { useContext } from 'react'
-import { ProfileContainer } from '../../components/pageSections/ProfileContainer'
-import AvatarCircle from '../../components/AvatarCircle'
+import React, { useContext, useState } from 'react'
 import { ProfileContext } from '../../context/profile'
-import AccountCard from '../../components/setting/AccountCard'
 import { useNavigate } from 'react-router-dom'
 import { useLogout } from '../../utils/hooks'
 import useTranslationHook from '../../hook/TranslationHook'
+import { ChevronRightIcon, EditIcon, LogOutIcon, UserIcon } from 'lucide-react'
+import Tippy from '@tippyjs/react'
+import { Container } from '../../components/home/Container'
+import LogoutModal from '../../components/modal/LogoutModal'
 
 export const AccountPage = (): JSX.Element => {
   const { profile } = useContext(ProfileContext)
-  const initials = (profile?.first_name?.charAt(0) ?? '').toUpperCase() + (profile?.last_name?.charAt(0) ?? '').toUpperCase()
   const fullName = `${profile?.email ?? ''}`
   const navigate = useNavigate()
   const logout = useLogout()
-  const onLogoutClick = (e: React.MouseEvent<HTMLElement>): void => logout()
   const { t } = useTranslationHook()
+  const [showLogoutModal, setShowLogoutModal] = useState(false)
 
-  const onAccountDetail = (): void => {
-    navigate('/profile')
-  }
+  const accountActions = [
+    {
+      icon: EditIcon,
+      label: t('navigation.account'),
+      onClick: () => navigate('/profile'),
+      variant: 'default'
+    },
+    {
+      icon: LogOutIcon,
+      label: t('navigation.logout'),
+      onClick: () => setShowLogoutModal(true),
+      variant: 'danger'
+    }
+  ]
+
   return (
-    <>
-      <ProfileContainer className='h-screen space-y-6 bg-gray-50 m-0'>
-        <div className='relative pt-16 pb-8'>
-          <div />
-          <div className='flex justify-center'>
-            <AvatarCircle initials={initials} size={100} fontSize={32} />
+    <Container>
+      {showLogoutModal && (
+        <LogoutModal
+          show={showLogoutModal}
+          onConfirm={logout}
+          onCancel={() => setShowLogoutModal(false)}
+        />
+      )}
+      <div className="space-y-6">
+        <div className="flex items-center justify-center flex-col">
+          <div className="bg-colorprimary/10 rounded-full w-24 h-24 flex items-center justify-center mb-4">
+            <UserIcon className="text-colorprimary w-12 h-12" />
           </div>
-          <div className='text-center mt-4 text-black'>
-            <h2 className='text-2xl font-semibold'>{fullName}</h2>
+          <div className="text-center">
+            <h2 className="text-xl font-semibold text-gray-800">{fullName}</h2>
           </div>
         </div>
-        <AccountCard title={t('navigation.account')} onClick={onAccountDetail} />
-        <AccountCard title={t('navigation.logout')} onClick={onLogoutClick} isDanger/>
-      </ProfileContainer>
-    </>
 
+        <div className="space-y-4">
+          {accountActions.map((action, index) => (
+            <div
+              key={index}
+              onClick={action.onClick}
+              className={`
+                bg-white/10 backdrop-blur-sm border border-gray-400 rounded-lg p-4
+                flex items-center justify-between cursor-pointer
+                hover:bg-white/20 transition-colors
+                ${action.variant === 'danger' ? 'text-red-500 hover:bg-red-50' : 'text-colorprimary'}
+              `}
+            >
+              <div className="flex items-center space-x-3">
+                <action.icon className="w-5 h-5" />
+                <span className="font-medium">{action.label}</span>
+              </div>
+              <Tippy
+                content={`Cliquez pour ${action.label.toLowerCase()}`}
+                placement="bottom"
+                theme="custom"
+              >
+                <span><ChevronRightIcon className="w-5 h-5 text-gray-400" /></span>
+              </Tippy>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Container>
   )
 }
