@@ -1,12 +1,14 @@
 module.exports = {
     testEnvironment: 'jsdom',
     transform: {
-      '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest'
+        '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
+        '^.+\\.css$': 'jest-transform-css'
     },
     transformIgnorePatterns: [
-      'node_modules/(?!(lucide-react)/)' 
+        'node_modules/(?!(lucide-react|react-datepicker)/)'
     ],
     moduleNameMapper: {
-      "^lucide-react$": "lucide-react"
+        "\\.(css|less)$": "identity-obj-proxy",
+        "^lucide-react$": "lucide-react"
     }
-  }
+}
