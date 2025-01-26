@@ -26,7 +26,7 @@ module.exports = {
         '^.+\\.css$': 'jest-transform-css'
       },
       transformIgnorePatterns: [
-        'node_modules/(?!(lucide-react|react-datepicker)/)' 
+        'node_modules/(?!(lucide-react|react-datepicker)/)'
       ],
       moduleNameMapper: {
         '\\.(css|less)$': 'identity-obj-proxy'
