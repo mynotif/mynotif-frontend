@@ -1,8 +1,8 @@
-import { FileTextIcon, HomeIcon, SettingsIcon, UsersIcon } from "lucide-react"
 import { FooterNav } from "./FooterNav"
 import { useIsLoggedIn } from "../../utils/hooks"
 import { useProfile } from "../../hook/profile.hook"
 import { useLocation } from "react-router-dom"
+import { FileTextIcon, HomeIcon, SettingsIcon, UsersIcon } from "lucide-react"
 
 const Footer = (): JSX.Element => {
   const location = useLocation()
