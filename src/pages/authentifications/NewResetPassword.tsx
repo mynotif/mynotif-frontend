@@ -2,10 +2,9 @@ import React, { useState } from 'react'
 import useTranslationHook from '../../hook/TranslationHook'
 import { useNavigate, useParams } from 'react-router-dom'
 import { confirmResetPassword } from '../../services/api'
-import { Container } from 'react-bootstrap'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import assert from 'assert'
 import NewResetPasswordForm from '../../components/forms/NewResetPasswordForm'
+import { Container } from '../../components/home/Container'
 
 const NewResetPassword = (): JSX.Element => {
   const [newPassword, setNewPassword] = useState<string>('')
@@ -64,8 +63,7 @@ const NewResetPassword = (): JSX.Element => {
   }
 
   return (
-    <Container className='d-flex flex-column align-items-center justify-items-center mt-4'>
-      <FontAwesomeIcon size='7x' icon={['fas', 'user-nurse']} />
+    <Container className='flex flex-col items-center'>
       <h1>{t('title.welcomeApp')}</h1>
       <p>{t('text.createNewPassword')}</p>
       <NewResetPasswordForm
