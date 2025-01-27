@@ -2,7 +2,6 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import clsx from "clsx"
 
-// InputFieldContainer.tsx
 interface InputFieldContainerProps {
   children: React.ReactNode
   icon?: IconProp | 'default-icon'
@@ -36,7 +35,7 @@ export const InputFieldContainer = ({
         )}
       >
         {icon !== 'default-icon' && (
-          <span className="flex select-none items-center w-10 h-10 pl-3 text-colorprimary bg-colorsecondary">
+          <span className="flex select-none items-center w-10 h-10 pl-3 text-colorprimary">
             <FontAwesomeIcon
               icon={icon}
               className="h-4 w-4"
