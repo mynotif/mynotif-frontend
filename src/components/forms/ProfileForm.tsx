@@ -25,7 +25,7 @@ export const ProfileForm = ({ profile, addErrorMessageCallback }: ProfileFormPro
   const { setProfile: setProfileContext } = useContext(ProfileContext)
   const { t } = useTranslationHook()
   const navigate = useNavigate()
-  const { register, handleSubmit, formState: { errors }, setValue, setError } = useForm<Profile>({resolver})
+  const { register, handleSubmit, formState: { errors }, setValue, setError } = useForm<Profile>({ resolver })
   const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export const ProfileForm = ({ profile, addErrorMessageCallback }: ProfileFormPro
     const { email } = data
 
     try {
-      const response = await updateUser(token, {...data, email: email.toLowerCase()})
+      const response = await updateUser(token, { ...data, email: email.toLowerCase() })
       setProfileContext(response)
       navigate('/profile')
     } catch (error: any) {
@@ -57,12 +57,15 @@ export const ProfileForm = ({ profile, addErrorMessageCallback }: ProfileFormPro
 
   return (
     <Container>
-      <div className='bg-gray-50 min-h-screen flex flex-col'>
-        <form className='space-y-4 ' onSubmit={handleSubmit(handleProfile)}>
+      <form className='space-y-4' onSubmit={handleSubmit(handleProfile)}>
+        <div className="space-y-4 bg-white/10 backdrop-blur-sm border border-gray-400 rounded-lg p-6">
+          <h3 className="text-lg font-semibold text-gray-700 mb-4">
+            {t('title.personalInformation')}
+          </h3>
+
           <InputFieldContainer
             icon={['fas', 'envelope']}
             label={t('form.emailAddress')}
-            required
           >
             <Input
               type='email'
@@ -73,6 +76,7 @@ export const ProfileForm = ({ profile, addErrorMessageCallback }: ProfileFormPro
             />
           </InputFieldContainer>
           <FormFieldError errorMessage={errors.email?.message} />
+
           <InputFieldContainer
             icon={['fas', 'user']}
             label={t('form.firstName')}
@@ -87,10 +91,11 @@ export const ProfileForm = ({ profile, addErrorMessageCallback }: ProfileFormPro
             />
           </InputFieldContainer>
           <FormFieldError errorMessage={errors.first_name?.message} />
+
           <InputFieldContainer
-          icon={['fas', 'user']}
-          label={t('form.lastName')}
-          required
+            icon={['fas', 'user']}
+            label={t('form.lastName')}
+            required
           >
             <Input
               type='text'
@@ -101,11 +106,12 @@ export const ProfileForm = ({ profile, addErrorMessageCallback }: ProfileFormPro
             />
           </InputFieldContainer>
           <FormFieldError errorMessage={errors.last_name?.message} />
-          <Button isLoading={loading} type='submit'>
-            {t('navigation.validate')}
-          </Button>
-        </form>
-      </div>
+        </div>
+
+        <Button variant='accent' isLoading={loading} type='submit'>
+          {t('navigation.validate')}
+        </Button>
+      </form>
     </Container>
   )
 }

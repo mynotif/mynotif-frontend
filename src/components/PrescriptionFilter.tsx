@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Prescription } from '../types';
+import { CheckIcon } from 'lucide-react';
 
 interface PrescriptionFilterProps {
     prescriptions: Prescription[];
@@ -32,38 +33,41 @@ const PrescriptionFilter = ({ prescriptions, onFilterChanged }: PrescriptionFilt
         setActiveFilter(activeFilter === filter ? null : filter);
     };
 
+    const filterOptions = [
+        { 
+            id: 'completed', 
+            label: 'Expiré', 
+            type: 'completed' as PrescriptionFilterType 
+        },
+        { 
+            id: 'expiring-soon', 
+            label: 'Expire bientôt', 
+            type: 'expiring_soon' as PrescriptionFilterType 
+        },
+        { 
+            id: 'in-progress', 
+            label: 'Valide', 
+            type: 'in_progress' as PrescriptionFilterType 
+        }
+    ];
+
     return (
-        <div className="flex items-center justify-center space-x-4 mb-4">
-            <div className="flex items-center">
-                <input
-                    type="checkbox"
-                    className='flex-grow outline-none text-gray-400'
-                    id="completed"
-                    checked={activeFilter === 'completed'}
-                    onChange={() => handleFilterChange('completed')}
-                />
-                <label htmlFor="completed" className="ml-2">Expiré</label>
-            </div>
-            <div className="flex items-center">
-                <input
-                    type="checkbox"
-                    className='flex-grow outline-none text-gray-400'
-                    id="expiring-soon"
-                    checked={activeFilter === 'expiring_soon'}
-                    onChange={() => handleFilterChange('expiring_soon')}
-                />
-                <label htmlFor="expiring-soon" className="ml-2">Expire bientôt</label>
-            </div>
-            <div className="flex items-center">
-                <input
-                    type="checkbox"
-                    className='flex-grow outline-none text-gray-400'
-                    id="in-progress"
-                    checked={activeFilter === 'in_progress'}
-                    onChange={() => handleFilterChange('in_progress')}
-                />
-                <label htmlFor="in-progress" className="ml-2">Valide</label>
-            </div>
+        <div className="flex items-center justify-center space-x-2 mb-4 overflow-x-auto">
+            {filterOptions.map((option) => (
+                <button
+                    key={option.id}
+                    onClick={() => handleFilterChange(option.type)}
+                    className={`
+                        flex items-center space-x-2 px-3 py-2 rounded-lg transition-all
+                        ${activeFilter === option.type 
+                            ? 'bg-colorprimary text-white' 
+                            : 'bg-white/10 backdrop-blur-sm border border-gray-400 text-gray-700 hover:bg-colorsecondary/30'}
+                    `}
+                >
+                    {activeFilter === option.type && <CheckIcon className="w-4 h-4" />}
+                    <span className="text-sm">{option.label}</span>
+                </button>
+            ))}
         </div>
     );
 };
