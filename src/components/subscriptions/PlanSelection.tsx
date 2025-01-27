@@ -7,44 +7,37 @@ interface PlanSelectionProps {
 }
 
 export const PlanSelection = ({ selectedPlan, setSelectedPlan }: PlanSelectionProps): JSX.Element => (
-  <div className="w-full max-w-md mt-8 space-y-4">
+  <div className="space-y-4">
     {plans.map((plan) => (
       <div
         key={plan.id}
         onClick={() => setSelectedPlan(plan.id as SubscriptionPlanType)}
-        className={`flex items-center justify-between px-4 py-3 border rounded-full shadow-sm cursor-pointer transition ${selectedPlan === plan.id
-            ? "bg-colorprimary text-white"
-            : "bg-white text-gray-800"
-          }`}
+        className={`
+          bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4 
+          flex items-center justify-between cursor-pointer transition-all
+          ${selectedPlan === plan.id 
+            ? 'ring-2 ring-colorprimary' 
+            : 'hover:bg-white/20'}
+        `}
       >
         <div>
-          <p
-            className={`font-semibold text-sm ${selectedPlan === plan.id ? "text-white" : "text-gray-800"
-              }`}
-          >
+          <h3 className={`
+            font-semibold 
+            ${selectedPlan === plan.id ? 'text-colorprimary' : 'text-gray-800'}
+          `}>
             {plan.title}
-          </p>
-          <p
-            className={`text-xs mt-1 ${selectedPlan === plan.id ? "text-white" : "text-gray-500"
-              }`}
-          >
+          </h3>
+          <p className="text-sm text-gray-500 mt-1">
             {plan.description}
           </p>
         </div>
-        <div
-          className={`w-5 h-5 border-2 rounded-full flex items-center justify-center ${selectedPlan === plan.id
-              ? "border-white"
-              : "border-gray-300"
-            }`}
-        >
-          <div
-            className={`w-2.5 h-2.5 rounded-full ${selectedPlan === plan.id ? "bg-white" : "bg-transparent"
-              }`}
-          ></div>
-        </div>
+        <div className={`
+          w-5 h-5 rounded-full border-2 
+          ${selectedPlan === plan.id 
+            ? 'border-colorprimary bg-colorprimary' 
+            : 'border-gray-300'}
+        `}></div>
       </div>
     ))}
   </div>
 );
-
-export default PlanSelection;

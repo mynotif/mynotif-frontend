@@ -1,14 +1,15 @@
 import { useContext, useState } from "react";
 import { Button } from "../../components/forms/inputGroups/Button";
-import PlanSelection from "../../components/subscriptions/PlanSelection";
+import {PlanSelection} from "../../components/subscriptions/PlanSelection";
 import { createSubscription } from "../../services/api";
 import { TokenContext } from "../../context/token";
 import { strict as assert } from 'assert'
 import type { SubscriptionPlanType } from "../../types";
 import ManageSubscription from "../../components/subscriptions/ManageSubscription";
-import LegalLinks from "../../components/subscriptions/LegalLinks";
-import PlanSelectionHeader from "../../components/subscriptions/PlanSelectionHeader";
+import {LegalLinks} from "../../components/subscriptions/LegalLinks";
+import {PlanSelectionHeader} from "../../components/subscriptions/PlanSelectionHeader";
 import { useSubscription } from "../../hook/subscription";
+import { Container } from "../../components/home/Container";
 
 export const Subscription = () => {
   const { subscription } = useSubscription();
@@ -32,9 +33,9 @@ export const Subscription = () => {
   }
 
   return (
-    <>
+    <Container>
       {!isActive ? (
-        <div className="flex flex-col items-center justify-center w-full h-screen bg-gray-50 px-4">
+        <div className="space-y-8 max-w-md mx-auto">
           <PlanSelectionHeader />
           <PlanSelection
             selectedPlan={selectedPlan}
@@ -42,10 +43,9 @@ export const Subscription = () => {
           />
           <Button
             variant="accent"
-            size="large"
-            icon={["fas", "arrow-left"]}
             disabled={!selectedPlan}
             onClick={handleSubscription}
+            className="w-full"
           >
             Souscrire
           </Button>
@@ -54,6 +54,7 @@ export const Subscription = () => {
       ) : (
         <ManageSubscription />
       )}
-    </>
+    </Container>
   );
 };
+

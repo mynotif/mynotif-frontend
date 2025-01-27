@@ -5,6 +5,7 @@ import { TokenContext } from "../../context/token";
 import { strict as assert } from 'assert'
 import { useContext } from "react";
 import { useSubscription } from '../../hook/subscription';
+import { Button } from '../forms/inputGroups/Button';
 
 const UnsubscribeSection = () => {
   const [showConfirm, setShowConfirm] = useState(false);
@@ -19,14 +20,15 @@ const UnsubscribeSection = () => {
   const handleFetchSubscription = async () => await fetchSubscription()
 
   return (
-    <div className="border-t pt-4">
+    <div className="border-t border-gray-200 pt-4">
       {!showConfirm ? (
-        <button
+        <Button
+          variant="secondary"
           onClick={() => setShowConfirm(true)}
-          className="w-full px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+          className="w-full bg-red-500 text-white hover:bg-red-600"
         >
           Se désabonner
-        </button>
+        </Button>
       ) : (
         <UnsubscribeConfirmation
           deleteSubscription={handleDeleteSubscription}
