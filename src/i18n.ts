@@ -69,6 +69,7 @@ i18n
             return: 'Return',
             resetPassword: 'Reset Password ',
             account: 'My account',
+            add: 'Add',
           },
           form: {
             emailAddress: 'Email address',
@@ -233,6 +234,7 @@ i18n
             return: 'Retour',
             resetPassword: 'Mot de passe perdu ?',
             account: 'Mon compte',
+            add: 'Ajouter',
           },
           form: {
             emailAddress: 'Adresse email',

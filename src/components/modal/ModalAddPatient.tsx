@@ -1,8 +1,9 @@
-import { Patient } from '../../types'
-import useTranslationHook from '../../hook/TranslationHook'
-import { InputFieldContainer } from '../forms/inputGroups/InputFieldContainer'
-import { InputField } from '../forms/inputGroups/InputField'
-import { Button } from '../forms/inputGroups/Button'
+import { XIcon } from "lucide-react";
+import { Button } from "../forms/inputGroups/Button";
+import { InputField } from "../forms/inputGroups/InputField";
+import { InputFieldContainer } from "../forms/inputGroups/InputFieldContainer";
+import useTranslationHook from "../../hook/TranslationHook";
+import { Patient } from "../../types";
 
 interface ModalAddPatientProps {
   patientState: Patient
@@ -25,18 +26,29 @@ const ModalAddPatient: React.FC<ModalAddPatientProps> = ({
 }) => {
   const { t } = useTranslationHook()
 
+  if (!show) return null;
+
   return (
-    <div className={`fixed bg-black bg-opacity-50 inset-0 flex items-center justify-center ${show ? 'block' : 'hidden'}`}>
-      <div className='bg-white rounded-lg shadow-lg w-full max-w-2xl mx-4'>
-        <div className='flex justify-between items-center p-4 border-b'>
-          <h2 className='text-xl font-semibold'>Ajouter un patient</h2>
-          <button onClick={onHide} className='text-gray-500 text-3xl hover:text-gray-700'>
-            &times;
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+      <div className="bg-gradient-to-br from-colorsecondary via-colorsecondary to-shade3 backdrop-blur-sm border border-gray-400 rounded-lg w-full max-w-md mx-4 overflow-hidden">
+        <div className="flex justify-between items-center p-6 border-b border-gray-400/30">
+          <h2 className="text-xl font-semibold text-gray-800">Ajouter un patient</h2>
+          <button 
+            onClick={onHide} 
+            className="text-gray-400 hover:text-colorprimary transition-colors"
+          >
+            <XIcon className="w-6 h-6" />
           </button>
         </div>
-        {error !== null && error !== undefined && error !== '' && <div className='bg-red-100 text-red-700 p-3 rounded-md'>{error}</div>}
-        <form className='mt-4 p-4 space-y-4 mb-24'>
-          <InputFieldContainer icon={['fas', 'user']}>
+
+        {error && (
+          <div className="bg-red-500/10 border border-red-500/30 text-red-500 p-4 m-4 rounded-lg">
+            {error}
+          </div>
+        )}
+
+        <form className="p-6 space-y-4">
+          <InputFieldContainer icon={['fas', 'user']} label={t('form.firstName')} required>
             <InputField
               name='firstname'
               placeholder={t('form.firstName')}
@@ -44,7 +56,8 @@ const ModalAddPatient: React.FC<ModalAddPatientProps> = ({
               onChange={handleChangeNewPatient}
             />
           </InputFieldContainer>
-          <InputFieldContainer icon={['fas', 'user']}>
+
+          <InputFieldContainer icon={['fas', 'user']} label={t('form.lastName')} required>
             <InputField
               name='lastname'
               placeholder={t('form.lastName')}
@@ -52,8 +65,14 @@ const ModalAddPatient: React.FC<ModalAddPatientProps> = ({
               onChange={handleChangeNewPatient}
             />
           </InputFieldContainer>
-          <Button isLoading={loading} onClick={handleNewPatientSubmit} type='submit' >
-            {t('navigation.validate')}
+
+          <Button 
+            variant='accent' 
+            isLoading={loading} 
+            onClick={handleNewPatientSubmit} 
+            type='submit'
+          >
+            {t('navigation.add')}
           </Button>
         </form>
       </div>
