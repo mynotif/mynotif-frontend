@@ -6,8 +6,8 @@ import useTranslationHook from '../../hook/TranslationHook'
 import { useIsLoggedIn } from '../../utils/hooks'
 import { Navigate } from 'react-router-dom'
 import { AuthLink } from '../../components/authentifications/AuthLink'
-import { ContainerAuth } from '../../components/authentifications/ContainerAuth'
 import { LogoSvg } from '../../components/module/LogoSvg'
+import { Container } from '../../components/home/Container'
 
 const LoginPage = (): JSX.Element => {
   const { t } = useTranslationHook()
@@ -19,14 +19,14 @@ const LoginPage = (): JSX.Element => {
   }
 
   return (
-    <ContainerAuth>
+    <Container className='flex flex-col items-center'>
       <LogoSvg />
         <WelcomeAuth title={t('title.welcomeApp')} description={t('title.login')} />
         <LoginForm />
         <ResetPasswordLink content={t('navigation.resetPassword')} />
         <Separator />
         <AuthLink textcontent={t('text.notAlreadyAccount')} textAnchor={t('navigation.register')} urlRedirect='register' />
-    </ContainerAuth>
+    </Container>
   )
 }
 

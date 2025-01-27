@@ -5,10 +5,10 @@ import { resetPassword } from '../../services/api'
 import { InputFieldContainer } from '../../components/forms/inputGroups/InputFieldContainer'
 import { InputField } from '../../components/forms/inputGroups/InputField'
 import { Button } from '../../components/forms/inputGroups/Button'
-import { ContainerAuth } from '../../components/authentifications/ContainerAuth'
 import { AuthLink } from '../../components/authentifications/AuthLink'
 import { WelcomeAuth } from '../../components/authentifications/WelcomeAuth'
 import { LogoSvg } from '../../components/module/LogoSvg'
+import { Container } from '../../components/home/Container'
 
 const ResetPassword = (): JSX.Element => {
   const [email, setEmail] = useState<string>('')
@@ -33,7 +33,7 @@ const ResetPassword = (): JSX.Element => {
   }
 
   return (
-    <ContainerAuth>
+    <Container className='flex flex-col items-center'>
     <LogoSvg />
     <WelcomeAuth title={t('title.welcomeApp')} description={t('title.resetPassword')} />
 
@@ -42,7 +42,7 @@ const ResetPassword = (): JSX.Element => {
             <InputField
               name='email'
               type='email'
-              placeholder={t('form.password')}
+              placeholder={t('form.emailAddress')}
               value={email}
               onChange={onEmailChange}
             />
@@ -55,7 +55,7 @@ const ResetPassword = (): JSX.Element => {
 
         <AuthLink textcontent={t('text.alreadyAccount')} textAnchor={t('navigation.login')} urlRedirect='login' />
 
-    </ContainerAuth>
+    </Container>
   )
 }
 

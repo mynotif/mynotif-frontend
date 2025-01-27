@@ -7,6 +7,7 @@ import { getPatient } from '../../services/api'
 import PatientForm from '../../components/forms/PatientForm'
 import { Patient } from '../../types'
 import useTranslationHook from '../../hook/TranslationHook'
+import { Container } from '../../components/home/Container'
 
 const PatientEdit = (): JSX.Element => {
   const { id } = useParams<'id'>()
@@ -44,9 +45,9 @@ const PatientEdit = (): JSX.Element => {
   return (
     <>
       {(patient !== null) ? (
-        <>
+        <Container>
           <PatientForm patient={patient} isEditForm />
-        </>
+        </Container>
       ) : (
         <h4 className='center'>{t('title.noPatientToDisplay')}</h4>
       )}
