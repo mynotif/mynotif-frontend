@@ -16,9 +16,10 @@ interface ButtonProps {
   iconTheme?: 'accent' | 'secondary'
   iconPosition?: 'left' | 'right'
   lucideIcon?: LucideIcon
+  className?: string
 }
 
-export const Button = ({ icon, iconTheme = 'accent', iconPosition = 'right', children, onClick, isLoading, type = 'button', disabled, variant = 'accent', size = 'medium' }: ButtonProps): JSX.Element => {
+export const Button = ({ icon, iconTheme = 'accent', iconPosition = 'right', children, onClick, isLoading, type = 'button', disabled, variant = 'accent', size = 'medium', className }: ButtonProps): JSX.Element => {
   let variantStyle: string = ''; let sizeStyle: string = ''; let iconSize: SizeProp
 
   switch (variant) {
@@ -59,7 +60,7 @@ export const Button = ({ icon, iconTheme = 'accent', iconPosition = 'right', chi
     <div className='flex justify-center items-center mt-4'>
       <button
         type={type}
-        className={clsx(variantStyle, sizeStyle, isLoading && 'cursor-wait', disabled && 'cursor-not-allowed', 'relative')}
+        className={clsx(variantStyle, sizeStyle, isLoading && 'cursor-wait', disabled && 'cursor-not-allowed', 'relative', className)}
         onClick={onClick}
         disabled={disabled}
       >

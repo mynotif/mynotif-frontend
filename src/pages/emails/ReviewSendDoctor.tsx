@@ -7,7 +7,7 @@ import { Prescription, Patient } from '../../types';
 import { sendEmailToDoctor } from '../../services/api';
 import { TokenContext } from '../../context/token';
 import assert from 'assert';
-import ModalConfirmSend from '../../components/modal/ModalConfirmSend';
+import { ModalConfirmSend } from '../../components/modal/ModalConfirmSend';
 import { Container } from '../../components/home/Container';
 import { InfoRow } from '../../components/pageSections/detail/InfoRow';
 
