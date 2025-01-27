@@ -18,7 +18,7 @@ export const StatCard = ({ count, label, tooltipContent }: StatCardProps) => (
                 interactive
             >
                 <span className='cursor-help text-gray-400 hover:text-colorprimary transition-colors'>
-                    <InfoIcon className="w-4 h-4 text-blue-400" />
+                    <InfoIcon className="w-5 h-5 text-blue-400" />
                 </span>
             </Tippy>
         </p>
