@@ -7,6 +7,7 @@ import {
   Token,
   OneSignal,
   SubscriptionInfo,
+  Subscription,
 } from '../types'
 import { API_V1, API_V2 } from './constants'
 
@@ -185,6 +186,12 @@ const sendEmailToDoctor = async (token: string, prescriptionId: number, careDeta
   return response.data
 }
 
+const getSubscriptionById = async (token: string, id: number): Promise<Subscription> => {
+  const url = API_V1 + `/payment/subscription/${id}/`
+  const headers = { Authorization: `Token ${token}` }
+  const response = await axios.get<Subscription>(url, { headers })
+  return response.data
+}
 
 export {
   getPatients,
@@ -207,4 +214,5 @@ export {
   createOneSignalSubscriptionId,
   getOneSignalSubscriptionId,
   sendEmailToDoctor,
+  getSubscriptionById,
 }
