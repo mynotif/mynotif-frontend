@@ -29,7 +29,7 @@ const ModalAddPatient: React.FC<ModalAddPatientProps> = ({
   if (!show) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 backdrop-blur-sm">
       <div className="bg-gradient-to-br from-colorsecondary via-colorsecondary to-shade3 backdrop-blur-sm border border-gray-400 rounded-lg w-full max-w-md mx-4 overflow-hidden">
         <div className="flex justify-between items-center p-6 border-b border-gray-400/30">
           <h2 className="text-xl font-semibold text-gray-800">Ajouter un patient</h2>
