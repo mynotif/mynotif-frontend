@@ -6,6 +6,7 @@ import { getPrescription } from '../../services/api'
 import { Prescription } from '../../types'
 import PrescriptionForm from '../../components/forms/PrescriptionForm'
 import useTranslationHook from '../../hook/TranslationHook'
+import { Container } from '../../components/home/Container'
 
 const PrescriptionEdit = (): JSX.Element => {
   const { id } = useParams<'id'>()
@@ -43,9 +44,9 @@ const PrescriptionEdit = (): JSX.Element => {
   return (
     <>
       {prescription !== null ? (
-        <>
+        <Container>
           <PrescriptionForm prescription={prescription} isEditForm />
-        </>
+        </Container>
       ) : (
         <h4 className='center'>{t('title.noPrescriptionToDisplay')}</h4>
       )}
