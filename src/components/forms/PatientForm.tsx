@@ -12,7 +12,7 @@ import { BACKEND_DATE_FORMAT, USER_DATE_FORMAT } from '../../services/constants'
 import { InputFieldContainer } from './inputGroups/InputFieldContainer'
 import { InputField } from './inputGroups/InputField'
 import { Button } from './inputGroups/Button'
-import { Container } from '../home/Container'
+import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
 
 interface PatientFormProps {
   patient: Patient
@@ -26,6 +26,7 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
   const { t } = useTranslationHook()
   const navigate = useNavigate()
   const [loading, setLoading] = useState<boolean>(false)
+  const [isOptionalFieldsOpen, setIsOptionalFieldsOpen] = useState(false)
 
   const birthdayDateValue: Date | null = patient.birthday !== null && patient.birthday !== undefined && patient.birthday !== '' ? new Date(patient.birthday) : null
   const [birthdayDate, setBirthdayDate] = useState<Date | null>(birthdayDateValue)
@@ -97,9 +98,12 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
   }
 
   return (
-    <Container>
-      <div className='min-h-screen flex flex-col'>
-        <form className='space-y-4 mb-24' onSubmit={handleSubmit}>
+      <form className='space-y-4' onSubmit={handleSubmit}>
+        {/* Required Fields */}
+        <div className="space-y-4 bg-white/10 backdrop-blur-sm border border-gray-400 rounded-lg p-6">
+          <h3 className="text-lg font-semibold text-gray-700 mb-4">
+            {t('title.requiredInformation')}
+          </h3>
           <InputFieldContainer icon={['fas', 'user']} label={t('form.firstName')} required>
             <InputField
               name='firstname'
@@ -116,7 +120,22 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
               onChange={handleChange}
             />
           </InputFieldContainer>
-          <InputFieldContainer icon={['fas', 'calendar-alt']} label={t('form.birthday')}>
+        </div>
+
+        {/* Optional Fields Toggle */}
+        <button
+          type="button"
+          onClick={() => setIsOptionalFieldsOpen(!isOptionalFieldsOpen)}
+          className="w-full flex items-center justify-center space-x-2 text-colorprimary hover:bg-colorsecondary p-2 rounded-lg transition-colors"
+        >
+          {isOptionalFieldsOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+          <span>{t('title.optionalInformation')}</span>
+        </button>
+
+        {/* Optional Fields */}
+        {isOptionalFieldsOpen && (
+          <div className="space-y-4 bg-white/10 backdrop-blur-sm border border-gray-400 rounded-lg p-6">
+            <InputFieldContainer icon={['fas', 'calendar-alt']} label={t('form.birthday')}>
           <DatePicker
             selected={birthdayDate}
             onChange={onBirthdayChange}
@@ -178,12 +197,13 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
               onChange={handleChange}
             />
           </InputFieldContainer>
-          <Button variant='accent' isLoading={loading} type='submit'>
-            {t('navigation.validate')}
-          </Button>
-        </form>
-      </div>
-    </Container>
+          </div>
+        )}
+
+        <Button variant='accent' isLoading={loading} type='submit'>
+          {t('navigation.validate')}
+        </Button>
+      </form>
   )
 }
 

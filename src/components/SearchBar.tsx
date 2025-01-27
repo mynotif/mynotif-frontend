@@ -1,18 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import useTranslationHook from '../hook/TranslationHook'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { SearchIcon, XIcon } from 'lucide-react'
+import clsx from 'clsx'
 
 interface SearchBarProps {
   onSearch: (searchValue: string) => void
   placeholderText?: string
+  className?: string
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch, placeholderText }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch, placeholderText, className='' }) => {
   const [search, setSearch] = useState<string>('')
+  const [isFocused, setIsFocused] = useState(false)
   const { t } = useTranslationHook()
+
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const value = e.target.value
     setSearch(value)
+  }
+
+  const clearSearch = (): void => {
+    setSearch('')
   }
 
   useEffect(() => {
@@ -20,21 +28,35 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, placeholderText }) => {
   }, [search, onSearch])
 
   return (
+    <form className={clsx(className,'mb-4')}>
+    <div 
+      className={`
+        bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg h-16 py-2 px-4 flex items-center transition-all duration-100
+        ${isFocused 
+          ? 'border-colorprimary ring-2 ring-colorprimary/30' 
+          : 'border border-gray-400 shadow-sm'}
 
-    <>
-      <form className='p-3'>
-        <div className='bg-white rounded-lg h-16 py-2 px-4 shadow-md flex items-center'>
-          <FontAwesomeIcon icon={['fas', 'search']} className='text-colorprimary mr-2' />
-          <input
-            type='text'
-            value={search}
-            onChange={handleSearch}
-            placeholder={placeholderText ?? t('text.search')}
-            className='outline-none w-full text-gray-600 placeholder-gray-500'
-          />
-        </div>
-      </form>
-    </>
+      `}
+    >
+      {search ? (
+        <XIcon 
+          onClick={clearSearch} 
+          className='text-colorprimary mr-4 w-5 h-5 cursor-pointer hover:opacity-70' 
+        />
+      ) : (
+        <SearchIcon className='text-colorprimary mr-4 w-5 h-5' />
+      )}
+      <input
+        type='text'
+        value={search}
+        onChange={handleSearch}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        placeholder={placeholderText ?? t('text.search')}
+        className='outline-none w-full text-gray-800 placeholder-gray-500 text-sm bg-transparent'
+      />
+    </div>
+  </form>
   )
 }
 
