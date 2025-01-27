@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimesCircle, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { XCircleIcon, AlertTriangleIcon } from 'lucide-react';
 import LogoPng from '../../components/module/LogoPng';
 import { useSubscription } from '../../hook/subscription';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-
+import { Container } from '../../components/home/Container';
+import { Button } from '../../components/forms/inputGroups/Button';
 
 const SubscriptionCancel = () => {
     const { subscription } = useSubscription();
@@ -25,39 +25,44 @@ const SubscriptionCancel = () => {
     }, [subscription, navigate, isFromCheckout]);
 
     return (
-        <div className="min-h-screen bg-colorsecondary flex flex-col items-center justify-center p-4">
-            <div className="bg-white shadow-2xl rounded-2xl p-8 max-w-md w-full text-center">
-                <div className='flex justify-center'>
-                    <LogoPng size={200} />
-                </div>
-                <h1 className="text-xl text-gray-600 mb-6">
-                    Processus d'abonnement annulé
-                </h1>
-                <div className="bg-red-50 rounded-lg p-4 mb-6">
-                    <div className="flex items-center justify-center space-x-4">
-                        <FontAwesomeIcon icon={faTimesCircle} className="text-red-600 w-12 h-12" />
-                        <FontAwesomeIcon icon={faExclamationTriangle} className="text-red-600 w-12 h-12" />
+        <Container>
+            <div className="max-w-md mx-auto space-y-6">
+                <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-6 text-center">
+                    <div className='flex justify-center mb-4'>
+                        <LogoPng size={150} />
                     </div>
-                </div>
-                <div className="space-y-4">
-                    <div className="bg-colorsecondary p-3 rounded-lg">
-                        <p className="text-gray-600">
-                            Contacter notre support à
+
+                    <h1 className="text-xl text-gray-600 mb-6">
+                        Processus d'abonnement annulé
+                    </h1>
+
+                    <div className="bg-red-500/10 rounded-lg p-4 mb-6">
+                        <div className="flex items-center justify-center space-x-4">
+                            <XCircleIcon className="text-red-500 w-10 h-10" />
+                            <AlertTriangleIcon className="text-red-500 w-10 h-10" />
+                        </div>
+                    </div>
+
+                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4 mb-6">
+                        <p className="text-gray-600 text-sm">
+                            Contacter notre support à{' '}
                             <span className="text-colorprimary">
                                 contact@ordopro.fr
                             </span>
-                            si vous rencontrez des difficultés
+                            {' '}si vous rencontrez des difficultés
                         </p>
                     </div>
+
+                    <Button
+                        variant="accent"
+                        className="w-full"
+                        onClick={() => window.location.href = '/subscription'}
+                    >
+                        Explorer les forfaits
+                    </Button>
                 </div>
-                <button
-                    className="mt-6 w-full bg-colorprimary text-white py-3 rounded-lg"
-                    onClick={() => window.location.href = '/subscription'}
-                >
-                    Explorer les forfaits
-                </button>
             </div>
-        </div>
+        </Container>
     )
 }
 
