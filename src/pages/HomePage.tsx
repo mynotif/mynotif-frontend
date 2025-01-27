@@ -73,12 +73,6 @@ const HomePage = (): JSX.Element => {
                   expiredSoon={expiredSoon}
                   prescriptions={prescriptions}
                 />
-
-                {patientsExpiredSoon.length === 0 && (
-                  <div className='p-4 text-center text-gray-500'>
-                    {t('text.noExpiredSoon')}
-                  </div>
-                )}
               </>
             )}
           </div>
