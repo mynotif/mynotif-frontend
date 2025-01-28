@@ -11,12 +11,14 @@ import { useNavigate } from 'react-router-dom'
 import PrescriptionLine from '../../components/prescriptions/PrescriptionLine'
 import { InfoIcon } from 'lucide-react'
 import Tippy from '@tippyjs/react'
+import { usePrescriptionManagement } from '../../hook/prescriptionManagement'
 
 
 const PrescriptionsPage = (): JSX.Element => {
   const [prescriptions] = usePrescription()
   const { t } = useTranslationHook()
   const navigate = useNavigate()
+  const { prescriptionCount, isSubscriptionActive, remainingFreePrescriptions } = usePrescriptionManagement()
 
   const [filteredPrescriptions, setFilteredPrescriptions] = useState<Prescription[]>(prescriptions)
 
@@ -69,6 +71,12 @@ const PrescriptionsPage = (): JSX.Element => {
 
   return (
     <Container>
+         {!isSubscriptionActive && (
+        <>
+        <p>Nombre total de prescriptions : {prescriptionCount}</p>
+        <p className='pb-4 text-sm text-gray-600'>Prescriptions restants dans le plan gratuit : {remainingFreePrescriptions}</p>
+        </>
+      )}
       <SearchBar className='flex-grow' onSearch={handleSearch} />
       <div className="flex justify-around">
         <PrescriptionFilter
