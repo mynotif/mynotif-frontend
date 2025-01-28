@@ -13,9 +13,9 @@ import { QuickActions } from '../components/home/QuickActions'
 
 const HomePage = (): JSX.Element => {
   const navigate = useNavigate()
-
   const { patients } = usePatients(['id', 'firstname', 'lastname'])
   const [prescriptions] = usePrescription()
+  const loading = !patients || !prescriptions
 
   const isFirstTimeUser = patients.length === 0 && prescriptions.length === 0
 
@@ -43,45 +43,42 @@ const HomePage = (): JSX.Element => {
   }
 
   return (
-    <>
-      {patients && prescriptions ? (
-        <Container className=''>
-          <div className='max-w-4xl mx-auto space-y-8'>
-            {isFirstTimeUser ? (
-              <WelcomeSection
+    <Container>
+      <div className='max-w-4xl mx-auto space-y-8'>
+    {loading ? (
+        <Loading />
+      ) : isFirstTimeUser ? (
+        <WelcomeSection
                 goToNewAddPatient={goToNewAddPatient}
                 goToNewPrescription={goToNewPrescription}
               />
-            ) : (
-              <>
-                <PrescriptionSoon
-                  patientsExpiredSoon={patientsExpiredSoon}
-                  goToPrescription={goToPrescription}
-                />
-
-                <MainStats
-                  patients={patients}
-                  prescriptions={prescriptions}
-                />
-
-                <QuickActions
-                  goToNewAddPatient={goToNewAddPatient}
-                  goToNewPrescription={goToNewPrescription}
-                />
-
-                <QuickInfos
-                  expiredSoon={expiredSoon}
-                  prescriptions={prescriptions}
-                />
-              </>
-            )}
-          </div>
-        </Container>
       ) : (
-        <Loading />
+        <>
+          <PrescriptionSoon
+            patientsExpiredSoon={patientsExpiredSoon}
+            goToPrescription={goToPrescription}
+          />
+
+          <MainStats
+            patients={patients}
+            prescriptions={prescriptions}
+          />
+
+          <QuickActions
+            goToNewAddPatient={goToNewAddPatient}
+            goToNewPrescription={goToNewPrescription}
+          />
+
+          <QuickInfos
+            expiredSoon={expiredSoon}
+            prescriptions={prescriptions}
+          />
+        </>
       )}
-    </>
+      </div>
+    </Container>
   )
 }
+
 
 export default HomePage

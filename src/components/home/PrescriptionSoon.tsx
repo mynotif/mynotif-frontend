@@ -11,7 +11,7 @@ export const PrescriptionSoon = ({ patientsExpiredSoon, goToPrescription }: Pres
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
         <div className='p-4 bg-colorprimary text-white flex justify-between items-center'>
             <h3 className='text-lg font-semibold'>{t('text.expiredSoon')}</h3>
-            <span className='text-sm bg-white/20 px-2 py-1 rounded'>
+            <span className='text-xl bg-white/20 px-2 rounded'>
                 {patientsExpiredSoon.length}
             </span>
         </div>
