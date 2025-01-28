@@ -14,7 +14,7 @@ const SubscriptionSuccess = () => {
     const isFromCheckout = searchParams.get('checkout') === 'true';
 
     useEffect(() => {
-        if (!subscription.active || !isFromCheckout) {
+        if (!isFromCheckout) {
             navigate('/home', { replace: true });
             return;
         }
