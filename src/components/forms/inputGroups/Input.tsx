@@ -27,9 +27,9 @@ export const Input = ({
       autoComplete={id}
       disabled={disabled}
       className={clsx(
-        "block flex-1 border-0 bg-transparent py-1.5 pl-2 pr-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm/6",
+        "block flex-1 border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm/6",
         disabled
-        ? "cursor-not-allowed opacity-30 bg-gray-400"
+        ? "cursor-not-allowed opacity-50 bg-gray-400"
         : "",
         className
       )}
