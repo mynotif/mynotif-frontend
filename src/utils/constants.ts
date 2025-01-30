@@ -19,8 +19,8 @@ export const COLOR_STATUS = {
 }
 
 export const SUBSCRIPTION_PRICES_CONFIG = {
-  monthly: 9.90,
-  annual: 106.90,
+  monthly: 18.00,
+  annual: 172,
 };
 
 enum SubscriptionPlanEnum {
