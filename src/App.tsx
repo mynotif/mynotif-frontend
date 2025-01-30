@@ -31,6 +31,10 @@ import { AccountPage } from './pages/setting/AccountPage'
 import Header from './components/Header'
 import ReviewSendDoctor from './pages/emails/ReviewSendDoctor'
 import 'tippy.js/dist/tippy.css'
+import { SubscriptionProvider } from './context/subscription'
+import { Subscription } from './pages/subscription/Subscription'
+import SubscriptionSuccess from './pages/subscription/SubscriptionSuccess'
+import SubscriptionCancel from './pages/subscription/SubscriptionCancel'
 
 library.add(fas, fab, far)
 
@@ -39,6 +43,7 @@ function App (): JSX.Element {
       <BrowserRouter>
         <TokenContextProvider>
           <ProfileContextProvider>
+            <SubscriptionProvider>
             <OneSignalManager>
               <Header />
               <FlashMessageContextProvider>
@@ -51,6 +56,10 @@ function App (): JSX.Element {
                   <Route path='/reset/password' element={<ResetPassword />} />
                   <Route path='/reset/password/:uid/:token' element={<NewResetPassword />} />
                   <Route element={<PrivateRoute />}>
+                    {/* subscription */}
+                    <Route path='/subscription' element={<Subscription />} />
+                    <Route path='/success' element={<SubscriptionSuccess />} />
+                    <Route path='/cancel' element={<SubscriptionCancel />} />
                     {/* Home */}
                     <Route path='/home' element={<HomePage />} />
                     {/* Profile */}
@@ -94,6 +103,7 @@ function App (): JSX.Element {
                 <Footer />
               </FlashMessageContextProvider>
             </OneSignalManager>
+            </SubscriptionProvider>
           </ProfileContextProvider>
         </TokenContextProvider>
       </BrowserRouter>

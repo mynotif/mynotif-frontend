@@ -12,7 +12,6 @@ import { TokenContext } from '../../context/token'
 import { updateUser } from '../../services/api'
 import { ProfileContext } from '../../context/profile'
 import { FlashMessageType } from '../../context/flashmessage'
-import { Container } from '../home/Container'
 import { resolver } from './validations/ValidationProfile'
 
 interface ProfileFormProps {
@@ -20,7 +19,7 @@ interface ProfileFormProps {
   addErrorMessageCallback: (flashMessage: FlashMessageType) => void
 }
 
-export const ProfileForm = ({ profile, addErrorMessageCallback }: ProfileFormProps): JSX.Element => {
+export const ProfileForm = ({ profile }: ProfileFormProps): JSX.Element => {
   const { token } = useContext(TokenContext)
   const { setProfile: setProfileContext } = useContext(ProfileContext)
   const { t } = useTranslationHook()
@@ -56,62 +55,60 @@ export const ProfileForm = ({ profile, addErrorMessageCallback }: ProfileFormPro
   }
 
   return (
-    <Container>
-      <form className='space-y-4' onSubmit={handleSubmit(handleProfile)}>
-        <div className="space-y-4 bg-white/10 backdrop-blur-sm border border-gray-400 rounded-lg p-6">
-          <h3 className="text-lg font-semibold text-gray-700 mb-4">
-            {t('title.personalInformation')}
-          </h3>
+    <form className='space-y-4' onSubmit={handleSubmit(handleProfile)}>
+      <div className="space-y-4 bg-white/10 backdrop-blur-sm border border-gray-400 rounded-lg p-6">
+        <h3 className="text-lg font-semibold text-gray-700 mb-4">
+          {t('title.personalInformation')}
+        </h3>
 
-          <InputFieldContainer
-            icon={['fas', 'envelope']}
-            label={t('form.emailAddress')}
-          >
-            <Input
-              type='email'
-              register={register}
-              id='email'
-              placeholder='contact@ordopro.fr'
-              disabled
-            />
-          </InputFieldContainer>
-          <FormFieldError errorMessage={errors.email?.message} />
+        <InputFieldContainer
+          icon={['fas', 'envelope']}
+          label={t('form.emailAddress')}
+        >
+          <Input
+            type='email'
+            register={register}
+            id='email'
+            placeholder='contact@ordopro.fr'
+            disabled
+          />
+        </InputFieldContainer>
+        <FormFieldError errorMessage={errors.email?.message} />
 
-          <InputFieldContainer
-            icon={['fas', 'user']}
-            label={t('form.firstName')}
-            required
-          >
-            <Input
-              type='text'
-              register={register}
-              id='first_name'
-              placeholder={t('form.firstName')}
-              disabled={loading}
-            />
-          </InputFieldContainer>
-          <FormFieldError errorMessage={errors.first_name?.message} />
+        <InputFieldContainer
+          icon={['fas', 'user']}
+          label={t('form.firstName')}
+          required
+        >
+          <Input
+            type='text'
+            register={register}
+            id='first_name'
+            placeholder={t('form.firstName')}
+            disabled={loading}
+          />
+        </InputFieldContainer>
+        <FormFieldError errorMessage={errors.first_name?.message} />
 
-          <InputFieldContainer
-            icon={['fas', 'user']}
-            label={t('form.lastName')}
-            required
-          >
-            <Input
-              type='text'
-              register={register}
-              id='last_name'
-              placeholder={t('form.lastName')}
-              disabled={loading}
-            />
-          </InputFieldContainer>
-          <FormFieldError errorMessage={errors.last_name?.message} />
-        </div>
+        <InputFieldContainer
+          icon={['fas', 'user']}
+          label={t('form.lastName')}
+          required
+        >
+          <Input
+            type='text'
+            register={register}
+            id='last_name'
+            placeholder={t('form.lastName')}
+            disabled={loading}
+          />
+        </InputFieldContainer>
+        <FormFieldError errorMessage={errors.last_name?.message} />
+      </div>
 
-        <Button variant='accent' isLoading={loading} type='submit'>
-          {t('navigation.validate')}
-        </Button>
-      </form>
-    </Container>
+      <Button variant='accent' isLoading={loading} type='submit'>
+        {t('navigation.validate')}
+      </Button>
+    </form>
   )
 }

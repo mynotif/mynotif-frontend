@@ -2,12 +2,11 @@ import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { Spinner } from '../../module/Spinner'
-import { LucideIcon } from 'lucide-react'
 
 interface ButtonProps {
   size?: 'small' | 'medium' | 'large'
   variant?: 'accent' | 'secondary' | 'disabled' | 'icon'
-  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<void>
+  onClick?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<void>) | (() => void | string);
   isLoading?: boolean
   type?: 'button' | 'submit'
   disabled?: boolean
@@ -15,7 +14,6 @@ interface ButtonProps {
   icon?: IconProp
   iconTheme?: 'accent' | 'secondary'
   iconPosition?: 'left' | 'right'
-  lucideIcon?: LucideIcon
   className?: string
 }
 

@@ -103,6 +103,69 @@ interface ProfileFormType {
   last_name: string
 }
 
+interface Subscription {
+  id: number;
+  stripe_subscription_id: string;
+  status: string;
+  payment_status: string;
+  active: boolean;
+  product_name: string;
+  current_period_start: string; // ISO date string
+  current_period_end: string;   // ISO date string
+  cancel_at_period_end: boolean;
+  trial_end: string | null;     // ISO date string or null
+  total_price: string;          // Price in string format
+  hosted_invoice_url: string;
+  invoice_pdf: string;
+  created_at: string;           // ISO date string
+  updated_at: string;           // ISO date string
+  user: number;
+}
+
+const defaultSubscription = {
+  id: 0,
+  stripe_subscription_id: '',
+  status: 'inactive',
+  payment_status: 'unpaid',
+  active: false,
+  product_name: '',
+  current_period_start: new Date().toISOString(),
+  current_period_end: new Date().toISOString(),
+  cancel_at_period_end: false,
+  trial_end: null,
+  total_price: '0.00',
+  hosted_invoice_url: '',
+  invoice_pdf: '',
+  created_at: new Date().toISOString(),
+  updated_at: new Date().toISOString(),
+  user: 0,
+}
+
+type SubscriptionPlanType = 'monthly' | 'annual';
+
+interface SessionObject {
+  sessionId: string;
+  checkout_url: string;
+}
+
+interface SubscriptionData {
+  active: boolean;
+  invoice_pdf: string;
+  current_period_end: string;
+  current_period_start: string;
+  product_name: string;
+  cancel_at_period_end: boolean;
+}
+
+interface CancelSubscriptionResponse {
+  message: string;
+}
+
+interface SubscriptionContextType {
+  subscription: SubscriptionData;
+  fetchSubscription: () => Promise<void>;
+}
+
 export type {
   ErrorResponse,
   Patient,
@@ -114,7 +177,13 @@ export type {
   OneSignal,
   SubscriptionInfo,
   ProfileFormType,
-  LoginFormType
+  LoginFormType,
+  Subscription,
+  SessionObject,
+  SubscriptionPlanType,
+  SubscriptionData,
+  CancelSubscriptionResponse,
+  SubscriptionContextType,
 }
 
-export { defaultPatient, defaultPrescription }
+export { defaultPatient, defaultPrescription, defaultSubscription }

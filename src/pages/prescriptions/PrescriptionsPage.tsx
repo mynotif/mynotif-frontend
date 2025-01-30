@@ -11,12 +11,14 @@ import { useNavigate } from 'react-router-dom'
 import PrescriptionLine from '../../components/prescriptions/PrescriptionLine'
 import { InfoIcon } from 'lucide-react'
 import Tippy from '@tippyjs/react'
+import { usePrescriptionManagement } from '../../hook/prescriptionManagement'
 
 
 const PrescriptionsPage = (): JSX.Element => {
   const [prescriptions] = usePrescription()
   const { t } = useTranslationHook()
   const navigate = useNavigate()
+  const { prescriptionCount, isSubscriptionActive, remainingFreePrescriptions } = usePrescriptionManagement()
 
   const [filteredPrescriptions, setFilteredPrescriptions] = useState<Prescription[]>(prescriptions)
 
@@ -69,6 +71,12 @@ const PrescriptionsPage = (): JSX.Element => {
 
   return (
     <Container>
+         {!isSubscriptionActive && (
+        <>
+        <p>{t('text.totalPrescriptionsInFreePlan')} {prescriptionCount}</p>
+        <p className='pb-4 text-sm text-gray-600'>{t('text.remainingPrescriptionsInFreePlan')} {remainingFreePrescriptions}</p>
+        </>
+      )}
       <SearchBar className='flex-grow' onSearch={handleSearch} />
       <div className="flex justify-around">
         <PrescriptionFilter
@@ -101,7 +109,7 @@ const PrescriptionsPage = (): JSX.Element => {
         </span>
       </div>
       <div className="space-y-4">
-        {filteredPrescriptions.length > 0 ? (
+        {filteredPrescriptions.length > 0 && (
           Object.entries(groupedPrescriptions).map(([letter, prescriptionGroup]) => (
             <div key={letter}>
               <div className='top-16 bg-colorsecondary/50 backdrop-blur-sm z-10 py-2 px-4 text-gray-700 font-semibold'>
@@ -115,10 +123,6 @@ const PrescriptionsPage = (): JSX.Element => {
               ))}
             </div>
           ))
-        ) : (
-          <div className="text-center text-gray-500 py-4">
-            Aucune prescription trouvée
-          </div>
         )}
       </div>
     </Container>

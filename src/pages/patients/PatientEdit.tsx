@@ -11,7 +11,6 @@ import { Container } from '../../components/home/Container'
 
 const PatientEdit = (): JSX.Element => {
   const { id } = useParams<'id'>()
-
   const { token } = useContext(TokenContext)
   const { addErrorMessage } = useContext(FlashMessageContext)
   const { t } = useTranslationHook()
@@ -43,15 +42,15 @@ const PatientEdit = (): JSX.Element => {
   }, [token, fetchPatientCallback])
 
   return (
-    <>
-      {(patient !== null) ? (
-        <Container>
+    <Container>
+      {
+        patient !== null ? (
           <PatientForm patient={patient} isEditForm />
-        </Container>
-      ) : (
-        <h4 className='center'>{t('title.noPatientToDisplay')}</h4>
-      )}
-    </>
+        ) : (
+          <h4 className='center'>{t('title.noPatientToDisplay')}</h4>
+        )
+      }
+    </Container>
   )
 }
 

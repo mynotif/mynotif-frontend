@@ -10,7 +10,6 @@ import { Container } from '../../components/home/Container'
 
 const PrescriptionEdit = (): JSX.Element => {
   const { id } = useParams<'id'>()
-
   const [prescription, setPrescription] = useState<Prescription | null>(null)
   const { token } = useContext(TokenContext)
 
@@ -42,15 +41,15 @@ const PrescriptionEdit = (): JSX.Element => {
   }, [fetchPrescriptionCallback, id, token])
 
   return (
-    <>
-      {prescription !== null ? (
-        <Container>
+    <Container>
+      {
+        prescription !== null ? (
           <PrescriptionForm prescription={prescription} isEditForm />
-        </Container>
-      ) : (
-        <h4 className='center'>{t('title.noPrescriptionToDisplay')}</h4>
-      )}
-    </>
+        ) : (
+          <h4 className="center">{t('title.noPrescriptionToDisplay')}</h4>
+        )
+      }
+    </Container>
   )
 }
 
