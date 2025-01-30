@@ -47,7 +47,7 @@ export const Subscription = () => {
             onClick={handleSubscription}
             className="w-full"
           >
-            Souscrire
+            Je m'abonne
           </Button>
           <LegalLinks />
         </div>

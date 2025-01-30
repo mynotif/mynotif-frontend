@@ -1,7 +1,7 @@
 import usePatients from "./patient.hook";
 import { useSubscription } from "./subscription";
 
-const FREE_PATIENT_LIMIT = 5;
+const FREE_PATIENT_LIMIT = 15;
 
 export const usePatientManagement = () => {
   const { subscription } = useSubscription();
@@ -11,7 +11,7 @@ export const usePatientManagement = () => {
   const isSubscriptionActive = subscription.active;
 
   const canAddPatient = isSubscriptionActive || patientCount < FREE_PATIENT_LIMIT;
-  const remainingFreePatients = isSubscriptionActive 
+  const remainingFreePatients = isSubscriptionActive
     ? 'Illimité' 
     : Math.max(0, FREE_PATIENT_LIMIT - patientCount);
 

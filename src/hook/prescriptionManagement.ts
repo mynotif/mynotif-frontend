@@ -1,7 +1,7 @@
 import usePrescription from "./prescription.hook";
 import { useSubscription } from "./subscription";
 
-const FREE_PRESCRIPTION_LIMIT = 5;
+const FREE_PRESCRIPTION_LIMIT = 15;
 
 export const usePrescriptionManagement = () => {
   const { subscription } = useSubscription();
@@ -11,7 +11,7 @@ export const usePrescriptionManagement = () => {
   const isSubscriptionActive = subscription.active;
 
   const canAddPrescription = isSubscriptionActive || prescriptionCount < FREE_PRESCRIPTION_LIMIT;
-  const remainingFreePrescriptions = isSubscriptionActive 
+  const remainingFreePrescriptions = isSubscriptionActive
     ? 'Illimité' 
     : Math.max(0, FREE_PRESCRIPTION_LIMIT - prescriptionCount);
 

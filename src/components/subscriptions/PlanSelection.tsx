@@ -6,6 +6,16 @@ interface PlanSelectionProps {
   setSelectedPlan: (planType: SubscriptionPlanType) => void;
 }
 
+const formatPlanDescription = (description: string) => {
+  const parts = description.split(' - ');
+  return (
+    <>
+      <span className="block font-medium text-gray-800">{parts[0]}</span>
+      {parts[1] && <span className="block text-xs mt-1">{parts[1]}</span>}
+    </>
+  );
+};
+
 export const PlanSelection = ({ selectedPlan, setSelectedPlan }: PlanSelectionProps): JSX.Element => (
   <div className="space-y-4">
     {plans.map((plan) => (
@@ -28,7 +38,7 @@ export const PlanSelection = ({ selectedPlan, setSelectedPlan }: PlanSelectionPr
             {plan.title}
           </h3>
           <p className="text-sm text-gray-500 mt-1">
-            {plan.description}
+            {formatPlanDescription(plan.description)}
           </p>
         </div>
         <div className={`

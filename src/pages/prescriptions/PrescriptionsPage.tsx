@@ -73,8 +73,8 @@ const PrescriptionsPage = (): JSX.Element => {
     <Container>
          {!isSubscriptionActive && (
         <>
-        <p>Nombre total de prescriptions : {prescriptionCount}</p>
-        <p className='pb-4 text-sm text-gray-600'>Prescriptions restants dans le plan gratuit : {remainingFreePrescriptions}</p>
+        <p>{t('text.totalPrescriptionsInFreePlan')} {prescriptionCount}</p>
+        <p className='pb-4 text-sm text-gray-600'>{t('text.remainingPrescriptionsInFreePlan')} {remainingFreePrescriptions}</p>
         </>
       )}
       <SearchBar className='flex-grow' onSearch={handleSearch} />
@@ -109,7 +109,7 @@ const PrescriptionsPage = (): JSX.Element => {
         </span>
       </div>
       <div className="space-y-4">
-        {filteredPrescriptions.length > 0 ? (
+        {filteredPrescriptions.length > 0 && (
           Object.entries(groupedPrescriptions).map(([letter, prescriptionGroup]) => (
             <div key={letter}>
               <div className='top-16 bg-colorsecondary/50 backdrop-blur-sm z-10 py-2 px-4 text-gray-700 font-semibold'>
@@ -123,10 +123,6 @@ const PrescriptionsPage = (): JSX.Element => {
               ))}
             </div>
           ))
-        ) : (
-          <div className="text-center text-gray-500 py-4">
-            Aucune prescription trouvée
-          </div>
         )}
       </div>
     </Container>

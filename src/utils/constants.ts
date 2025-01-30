@@ -19,26 +19,26 @@ export const COLOR_STATUS = {
 }
 
 export const SUBSCRIPTION_PRICES_CONFIG = {
-  monthly: 9.99,
+  monthly: 9.90,
   annual: 106.90,
 };
 
 enum SubscriptionPlanEnum {
   MONTHLY = 'monthly',
   ANNUAL = 'annual',
-  MONTHLY_FRENCH = 'MOIS',
-  ANNUAL_FRENCH = 'ANNUEL',
+  FLEXIBLE = 'Flexible',
+  ANNUAL_FRENCH = 'Économique',
 }
 
 export const plans = [
   {
     id: SubscriptionPlanEnum.MONTHLY,
-    title: SubscriptionPlanEnum.MONTHLY_FRENCH,
-    description: `${SUBSCRIPTION_PRICES_CONFIG.monthly} €, payé mensuellement`,
+    title: SubscriptionPlanEnum.FLEXIBLE,
+    description: `${SUBSCRIPTION_PRICES_CONFIG.monthly.toFixed(2)}€/mois - Liberté de résilier à tout moment`,
   },
   {
     id: SubscriptionPlanEnum.ANNUAL,
     title: SubscriptionPlanEnum.ANNUAL_FRENCH,
-    description: `${SUBSCRIPTION_PRICES_CONFIG.annual} €, payé annuellement`,
+    description: `${SUBSCRIPTION_PRICES_CONFIG.annual.toFixed(2)}€/an (soit ${(SUBSCRIPTION_PRICES_CONFIG.annual/12).toFixed(2)}€/mois) - Économisez 10%`,
   },
 ];
