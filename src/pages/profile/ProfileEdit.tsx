@@ -3,6 +3,7 @@ import { Profile } from '../../types'
 import { ProfileContext } from '../../context/profile'
 import { FlashMessageContext, FlashMessageType } from '../../context/flashmessage'
 import { ProfileForm } from '../../components/forms/ProfileForm'
+import { Container } from '../../components/home/Container'
 
 const ProfileEdit = (): JSX.Element => {
   const { profile: profileContext } = useContext(ProfileContext)
@@ -21,7 +22,11 @@ const ProfileEdit = (): JSX.Element => {
     []
   )
 
-  return <ProfileForm addErrorMessageCallback={addErrorMessageCallback} profile={profile} />
+  return (
+    <Container>
+      <ProfileForm addErrorMessageCallback={addErrorMessageCallback} profile={profile} />
+    </Container>
+  )
 }
 
 export default ProfileEdit

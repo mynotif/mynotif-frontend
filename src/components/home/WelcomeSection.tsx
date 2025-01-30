@@ -20,14 +20,14 @@ export const WelcomeSection = ({ goToNewAddPatient, goToNewPrescription }: Welco
                     className="flex items-center space-x-2 bg-colorprimary text-sm text-white px-4 py-2 rounded-lg hover:bg-shade1 transition-colors"
                 >
                     <UserPlusIcon className="w-5 h-5" />
-                    <span>Ajouter un patient</span>
+                    <span>Créer un patient</span>
                 </button>
                 <button
                     onClick={goToNewPrescription}
                     className="flex items-center space-x-2 bg-white text-sm text-colorprimary px-4 py-2 rounded-lg hover:bg-shade3 transition-colors"
                 >
                     <FilePlusIcon className="w-5 h-5" />
-                    <span>Créer une prescription</span>
+                    <span>Créer une ordonnance</span>
                 </button>
             </div>
         </div>

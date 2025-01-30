@@ -163,6 +163,8 @@ i18n
             notSavePrescription: 'No prescription save',
             notEmailDoctor: 'No email contact',
             contactDoctor: 'Contact Doctor',
+            totalPrescriptionsInFreePlan : 'Total number of prescriptions in the free plan:',
+            remainingPrescriptionsInFreePlan : 'Remaining prescriptions in the free plan:',
           },
           error: {
             errorLogin: 'Sorry, the email or password is incorrect!',
@@ -189,7 +191,12 @@ i18n
             invalidCredentials: 'Username or password is incorrect. Please try again.',
             invalidEmail: 'Please enter a valid email address',
             minLengthPassword: 'Password must be at least 6 characters long',
-          }
+          },
+          subscription: {
+            limit_reached: 'You have reached the limit of free.',
+            description: 'To continue to fully benefit from our services and create additional prescriptions, switch to our Essential plan now.',
+            subscribe_button: 'Switch to Essential version',
+          },
         }
       },
       fr: {
@@ -332,6 +339,8 @@ i18n
             notSavePrescription: 'Aucune ordonnance sauvegarder',
             notEmailDoctor: 'Aucun email de contact',
             contactDoctor: 'Contacter le médecin',
+            totalPrescriptionsInFreePlan : 'Nombre total d\'ordonnances dans le plan gratuit :',
+            remainingPrescriptionsInFreePlan : 'Ordonnances restantes dans le plan gratuit :',
           },
           error: {
             errorLogin: 'Désolé, l\'email ou le mot de passe est incorrect !',
@@ -358,7 +367,12 @@ i18n
             invalidCredentials: 'Le nom d\'utilisateur ou le mot de passe est incorrect',
             invalidEmail: 'Veuillez saisir une adresse e-mail valide',
             minLengthPassword: 'Le mot de passe doit comporter au moins 6 caractères',
-          }
+          },
+          subscription: {
+            limit_reached: 'Vous avez atteint la limite gratuite',
+            description: 'Pour continuer à bénéficier pleinement de nos services, passez dès maintenant à notre formule Essentielle.',
+            upgrade_subscribe_button: 'Passer à la version Essentielle',
+          },
         }
       }
     }
