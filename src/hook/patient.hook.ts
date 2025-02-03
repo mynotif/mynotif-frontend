@@ -5,8 +5,15 @@ import { Patient } from '../types'
 import axios from 'axios'
 import { TokenContext } from '../context/token'
 
-const usePatients = (fields?: string[]): { patients: Patient[], reloadPatients: () => Promise<void> } => {
+interface UsePatientsReturn {
+  patients: Patient[]
+  reloadPatients: () => Promise<void>
+  patientsLoading: boolean
+}
+
+const usePatients = (fields?: string[]): UsePatientsReturn => {
   const [patients, setPatients] = useState<Patient[]>([])
+  const [patientsLoading, setIsLoading] = useState(true)
   const { token } = useContext(TokenContext)
 
   // allows us to pick up patients
@@ -21,6 +28,8 @@ const usePatients = (fields?: string[]): { patients: Patient[], reloadPatients: 
       } else {
         console.error(error)
       }
+    } finally {
+      setIsLoading(false)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token])
@@ -37,7 +46,7 @@ const usePatients = (fields?: string[]): { patients: Patient[], reloadPatients: 
     void (async () => await fetchPatientsCallback())()
   }, [fetchPatientsCallback])
 
-  return { patients, reloadPatients }
+  return { patients, reloadPatients, patientsLoading }
 }
 
 export default usePatients

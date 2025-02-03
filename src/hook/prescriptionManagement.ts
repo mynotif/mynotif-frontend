@@ -5,9 +5,9 @@ const FREE_PRESCRIPTION_LIMIT = 15;
 
 export const usePrescriptionManagement = () => {
   const { subscription } = useSubscription();
-    const prescriptions = usePrescription();
+    const { prescriptions } = usePrescription();
 
-  const prescriptionCount = prescriptions[0]?.length || 0;
+  const prescriptionCount = prescriptions.length || 0;
   const isSubscriptionActive = subscription.active;
 
   const canAddPrescription = isSubscriptionActive || prescriptionCount < FREE_PRESCRIPTION_LIMIT;
