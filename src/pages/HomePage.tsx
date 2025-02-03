@@ -13,10 +13,10 @@ import { QuickActions } from '../components/home/QuickActions'
 
 const HomePage = (): JSX.Element => {
   const navigate = useNavigate()
-  const { patients } = usePatients(['id', 'firstname', 'lastname'])
-  const [prescriptions] = usePrescription()
-  const loading = !patients || !prescriptions
+  const { patients, patientsLoading } = usePatients(['id', 'firstname', 'lastname'])
+  const {prescriptions, prescriptionsLoading} = usePrescription()
 
+  const hasLoading = patientsLoading || prescriptionsLoading
   const isFirstTimeUser = patients.length === 0 && prescriptions.length === 0
 
   const expiredSoon = prescriptions.filter(prescription => prescription.expiring_soon)
@@ -45,7 +45,7 @@ const HomePage = (): JSX.Element => {
   return (
     <Container>
       <div className='max-w-4xl mx-auto space-y-8'>
-    {loading ? (
+    {hasLoading ? (
         <Loading />
       ) : isFirstTimeUser ? (
         <WelcomeSection

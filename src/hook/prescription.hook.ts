@@ -5,8 +5,15 @@ import { TokenContext } from '../context/token'
 import { FlashMessageContext } from '../context/flashmessage'
 import assert from 'assert'
 
-const usePrescription = (): [Prescription[], (id: number) => Promise<void>] => {
+interface UsePrescriptionReturn {
+  prescriptions: Prescription[]
+  deletePrescriptionById: (id: number) => Promise<void>
+  prescriptionsLoading: boolean
+}
+
+const usePrescription = (): UsePrescriptionReturn => {
   const [prescriptions, setPrescriptions] = useState<Prescription[]>([])
+  const [isLoading, setIsLoading] = useState(true)
   const { token } = useContext(TokenContext)
   const { addErrorMessage } = useContext(FlashMessageContext)
 
@@ -18,6 +25,8 @@ const usePrescription = (): [Prescription[], (id: number) => Promise<void>] => {
     } catch (error) {
       console.error(error)
       addErrorMessage({ body: 'Error fetching prescription data' })
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -45,7 +54,7 @@ const usePrescription = (): [Prescription[], (id: number) => Promise<void>] => {
     void (async () => await fetchPrescriptionsCallback(token))()
   }, [fetchPrescriptionsCallback, token])
 
-  return [prescriptions, deletePrescriptionById]
+  return {prescriptions, deletePrescriptionById, prescriptionsLoading: isLoading}
 }
 
 export default usePrescription

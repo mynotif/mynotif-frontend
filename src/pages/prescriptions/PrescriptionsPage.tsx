@@ -15,7 +15,7 @@ import { usePrescriptionManagement } from '../../hook/prescriptionManagement'
 
 
 const PrescriptionsPage = (): JSX.Element => {
-  const [prescriptions] = usePrescription()
+  const {prescriptions} = usePrescription()
   const { t } = useTranslationHook()
   const navigate = useNavigate()
   const { prescriptionCount, isSubscriptionActive, remainingFreePrescriptions } = usePrescriptionManagement()
