@@ -8,7 +8,6 @@ import { Patient } from '../types'
 import { WelcomeSection } from '../components/home/WelcomeSection'
 import { PrescriptionSoon } from '../components/home/PrescriptionSoon'
 import { MainStats } from '../components/home/MainStats'
-import { QuickInfos } from '../components/home/QuickInfos'
 import { QuickActions } from '../components/home/QuickActions'
 
 const HomePage = (): JSX.Element => {
@@ -72,11 +71,6 @@ const HomePage = (): JSX.Element => {
           <QuickActions
             goToNewAddPatient={goToNewAddPatient}
             goToNewPrescription={goToNewPrescription}
-          />
-
-          <QuickInfos
-            expiredSoon={expiredSoon}
-            prescriptions={prescriptions}
           />
         </>
       )}
