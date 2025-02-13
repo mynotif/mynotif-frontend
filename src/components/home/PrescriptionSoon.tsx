@@ -1,6 +1,7 @@
 import { EyeIcon } from 'lucide-react'
 import { Patient } from '../../types';
 import { t } from 'i18next';
+import { PatientDaysRemaining } from './PatientDaysRemaining';
 
 interface PrescriptionSoonProps {
     patientsExpiredSoon: Patient[];
@@ -25,9 +26,9 @@ export const PrescriptionSoon = ({ patientsExpiredSoon, goToPrescription }: Pres
                         <p className="text-sm font-semibold text-gray-900 mb-1">
                             {patient.firstname} {patient.lastname}
                         </p>
-                        <p className="text-xs text-gray-500">
-                            {t('text.prescriptionExpireSoon')}
-                        </p>
+                       {patient.prescriptions?.map(prescription => (
+                        <PatientDaysRemaining key={prescription.id} prescription={prescription} />
+                       ))}
                     </div>
                 </div>
                 <button
