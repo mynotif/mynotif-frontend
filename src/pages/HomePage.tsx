@@ -20,7 +20,12 @@ const HomePage = (): JSX.Element => {
   const isFirstTimeUser = patients.length === 0 && prescriptions.length === 0
 
   const expiredSoon = prescriptions.filter(prescription => prescription.expiring_soon)
-  const patientsExpiredSoon = patients.filter(patient => expiredSoon.some(prescription => prescription.patient === patient.id))
+  const patientsExpiredSoon = patients
+    .filter(patient => expiredSoon.some(prescription => prescription.patient === patient.id))
+    .map(patient => ({
+      ...patient,
+      prescriptions: expiredSoon.filter(prescription => prescription.patient === patient.id)
+    }))
 
   const goToPrescription = (patient: Patient): void => {
     const expiredPrescription = expiredSoon.find(prescription => prescription.patient === patient.id);
