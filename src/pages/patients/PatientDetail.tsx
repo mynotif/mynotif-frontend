@@ -105,7 +105,10 @@ const PatientDetail = (): JSX.Element => {
                 />
                 <InfoRow
                   label={t('form.birthday')}
-                  value={patient.birthday}
+                  value={patient.birthday ?
+                    // Split ISO date string and reformat to DD/MM/YYYY
+                    patient.birthday.split('-').reverse().join('/')
+                    : ''}
                 />
                 <InfoRow
                   label={t('form.carteVitale')}
