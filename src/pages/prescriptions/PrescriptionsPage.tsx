@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from 'react'
 import usePrescription from '../../hook/prescription.hook'
 import SearchBar from '../../components/SearchBar'
+import { normalizeText } from '../../utils/helpers'
 import { Prescription } from '../../types'
 import useTranslationHook from '../../hook/TranslationHook'
 import { Container } from '../../components/home/Container'
@@ -24,16 +25,16 @@ const PrescriptionsPage = (): JSX.Element => {
 
   // Function to check if the prescription's doctor name matches the search
   const isDoctorMatch = (prescription: Prescription, search: string): boolean => {
-    const doctorName = prescription.prescribing_doctor.toLowerCase()
-    const searchLowerCase = search.toLowerCase()
-    return doctorName.includes(searchLowerCase)
+    const normalizedDoctorName = normalizeText(prescription.prescribing_doctor)
+    const normalizedSearch = normalizeText(search)
+    return normalizedDoctorName.includes(normalizedSearch)
   }
 
   // Function to check if the prescription's patient name matches the search
   const isPatientMatch = (prescription: Prescription, search: string): boolean => {
-    const patientFullName = `${prescription.patient_firstname} ${prescription.patient_lastname}`.toLowerCase()
-    const searchLowerCase = search.toLowerCase()
-    return patientFullName.includes(searchLowerCase)
+    const normalizedPatientName = normalizeText(`${prescription.patient_firstname} ${prescription.patient_lastname}`)
+    const normalizedSearch = normalizeText(search)
+    return normalizedPatientName.includes(normalizedSearch)
   }
 
   const filterByPrescriptions = useCallback((prescription: Prescription, search: string) => (
