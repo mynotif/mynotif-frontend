@@ -78,6 +78,17 @@ function validateFileType(file: File): boolean {
 
 }
 
+/**
+ * Normalizes text by removing diacritics (accents) and converting to lowercase
+ * Example: "élève" becomes "eleve"
+ */
+const normalizeText = (text: string): string => {
+  return text
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
+}
+
 export {
   getTokenLocalStorage,
   setTokenLocalStorage,
@@ -88,4 +99,5 @@ export {
   getIconClass,
   formatDate,
   validateFileType,
+  normalizeText,
 }

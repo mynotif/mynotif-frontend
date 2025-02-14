@@ -1,6 +1,7 @@
 import PatientLine from '../../components/patients/PatientsPage/PatientLine'
 import usePatients from '../../hook/patient.hook'
 import { useCallback, useMemo, useState } from 'react'
+import { normalizeText } from '../../utils/helpers'
 import { Patient } from '../../types'
 import SearchBar from '../../components/SearchBar'
 import { Container } from '../../components/home/Container'
@@ -18,9 +19,9 @@ const PatientsPage = (): JSX.Element => {
   const [filteredPatients, setFilteredPatients] = useState<Patient[]>(patients)
 
   const filterByPatients = (patient: Patient, searchValue: string): boolean => {
-    searchValue = searchValue.toLocaleLowerCase()
-    const fullName = `${patient.lastname} ${patient.firstname}`.toLowerCase()
-    return fullName.includes(searchValue)
+    const normalizedSearch = normalizeText(searchValue)
+    const normalizedFullName = normalizeText(`${patient.lastname} ${patient.firstname}`)
+    return normalizedFullName.includes(normalizedSearch)
   }
 
   const handleSearch = useCallback((searchValue: string) => {
