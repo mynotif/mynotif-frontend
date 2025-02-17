@@ -7,10 +7,9 @@ import { getPatient } from '../../services/api'
 import { Patient } from '../../types'
 import { Container } from '../../components/home/Container'
 import { Loading } from '../../components/loading/Loading'
-import { EditIcon, EyeIcon, InfoIcon, UserIcon } from 'lucide-react'
+import { EditIcon, EyeIcon, UserIcon } from 'lucide-react'
 import { t } from 'i18next'
 import { InfoRow } from '../../components/pageSections/detail/InfoRow'
-import Tippy from '@tippyjs/react'
 
 const PatientDetail = (): JSX.Element => {
   const { id } = useParams<'id'>()
@@ -50,14 +49,6 @@ const PatientDetail = (): JSX.Element => {
     valid: patient?.prescriptions.filter((p) => p.is_valid && !p.expiring_soon) ?? [],
     invalid: patient?.prescriptions.filter((p) => !p.is_valid) ?? []
   }
-
-  const prescriptionIdSoon = prescriptionCategories.expireSoon.reduce((closest, current) => {
-    if (!closest || !closest.end_date) return current;
-    const closestEndDate = new Date(closest.end_date);
-    const currentEndDate = new Date(current.end_date);
-
-    return currentEndDate < closestEndDate ? current : closest;
-  }, patient?.prescriptions[0])?.id;
 
   return (
     <Container>
@@ -122,45 +113,83 @@ const PatientDetail = (): JSX.Element => {
                 <h3 className="text-lg font-semibold text-gray-700">
                   {t('text.prescription')}
                 </h3>
-                {/* View the prescription with the closest expiration date */}
-               {prescriptionIdSoon !== undefined && (
-                 <div className='flex items-center space-x-2'>
-                 <button
-                   onClick={() => navigate(`/prescriptions/${prescriptionIdSoon}`)}
-                   className="bg-colorprimary text-colorsecondary px-4 py-2 rounded-lg hover:bg-colorprimary transition-colors flex items-center space-x-2"
-                 >
-                   <EyeIcon className="w-5 h-5" />
-                 </button>
-                 <Tippy
-                   content="L'ordonnance dont la date est la plus proche de la date actuelle"
-                   placement="bottom"
-                   theme="custom"
-                   trigger="click"
-                   interactive={true}
-                   onClickOutside={(instance) => instance.hide()}
-                 >
-                   <span className='cursor-help text-gray-400 hover:text-colorprimary transition-colors'>
-                     <InfoIcon className="w-5 h-5 text-blue-400" />
-                   </span>
-                 </Tippy>
-                 </div>
-               )}
               </div>
               <div className="space-y-3">
-                <InfoRow
-                  label={t('text.expiredSoon').charAt(0).toUpperCase() + t('text.expiredSoon').toLowerCase().slice(1)}
-                  value={`${prescriptionCategories.expireSoon.length} ${t('text.prescription')}${prescriptionCategories.expireSoon.length > 1 ? 's' : ''}`}
-                  valueClassName="text-yellow-500"
-                />
-                <InfoRow
-                  label={t('text.running').charAt(0).toUpperCase() + t('text.running').toLowerCase().slice(1)}
-                  value={`${prescriptionCategories.valid.length} ${t('text.prescription')}${prescriptionCategories.valid.length > 1 ? 's' : ''}`}
-                  valueClassName="text-green-500"
-                />
-                <InfoRow
-                  label={t('text.expired')}
-                  value={`${prescriptionCategories.invalid.length} ${t('text.prescription')}${prescriptionCategories.invalid.length > 1 ? 's' : ''}`} valueClassName="text-red-500"
-                />
+                <div>
+                  <InfoRow
+                    label={t('text.expiredSoon').charAt(0).toUpperCase() + t('text.expiredSoon').toLowerCase().slice(1)}
+                    value={`${prescriptionCategories.expireSoon.length} ${t('text.prescription')}${prescriptionCategories.expireSoon.length > 1 ? 's' : ''}`}
+                    valueClassName="text-yellow-500"
+                  />
+                  {prescriptionCategories.expireSoon.length > 0 && (
+                    <div className="ml-4 mt-2 space-y-2">
+                      {prescriptionCategories.expireSoon
+                        .sort((a, b) => new Date(a.end_date).getTime() - new Date(b.end_date).getTime()) // Sort by closest expiry date first
+                        .map((prescription) => (
+                        <button
+                          key={prescription.id}
+                          onClick={() => navigate(`/prescriptions/${prescription.id}`)}
+                          className="text-yellow-500 hover:text-yellow-600 transition-colors text-sm flex items-center space-x-2 w-full pb-2 border-b border-yellow-200/20 last:border-b-0"
+                        >
+                          <EyeIcon className="w-4 h-4" />
+                          <span>
+                            {prescription.end_date.split('-').reverse().join('/')} - Dr {prescription.prescribing_doctor}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <InfoRow
+                    label={t('text.running').charAt(0).toUpperCase() + t('text.running').toLowerCase().slice(1)}
+                    value={`${prescriptionCategories.valid.length} ${t('text.prescription')}${prescriptionCategories.valid.length > 1 ? 's' : ''}`}
+                    valueClassName="text-green-500"
+                  />
+                  {prescriptionCategories.valid.length > 0 && (
+                    <div className="ml-4 mt-2 space-y-2">
+                      {prescriptionCategories.valid
+                        .sort((a, b) => new Date(a.end_date).getTime() - new Date(b.end_date).getTime())
+                        .map((prescription) => (
+                        <button
+                          key={prescription.id}
+                          onClick={() => navigate(`/prescriptions/${prescription.id}`)}
+                          className="text-green-500 hover:text-green-600 transition-colors text-sm flex items-center space-x-2 w-full pb-2 border-b border-green-200/20 last:border-b-0"
+                        >
+                          <EyeIcon className="w-4 h-4" />
+                          <span>
+                            {prescription.end_date.split('-').reverse().join('/')} - Dr {prescription.prescribing_doctor}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <InfoRow
+                    label={t('text.expired')}
+                    value={`${prescriptionCategories.invalid.length} ${t('text.prescription')}${prescriptionCategories.invalid.length > 1 ? 's' : ''}`}
+                    valueClassName="text-red-500"
+                  />
+                  {prescriptionCategories.invalid.length > 0 && (
+                    <div className="ml-4 mt-2 space-y-2">
+                      {prescriptionCategories.invalid
+                        .sort((a, b) => new Date(b.end_date).getTime() - new Date(a.end_date).getTime()) // Sort expired prescriptions with most recently expired first
+                        .map((prescription) => (
+                        <button
+                          key={prescription.id}
+                          onClick={() => navigate(`/prescriptions/${prescription.id}`)}
+                          className="text-red-500 hover:text-red-600 transition-colors text-sm flex items-center space-x-2 w-full pb-2 border-b border-red-200/20 last:border-b-0"
+                        >
+                          <EyeIcon className="w-4 h-4" />
+                          <span>
+                            {prescription.end_date.split('-').reverse().join('/')} - Dr {prescription.prescribing_doctor}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
