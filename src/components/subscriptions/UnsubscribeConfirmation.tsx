@@ -1,7 +1,7 @@
 import { Button } from "../forms/inputGroups/Button";
 
 interface UnsubscribeConfirmationProps {
-  deleteSubscription: () => void;
+  deleteSubscription: () => Promise<void>;
   fetchSubscription: () => Promise<void>;
   setShowConfirm: (show: boolean) => void;
 }
@@ -26,7 +26,7 @@ const UnsubscribeConfirmation = ({
       <Button
         variant="accent"
         onClick={async () => {
-          deleteSubscription();
+          await deleteSubscription();
           await fetchSubscription();
           setShowConfirm(false);
         }}
