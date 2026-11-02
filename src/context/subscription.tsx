@@ -49,7 +49,7 @@ export const SubscriptionProvider: React.FC<{ children: ReactNode }> = ({ childr
   }, [token, profile]);
 
   useEffect(() => {
-    fetchSubscription();
+    void fetchSubscription().catch(() => { /* Transport reports session failures without sensitive payloads. */ });
   }, [fetchSubscription]);
 
   return (

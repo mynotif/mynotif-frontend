@@ -1,0 +1,270 @@
+import axios from 'axios'
+import { webcrypto } from 'crypto'
+import { clearSession, loginSession, logoutSession, privateApi, sessionSnapshot, removeLegacyToken, SessionFailure, checkSessionExpiry, confirmSessionReset } from './session'
+
+jest.mock('axios')
+const http = axios as jest.Mocked<typeof axios>
+const now = Date.now()
+const pair = (version = 1) => ({
+  session_id: '00000000-0000-4000-8000-000000000001', token_type: 'Bearer',
+  access_token: `synthetic-access-${version}`, refresh_token: `synthetic-refresh-${version}`,
+  access_expires_at: new Date(now + 900000).toISOString(), refresh_expires_at: new Date(now + 3600000).toISOString(),
+  session_expires_at: new Date(now + 3600000).toISOString(), expires_in: 900
+})
+const user = { id: 1, email: 'a@example.invalid', username: 'a', first_name: 'Fictif', last_name: 'A', is_staff: false }
+const refused = (status: number) => ({ isAxiosError: true, response: { status, data: { secret: 'must-not-escape' }, headers: {} }, config: { secret: 'must-not-escape' } })
+const deferred = <T,>() => { let resolve!: (value: T) => void; let reject!: (value: unknown) => void; const promise = new Promise<T>((a, b) => { resolve = a; reject = b }); return { promise, resolve, reject } }
+async function connect(account = 1) {
+  const responsePair = account === 1 ? pair() : { ...pair(), session_id: '00000000-0000-4000-8000-000000000002', access_token: 'synthetic-B-access', refresh_token: 'synthetic-B-refresh' }
+  http.post.mockResolvedValueOnce({ status: 201, data: responsePair })
+  http.request.mockResolvedValueOnce({ status: 200, data: { ...user, id: account, email: account === 1 ? user.email : 'b@example.invalid' } })
+  return (await loginSession(account === 1 ? user.email : 'b@example.invalid', 'fictitious-password')).token
+}
+beforeEach(() => {
+  clearSession()
+  jest.useFakeTimers('modern')
+  Object.defineProperty(window, 'crypto', { configurable: true, value: webcrypto })
+  jest.resetAllMocks()
+  http.isAxiosError.mockImplementation((e: any) => e?.isAxiosError === true)
+  clearSession()
+})
+afterEach(() => { clearSession(); jest.useRealTimers() })
+it('validates pair, bootstraps identity and removes legacy without persisting secrets', async () => {
+  localStorage.setItem('token', 'synthetic-legacy')
+  removeLegacyToken()
+  expect(localStorage.getItem('token')).toBeNull()
+  const token = await connect()
+  expect(sessionSnapshot().token).toBe(token)
+  expect(http.request).toHaveBeenCalledWith(expect.objectContaining({ headers: { Authorization: `Bearer ${token}` } }))
+  expect(localStorage.length).toBe(0)
+  expect(sessionStorage.length).toBe(0)
+})
+it('rejects malformed session before profile bootstrap', async () => {
+  http.post.mockResolvedValueOnce({ status: 201, data: { ...pair(), token_type: 'Token' } })
+  await expect(loginSession(user.email, 'fictitious-password')).rejects.toBeInstanceOf(SessionFailure)
+  expect(http.request).not.toHaveBeenCalled()
+  expect(sessionSnapshot().token).toBeNull()
+})
+it('single flights concurrent401 and reuses completed rotation for late401', async () => {
+  const token = await connect()
+  const a = deferred<any>(); const b = deferred<any>(); const rotation = deferred<any>()
+  http.request.mockReturnValueOnce(a.promise).mockReturnValueOnce(b.promise)
+  http.post.mockReturnValueOnce(rotation.promise)
+  const one = privateApi.get('/synthetic', { headers: { Authorization: `Bearer ${token}` } })
+  const two = privateApi.get('/synthetic', { headers: { Authorization: `Bearer ${token}` } })
+  a.reject(refused(401))
+  await Promise.resolve(); await Promise.resolve()
+  expect(sessionSnapshot().recovering).toBe(true)
+  http.request.mockResolvedValue({ status: 200, data: [] })
+  rotation.resolve({ status: 200, data: pair(2) })
+  await one
+  b.reject(refused(401))
+  await two
+  expect(http.post).toHaveBeenCalledTimes(2) // login plus one rotation
+  expect(sessionSnapshot().recovering).toBe(false)
+})
+it('lost refresh response preserves request_id and parent for bounded recovery', async () => {
+  jest.useFakeTimers('modern')
+  const token = await connect()
+  http.request.mockRejectedValueOnce(refused(401)).mockResolvedValue({ data: [] })
+  http.post.mockRejectedValueOnce({ isAxiosError: true }).mockResolvedValueOnce({ status: 200, data: pair(2) })
+  const request = privateApi.get('/synthetic', { headers: { Authorization: `Bearer ${token}` } })
+  for (let i = 0; i < 12; i++) await Promise.resolve()
+  jest.advanceTimersByTime(1000)
+  await request
+  const calls = http.post.mock.calls.slice(1)
+  expect(calls).toHaveLength(2)
+  expect(calls[0][1]).toEqual(calls[1][1])
+  expect((calls[0][1] as any).request_id).toMatch(/^[0-9a-f-]{14}4[0-9a-f]{3}-[89ab]/)
+})
+it('second401 is terminal and errors contain no Axios payload', async () => {
+  const token = await connect()
+  http.request.mockRejectedValue(refused(401))
+  http.post.mockResolvedValueOnce({ status: 200, data: pair(2) })
+  let error: unknown
+  try { await privateApi.get('/synthetic', { headers: { Authorization: `Bearer ${token}` } }) } catch (e) { error = e }
+  expect(error).toBeInstanceOf(SessionFailure)
+  expect(JSON.stringify(error)).not.toContain('must-not-escape')
+  expect(sessionSnapshot().token).toBeNull()
+  expect(http.post).toHaveBeenCalledTimes(2)
+})
+it('logout purges immediately, does not refresh and reports unconfirmed revoke', async () => {
+  await connect()
+  const revocation = deferred<any>()
+  http.delete.mockReturnValueOnce(revocation.promise)
+  const pending = logoutSession()
+  expect(sessionSnapshot().token).toBeNull()
+  revocation.reject({ isAxiosError: true })
+  await pending
+  expect(sessionSnapshot().notice).toContain('n’a pas pu être confirmée')
+  expect(http.post).toHaveBeenCalledTimes(1)
+})
+it('late accountA response and refresh cannot repopulate B', async () => {
+  const token = await connect()
+  const old = deferred<any>()
+  http.request.mockReturnValueOnce(old.promise)
+  const request = privateApi.get('/synthetic', { headers: { Authorization: `Bearer ${token}` } })
+  clearSession()
+  const tokenB = await connect(2)
+  old.resolve({ data: ['private-A'] })
+  await expect(request).rejects.toMatchObject({ kind: 'stale' })
+  expect(sessionSnapshot().token).toBe(tokenB)
+})
+it('late login cannot authenticate after logout', async () => {
+  const pending = deferred<any>()
+  http.post.mockReturnValueOnce(pending.promise)
+  const login = loginSession(user.email, 'fictitious-password')
+  await logoutSession()
+  pending.resolve({ status: 201, data: pair() })
+  await expect(login).rejects.toMatchObject({ kind: 'stale' })
+  expect(sessionSnapshot().token).toBeNull()
+})
+it('absolute expiration purges idle session and rejects late success', async () => {
+  jest.useFakeTimers('modern')
+  const token = await connect()
+  const late = deferred<any>()
+  http.request.mockReturnValueOnce(late.promise)
+  const request = privateApi.get('/synthetic', { headers: { Authorization: `Bearer ${token}` } })
+  jest.advanceTimersByTime(3600001)
+  checkSessionExpiry()
+  expect(sessionSnapshot().token).toBeNull()
+  late.resolve({ data: ['private'] })
+  await expect(request).rejects.toMatchObject({ kind: 'stale' })
+})
+it.each([401, 429, 500])('distinguishes login HTTP%s and sanitizes body/config', async status => {
+  http.post.mockRejectedValueOnce(refused(status))
+  const request = loginSession(user.email, 'fictitious-password')
+  await expect(request).rejects.toMatchObject({ kind: status === 401 ? 'credentials' : status === 429 ? 'rate-limit' : 'server' })
+  expect(JSON.stringify(await request.catch(e => e))).not.toContain('must-not-escape')
+})
+
+it.each(['success', 'refused'])('late refreshA %s cannot alter accountB', async outcome => {
+  const token = await connect()
+  const rotation = deferred<any>()
+  http.request.mockRejectedValueOnce(refused(401))
+  http.post.mockReturnValueOnce(rotation.promise)
+  const request = privateApi.get('/synthetic', { headers: { Authorization: `Bearer ${token}` } })
+  for (let i = 0; i < 8; i++) await Promise.resolve()
+  clearSession()
+  const tokenB = await connect(2)
+  if (outcome === 'success') rotation.resolve({ status: 200, data: pair(2) })
+  else rotation.reject(refused(401))
+  await expect(request).rejects.toMatchObject({ kind: 'stale' })
+  expect(sessionSnapshot().token).toBe(tokenB)
+})
+it('logout during refresh aborts rotation without starting another', async () => {
+  const token = await connect()
+  const rotation = deferred<any>()
+  http.request.mockRejectedValueOnce(refused(401))
+  http.post.mockReturnValueOnce(rotation.promise)
+  http.delete.mockResolvedValueOnce({ status: 204 })
+  const request = privateApi.get('/synthetic', { headers: { Authorization: `Bearer ${token}` } })
+  for (let i = 0; i < 8; i++) await Promise.resolve()
+  await logoutSession()
+  rotation.resolve({ status: 200, data: pair(2) })
+  await expect(request).rejects.toMatchObject({ kind: 'stale' })
+  expect(http.post).toHaveBeenCalledTimes(2)
+  expect(sessionSnapshot().token).toBeNull()
+})
+it('reset204 purges local identity, late reset cannot purge B', async () => {
+  await connect()
+  await confirmSessionReset(async () => ({ status: 204, data: {} }))
+  expect(sessionSnapshot().token).toBeNull()
+  await connect()
+  const reset = deferred<any>()
+  const pending = confirmSessionReset(() => reset.promise)
+  clearSession()
+  const tokenB = await connect(2)
+  reset.resolve({ status: 204, data: {} })
+  await expect(pending).rejects.toMatchObject({ kind: 'stale' })
+  expect(sessionSnapshot().token).toBe(tokenB)
+})
+it.each([401, 409, 429])('refresh HTTP%s terminates or respects exhausted retry budget', async status => {
+  const token = await connect()
+  http.request.mockRejectedValueOnce(refused(401))
+  const error = refused(status)
+  error.response.headers = { 'retry-after': '61' } as any
+  http.post.mockRejectedValueOnce(error)
+  await expect(privateApi.get('/synthetic', { headers: { Authorization: `Bearer ${token}` } })).rejects.toMatchObject({ kind: status === 429 ? 'rate-limit' : 'expired' })
+  expect(http.post).toHaveBeenCalledTimes(2)
+  expect(sessionSnapshot().token).toBeNull()
+})
+it('network refresh exhaustion stops after three attempts using one operation', async () => {
+  const token = await connect()
+  http.request.mockRejectedValueOnce(refused(401))
+  http.post.mockRejectedValue({ isAxiosError: true })
+  const request = privateApi.get('/synthetic', { headers: { Authorization: `Bearer ${token}` } })
+  const result = request.catch(error => error)
+  for (let attempt = 0; attempt < 2; attempt++) {
+    for (let i = 0; i < 12; i++) await Promise.resolve()
+    jest.advanceTimersByTime(attempt === 0 ? 1000 : 3000)
+  }
+  expect(await result).toMatchObject({ kind: 'network' })
+  expect(http.post).toHaveBeenCalledTimes(4)
+  expect(http.post.mock.calls[1][1]).toEqual(http.post.mock.calls[3][1])
+  expect(sessionSnapshot().token).toBeNull()
+})
+it.each(['session_id', 'access_token', 'refresh_token', 'access_expires_at', 'refresh_expires_at', 'session_expires_at', 'expires_in'])('rejects malformed pair field %s', async field => {
+  http.post.mockResolvedValueOnce({ status: 201, data: { ...pair(), [field]: null } })
+  await expect(loginSession(user.email, 'fictitious-password')).rejects.toMatchObject({ kind: 'server' })
+  expect(http.request).not.toHaveBeenCalled()
+})
+
+it('unexpected reset200 does not purge or report success', async () => {
+  const token = await connect()
+  await expect(confirmSessionReset(async () => ({ status: 200, data: {} }))).rejects.toMatchObject({ kind: 'server' })
+  expect(sessionSnapshot().token).toBe(token)
+})
+it('expired access logout recovers only to revoke, without restoring local authentication', async () => {
+  await connect()
+  jest.advanceTimersByTime(900001)
+  http.delete.mockRejectedValueOnce(refused(401)).mockResolvedValueOnce({ status: 204 })
+  const rotation = deferred<any>()
+  http.post.mockReturnValueOnce(rotation.promise)
+  const logout = logoutSession()
+  expect(sessionSnapshot().token).toBeNull()
+  for (let i = 0; i < 8; i++) await Promise.resolve()
+  expect(http.post).toHaveBeenCalledTimes(2)
+  rotation.resolve({ status: 200, data: { ...pair(2), access_expires_at: new Date(Date.now() + 900000).toISOString() } })
+  await logout
+  expect(sessionSnapshot().token).toBeNull()
+  expect(sessionSnapshot().notice).toBe('')
+  expect(http.delete).toHaveBeenLastCalledWith(expect.any(String), expect.objectContaining({ headers: { Authorization: 'Bearer synthetic-access-2' } }))
+})
+it('logout during ambiguous rotation recovers same parent+UUID and cannot alter B', async () => {
+  const token = await connect()
+  const normalRotation = deferred<any>()
+  http.request.mockRejectedValueOnce(refused(401))
+  http.post.mockReturnValueOnce(normalRotation.promise)
+  const request = privateApi.get('/synthetic', { headers: { Authorization: `Bearer ${token}` } })
+  const rejection = request.catch(error => error)
+  for (let i = 0; i < 8; i++) await Promise.resolve()
+  const originalOperation = http.post.mock.calls[1][1]
+  http.delete.mockRejectedValueOnce(refused(401)).mockResolvedValueOnce({ status: 204 })
+  const detachedRotation = deferred<any>()
+  http.post.mockReturnValueOnce(detachedRotation.promise)
+  const logout = logoutSession()
+  for (let i = 0; i < 8; i++) await Promise.resolve()
+  expect(http.post.mock.calls[2][1]).toEqual(originalOperation)
+  expect(sessionSnapshot().token).toBeNull()
+  const tokenB = await connect(2)
+  detachedRotation.resolve({ status: 200, data: pair(2) })
+  normalRotation.resolve({ status: 200, data: pair(2) })
+  await logout
+  expect(await rejection).toMatchObject({ kind: 'stale' })
+  expect(sessionSnapshot().token).toBe(tokenB)
+  expect(sessionSnapshot().notice).toBe('')
+})
+it('detached revocation failure after login B cannot attach old notice or credentials', async () => {
+  await connect()
+  http.delete.mockRejectedValueOnce(refused(401))
+  const rotation = deferred<any>()
+  http.post.mockReturnValueOnce(rotation.promise)
+  const logout = logoutSession()
+  for (let i = 0; i < 8; i++) await Promise.resolve()
+  const tokenB = await connect(2)
+  rotation.reject(refused(401))
+  await logout
+  expect(sessionSnapshot().token).toBe(tokenB)
+  expect(sessionSnapshot().notice).toBe('')
+})
