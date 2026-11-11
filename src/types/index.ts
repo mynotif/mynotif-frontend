@@ -13,6 +13,11 @@ interface Patient {
   expire_soon_prescriptions: Prescription[]
 }
 
+type PatientInput = Partial<Pick<Patient,
+  'firstname' | 'lastname' | 'street' | 'zip_code' | 'city' | 'phone' |
+  'birthday' | 'health_card_number' | 'ss_provider_code'
+>>
+
 interface OneSignal {
   subscription_id: string
 }
@@ -169,6 +174,7 @@ interface SubscriptionContextType {
 export type {
   ErrorResponse,
   Patient,
+  PatientInput,
   Prescription,
   PrescriptionUploadResponse,
   Profile,
