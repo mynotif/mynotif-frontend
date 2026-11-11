@@ -14,18 +14,6 @@ import {
 } from '../types'
 import { API_V1, API_V2 } from './constants'
 
-const getPatients = async (token: string, fields?: string[]): Promise<Patient[]> => {
-  const url = API_V1 + '/patient/'
-  const params = fields ? { fields: fields.join(',') } : undefined
-  const headers = { Authorization: `Bearer ${token}` }
-
-  const response = await privateApi.get<Patient[]>(url, {
-    headers,
-    params
-  })
-  return response.data
-}
-
 const getPatient = async (token: string, id: number): Promise<Patient> => {
   const url = API_V1 + `/patient/${id}/`
   const headers = { Authorization: `Bearer ${token}` }
@@ -72,10 +60,10 @@ const createPrescription = async (
   return response.data
 }
 
-const getPrescriptions = async (token: string): Promise<Prescription[]> => {
+const getPrescriptions = async (token: string, signal?: AbortSignal): Promise<Prescription[]> => {
   const url = API_V1 + '/prescription/'
   const headers = { Authorization: `Bearer ${token}` }
-  const response = await privateApi.get<Prescription[]>(url, { headers })
+  const response = await privateApi.get<Prescription[]>(url, { headers, signal })
   return response.data
 }
 
@@ -205,7 +193,6 @@ const deleteSubscription = async (token: string): Promise<CancelSubscriptionResp
 }
 
 export {
-  getPatients,
   getPatient,
   createPatient,
   login,

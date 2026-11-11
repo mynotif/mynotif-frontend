@@ -13,6 +13,17 @@ interface Patient {
   expire_soon_prescriptions: Prescription[]
 }
 
+export type PatientSummary = Pick<Patient, 'id' | 'firstname' | 'lastname' | 'city' | 'phone' | 'birthday'>
+export interface PatientQuery { page?: number; pageSize?: number; search?: string }
+export interface PatientPage {
+  count: number
+  page: number
+  page_size: number
+  next_page: number | null
+  previous_page: number | null
+  results: PatientSummary[]
+}
+
 interface OneSignal {
   subscription_id: string
 }

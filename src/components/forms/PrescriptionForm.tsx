@@ -14,12 +14,13 @@ import {
   updatePrescription,
   uploadPrescription
 } from '../../services/api'
-import { Patient, Prescription, defaultPatient } from '../../types'
+import { Patient, PatientSummary, Prescription, defaultPatient } from '../../types'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { format } from 'date-fns'
 import useTranslationHook from '../../hook/TranslationHook'
 import usePatients from '../../hook/patient.hook'
+import { patientListErrorMessage, patientReadStatus } from '../../services/patientList'
 import ModalAddPatient from '../modal/ModalAddPatient'
 import { BACKEND_DATE_FORMAT, USER_DATE_FORMAT } from '../../services/constants'
 import { InputFieldContainer } from './inputGroups/InputFieldContainer'
@@ -49,8 +50,12 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
   const { t } = useTranslationHook()
   const [addingNewPatient, setAddingNewPatient] = useState(false)
   const [patientState, setPatientState] = useState<Patient>(defaultPatient)
-  const { patients, reloadPatients } = usePatients()
-  const [newCreatedPatientId, setNewCreatedPatientId] = useState<null | number>(null)
+  const list = usePatients()
+  const { patients, reloadPatients } = list
+  const [selection, setSelection] = useState<{ owner: typeof token; patient: PatientSummary } | null>(null)
+  const selectedPatient = selection && selection.owner === token ? selection.patient : null
+  const patientOptions = selectedPatient && !patients.some(patient => patient.id === selectedPatient.id)
+    ? [...patients, selectedPatient] : patients
   const [error, setError] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
@@ -179,7 +184,9 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
       [name]: value
     })
     if (name === 'patient' && value !== 'addNewPatient') {
-      setNewCreatedPatientId(Number(value))
+      const selected = patients.find(patient => patient.id === Number(value)) ??
+        (selectedPatient?.id === Number(value) ? selectedPatient : null)
+      setSelection(selected ? { owner: token, patient: selected } : null)
     }
     if (name === 'patient' && value === 'addNewPatient') {
       setAddingNewPatient(true)
@@ -204,7 +211,10 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
       setAddingNewPatient(false)
 
       // Set the new created patient ID
-      setNewCreatedPatientId(data?.id)
+      setSelection({ owner: token, patient: {
+        id: data.id, firstname: data.firstname, lastname: data.lastname,
+        city: data.city, phone: data.phone, birthday: data.birthday
+      } })
 
       // Update prescription with the new patient ID
       setPrescriptionState((prevState) => ({
@@ -300,12 +310,35 @@ const PrescriptionForm: FunctionComponent<PrescriptionFormProps> = ({
               required
               label={t('form.selectPatient')}
             >
+              <div className='min-w-0 flex-1 space-y-2'>
+              <input type='text' aria-label='Rechercher un patient' placeholder={t('text.search')}
+                className='w-full rounded border p-2' value={list.search}
+                onKeyDown={event => { if (event.key === 'Enter') event.preventDefault() }}
+                onChange={event => list.setSearch(event.target.value)} />
               <SelectField
                 name='patient'
-                value={newCreatedPatientId ?? ''}
+                value={selectedPatient?.id ?? ''}
                 onChange={onSelectChange}
-                patients={patients}
+                patients={patientOptions}
               />
+              {list.patientsLoading && <p role='status'>Chargement des patients…</p>}
+              {Boolean(list.patientsError) && <div role='alert'>
+                <p>{patientListErrorMessage(list.patientsError)}</p>
+                {patientReadStatus(list.patientsError) === 404
+                  ? <button type='button' onClick={() => { void list.reloadPatients() }}>Recommencer à la première page</button>
+                  : <button type='button' onClick={() => { void list.retryPatients() }}>Réessayer</button>}
+              </div>}
+              {!list.patientsLoading && !list.patientsError && list.count === 0 &&
+                <p role='status'>{list.search ? 'Aucun résultat pour cette recherche.' : 'Aucun patient.'}</p>}
+              {list.previousPage !== null && !list.patientsError &&
+                <button type='button' disabled={list.patientsLoading} onClick={list.loadPreviousPatients}>
+                  Patients précédents
+                </button>}
+              {list.nextPage !== null && !list.patientsError &&
+                <button type='button' disabled={list.patientsLoading} onClick={list.loadNextPatients}>
+                  Patients suivants
+                </button>}
+              </div>
             </InputFieldContainer>
           )}
           <InputField

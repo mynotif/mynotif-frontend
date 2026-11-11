@@ -1,13 +1,13 @@
 import { t } from 'i18next'
-import { Patient, Prescription } from '../../types'
+import { Prescription } from '../../types'
 import { useNavigate } from 'react-router-dom'
 
 interface MainStatsProps {
-    patients: Patient[]
+    patientCount: number
     prescriptions: Prescription[]
 }
 
-export const MainStats = ({ patients, prescriptions }: MainStatsProps) => {
+export const MainStats = ({ patientCount, prescriptions }: MainStatsProps) => {
     const navigate = useNavigate()
     const handlePatientClick = () => navigate('/patients')
     const handlePrescriptionClick = () => navigate('/prescriptions')
@@ -17,10 +17,10 @@ export const MainStats = ({ patients, prescriptions }: MainStatsProps) => {
             <button
                 onClick={handlePatientClick}
                 className="bg-white border border-gray-200 rounded-lg p-6 text-center transition-all hover:shadow-lg hover:border-colorprimary focus:outline-none focus:ring-2 focus:ring-colorprimary focus:ring-offset-2"
-                aria-label={`${t('text.patients')} - ${patients.length} ${t('text.total')}`}
+                aria-label={`${t('text.patients')} - ${patientCount} ${t('text.total')}`}
             >
                 <div className="text-5xl font-light text-colorprimary mb-2">
-                    {patients.length}
+                    {patientCount}
                 </div>
                 <h2 className="text-sm uppercase tracking-wider text-gray-500 mb-1">
                     {t('text.patients')}

@@ -1,18 +1,19 @@
 import { t } from 'i18next'
-import { Patient } from '../../../types'
+import { PatientSummary } from '../../../types'
 
 interface SelectFieldProps {
   value: string | number
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
   name: string
-  patients: Patient[]
+  patients: PatientSummary[]
 }
 
 export const SelectField = ({ value, onChange, name, patients }: SelectFieldProps): JSX.Element => {
   return (
     <select
-      className="block flex-1 border-0 bg-transparent py-1.5 pl-2 pr-8 text-gray-900 focus:ring-0 sm:text-sm/6"
+      className="block w-full flex-1 border-0 bg-transparent py-1.5 pl-2 pr-8 text-gray-900 focus:ring-0 sm:text-sm/6"
       name={name}
+      aria-label={t('form.selectPatient')}
       value={value}
       onChange={onChange}
       autoComplete="off"
