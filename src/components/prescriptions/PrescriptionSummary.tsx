@@ -5,7 +5,7 @@ import { Patient, Prescription } from "../../types";
 
 interface PrescriptionSummaryProps {
     prescriptionState: Prescription;
-    patientState: Patient;
+    patientState: Pick<Patient, 'firstname' | 'lastname'>;
 }
 
 export const PrescriptionSummary = ({ prescriptionState, patientState }: PrescriptionSummaryProps) => (

@@ -13,6 +13,20 @@ interface Patient {
   expire_soon_prescriptions: Prescription[]
 }
 
+type PatientFields = Omit<Patient, 'prescriptions' | 'expire_soon_prescriptions'>
+interface PatientDetail extends PatientFields {
+  prescriptions: PatientPrescription[]
+  expire_soon_prescriptions: PatientPrescription[]
+}
+
+// V1 patient dossiers embed the legacy serializer, without expanded patient names.
+type PatientPrescription = Omit<Prescription,
+  'email_doctor' | 'start_date' | 'end_date' | 'patient_firstname' | 'patient_lastname'> & {
+  email_doctor: string | null
+  start_date: string | null
+  end_date: string | null
+}
+
 interface OneSignal {
   subscription_id: string
 }
@@ -169,6 +183,9 @@ interface SubscriptionContextType {
 export type {
   ErrorResponse,
   Patient,
+  PatientPrescription,
+  PatientFields,
+  PatientDetail,
   Prescription,
   PrescriptionUploadResponse,
   Profile,

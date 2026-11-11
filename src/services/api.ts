@@ -2,6 +2,8 @@ import { privateApi, loginSession, publicRequest, confirmSessionReset } from './
 import axios from 'axios'
 import {
   Patient,
+  PatientFields,
+  PatientDetail,
   Prescription,
   PrescriptionUploadResponse,
   Profile,
@@ -13,6 +15,7 @@ import {
   CancelSubscriptionResponse,
 } from '../types'
 import { API_V1, API_V2 } from './constants'
+import { InvalidPatientDetail, parsePatientDetail } from './patientDetail'
 
 const getPatients = async (token: string, fields?: string[]): Promise<Patient[]> => {
   const url = API_V1 + '/patient/'
@@ -26,16 +29,17 @@ const getPatients = async (token: string, fields?: string[]): Promise<Patient[]>
   return response.data
 }
 
-const getPatient = async (token: string, id: number): Promise<Patient> => {
+const getPatient = async (token: string, id: number, signal?: AbortSignal): Promise<PatientDetail> => {
+  if (!Number.isSafeInteger(id) || id <= 0) throw new InvalidPatientDetail()
   const url = API_V1 + `/patient/${id}/`
   const headers = { Authorization: `Bearer ${token}` }
-  const response = await privateApi.get(url, { headers })
-  return response.data
+  const response = await privateApi.get<unknown>(url, { headers, signal })
+  return parsePatientDetail(response.data, id)
 }
 
 const updatePatient = async (
   token: string,
-  patient: Patient
+  patient: PatientFields
 ): Promise<Patient> => {
   const url = API_V1 + `/patient/${patient.id}/`
   const headers = { Authorization: `Bearer ${token}` }
@@ -45,7 +49,7 @@ const updatePatient = async (
 
 const createPatient = async (
   token: string,
-  patient: Patient
+  patient: PatientFields
 ): Promise<Patient> => {
   const headers = { Authorization: `Bearer ${token}` }
   const url = API_V1 + '/patient/'

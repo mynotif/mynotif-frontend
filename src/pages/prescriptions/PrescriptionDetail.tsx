@@ -1,11 +1,12 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Patient, Prescription } from '../../types'
-import { getPatient, getPrescription } from '../../services/api'
+import { getPrescription } from '../../services/api'
 import { TokenContext } from '../../context/token'
-import assert from 'assert'
+import { usePatientDetail } from '../../hook/patientDetail.hook'
+import { patientId, patientReadFailure, PatientReadStatus, InvalidPatientDetail } from '../../services/patientDetail'
+import { PatientReadFeedback } from '../patients/PatientDetail'
 import { Container } from '../../components/home/Container'
-import { Loading } from '../../components/loading/Loading'
 import { EditIcon } from 'lucide-react'
 import { PrescriptionInfo } from '../../components/prescriptions/PrescriptionInfo'
 import { ContactDoctor } from '../../components/prescriptions/ContactDoctor'
@@ -15,28 +16,42 @@ import { PrescriptionSummary } from '../../components/prescriptions/Prescription
 const PrescriptionDetail = (): JSX.Element => {
   const { id } = useParams<'id'>()
   const { token } = useContext(TokenContext)
-  const [prescriptionState, setPrescriptionState] = useState<Prescription | null>(null)
-  const [patientState, setPatientState] = useState<Patient | null>(null)
+  const [attempt, setAttempt] = useState(0)
+  const prescriptionId = patientId(id)
+  const [identity, setIdentity] = useState({ token, id: prescriptionId, attempt })
+  if (identity.token !== token || identity.id !== prescriptionId || identity.attempt !== attempt) {
+    setIdentity({ token, id: prescriptionId, attempt })
+  }
+  const [result, setResult] = useState<{
+    identity: typeof identity; prescription: Prescription | null; status: PatientReadStatus
+  } | null>(null)
+  const current = result?.identity === identity && identity.token === token &&
+    identity.id === prescriptionId && identity.attempt === attempt
+  const prescriptionState = current ? result?.prescription : null
+  const patientRead = usePatientDetail(prescriptionState ? String(prescriptionState.patient) : undefined)
+  const patientState = patientRead.patient
   const navigate = useNavigate()
 
-  const fetchPrescriptionCallback = useCallback(async (): Promise<void> => {
-    assert(token)
-    assert(id)
-    try {
-      const prescriptionData = await getPrescription(token, parseInt(id, 10))
-      setPrescriptionState(prescriptionData)
-      const patientData = await getPatient(token, prescriptionData.patient)
-      setPatientState(patientData)
-    } catch (error) {
-      console.error(error)
-    }
-  }, [token, id])
-
   useEffect(() => {
-    if (token === null) return
-    // eslint-disable-next-line no-void
-    void (async () => await fetchPrescriptionCallback())()
-  }, [token, fetchPrescriptionCallback])
+    const { token, id } = identity
+    if (!token || id === null) return
+    let active = true
+    getPrescription(token, id).then(prescription => {
+      if (!active) return
+      if (prescription.id !== id) throw new InvalidPatientDetail()
+      setResult({ identity, prescription, status: 'ready' })
+    }).catch(error => {
+      if (active) setResult({ identity, prescription: null, status: patientReadFailure(error) })
+    })
+    return () => { active = false }
+  }, [identity])
+
+  const status = prescriptionId === null ? 'invalid'
+    : prescriptionState ? patientRead.status : current && result ? result.status : 'loading'
+  const retry = (): void => {
+    if (prescriptionState) patientRead.retry()
+    else setAttempt(value => value + 1)
+  }
 
   const goToEditPrescription = (): void => {
     if (prescriptionState?.id !== undefined) {
@@ -46,7 +61,7 @@ const PrescriptionDetail = (): JSX.Element => {
     }
   }
 
-  const goToPatient = (patient: Patient): void => {
+  const goToPatient = (patient: Pick<Patient, 'id'>): void => {
     navigate(`/patients/${patient.id}/`)
   }
 
@@ -84,7 +99,7 @@ const PrescriptionDetail = (): JSX.Element => {
           <PatientInformation patientState={patientState} goToPatient={goToPatient} />
         </div>
       ) : (
-        <Loading />
+        <PatientReadFeedback status={status} retry={retry} />
       )}
     </Container>
   );

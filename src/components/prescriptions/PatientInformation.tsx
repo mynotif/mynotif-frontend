@@ -4,8 +4,8 @@ import { EyeIcon } from "lucide-react";
 import { InfoRow } from "../pageSections/detail/InfoRow";
 
 interface PatientInformationProps {
-    patientState: Patient;
-    goToPatient: (patient: Patient) => void;
+    patientState: Pick<Patient, 'id' | 'health_card_number'>;
+    goToPatient: (patient: Pick<Patient, 'id'>) => void;
     }
 
 export const PatientInformation = ({ patientState, goToPatient }: PatientInformationProps) => {
