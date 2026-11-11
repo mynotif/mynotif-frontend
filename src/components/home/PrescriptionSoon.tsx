@@ -1,10 +1,11 @@
 import { EyeIcon } from 'lucide-react'
-import { Patient, Prescription } from '../../types';
+import { Prescription } from '../../types';
 import { t } from 'i18next';
 import { PatientDaysRemaining } from './PatientDaysRemaining';
 import { useMemo } from 'react';
 
 const calculateDaysRemaining = (endDate: string): number => {
+    if (typeof endDate !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(endDate)) return NaN;
     const [year, month, day] = endDate.split('-').map(Number);
     const end = new Date(year, month - 1, day);
     const today = new Date();
@@ -17,16 +18,21 @@ const isValidPrescription = (prescription: Prescription): boolean => {
     return calculateDaysRemaining(prescription.end_date) >= 0;
 };
 
+export interface PatientPrescriptionAlerts {
+    id: number;
+    firstname: string;
+    lastname: string;
+    prescriptions: Prescription[];
+}
+
 interface PrescriptionSoonProps {
-    patientsExpiredSoon: Patient[];
-    goToPrescription: (patient: Patient, prescriptionId?: string) => void;
+    patientsExpiredSoon: PatientPrescriptionAlerts[];
+    goToPrescription: (patient: PatientPrescriptionAlerts, prescriptionId?: string) => void;
 }
 
 export const PrescriptionSoon = ({ patientsExpiredSoon, goToPrescription }: PrescriptionSoonProps) => {
     const validPatients = useMemo(() =>
-        patientsExpiredSoon.filter(patient =>
-            patient.prescriptions?.some(isValidPrescription)
-        )
+        patientsExpiredSoon.filter(patient => patient.prescriptions.some(isValidPrescription))
     , [patientsExpiredSoon]);
 
     return (
@@ -52,6 +58,7 @@ export const PrescriptionSoon = ({ patientsExpiredSoon, goToPrescription }: Pres
                                 <div key={prescription.id} className="flex items-center justify-between">
                                     <PatientDaysRemaining prescription={prescription} />
                                     <button
+                                        aria-label={`Voir l’ordonnance de ${patient.firstname} ${patient.lastname}`}
                                         onClick={() => goToPrescription(patient, prescription.id.toString())}
                                         className="ml-2 text-sm font-semibold text-colorprimary hover:bg-colorsecondary px-2 py-1 rounded transition-colors"
                                     >

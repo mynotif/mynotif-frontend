@@ -5,10 +5,11 @@ import { Container } from '../../components/home/Container'
 import { usePatientManagement } from '../../hook/patientManagement'
 import { Link } from 'react-router-dom'
 import { t } from 'i18next'
+import { patientListErrorMessage } from '../../services/patientList'
 
 const PatientCreatePage = (): JSX.Element => {
   const [newPatient] = useState<Patient>(defaultPatient)
-  const { canAddPatient, remainingFreePatients, isSubscriptionActive } = usePatientManagement()
+  const { canAddPatient, remainingFreePatients, isSubscriptionActive, countLoading, countError, retryCount } = usePatientManagement()
 
   return (
     <Container>
@@ -17,7 +18,12 @@ const PatientCreatePage = (): JSX.Element => {
           Il vous reste {remainingFreePatients} patient(s) dans le plan gratuit(s).
         </p>
       )}
-      {!canAddPatient ? (
+      {!isSubscriptionActive && countLoading ? <p role='status'>Vérification du nombre de patients…</p> : !isSubscriptionActive && countError ? (
+        <div role='alert'>
+          <p>{patientListErrorMessage(countError)}</p>
+          <button type='button' onClick={() => { void retryCount() }}>Réessayer</button>
+        </div>
+      ) : !canAddPatient ? (
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-4">{t('subscription.limit_reached')}</h2>
           <p className="mb-4">

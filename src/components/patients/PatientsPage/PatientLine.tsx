@@ -1,10 +1,10 @@
-import { Patient } from '../../../types'
+import { PatientSummary } from '../../../types'
 import { FunctionComponent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ChevronRightIcon, User2Icon } from 'lucide-react'
 
 interface PatientLineProps {
-  patient: Patient
+  patient: PatientSummary
 }
 
 const PatientLine: FunctionComponent<PatientLineProps> = ({ patient }) => {
