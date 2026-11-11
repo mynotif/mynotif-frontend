@@ -1,10 +1,9 @@
-import { strict as assert } from 'assert'
-import { FunctionComponent, useState, useContext, useCallback } from 'react'
+import { FunctionComponent, useState, useContext, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { format } from 'date-fns'
 import { Patient } from '../../types'
 import { TokenContext } from '../../context/token'
-import { FlashMessageContext, FlashMessageType } from '../../context/flashmessage'
+import { FlashMessageContext } from '../../context/flashmessage'
 import useTranslationHook from '../../hook/TranslationHook'
 import { createPatient, updatePatient } from '../../services/api'
 import DatePicker from 'react-datepicker'
@@ -26,6 +25,8 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
   const { t } = useTranslationHook()
   const navigate = useNavigate()
   const [loading, setLoading] = useState<boolean>(false)
+  const [submitError, setSubmitError] = useState('')
+  const submitting = useRef(false)
   const [isOptionalFieldsOpen, setIsOptionalFieldsOpen] = useState(false)
 
   const birthdayDateValue: Date | null = patient.birthday !== null && patient.birthday !== undefined && patient.birthday !== '' ? new Date(patient.birthday) : null
@@ -49,52 +50,32 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
     setPatientState({ ...patientState, [name]: value })
   }
 
-  const addErrorMessageCallback = useCallback(
-    (flashMessage: FlashMessageType) => addErrorMessage(flashMessage),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
-
-  const onUpdate = async (): Promise<void> => {
-    assert(token)
-    try {
-      await updatePatient(token, patientState)
-      setLoading(true)
-    } catch (error) {
-      console.error(error)
-      setLoading(false)
-      addErrorMessageCallback({ body: t('error.updatedPatient') })
-    }
-  }
-
-  const onCreatePatient = async (): Promise<void> => {
-    assert(token)
-    try {
-      const data = await createPatient(token, patientState)
-      setPatientState(data)
-      setLoading(true)
-    } catch (error) {
-      console.error(error)
-      setLoading(false)
-      addErrorMessageCallback({ body: t('error.createdPatient') })
-    }
-  }
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
-    isEditForm ? await editPatient() : await addPatient()
-  }
+    if (submitting.current) return
+    submitting.current = true
+    setLoading(true)
+    setSubmitError('')
 
-  const addPatient = async (): Promise<void> => {
-    await onCreatePatient()
-    navigate('/patients')
-    addSuccessMessage({ body: t('text.createdPatient') })
-  }
+    try {
+      if (!token) throw new Error('Session unavailable')
+      if (isEditForm) {
+        await updatePatient(token, patientState)
+      } else {
+        await createPatient(token, patientState)
+      }
+    } catch {
+      const message = t(isEditForm ? 'error.updatedPatient' : 'error.createdPatient')
+      setSubmitError(message)
+      addErrorMessage({ body: message })
+      return
+    } finally {
+      submitting.current = false
+      setLoading(false)
+    }
 
-  const editPatient = async (): Promise<void> => {
-    await onUpdate()
-    navigate(`/patients/${patient.id}`)
-    addSuccessMessage({ body: t('text.updatedPatient') })
+    addSuccessMessage({ body: t(isEditForm ? 'text.updatedPatient' : 'text.createdPatient') })
+    navigate(isEditForm ? `/patients/${patient.id}` : '/patients')
   }
 
   return (
@@ -200,7 +181,8 @@ const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm 
           </div>
         )}
 
-        <Button variant='accent' isLoading={loading} type='submit'>
+        {submitError && <p role='alert' className='text-red-500 text-sm'>{submitError}</p>}
+        <Button variant='accent' isLoading={loading} disabled={loading} type='submit'>
           {t('navigation.validate')}
         </Button>
       </form>
