@@ -3,6 +3,7 @@ import useTranslationHook from '../../hook/TranslationHook'
 import { useNavigate, useParams } from 'react-router-dom'
 import { confirmResetPassword } from '../../services/api'
 import assert from 'assert'
+import { sessionErrorMessage } from '../../services/session'
 import NewResetPasswordForm from '../../components/forms/NewResetPasswordForm'
 import { Container } from '../../components/home/Container'
 
@@ -45,7 +46,7 @@ const NewResetPassword = (): JSX.Element => {
       const errorCase = errorsCases(newPassword, confirmNewPassword)
       if (errorCase !== null) {
         setPasswordError(errorCase)
-        console.error(errorCase)
+
       } else {
         assert(token)
         assert(uid)
@@ -53,7 +54,7 @@ const NewResetPassword = (): JSX.Element => {
         navigate('/login')
       }
     } catch (error) {
-      console.error({ error })
+      setPasswordError(sessionErrorMessage(error))
     }
   }
 

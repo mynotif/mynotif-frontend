@@ -3,17 +3,6 @@ import { COLOR_STATUS } from './constants'
 import { last, sortBy } from 'lodash'
 import { Prescription } from '../types'
 import { USER_DATE_FORMAT } from '../services/constants'
-const tokenLocalStorageKey = 'token'
-
-const getTokenLocalStorage = (): string | null =>
-  localStorage.getItem(tokenLocalStorageKey)
-
-const setTokenLocalStorage = (token: string): void =>
-  localStorage.setItem(tokenLocalStorageKey, token)
-
-const removeTokenLocalStorage = (): void =>
-  localStorage.removeItem(tokenLocalStorageKey)
-
 /**
  * Returns the first valid prescription found or null
  */
@@ -90,9 +79,6 @@ const normalizeText = (text: string): string => {
 }
 
 export {
-  getTokenLocalStorage,
-  setTokenLocalStorage,
-  removeTokenLocalStorage,
   getValidPrescription,
   getLastPrescription,
   getValidOrLastPrescription,

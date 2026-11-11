@@ -1,30 +1,17 @@
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { removeTokenLocalStorage } from './helpers'
 import { TokenContext } from '../context/token'
+import { logoutSession } from '../services/session'
 
-/**
- * Returns:
- * - true if a token in a valid format is stored
- * - undefined if the application is still loading
- * - false if the token is in an invalid format
- */
-const useIsLoggedIn = (): boolean|undefined => {
+const useIsLoggedIn = (): boolean | undefined => {
   const { token } = useContext(TokenContext)
-  // application is still loading
-  if (token === undefined) return undefined
-  const tokenValid = typeof token === 'string' ? token.length > 0 : false
-  return tokenValid
+  return typeof token === 'string' && token.length > 0
 }
-
 const useLogout = (): () => void => {
-  const { setToken } = useContext(TokenContext)
   const navigate = useNavigate()
   return () => {
-    removeTokenLocalStorage()
-    setToken(null)
-    navigate('/login')
+    void logoutSession()
+    navigate('/login', { replace: true })
   }
 }
-
 export { useIsLoggedIn, useLogout }
