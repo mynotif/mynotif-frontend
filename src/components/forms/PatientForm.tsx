@@ -1,7 +1,7 @@
 import { FunctionComponent, useState, useContext, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { format } from 'date-fns'
-import { Patient } from '../../types'
+import { PatientFields } from '../../types'
 import { TokenContext } from '../../context/token'
 import { FlashMessageContext } from '../../context/flashmessage'
 import useTranslationHook from '../../hook/TranslationHook'
@@ -14,14 +14,14 @@ import { Button } from './inputGroups/Button'
 import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
 
 interface PatientFormProps {
-  patient: Patient
+  patient: PatientFields
   isEditForm: boolean
 }
 
 const PatientForm: FunctionComponent<PatientFormProps> = ({ patient, isEditForm }) => {
   const { token } = useContext(TokenContext)
   const { addErrorMessage, addSuccessMessage } = useContext(FlashMessageContext)
-  const [patientState, setPatientState] = useState<Patient>(patient)
+  const [patientState, setPatientState] = useState<PatientFields>(patient)
   const { t } = useTranslationHook()
   const navigate = useNavigate()
   const [loading, setLoading] = useState<boolean>(false)

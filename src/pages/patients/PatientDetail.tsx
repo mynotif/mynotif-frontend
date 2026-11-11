@@ -1,46 +1,33 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { strict as assert } from 'assert'
-import { TokenContext } from '../../context/token'
-import { FlashMessageContext } from '../../context/flashmessage'
-import { getPatient } from '../../services/api'
-import { Patient } from '../../types'
+import { usePatientDetail } from '../../hook/patientDetail.hook'
+import { patientReadMessages, PatientReadStatus } from '../../services/patientDetail'
 import { Container } from '../../components/home/Container'
 import { Loading } from '../../components/loading/Loading'
 import { EditIcon, EyeIcon, UserIcon } from 'lucide-react'
 import { t } from 'i18next'
 import { InfoRow } from '../../components/pageSections/detail/InfoRow'
 
+export const PatientReadFeedback = ({ status, retry }: { status: PatientReadStatus; retry: () => void }): JSX.Element => (
+  status === 'loading' ? <div role='status' aria-label='Chargement du dossier patient'><Loading /></div>
+    : <div role='alert' className='space-y-4'>
+      <p>{status === 'ready' ? '' : patientReadMessages[status]}</p>
+      <button type='button' onClick={retry} className='text-colorprimary underline'>Réessayer</button>
+    </div>
+)
+const dateLabel = (date: string | null): string => date ? date.split('-').reverse().join('/') : '—'
+const dateOrder = (date: string | null): number => date ? Date.parse(date) : 0
+
 const PatientDetail = (): JSX.Element => {
   const { id } = useParams<'id'>()
-  const { token } = useContext(TokenContext)
-  const { addErrorMessage } = useContext(FlashMessageContext)
+  const { patient, status, retry } = usePatientDetail(id)
   const navigate = useNavigate()
-
-  const [patient, setPatient] = useState<Patient | null>(null)
-
-  const fetchPatientCallback = useCallback(async (): Promise<void> => {
-    assert(token)
-    assert(id)
-    try {
-      const data = await getPatient(token, parseInt(id, 10))
-      setPatient(data)
-    } catch (error) {
-      console.error(error)
-      addErrorMessage({ body: 'Error fetching patient data' })
-    }
-  }, [token, id, addErrorMessage])
-
-  useEffect(() => {
-    if (token === null) return
-    void (async () => await fetchPatientCallback())()
-  }, [token, fetchPatientCallback])
 
   const goToEditPatient = (): void => {
     if (patient?.id !== undefined) {
       navigate(`/patients/edit/${patient.id}/`)
     } else {
-      console.error('Patient is undefined')
+      return
     }
   }
 
@@ -69,6 +56,7 @@ const PatientDetail = (): JSX.Element => {
               </div>
             </div>
             <button
+              aria-label='Modifier le patient'
               onClick={goToEditPatient}
               className="bg-colorsecondary text-colorprimary px-3 py-2 rounded-lg hover:bg-shade3 transition-colors flex items-center space-x-2"
             >
@@ -124,7 +112,7 @@ const PatientDetail = (): JSX.Element => {
                   {prescriptionCategories.expireSoon.length > 0 && (
                     <div className="ml-4 mt-2 space-y-2">
                       {prescriptionCategories.expireSoon
-                        .sort((a, b) => new Date(a.end_date).getTime() - new Date(b.end_date).getTime()) // Sort by closest expiry date first
+                        .sort((a, b) => dateOrder(a.end_date) - dateOrder(b.end_date)) // Sort by closest expiry date first
                         .map((prescription) => (
                         <button
                           key={prescription.id}
@@ -133,7 +121,7 @@ const PatientDetail = (): JSX.Element => {
                         >
                           <EyeIcon className="w-4 h-4" />
                           <span>
-                            {prescription.end_date.split('-').reverse().join('/')} - Dr {prescription.prescribing_doctor}
+                            {dateLabel(prescription.end_date)} - Dr {prescription.prescribing_doctor}
                           </span>
                         </button>
                       ))}
@@ -149,7 +137,7 @@ const PatientDetail = (): JSX.Element => {
                   {prescriptionCategories.valid.length > 0 && (
                     <div className="ml-4 mt-2 space-y-2">
                       {prescriptionCategories.valid
-                        .sort((a, b) => new Date(a.end_date).getTime() - new Date(b.end_date).getTime())
+                        .sort((a, b) => dateOrder(a.end_date) - dateOrder(b.end_date))
                         .map((prescription) => (
                         <button
                           key={prescription.id}
@@ -158,7 +146,7 @@ const PatientDetail = (): JSX.Element => {
                         >
                           <EyeIcon className="w-4 h-4" />
                           <span>
-                            {prescription.end_date.split('-').reverse().join('/')} - Dr {prescription.prescribing_doctor}
+                            {dateLabel(prescription.end_date)} - Dr {prescription.prescribing_doctor}
                           </span>
                         </button>
                       ))}
@@ -174,7 +162,7 @@ const PatientDetail = (): JSX.Element => {
                   {prescriptionCategories.invalid.length > 0 && (
                     <div className="ml-4 mt-2 space-y-2">
                       {prescriptionCategories.invalid
-                        .sort((a, b) => new Date(b.end_date).getTime() - new Date(a.end_date).getTime()) // Sort expired prescriptions with most recently expired first
+                        .sort((a, b) => dateOrder(b.end_date) - dateOrder(a.end_date)) // Sort expired prescriptions with most recently expired first
                         .map((prescription) => (
                         <button
                           key={prescription.id}
@@ -183,7 +171,7 @@ const PatientDetail = (): JSX.Element => {
                         >
                           <EyeIcon className="w-4 h-4" />
                           <span>
-                            {prescription.end_date.split('-').reverse().join('/')} - Dr {prescription.prescribing_doctor}
+                            {dateLabel(prescription.end_date)} - Dr {prescription.prescribing_doctor}
                           </span>
                         </button>
                       ))}
@@ -195,7 +183,7 @@ const PatientDetail = (): JSX.Element => {
           </div>
         </div>
       ) : (
-        <Loading />
+        <PatientReadFeedback status={status} retry={retry} />
       )}
     </Container>
   )
